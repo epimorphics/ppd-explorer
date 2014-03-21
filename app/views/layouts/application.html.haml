@@ -1,0 +1,57 @@
+!!! html
+%html
+  %head
+    %title Land Registry - search the price paid data
+    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = csrf_meta_tags
+    = stylesheet_link_tag "https://www.gov.uk/service-manual/assets/govuk_template/stylesheets/govuk-template.css", media: "all"
+    = stylesheet_link_tag "https://www.gov.uk/service-manual/assets/stylesheets/main.css", media: "all"
+
+  %body.government.website.lr.ppd
+    :javascript
+      document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
+
+    %header#global-header.with-proposition{ role: "banner" }
+      .header-wrapper
+        .header-global
+          .header-logo
+            %a.content{ href: "https://www.landregistry.gov.uk/", title: "Go to the Land Registry homepage" }
+              = image_tag "lr_logo_221_80.png"
+        .header-proposition
+          .content
+            %a.js-header-toggle.menu{ href: "#proposition-links"}
+              Menu
+            %nav#proposition-menu
+              - relative_root = Rails.application.config.relative_url_root
+              - ppd_active = request.original_url =~ /ppd/ ? :active : nil
+              - qonsole_active = request.original_url =~ /qonsole/ ? :active : nil
+              - hpi_active = (ppd_active || qonsole_active) ? nil : "active"
+
+              %a#proposition-name{ href: "http://landregistry.data.gov.uk" }
+                Land Registry Linked Open Data
+                %a.beta-tag{ href: ""}
+                  beta
+              %ul#proposition-links
+                %li
+                  %a{ href: "#{relative_root}/hpi", class: hpi_active }
+                    House Price Index
+                %li
+                  %a{ href: "todo", class: ppd_active }
+                    Price Paid Data
+                %li
+                  %a{ href: "#{relative_root}/qonsole", class: qonsole_active }
+                    SPARQL query
+
+                %li
+                  %a.js.hidden.action.action-bookmark{ href: "#", alt: "Bookmark the current view", title: "Bookmark the current view" }
+                    %i.fa.fa-bookmark
+
+  .lr-top-bar
+  .container{ role: "main"}
+    .row
+      .col-md-12
+        = yield
+
+  = render partial: "ppd/footer"
+  = render partial: "ppd/bookmark_modal", locals: {preferences: @preferences}
