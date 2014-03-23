@@ -1,0 +1,30 @@
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix qb:    <http://purl.org/linked-data/cube#> .
+@prefix wfd: <http://location.data.gov.uk/def/am/wfd/> .
+@prefix ppd:  <http://landregistry.data.gov.uk/def/ppi/> .
+@prefix lrcommon: <http://landregistry.data.gov.uk/def/common/>.
+@prefix dsapi: <http://www.epimorphics.com/public/vocabulary/dsapi#> .
+@prefix admingeo: <http://data.ordnancesurvey.co.uk/ontology/admingeo/> .
+@prefix sr:    <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/> .
+@prefix :  <http://landregistry.data.gov.uk/dsapi/ppd#> .
+
+:ppd a dsapi:Dataset;
+    rdfs:label "Property price data";
+    dct:description "A dataset of property transactions";
+    dsapi:baseQuery "?item rdf:type ppd:TransactionRecord";
+    dsapi:aspect
+      [rdfs:label "estate type"              ; dsapi:property ppd:estateType],
+      [rdfs:label "transaction"              ; dsapi:property ppd:hasTransaction],
+      [rdfs:label "new build"                ; dsapi:property ppd:newBuild],
+      [rdfs:label "price paid"               ; dsapi:property ppd:pricePaid],
+      [rdfs:label "property address"         ; dsapi:property ppd:propertyAddress],
+      [rdfs:label "property type"            ; dsapi:property ppd:propertyType],
+      [rdfs:label "publish date"             ; dsapi:property ppd:publishDate],
+      [rdfs:label "transaction date"         ; dsapi:property ppd:transactionDate],
+      [rdfs:label "transaction ID"           ; dsapi:property ppd:transactionId]
+    .
