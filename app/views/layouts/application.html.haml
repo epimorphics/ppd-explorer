@@ -2,12 +2,14 @@
 %html
   %head
     %title Land Registry - search the price paid data
+
     = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
     = javascript_include_tag "application", "data-turbolinks-track" => true
     = csrf_meta_tags
-    = stylesheet_link_tag "https://www.gov.uk/service-manual/assets/govuk_template/stylesheets/govuk-template.css", media: "all"
-    = stylesheet_link_tag "https://www.gov.uk/service-manual/assets/stylesheets/main.css", media: "all"
 
+    /[if IE]
+      = javascript_include_tag "html5shiv.js"
+      = javascript_include_tag "respond.min.js"
   %body.government.website.lr.ppd
     :javascript
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');

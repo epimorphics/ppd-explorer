@@ -17,6 +17,7 @@
     rdfs:label "Property price data addresses";
     dct:description "A dataset of addresses in property transactions";
     dsapi:baseQuery "?item rdf:type common:BS7666Address";
+    dsapi:source "source1";
     dsapi:aspect
       [rdfs:label "paon"           ; dsapi:property lrcommon:paon;     dsapi:optional true],
       [rdfs:label "postcode"       ; dsapi:property lrcommon:postcode; dsapi:optional true],
