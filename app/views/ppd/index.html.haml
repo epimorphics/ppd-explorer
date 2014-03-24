@@ -47,56 +47,73 @@
       .form-group
         %label.col-sm-4.control-label{ for: "ptype" } Property type
         .col-sm-8
-          .checkbox
-            %label
-              %input{ type: "checkbox", name: "ptype", value: "d" }
-              detached
-          .checkbox
-            %label
-              %input{ type: "checkbox", name: "ptype", value: "sd" }
-              semi-detached
-          .checkbox
-            %label
-              %input{ type: "checkbox", name: "ptype", value: "t" }
-              terraced
-          .checkbox
-            %label
-              %input{ type: "checkbox", name: "ptype", value: "f" }
-              flat/maisonette
-
+          %ul.list-inline
+            %li
+              .checkbox
+                %label
+                  %input{ type: "checkbox", name: "ptype", value: "d", checked: true }
+                  detached
+            %li
+              .checkbox
+                %label
+                  %input{ type: "checkbox", name: "ptype", value: "sd", checked: true }
+                  semi-detached
+            %li
+              .checkbox
+                %label
+                  %input{ type: "checkbox", name: "ptype", value: "t", checked: true }
+                  terraced
+            %li
+              .checkbox
+                %label
+                  %input{ type: "checkbox", name: "ptype", value: "f", checked: true }
+                  flat/maisonette
 
       .form-group
         %label.col-sm-4.control-label{ for: "nb" } New build?
         .col-sm-8
-          .checkbox
-            %label
-              %input{ type: "checkbox", name: "nb", value: "nb" }
-              new-build
-          .checkbox
-            %label
-              %input{ type: "checkbox", name: "nb", value: "n" }
-              not new-build
+          %ul.list-inline
+            %li
+              .checkbox
+                %label
+                  %input{ type: "checkbox", name: "nb", value: "nb", checked: true }
+                  new-build
+            %li
+              .checkbox
+                %label
+                  %input{ type: "checkbox", name: "nb", value: "n", checked: true }
+                  not new-build
 
       .form-group
         %label.col-sm-4.control-label{ for: "ten" } Tenure
         .col-sm-8
-          .checkbox
-            %label
-              %input{ type: "checkbox", name: "ten", value: "free" }
-              freehold
-          .checkbox
-            %label
-              %input{ type: "checkbox", name: "ten", value: "lease" }
-              leasehold
+          %ul.list-inline
+            %li
+              .checkbox
+                %label
+                  %input{ type: "checkbox", name: "ten", value: "free", checked: true }
+                  freehold
+            %li
+              .checkbox
+                %label
+                  %input{ type: "checkbox", name: "ten", value: "lease", checked: true }
+                  leasehold
 
       .form-group
         %label.col-sm-4.control-label{ for: "price" } Price
         .col-sm-8
-          %div
-            %label
-              %input{ type: "number" }
-              min
-          %div
-            %label
-              %input{ type: "number" }
-              max
+          %ul.list-inline
+            %li
+              %div
+                %label
+                  %input{ type: "number" }
+                  min
+            %li
+              %div
+              %label
+                %input{ type: "number" }
+                max
+      .col-sm-12
+        .pull-right
+          %button.btn.btn-primary{ type: "submit"}
+            preview results
