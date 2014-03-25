@@ -29,18 +29,18 @@
           %input#locality.form-control{ type: "text", name: "locality" }
 
       .form-group
-        %label.col-sm-4.control-label{ for: "street" } District
+        %label.col-sm-4.control-label{ for: "district" } District
         .col-sm-8
           %input#district.form-control{ type: "text", name: "district" }
 
       .form-group
-        %label.col-sm-4.control-label{ for: "street" } County
+        %label.col-sm-4.control-label{ for: "county" } County
         .col-sm-8
           %input#county.form-control{ type: "text", name: "county" }
 
 
       .form-group
-        %label.col-sm-4.control-label{ for: "street" } Postcode
+        %label.col-sm-4.control-label{ for: "postcode" } Postcode
         .col-sm-8
           %input#postcode.form-control{ type: "text", name: "postcode" }
 
@@ -51,22 +51,22 @@
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ptype", value: "d", checked: true }
+                  %input{ type: "checkbox", name: "ptype", value: "lrcommon:detached", checked: true }
                   detached
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ptype", value: "sd", checked: true }
+                  %input{ type: "checkbox", name: "ptype", value: "lrcommon:semi-detached", checked: true }
                   semi-detached
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ptype", value: "t", checked: true }
+                  %input{ type: "checkbox", name: "ptype", value: "lrcommon:terraced", checked: true }
                   terraced
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ptype", value: "f", checked: true }
+                  %input{ type: "checkbox", name: "ptype", value: "lrcommon:flat", checked: true }
                   flat/maisonette
 
       .form-group
@@ -76,12 +76,12 @@
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "nb", value: "nb", checked: true }
+                  %input{ type: "checkbox", name: "nb", value: true, checked: true }
                   new-build
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "nb", value: "n", checked: true }
+                  %input{ type: "checkbox", name: "nb", value: false, checked: true }
                   not new-build
 
       .form-group
@@ -91,12 +91,12 @@
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ten", value: "free", checked: true }
+                  %input{ type: "checkbox", name: "ten", value: "lrcommon:freehold", checked: true }
                   freehold
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ten", value: "lease", checked: true }
+                  %input{ type: "checkbox", name: "ten", value: "lrcommon:leasehold", checked: true }
                   leasehold
 
       .form-group
@@ -106,13 +106,30 @@
             %li
               %div
                 %label
-                  %input{ type: "number" }
+                  %input{ type: "number", name: :min_price }
                   min
             %li
               %div
-              %label
-                %input{ type: "number" }
-                max
+                %label
+                  %input{ type: "number", name: :max_price }
+                  max
+
+
+      .form-group
+        %label.col-sm-4.control-label{ for: "date" } Date
+        .col-sm-8
+          %ul.list-inline
+            %li
+              %div
+                %label
+                  %input{ type: "date", name: :min_date }
+                  earliest
+            %li
+              %div
+                %label
+                  %input{ type: "date", name: :max_date }
+                  latest
+
       .col-sm-12
         .pull-right
           %button.btn.btn-primary{ type: "submit"}
