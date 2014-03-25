@@ -1,7 +1,7 @@
 # An aspect class that adds a search query term
 class SearchAspect < Aspect
   def add_clause( query, preferences )
-    add_search_clause( query, preferences ) if present?( preferences )
+    present?( preferences ) ? add_search_clause( query, preferences ) : query
   end
 
   def add_search_clause( query, preferences )
