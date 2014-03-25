@@ -1,15 +1,15 @@
 GIT
   remote: git://github.com/alphagov/govuk_frontend_toolkit_gem.git
-  revision: 32f74021c37c986bdeb2a2fb747be149e3642f3e
+  revision: 31f0ee8e2a5640a7f17f8756a507f21162bf9141
   submodules: true
   specs:
-    govuk_frontend_toolkit (0.45.0)
+    govuk_frontend_toolkit (0.46.0)
       rails (>= 3.1.0)
       sass (>= 3.2.0)
 
 GIT
   remote: git@github.com:epimorphics/ds-api-ruby.git
-  revision: c384cb22a1e27ef5da505bbee5f685d4df7a7c14
+  revision: 1ee01c5e9e67ec76ac7ff46844b0145fe7b70d52
   specs:
     data_services_api (0.0.1)
       faraday_middleware (< 0.9.0)
@@ -42,7 +42,7 @@ GEM
       multi_json (~> 1.3)
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
-    addressable (2.3.5)
+    addressable (2.3.6)
     arel (4.0.2)
     atomic (1.1.16)
     bootstrap-sass (3.1.1.0)
@@ -110,7 +110,7 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.8.2)
     mime-types (1.25.1)
-    mini_portile (0.5.2)
+    mini_portile (0.5.3)
     minispec-metadata (2.0.0)
       minitest
     minitest (4.7.5)
@@ -158,11 +158,11 @@ GEM
       activesupport (= 4.0.3)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
-    rake (10.1.1)
+    rake (10.2.0)
     rdoc (4.1.1)
       json (~> 1.4)
     safe_yaml (1.0.1)
-    sass (3.2.17)
+    sass (3.2.18)
     sass-rails (4.0.2)
       railties (>= 4.0.0, < 5.0)
       sass (~> 3.2.0)
@@ -187,7 +187,7 @@ GEM
       term-ansicolor
     term-ansicolor (1.3.0)
       tins (~> 1.0)
-    thor (0.18.1)
+    thor (0.19.1)
     thread_safe (0.3.1)
       atomic (>= 1.1.7, < 2)
     tilt (1.4.1)

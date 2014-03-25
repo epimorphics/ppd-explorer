@@ -1,26 +1,26 @@
 # Model to encapsulate user's search preferences
 class UserPreferences
-  ASPECTS = {
-    paon:       {aspect: "ppd:propertyAddress", property: "lrcommon:paon"},
-    street:     {aspect: "ppd:propertyAddress", property: "lrcommon:street"},
-    town:       {aspect: "ppd:propertyAddress", property: "lrcommon:town"},
-    locality:   {aspect: "ppd:propertyAddress", property: "lrcommon:locality"},
-    district:   {aspect: "ppd:propertyAddress", property: "lrcommon:district"},
-    county:     {aspect: "ppd:propertyAddress", property: "lrcommon:county"},
-    postcode:   {aspect: "ppd:propertyAddress", property: "lrcommon:postcode"},
-    ptype:      {aspect: "ppd:propertyType"},
-    nb:         {aspect: "ppd:newBuild"}
-    ten:        {aspect: "ppd:estateType"}
-  }
-   WHITE_LIST = (ASPECTS.keys +
-                 %w(min_price max_price
-                    min_date max_date
-                   )
-               ).map( &:to_s )
 
-  def intitialize( p )
+  WHITE_LIST = QueryCommand::ASPECTS.keys.map( &:to_s )
+
+  def initialize( p )
     @params = indifferent_access( p )
     sanitise!
+  end
+
+  def param( p )
+    val = @params[p]
+    (val == "") ? nil : val
+  end
+
+  # Return truthy if parameter p is present, optionally with value v
+  def present?( p, v = nil )
+    if v
+      param_value = param( p )
+      param_value.is_a?( Array ) ? param_value.include?( v ) : (param_value == v)
+    else
+      param( p )
+    end
   end
 
   private

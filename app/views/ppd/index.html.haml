@@ -51,22 +51,22 @@
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ptype", value: "lrcommon:detached", checked: true }
+                  %input{ type: "checkbox", name: "ptype[]", value: "lrcommon:detached", checked: true }
                   detached
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ptype", value: "lrcommon:semi-detached", checked: true }
+                  %input{ type: "checkbox", name: "ptype[]", value: "lrcommon:semi-detached", checked: true }
                   semi-detached
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ptype", value: "lrcommon:terraced", checked: true }
+                  %input{ type: "checkbox", name: "ptype[]", value: "lrcommon:terraced", checked: true }
                   terraced
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ptype", value: "lrcommon:flat", checked: true }
+                  %input{ type: "checkbox", name: "ptype[]", value: "lrcommon:flat", checked: true }
                   flat/maisonette
 
       .form-group
@@ -76,12 +76,12 @@
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "nb", value: true, checked: true }
+                  %input{ type: "checkbox", name: "nb[]", value: "true", checked: true }
                   new-build
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "nb", value: false, checked: true }
+                  %input{ type: "checkbox", name: "nb[]", value: "false", checked: true }
                   not new-build
 
       .form-group
@@ -91,12 +91,12 @@
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ten", value: "lrcommon:freehold", checked: true }
+                  %input{ type: "checkbox", name: "ten[]", value: "lrcommon:freehold", checked: true }/
                   freehold
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ten", value: "lrcommon:leasehold", checked: true }
+                  %input{ type: "checkbox", name: "ten[]", value: "lrcommon:leasehold", checked: true }/
                   leasehold
 
       .form-group

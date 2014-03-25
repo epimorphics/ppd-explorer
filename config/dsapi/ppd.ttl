@@ -19,13 +19,24 @@
     dsapi:baseQuery "?item rdf:type ppd:TransactionRecord";
     dsapi:source "source1";
     dsapi:aspect
-      [rdfs:label "estate type"              ; dsapi:property ppd:estateType],
       [rdfs:label "transaction"              ; dsapi:property ppd:hasTransaction],
-      [rdfs:label "new build"                ; dsapi:property ppd:newBuild],
-      [rdfs:label "price paid"               ; dsapi:property ppd:pricePaid],
-      [rdfs:label "property address"         ; dsapi:property ppd:propertyAddress],
-      [rdfs:label "property type"            ; dsapi:property ppd:propertyType],
       [rdfs:label "publish date"             ; dsapi:property ppd:publishDate],
       [rdfs:label "transaction date"         ; dsapi:property ppd:transactionDate],
-      [rdfs:label "transaction ID"           ; dsapi:property ppd:transactionId]
+      [rdfs:label "transaction ID"           ; dsapi:property ppd:transactionId],
+      [rdfs:label "price paid"               ; dsapi:property ppd:pricePaid],
+      [rdfs:label "property address"         ; dsapi:property ppd:propertyAddress],
+
+      [rdfs:label "estate type"              ; dsapi:property ppd:estateType;     dsapi:optional true],
+      [rdfs:label "new build"                ; dsapi:property ppd:newBuild;       dsapi:optional true],
+      [rdfs:label "property type"            ; dsapi:property ppd:propertyType;   dsapi:optional true],
+
+      [rdfs:label "property-paon"            ; dsapi:property "ppd:propertyAddressPaon" ; dsapi:propertyPath "ppd:propertyAddress/lrcommon:paon";     dsapi:optional true],
+      [rdfs:label "property-postcode"        ; dsapi:property "ppd:propertyAddressPostcode" ; dsapi:propertyPath "ppd:propertyAddress/lrcommon:postcode"; dsapi:optional true],
+      [rdfs:label "property-saon"            ; dsapi:property "ppd:propertyAddressSaon" ; dsapi:propertyPath "ppd:propertyAddress/lrcommon:saon";     dsapi:optional true],
+      [rdfs:label "property-town"            ; dsapi:property "ppd:propertyAddressTown" ; dsapi:propertyPath "ppd:propertyAddress/lrcommon:town";     dsapi:optional true],
+      [rdfs:label "property-locality"        ; dsapi:property "ppd:propertyAddressLocality" ; dsapi:propertyPath "ppd:propertyAddress/lrcommon:locality"; dsapi:optional true],
+      [rdfs:label "property-district"        ; dsapi:property "ppd:propertyAddressDistrict" ; dsapi:propertyPath "ppd:propertyAddress/lrcommon:district"; dsapi:optional true],
+      [rdfs:label "property-county"          ; dsapi:property "ppd:propertyAddressCounty" ; dsapi:propertyPath "ppd:propertyAddress/lrcommon:county";   dsapi:optional true],
+      [rdfs:label "property-street"          ; dsapi:property "ppd:propertyAddressStreet" ; dsapi:propertyPath "ppd:propertyAddress/lrcommon:street";   dsapi:optional true]
+
     .
