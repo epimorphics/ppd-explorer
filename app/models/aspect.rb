@@ -28,6 +28,14 @@ class Aspect
     preferences.param( key )
   end
 
+  # Return a preference value as a number, if possible
+  def preference_value_numeric( preferences )
+    s = preference_value( preferences )
+    Integer( s )
+    rescue ArgumentError
+      Float( s )
+  end
+
   private
 
   # Return true if all of this aspect's values are present in the parameters

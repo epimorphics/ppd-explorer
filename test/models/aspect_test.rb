@@ -27,4 +27,13 @@ describe "Aspect" do
     aspect.preference_value( UserPreferences.new( {"street" => "bar"} )).must_equal "bar"
   end
 
+  it "should parse a preference value as an integer" do
+    aspect = Aspect.new( :min_price, "" )
+    aspect.preference_value_numeric( UserPreferences.new( {"min_price" => "10"} )).must_equal 10
+  end
+
+  it "should parse a preference value as an float" do
+    aspect = Aspect.new( :min_price, "" )
+    aspect.preference_value_numeric( UserPreferences.new( {"min_price" => "10.1"} )).must_be_within_epsilon 10.1
+  end
 end
