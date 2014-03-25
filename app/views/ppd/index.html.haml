@@ -7,7 +7,7 @@
 
 .row
   .col-md-12
-    %form.ppd.form-horizontal{ role: "form" }
+    =form_tag( {controller: :ppd, action: :create}, {role: "form", class: "ppd form form-horizontal"} ) do
       .form-group
         %label.col-sm-4.control-label{ for: "paon" } Property name or number
         .col-sm-8
