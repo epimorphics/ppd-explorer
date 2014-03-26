@@ -10,12 +10,12 @@ class Aspect
 
   # Return true if this aspect is present, given the current parameters
   def present?( preferences )
-    (values && !all_present( preferences )) || preferences.present?( key )
+    values ? only_some_present?( values, preferences ) : preferences.present?( key )
   end
 
   # Return the array of fixed values this aspect, or nil if not defined
   def values
-    nil
+    option( :values )
   end
 
   # Return an option value
@@ -38,10 +38,10 @@ class Aspect
 
   private
 
-  # Return true if all of this aspect's values are present in the parameters
-  def all_present?( preferences )
-    values.map {|v| preferences.present?( key, value )}
-          .reduce( true ) {|acc, p| p && acc}
+  # Return true if at least one, but not all, of this aspect's values are present in the parameters
+  def only_some_present?( values, preferences )
+    presence = values.map {|value| preferences.present?( key, value )}
+    presence.include?( true ) && presence.include?( false )
   end
 
 end

@@ -22,6 +22,11 @@ describe "Aspect" do
     assert( !aspect.present?( UserPreferences.new( {"town" => "bar"} )) )
   end
 
+  it "should not be present if all values are given" do
+    aspect = Aspect.new( :street, "foo:bar", values: %w(a b c) )
+    assert( !aspect.present?( UserPreferences.new( {"street" => ["a", "b", "c"]} )) )
+  end
+
   it "should return a preference value" do
     aspect = Aspect.new( :street, "foo:bar" )
     aspect.preference_value( UserPreferences.new( {"street" => "bar"} )).must_equal "bar"
