@@ -1,6 +1,7 @@
 require 'test_helper'
+require 'app/models/search_result'
 
-describe "Aspect" do
+describe "SearchResults" do
   PAC = "ppd:propertyAddressCounty"
   PAL = "ppd:propertyAddressLocality"
   PAD = "ppd:propertyAddressDistrict"
@@ -121,7 +122,7 @@ describe "Aspect" do
     sr = SearchResults.new( [result0,result1,result2,result3,result4,result5] )
 
     prices = []
-    sr.traverse {|tx| prices << tx["ppd:pricePaid"]}
+    sr.each_transaction {|tx| prices << tx["ppd:pricePaid"]}
     prices.must_equal [100,101,102,108,109,110]
   end
 end
