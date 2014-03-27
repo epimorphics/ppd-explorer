@@ -72,7 +72,7 @@ class SearchResults
       if v.kind_of?( Hash )
         traverse_property_addresses( v, &block )
       else
-        yield v
+        yield v.sort.reverse
       end
     end
   end
