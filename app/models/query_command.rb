@@ -12,8 +12,8 @@ class QueryCommand < DataService
     ptype:      FilterAspect.new( :ptype,    "ppd:propertyType",    values: %w{lrcommon:detached lrcommon:semi-detached lrcommon:terraced lrcommon:flat-maisonette } ),
     nb:         FilterAspect.new( :nb,       "ppd:newBuild",        values: %w{true false} ),
     ten:        FilterAspect.new( :ten,      "ppd:estateType",      values: %w{lrcommon:freehold lrcommon:leasehold} ),
-    min_price:  RangeAspect.new( :min_price, "ppd:purchasePrice",   operator: "@ge" ),
-    max_price:  RangeAspect.new( :max_price, "ppd:purchasePrice",   operator: "@le" ),
+    min_price:  RangeAspect.new( :min_price, "ppd:pricePaid",       operator: "@ge" ),
+    max_price:  RangeAspect.new( :max_price, "ppd:pricePaid",       operator: "@le" ),
     min_date:   RangeAspect.new( :min_date,  "ppd:transactionDate", operator: "@ge" ),
     max_date:   RangeAspect.new( :max_date,  "ppd:transactionDate", operator: "@le" )
   }
