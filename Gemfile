@@ -44,6 +44,7 @@ gem 'capistrano-bundler', group: :development
 
 # gem 'debugger', group: [:development, :test]
 gem 'pry', group: :development
+gem 'pry-stack_explorer', group: :development
 gem 'quiet_assets', :group => :development
 
 gem 'govuk_frontend_toolkit', github: "alphagov/govuk_frontend_toolkit_gem", :submodules => true

@@ -17,7 +17,7 @@ class SearchResult
   end
 
   def key
-    @key ||= INDEX_KEY_PROPERTIES.map {|p| index_key_value( p, result )}
+    @key ||= INDEX_KEY_PROPERTIES.map {|p| index_key_value( p )}
   end
 
   def <=>( sr )
@@ -32,18 +32,26 @@ class SearchResult
     value_of( @result[p] )
   end
 
+  def different_key?( sr )
+    key != sr.key
+  end
+
   private
 
-  def index_key_value( p, result )
-    v = result[p]
-    return :no_value unless v
-    return :no_value if empty_string?( v )
+  def index_key_value( p )
+    v = @result[p]
+    return "no_value" unless v
+    return "no_value" if empty_string?( v )
     value_of( v )
   end
 
   def value_of( v )
-    v = (v["@value"] || :no_value) if v.kind_of?( Hash )
-    empty_string?( v ) ? :no_value : v
+    if v.kind_of?( Array )
+      v = v.empty? ? "no_value" : v.first
+    end
+
+    v = (v["@value"] || "no_value") if v.kind_of?( Hash )
+    empty_string?( v ) ? "no_value" : v
   end
 
   def empty_string?( v )

@@ -1,5 +1,5 @@
 class QueryCommand < DataService
-  attr_reader :all_results
+  attr_reader :all_results, :search_results
 
   ASPECTS = {
     paon:       SearchAspect.new( :paon,     "ppd:propertyAddress", key_property: "lrcommon:paon" ),
@@ -31,6 +31,7 @@ class QueryCommand < DataService
     Rails.logger.debug "About to ask DsAPI query: #{query.to_json}"
 
     @all_results = ppd.query( query )
+    @search_results = SearchResults.new( @all_results )
   end
 
 end

@@ -12,6 +12,12 @@ class SearchResults
     traverse_in_sort_order( index, &block )
   end
 
+  # Traverse the index values in sort order, and yield a list of transactions
+  # for one address
+  def each_property_address( &block )
+    traverse_property_addresses( index, &block )
+  end
+
   private
 
   def index_results( results )
@@ -22,7 +28,11 @@ class SearchResults
 
   def index_result( result )
     key = result.key
-    last = key.pop
+    begin
+      last = key.pop
+    rescue
+      binding.pry
+    end
     ind = key.reduce( index ) {|i,k| i[k]}
 
     if ind.has_key?( last )
@@ -36,6 +46,7 @@ class SearchResults
     Hash.new {|h,k| h[k] = autokey_hash}
   end
 
+  # TODO DRY
   def traverse_in_sort_order( index, &block )
     index.keys.sort.each do |key|
       v = index[key]
@@ -44,6 +55,19 @@ class SearchResults
         traverse_in_sort_order( v, &block )
       else
         traverse_in_date_order( v, &block )
+      end
+    end
+  end
+
+  # TODO DRY
+  def traverse_property_addresses( index, &block )
+    index.keys.sort.each do |key|
+      v = index[key]
+
+      if v.kind_of?( Hash )
+        traverse_property_addresses( v, &block )
+      else
+        yield v
       end
     end
   end

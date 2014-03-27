@@ -1,5 +1,22 @@
-%p
-  Placeholder for create action
+%h2
+  Search results
 
-%pre
-  = @query_command.all_results.inspect
+%ul.list-none
+  - @query_command.search_results.each_property_address do |results|
+    -result = results.first
+    %li
+      .property
+        .address
+          #{result.value_of_property "ppd:propertyAddressSaon"},
+          #{result.value_of_property "ppd:propertyAddressPaon"},
+          #{result.value_of_property "ppd:propertyAddressStreet"},
+          #{result.value_of_property "ppd:propertyAddressTown"},
+          #{result.value_of_property "ppd:propertyAddressDistrict"},
+          #{result.value_of_property "ppd:propertyAddressLocality"},
+          #{result.value_of_property "ppd:propertyAddressCounty"},
+          #{result.value_of_property "ppd:propertyAddressPostcode"}
+      .url
+        %a{ href: result.value_of_property("@id") }
+          = result.value_of_property("ppd:transactionId")
+
+
