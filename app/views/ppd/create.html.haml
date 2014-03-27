@@ -1,6 +1,8 @@
 - sr = @query_command.search_results
 %h2
   Search results
+%p.text-muted.small
+  #{sr.properties} properties and #{sr.transactions} transactions found in #{@time_taken}ms
 
 %ul.list-unstyled
   - sr.each_property_address do |results|
@@ -22,21 +24,22 @@
       .details
         = result.property_details.map {|d| d[:label]} .join( ", ")
 
-      .prices
-        %table.table
-          %thead
-            %tr
-              %th
-                Date
-              %th
-                Price
-          %tbody
-            - results.each do |result|
+      .prices.row
+        .col-md-4
+          %table.table
+            %thead
               %tr
-                %td
-                  = result.value_of_property( "ppd:transactionDate" )
-                %td
-                  = result.value_of_property( "ppd:pricePaid" )
+                %th
+                  Date
+                %th
+                  Price
+            %tbody
+              - results.each do |result|
+                %tr
+                  %td
+                    = result.value_of_property( "ppd:transactionDate" )
+                  %td.text-right
+                    = number_to_currency( result.value_of_property( "ppd:pricePaid" ), locale: "en-UK", precision: 0, unit: "&pound;".html_safe )
 
 
 

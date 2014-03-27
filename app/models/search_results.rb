@@ -1,8 +1,10 @@
 class SearchResults
-  attr_reader :index
+  attr_reader :index, :properties, :transactions
 
   def initialize( results_json )
     @index = autokey_hash
+    @properties = 0
+    @transactions = 0
     index_results( results_json )
   end
 
@@ -35,10 +37,13 @@ class SearchResults
     end
     ind = key.reduce( index ) {|i,k| i[k]}
 
+    @transactions += 1
+
     if ind.has_key?( last )
       ind[last] << result
     else
       ind[last] = [result]
+      @properties += 1
     end
   end
 
