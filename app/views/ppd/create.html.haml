@@ -1,12 +1,16 @@
+- sr = @query_command.search_results
 %h2
   Search results
 
-%ul.list-none
-  - @query_command.search_results.each_property_address do |results|
+%ul.list-unstyled
+  - sr.each_property_address do |results|
     -result = results.first
     %li
       .property
-        .address
+        %span.transaction-url
+          %a{ href: result.value_of_property("@id") }
+            %i.fa.fa-external-link
+        %span.address
           #{result.value_of_property "ppd:propertyAddressSaon"},
           #{result.value_of_property "ppd:propertyAddressPaon"},
           #{result.value_of_property "ppd:propertyAddressStreet"},
@@ -15,8 +19,8 @@
           #{result.value_of_property "ppd:propertyAddressLocality"},
           #{result.value_of_property "ppd:propertyAddressCounty"},
           #{result.value_of_property "ppd:propertyAddressPostcode"}
-      .url
-        %a{ href: result.value_of_property("@id") }
-          = result.value_of_property("ppd:transactionId")
+      .details
+        = result.property_details.map {|d| d[:label]} .join( ", ")
+
 
 

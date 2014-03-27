@@ -12,6 +12,11 @@ class SearchResult
         ppd:propertyAddressSaon
       )
 
+  PROPERTY_DETAILS_PROPERTIES = %w(
+    ppd:propertyType
+
+  )
+
   def initialize( resultJson )
     @result = resultJson
   end
@@ -32,8 +37,35 @@ class SearchResult
     value_of( @result[p] )
   end
 
+  def id_of_property( p )
+    id_of( @result[p] )
+  end
+
   def different_key?( sr )
     key != sr.key
+  end
+
+  def property_details
+    [property_type, tenure, new_build]
+  end
+
+  def property_type
+    pt = id_of_property( "ppd:propertyType" )
+    {uri: pt, label: pt.gsub( /\A.*\//, "" )}
+  end
+
+  def tenure
+    ten = id_of_property( "ppd:estateType" )
+    {uri: ten, label: ten.gsub( /\A.*\//, "" )}
+  end
+
+  def new_build
+    nb = value_of_property( "ppd:estateType" )
+    if nb == "false" || nb == false || nb == "no_value"
+      {label: "not new-build"}
+    else
+      {label: "new-build"}
+    end
   end
 
   private
@@ -51,6 +83,15 @@ class SearchResult
     end
 
     v = (v["@value"] || "no_value") if v.kind_of?( Hash )
+    empty_string?( v ) ? "no_value" : v
+  end
+
+  def id_of( v )
+    if v.kind_of?( Array )
+      v = v.empty? ? "no_value" : v.first
+    end
+
+    v = (v["@id"] || "no_value") if v.kind_of?( Hash )
     empty_string?( v ) ? "no_value" : v
   end
 
