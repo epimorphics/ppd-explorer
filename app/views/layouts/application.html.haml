@@ -36,13 +36,13 @@
                   beta
               %ul#proposition-links
                 %li
-                  %a{ href: "#{relative_root}/hpi", class: hpi_active }
+                  %a{ href: "#{relative_root.gsub(/ppd/, "hpi")}", class: hpi_active }
                     House Price Index
                 %li
                   %a{ href: "#{relative_root}/ppd", class: ppd_active }
                     Price Paid Data
                 %li
-                  %a{ href: "#{relative_root}/qonsole", class: qonsole_active }
+                  %a{ href: "#{relative_root.gsub(/ppd/, "qonsole")}", class: qonsole_active }
                     SPARQL query
 
                 %li
