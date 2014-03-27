@@ -112,10 +112,19 @@ $lr-footer-link: lighten( $lr-separator, 10 );
   }
 
   .address {
+    font-weight: bold;
   }
 
   .address-text {
     text-transform: capitalize;
+  }
+
+  .property-detail-tag {
+    color: #101510;
+    background-color: $lr-footer-grey;
+    padding: 3px 5px;
+    border-radius: 3px;
+    margin-left: 10px;
   }
 
   // buttons
