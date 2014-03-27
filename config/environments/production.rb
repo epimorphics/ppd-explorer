@@ -83,6 +83,6 @@ PpdExplorer::Application.configure do
   config.relative_url_root = "/app/ppd"
 end
 
-JsRoutes.setup do |config|
-  config.prefix = "/app/ppd"
-end
+# JsRoutes.setup do |config|
+#   config.prefix = "/app/ppd"
+# end
