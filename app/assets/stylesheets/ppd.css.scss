@@ -111,6 +111,13 @@ $lr-footer-link: lighten( $lr-separator, 10 );
     margin-bottom: 3px;
   }
 
+  .address {
+  }
+
+  .address-text {
+    text-transform: capitalize;
+  }
+
   // buttons
   a.btn.btn-primary, a.btn.btn-primary:hover, a.btn.btn-primary:visited {
     background-color: $lr-headline;

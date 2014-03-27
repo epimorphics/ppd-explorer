@@ -13,13 +13,15 @@
           %a{ href: result.value_of_property("@id") }
             %i.fa.fa-external-link
         %span.address
-          #{result.value_of_property "ppd:propertyAddressSaon"},
-          #{result.value_of_property "ppd:propertyAddressPaon"},
-          #{result.value_of_property "ppd:propertyAddressStreet"},
-          #{result.value_of_property "ppd:propertyAddressTown"},
-          #{result.value_of_property "ppd:propertyAddressDistrict"},
-          #{result.value_of_property "ppd:propertyAddressLocality"},
-          #{result.value_of_property "ppd:propertyAddressCounty"},
+          %span.address-text
+            #{result.value_of_property( "ppd:propertyAddressSaon" ).downcase},
+            #{result.value_of_property( "ppd:propertyAddressPaon" ).downcase},
+            #{result.value_of_property( "ppd:propertyAddressStreet" ).downcase},
+            #{result.value_of_property( "ppd:propertyAddressTown" ).downcase},
+            #{result.value_of_property( "ppd:propertyAddressDistrict" ).downcase},
+            #{result.value_of_property( "ppd:propertyAddressLocality" ).downcase},
+            #{result.value_of_property( "ppd:propertyAddressCounty" ).downcase},
+          %span.address-postcode
           #{result.value_of_property "ppd:propertyAddressPostcode"}
       .details
         = result.property_details.map {|d| d[:label]} .join( ", ")
