@@ -4,8 +4,8 @@ class SearchResult
   INDEX_KEY_PROPERTIES =
       %w(
         ppd:propertyAddressCounty
-        ppd:propertyAddressLocality
         ppd:propertyAddressDistrict
+        ppd:propertyAddressLocality
         ppd:propertyAddressTown
         ppd:propertyAddressStreet
         ppd:propertyAddressPaon
