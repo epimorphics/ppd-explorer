@@ -68,6 +68,14 @@ class SearchResult
     end
   end
 
+  def address_fields
+    INDEX_KEY_PROPERTIES.reverse
+                        .map {|p| value_of_property( p )}
+                        .reject {|v| ["no_value", ""].include?( v )}
+                        .map &:downcase
+  end
+
+
   private
 
   def index_key_value( p )

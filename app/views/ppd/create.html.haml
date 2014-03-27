@@ -11,13 +11,7 @@
       .property
         %span.address
           %span.address-text
-            #{result.value_of_property( "ppd:propertyAddressSaon" ).downcase},
-            #{result.value_of_property( "ppd:propertyAddressPaon" ).downcase},
-            #{result.value_of_property( "ppd:propertyAddressStreet" ).downcase},
-            #{result.value_of_property( "ppd:propertyAddressTown" ).downcase},
-            #{result.value_of_property( "ppd:propertyAddressDistrict" ).downcase},
-            #{result.value_of_property( "ppd:propertyAddressLocality" ).downcase},
-            #{result.value_of_property( "ppd:propertyAddressCounty" ).downcase},
+            = result.address_fields.join( ", " )
           %span.address-postcode
           #{result.value_of_property "ppd:propertyAddressPostcode"}
       .details
