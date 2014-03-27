@@ -60,7 +60,8 @@ class SearchResult
   end
 
   def new_build
-    nb = value_of_property( "ppd:estateType" )
+    nb = value_of_property( "ppd:newBuild" )
+
     if nb == "false" || nb == false || nb == "no_value"
       {label: "not new-build"}
     else

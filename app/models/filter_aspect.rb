@@ -5,11 +5,23 @@ class FilterAspect < Aspect
   end
 
   def add_filter_clause( query, preferences )
-    query.eq_any_uri( aspect_property, preference_value( preferences ))
+    if is_uri_value?
+      query.eq_any_uri( aspect_property, preference_value( preferences ) )
+    else
+      query.eq_any_value( aspect_property, preference_value( preferences ), {type: value_type} )
+    end
   end
 
   def operator
     option( :operator )
+  end
+
+  def is_uri_value?
+    option( :uri_value )
+  end
+
+  def value_type
+    option( :value_type )
   end
 
 end

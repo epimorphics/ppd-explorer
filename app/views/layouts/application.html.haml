@@ -25,7 +25,7 @@
             %a.js-header-toggle.menu{ href: "#proposition-links"}
               Menu
             %nav#proposition-menu
-              - relative_root = Rails.application.config.relative_url_root
+              - relative_root = Rails.application.config.relative_url_root || ""
               - ppd_active = request.original_url =~ /ppd/ ? :active : nil
               - qonsole_active = request.original_url =~ /qonsole/ ? :active : nil
               - hpi_active = (ppd_active || qonsole_active) ? nil : "active"
