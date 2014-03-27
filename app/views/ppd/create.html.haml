@@ -9,9 +9,6 @@
     -result = results.first
     %li
       .property
-        %span.transaction-url
-          %a{ href: result.value_of_property("@id") }
-            %i.fa.fa-external-link
         %span.address
           %span.address-text
             #{result.value_of_property( "ppd:propertyAddressSaon" ).downcase},
@@ -35,6 +32,7 @@
                   Date
                 %th
                   Price
+                %th
             %tbody
               - results.each do |result|
                 %tr
@@ -42,6 +40,9 @@
                     = result.value_of_property( "ppd:transactionDate" )
                   %td.text-right
                     = number_to_currency( result.value_of_property( "ppd:pricePaid" ), locale: "en-UK", precision: 0, unit: "&pound;".html_safe )
+                  %td.transaction-url
+                    %a{ href: result.value_of_property("@id") }
+                      %i.fa.fa-external-link
 
 
 
