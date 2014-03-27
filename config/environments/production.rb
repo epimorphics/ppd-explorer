@@ -77,4 +77,12 @@ PpdExplorer::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+  # Specify that we're not at the root
+  config.action_controller.relative_url_root = "/app/ppd"
+  config.relative_url_root = "/app/ppd"
+end
+
+JsRoutes.setup do |config|
+  config.prefix = "/app/ppd"
 end
