@@ -20,10 +20,7 @@ class QueryCommand < DataService
 
   def assemble_query
     ASPECTS.values.reduce( base_query ) do |query, aspect|
-      Rails.logger.debug "reduce query = #{query.inspect}"
-      a = aspect.present?( preferences ) ? aspect.add_clause( query, preferences ) : query
-      Rails.logger.debug "after update, = #{a.inspect}"
-      a
+      aspect.present?( preferences ) ? aspect.add_clause( query, preferences ) : query
     end
   end
 

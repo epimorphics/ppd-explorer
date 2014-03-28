@@ -33,11 +33,16 @@ class SearchAspect < Aspect
     option( :aspect_key_property )
   end
 
+  def search_term( key, preferences )
+    val = preference_value(preferences)
+    SearchTerm.new( key, "#{key} matches '#{val}'", val )
+  end
+
   # Sanitise input and convert to Lucene expression
   def text_index_term( preferences )
     preference_value( preferences )
         .split( " " )
-        .map {|token| token.gsub( /[[:punct:]/, "" ) }
+        .map {|token| token.gsub( /[[:punct:]]/, "" ) }
         .reject {|token| token.empty?}
         .join( " AND " )
         .gsub( /\A(.*)\Z/, '( \1 )' )

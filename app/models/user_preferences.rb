@@ -5,6 +5,7 @@ class UserPreferences
 
   def initialize( p )
     @params = indifferent_access( p )
+    process_removes
     sanitise!
   end
 
@@ -23,6 +24,20 @@ class UserPreferences
     end
   end
 
+  # Yield a block to each search term with a non-empty value
+  def each_search_term( &block )
+    QueryCommand::ASPECTS.each do |key,aspect|
+      yield aspect.search_term( key, self ) if present?( key, @params[key] )
+    end
+  end
+
+  # Return true if there are no params set
+  def empty?
+    QueryCommand::ASPECTS.keys.reduce( true ) do |acc, aspect_name|
+      acc && !present?( aspect_name, param( aspect_name ) )
+    end
+  end
+
   private
 
   def whitelist_params
@@ -38,7 +53,10 @@ class UserPreferences
     @params.keep_if {|k,v| whitelisted? k}
   end
 
-
+  def process_removes
+    r = param( "remove-search" )
+    @params.delete( r ) if r
+  end
 
 
   def indifferent_access( h )

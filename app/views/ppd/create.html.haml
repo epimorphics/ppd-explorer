@@ -1,4 +1,15 @@
 - sr = @query_command.search_results
+%h3
+  Search summary
+=form_tag( {controller: :ppd, action: :create}, {role: "form", class: "ppd-search-terms form form-horizontal"} ) do
+  %ul.search-terms.list-inline
+    - @preferences.each_search_term do |search_term|
+      %li
+        = hidden_field_tag( search_term.name, search_term.value )
+        %button.search-term{ name: "remove-search", value: search_term.name, type: :submit }
+          = search_term.label
+          %i.fa.fa-times-circle
+
 %h2
   Search results
 %p.text-muted.small

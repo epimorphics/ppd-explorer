@@ -24,4 +24,8 @@ class FilterAspect < Aspect
     option( :value_type )
   end
 
+  def search_term( key, preferences )
+    SearchTerm.new( key, "#{key} todo", "todo" )
+  end
+
 end
