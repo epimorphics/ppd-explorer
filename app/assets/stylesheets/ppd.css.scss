@@ -90,25 +90,19 @@ $lr-footer-link: lighten( $lr-separator, 10 );
     font-family: GeoHeadlineRegular;
   }
 
-  #map {
-    width: 300px;
-    height: 350px;
-  }
-
   .inline {
     display: inline-block;
   }
 
-  .date-to {
-    margin-left: 1em;
-  }
+  form.ppd {
+    .form-group {
+      margin-bottom: 8px;
+    }
 
-  .related-locations {
-    margin-bottom: 1em;
-  }
-
-  form.search .form-group {
-    margin-bottom: 3px;
+    ul {
+      margin-bottom: 0;
+      -webkit-margin-after: 0;
+    }
   }
 
   .address {
