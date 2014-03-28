@@ -5,17 +5,12 @@ class SearchResult
       %w(
         ppd:propertyAddressCounty
         ppd:propertyAddressDistrict
-        ppd:propertyAddressLocality
         ppd:propertyAddressTown
+        ppd:propertyAddressLocality
         ppd:propertyAddressStreet
         ppd:propertyAddressPaon
         ppd:propertyAddressSaon
       )
-
-  PROPERTY_DETAILS_PROPERTIES = %w(
-    ppd:propertyType
-
-  )
 
   def initialize( resultJson )
     @result = resultJson

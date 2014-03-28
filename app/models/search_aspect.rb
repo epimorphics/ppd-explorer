@@ -5,10 +5,41 @@ class SearchAspect < Aspect
   end
 
   def add_search_clause( query, preferences )
-    query.search_aspect_property( aspect_property, key_property, preference_value( preferences ))
+    unless has_search?( query )
+      query.search_aspect_property( aspect_property, key_property, text_index_term( preferences ))
+    else
+      add_search_regex_clause( query, preferences )
+    end
+  end
+
+  def add_search_regex_clause( query, preferences )
+    query.matches( aspect_key_property, preference_value_as_regex( preferences ), flags: "i" )
   end
 
   def key_property
     option( :key_property )
+  end
+
+  def has_search?( query )
+    query.terms.has_key?( aspect_property ) &&
+    query.terms[aspect_property].has_key?( "@search" )
+  end
+
+  def preference_value_as_regex( preferences )
+    ".*#{preference_value( preferences )}.*"
+  end
+
+  def aspect_key_property
+    option( :aspect_key_property )
+  end
+
+  # Sanitise input and convert to Lucene expression
+  def text_index_term( preferences )
+    preference_value( preferences )
+        .split( " " )
+        .map {|token| token.gsub( /[[:punct:]/, "" ) }
+        .reject {|token| token.empty?}
+        .join( " AND " )
+        .gsub( /\A(.*)\Z/, '( \1 )' )
   end
 end
