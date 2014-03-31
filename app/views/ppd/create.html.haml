@@ -23,12 +23,10 @@
       .property
         %span.address
           %span.address-text
-            = result.address_fields.join( ", " )
-          %span.address-postcode
-          #{result.value_of_property "ppd:propertyAddressPostcode"}
-      .details
-        - result.property_details.each do |d|
-          %span.property-detail-tag #{d[:label]}
+            = result.formatted_address
+        %span.details
+          - result.property_details.each do |d|
+            %span.property-detail-tag #{d[:label]}
 
       .prices.row
         .col-md-4

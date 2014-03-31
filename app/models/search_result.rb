@@ -64,6 +64,34 @@ class SearchResult
     end
   end
 
+  def formatted_address
+    fields = []
+
+    if (saon = value_of_property( "ppd:propertyAddressSaon" )) && saon != "no_value"
+      fields << "#{saon.titlecase},"
+    end
+
+    if (paon = value_of_property( "ppd:propertyAddressPaon" )) && paon != "no_value"
+      numeric = paon =~ /\A\d+[A-Za-z]*\Z/
+      fields << "#{paon.titlecase}#{numeric ? "" : ","}"
+    end
+
+    %w(
+      ppd:propertyAddressStreet
+      ppd:propertyAddressTown
+    ).each do |p|
+      if (f = value_of_property( p )) && f != "no_value"
+        fields << "#{f.titlecase},"
+      end
+    end
+
+    if (postcode = value_of_property( "ppd:propertyAddressPostcode" )) && postcode != "no_value"
+      fields << postcode
+    end
+
+    fields.join( " " )
+  end
+
   def address_fields
     INDEX_KEY_PROPERTIES.reverse
                         .map {|p| value_of_property( p )}
