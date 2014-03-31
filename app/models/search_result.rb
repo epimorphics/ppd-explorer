@@ -14,7 +14,7 @@ class SearchResult
 
   DETAILED_ADDRESS_ASPECTS =
     (INDEX_KEY_PROPERTIES.reverse + ["ppd:propertyAddressPostcode"]).map do |ap|
-      QueryCommand::ASPECTS.find {|k,a| a.aspect_property == ap}
+      QueryCommand::ASPECTS.values.find {|a| a.aspect_key_property == ap}
     end
 
   def initialize( resultJson )
@@ -39,6 +39,7 @@ class SearchResult
 
   def presentation_value_of_property( p )
     v = value_of( @result[p] )
+    binding.pry unless v
     return nil if v == "no_value"
     title_case_exception?( p ) ? v : v.titlecase
   end

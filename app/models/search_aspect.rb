@@ -16,10 +16,6 @@ class SearchAspect < Aspect
     query.matches( aspect_key_property, preference_value_as_regex( preferences ), flags: "i" )
   end
 
-  def key_property
-    option( :key_property )
-  end
-
   def has_search?( query )
     query.terms.has_key?( aspect_property ) &&
     query.terms[aspect_property].has_key?( "@search" )
@@ -27,10 +23,6 @@ class SearchAspect < Aspect
 
   def preference_value_as_regex( preferences )
     ".*#{preference_value( preferences )}.*"
-  end
-
-  def aspect_key_property
-    option( :aspect_key_property )
   end
 
   def search_term( value, preferences )

@@ -38,7 +38,7 @@ class Aspect
   end
 
   def key_as_label()
-    option( :presentation_label ) || uri_as_label( key )
+    option( :presentation_label ) || key.to_s.gsub( /_/, " " )
   end
 
   def uri_as_label( value )
@@ -46,6 +46,16 @@ class Aspect
          .gsub( /_/, " " )
   end
 
+  # The key property which gives the key value given an observation, may be different from
+  # the aspect property. In particular, the key property may denote a property path, such
+  # as propertyAddress/postcode
+  def aspect_key_property
+    option(:aspect_key_property) || aspect_property
+  end
+
+  def key_property
+    option( :key_property )
+  end
 
   private
 

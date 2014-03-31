@@ -2,6 +2,11 @@ class QueryCommand < DataService
   attr_reader :all_results, :search_results
 
   ASPECTS = {
+    saon:       SearchAspect.new( :saon,
+                                  "ppd:propertyAddress",
+                                  key_property: "lrcommon:saon",
+                                  aspect_key_property: "ppd:propertyAddressSaon",
+                                  presentation_label: "secondary name" ),
     paon:       SearchAspect.new( :paon,
                                   "ppd:propertyAddress",
                                   key_property: "lrcommon:paon",
