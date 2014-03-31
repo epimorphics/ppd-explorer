@@ -28,6 +28,17 @@
           - result.property_details.each do |d|
             %span.property-detail-tag #{d[:label]}
 
+      .detailed-address
+        .small
+          %table
+            %thead
+              %tr
+                - SearchResult::DETAILED_ADDRESS_FIELDS.each do |addr_f|
+                  = address_detail_header( addr_f, result )
+            %tbody
+              %tr
+                - SearchResult::DETAILED_ADDRESS_FIELDS.each do |addr_f|
+                  = address_detail_filter( addr_f, result )
       .prices.row
         .col-md-4
           %table.table

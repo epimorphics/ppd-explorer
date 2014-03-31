@@ -12,6 +12,18 @@ class SearchResult
         ppd:propertyAddressSaon
       )
 
+  DETAILED_ADDRESS_FIELDS =
+    (INDEX_KEY_PROPERTIES.reverse + ["ppd:propertyAddressPostcode"]).zip( [
+      'secondary name',
+      'primary name',
+      'street',
+      'locality',
+      'town or city',
+      'district',
+      'county',
+      'postcode'
+    ])
+
   def initialize( resultJson )
     @result = resultJson
   end
@@ -30,6 +42,12 @@ class SearchResult
 
   def value_of_property( p )
     value_of( @result[p] )
+  end
+
+  def presentation_value_of_property( p )
+    v = value_of( @result[p] )
+    return nil if v == "no_value"
+    title_case_exception?( p ) ? v : v.titlecase
   end
 
   def id_of_property( p )
@@ -67,8 +85,8 @@ class SearchResult
   def formatted_address
     fields = []
 
-    if (saon = value_of_property( "ppd:propertyAddressSaon" )) && saon != "no_value"
-      fields << "#{saon.titlecase},"
+    if saon = presentation_value_of_property( "ppd:propertyAddressSaon" )
+      fields << "#{saon},"
     end
 
     if (paon = value_of_property( "ppd:propertyAddressPaon" )) && paon != "no_value"
@@ -80,8 +98,8 @@ class SearchResult
       ppd:propertyAddressStreet
       ppd:propertyAddressTown
     ).each do |p|
-      if (f = value_of_property( p )) && f != "no_value"
-        fields << "#{f.titlecase},"
+      if f = presentation_value_of_property( p )
+        fields << "#{f},"
       end
     end
 
@@ -92,7 +110,7 @@ class SearchResult
     fields.join( " " )
   end
 
-  def address_fields
+  def detailed_address
     INDEX_KEY_PROPERTIES.reverse
                         .map {|p| value_of_property( p )}
                         .reject {|v| ["no_value", ""].include?( v )}
@@ -131,5 +149,8 @@ class SearchResult
     v.kind_of?(String) && v.empty?
   end
 
+  def title_case_exception?( p )
+    p == "ppd:propertyAddressPostcode"
+  end
 
 end
