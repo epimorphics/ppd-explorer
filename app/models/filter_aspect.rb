@@ -25,7 +25,7 @@ class FilterAspect < Aspect
   end
 
   def search_term( value, preferences )
-    SearchTerm.new( key, "#{key} is #{preference_option_label( value )}", value )
+    SearchTerm.new( key, "#{key} is #{preference_option_label( value )}", value, option( :values ) )
   end
 
   def preference_option_label( value )

@@ -58,9 +58,22 @@ class UserPreferences
     @params.keep_if {|k,v| whitelisted? k}
   end
 
+  # Process any instructions to remove a value from the params
   def process_removes
-    r = param( "remove-search" )
-    @params.delete( r ) if r
+    p,v = @params.find do |p,v|
+      p =~ /\Aremove-(.*)/
+    end
+
+    if p
+      r = p.gsub( /\Aremove-/, "" )
+
+      if @params[r].is_a?( Array )
+        @params[r].delete( v )
+        @params.delete( r ) if @params[r].empty?
+      else
+        @params.delete( r )
+      end
+    end
   end
 
 
