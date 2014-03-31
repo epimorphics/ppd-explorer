@@ -35,7 +35,7 @@ class SearchAspect < Aspect
 
   def search_term( value, preferences )
     val = preference_value(preferences)
-    SearchTerm.new( key, "#{key} matches '#{val}'", val )
+    SearchTerm.new( key, "#{key_as_label} matches '#{val}'", val )
   end
 
   # Sanitise input and convert to Lucene expression

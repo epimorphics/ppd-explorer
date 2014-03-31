@@ -14,7 +14,7 @@ class RangeAspect < Aspect
 
   def search_term( value, preferences )
     val = preference_value_numeric( preferences )
-    SearchTerm.new( key, "#{key} is &pound;#{val}".html_safe, val )
+    SearchTerm.new( key, "#{key_as_label} is &pound;#{val}".html_safe, val )
   end
 
 

@@ -121,6 +121,17 @@ $lr-footer-link: lighten( $lr-separator, 10 );
     margin-left: 10px;
   }
 
+  .search-terms {
+    .btn {
+      border: 0;
+      padding-left: 3px;
+    }
+
+    label {
+      font-weight: normal;
+    }
+  }
+
   // buttons
   a.btn.btn-primary, a.btn.btn-primary:hover, a.btn.btn-primary:visited {
     background-color: $lr-headline;

@@ -37,6 +37,16 @@ class Aspect
       Float( s )
   end
 
+  def key_as_label()
+    option( :presentation_label ) || uri_as_label( key )
+  end
+
+  def uri_as_label( value )
+    value.gsub( /\A[^\/#:]+./, "" )
+         .gsub( /_/, " " )
+  end
+
+
   private
 
   # Return true if at least one, but not all, of this aspect's values are present in the parameters

@@ -8,8 +8,8 @@
         = hidden_field_tag( search_term.form_name, search_term.form_value )
         %label
           = search_term.label
-          %button.search-term{ name: "remove-#{search_term.name}", value: search_term.value, type: :submit }
-            %i.fa.fa-times-circle
+          %button.btn.btn-default.search-term{ name: "remove-#{search_term.name}", value: search_term.value, type: :submit }
+            %i.fa.fa-times-circle.fa-lg
 
 %h2
   Search results
