@@ -33,7 +33,7 @@ class SearchAspect < Aspect
     option( :aspect_key_property )
   end
 
-  def search_term( key, preferences )
+  def search_term( value, preferences )
     val = preference_value(preferences)
     SearchTerm.new( key, "#{key} matches '#{val}'", val )
   end

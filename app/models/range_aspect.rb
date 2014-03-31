@@ -12,8 +12,8 @@ class RangeAspect < Aspect
     option( :operator )
   end
 
-  def search_term( key, preferences )
-    SearchTerm.new( key, "#{key} todo", "todo" )
+  def search_term( value, preferences )
+    [SearchTerm.new( key, "#{key} todo", "todo" )]
   end
 
 

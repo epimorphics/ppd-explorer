@@ -24,8 +24,13 @@ class FilterAspect < Aspect
     option( :value_type )
   end
 
-  def search_term( key, preferences )
-    SearchTerm.new( key, "#{key} todo", "todo" )
+  def search_term( value, preferences )
+    SearchTerm.new( key, "#{key} is #{preference_option_label( value )}", value )
+  end
+
+  def preference_option_label( value )
+    value.gsub( /\A[^\/#:]+./, "" )
+         .gsub( /_/, " " )
   end
 
 end

@@ -17,6 +17,7 @@ class UserPreferences
   # Return truthy if parameter p is present, optionally with value v
   def present?( p, v = nil )
     if v
+        # binding.pry
       param_value = param( p )
       param_value.is_a?( Array ) ? param_value.include?( v ) : (param_value == v)
     else
@@ -27,7 +28,11 @@ class UserPreferences
   # Yield a block to each search term with a non-empty value
   def each_search_term( &block )
     QueryCommand::ASPECTS.each do |key,aspect|
-      yield aspect.search_term( key, self ) if present?( key, @params[key] )
+      (aspect.option( :values ) || [nil]).each do |value|
+        if aspect.present?( self, value )
+          yield aspect.search_term( value, self )
+        end
+      end
     end
   end
 

@@ -9,8 +9,9 @@ class Aspect
   end
 
   # Return true if this aspect is present, given the current parameters
-  def present?( preferences )
-    values ? only_some_present?( values, preferences ) : preferences.present?( key )
+  def present?( preferences, value = nil )
+    precondition = values ? only_some_present?( values, preferences ) : true
+    precondition && preferences.present?( key, value )
   end
 
   # Return the array of fixed values this aspect, or nil if not defined
