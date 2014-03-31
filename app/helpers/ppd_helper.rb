@@ -17,7 +17,7 @@ module PpdHelper
 
         unless preferences.present?( aspect.key )
           concat(
-            content_tag( :a, {href: preferences.as_path( :search, {aspect.key => val} )}, class: "btn btn-lg btn-default" ) do
+            content_tag( :a, {href: preferences.as_path( :search, {aspect.key => val} ), class: "search-zoom-button"}, {} ) do
               content_tag( :i, nil, class: "fa fa-search-plus" )
             end
           ).html_safe
