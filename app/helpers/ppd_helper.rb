@@ -1,18 +1,30 @@
 module PpdHelper
 
-  def address_detail_header( addr_f, result )
-    if result.presentation_value_of_property( addr_f.first )
+  def address_detail_header( aspect, result )
+    if result.presentation_value_of_property( aspect.key )
       content_tag( "th" ) do
-        addr_f.second
+        aspect.key_as_label
       end
     end
   end
 
-  def address_detail_filter( addr_f, result )
-    if v = result.presentation_value_of_property( addr_f.first )
+  def address_detail_filter( aspect, result, preferences )
+    if vp = result.presentation_value_of_property( aspect.key )
+      val = result.value_of_property( aspect.key )
+
       content_tag( "td" ) do
-        v
+        concat vp
+
+        unless preferences.present?( aspect.key )
+          concat(
+            content_tag( :a, {href: preferences.as_path( :search, {aspect.key => value} )}, class: "btn btn-lg btn-default" ) do
+              content_tag( :i, nil, class: "fa fa-search-plus" )
+            end
+          ).html_safe
+        end
+
       end
     end
   end
+
 end

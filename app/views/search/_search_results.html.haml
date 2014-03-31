@@ -1,15 +1,14 @@
 - sr = @query_command.search_results
 %h3
   Search summary
-=form_tag( {controller: :ppd, action: :create}, {role: "form", class: "ppd-search-terms form form-horizontal"} ) do
-  %ul.search-terms.list-inline
-    - @preferences.each_search_term do |search_term|
-      %li
-        = hidden_field_tag( search_term.form_name, search_term.form_value )
-        %label
-          = search_term.label
-          %button.btn.btn-default.search-term{ name: "remove-#{search_term.name}", value: search_term.value, type: :submit }
-            %i.fa.fa-times-circle.fa-lg
+
+%ul.search-terms.list-inline
+  - @preferences.each_search_term do |search_term|
+    %li
+      %label
+        = search_term.label
+        %a.btn.btn-default.search-term{ href: @preferences.as_path( :search, {search_term.name => search_term.value } )}
+          %i.fa.fa-times-circle.fa-lg
 
 %h2
   Search results
@@ -33,12 +32,12 @@
           %table
             %thead
               %tr
-                - SearchResult::DETAILED_ADDRESS_FIELDS.each do |addr_f|
-                  = address_detail_header( addr_f, result )
+                - SearchResult::DETAILED_ADDRESS_ASPECTS.each do |aspect|
+                  = address_detail_header( aspect, result )
             %tbody
               %tr
-                - SearchResult::DETAILED_ADDRESS_FIELDS.each do |addr_f|
-                  = address_detail_filter( addr_f, result )
+                - SearchResult::DETAILED_ADDRESS_ASPECTS.each do |aspect|
+                  = address_detail_filter( aspect, result, @preferences )
       .prices.row
         .col-md-4
           %table.table

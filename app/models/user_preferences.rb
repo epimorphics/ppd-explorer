@@ -1,11 +1,11 @@
 # Model to encapsulate user's search preferences
 class UserPreferences
+  include Rails.application.routes.url_helpers
 
-  WHITE_LIST = QueryCommand::ASPECTS.keys.map( &:to_s )
+  WHITE_LIST = QueryCommand::ASPECTS.keys.map( &:to_s ) + %w(search)
 
   def initialize( p )
     @params = indifferent_access( p )
-    process_removes
     sanitise!
   end
 
@@ -43,6 +43,26 @@ class UserPreferences
     end
   end
 
+  # Return the current preferences as arguments to the given controller path
+  def as_path( controller, options = {}, remove = [] )
+    path_params = @params.merge( options )
+    process_removes( remove )
+
+    path =
+      case controller
+      when :ppd
+        ppd_index_path( path_params )
+      when :search
+        search_index_path( path_params )
+
+      else
+        raise "Do not know how to make path for #{controller}"
+      end
+
+    # this shouldn't be necessay if ENV[RAILS_RELATIVE_ROOT] was working correctly
+    path.gsub( /^/, "#{ENV['RAILS_RELATIVE_URL_ROOT']}" )
+  end
+
   private
 
   def whitelist_params
@@ -59,14 +79,8 @@ class UserPreferences
   end
 
   # Process any instructions to remove a value from the params
-  def process_removes
-    p,v = @params.find do |p,v|
-      p =~ /\Aremove-(.*)/
-    end
-
-    if p
-      r = p.gsub( /\Aremove-/, "" )
-
+  def process_removes( removes )
+    removes.each do |r,v|
       if @params[r].is_a?( Array )
         @params[r].delete( v )
         @params.delete( r ) if @params[r].empty?

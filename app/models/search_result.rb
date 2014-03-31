@@ -12,17 +12,10 @@ class SearchResult
         ppd:propertyAddressSaon
       )
 
-  DETAILED_ADDRESS_FIELDS =
-    (INDEX_KEY_PROPERTIES.reverse + ["ppd:propertyAddressPostcode"]).zip( [
-      'secondary name',
-      'primary name',
-      'street',
-      'locality',
-      'town or city',
-      'district',
-      'county',
-      'postcode'
-    ])
+  DETAILED_ADDRESS_ASPECTS =
+    (INDEX_KEY_PROPERTIES.reverse + ["ppd:propertyAddressPostcode"]).map do |ap|
+      QueryCommand::ASPECTS.find {|k,a| a.aspect_property == ap}
+    end
 
   def initialize( resultJson )
     @result = resultJson
@@ -108,13 +101,6 @@ class SearchResult
     end
 
     fields.join( " " )
-  end
-
-  def detailed_address
-    INDEX_KEY_PROPERTIES.reverse
-                        .map {|p| value_of_property( p )}
-                        .reject {|v| ["no_value", ""].include?( v )}
-                        .map &:downcase
   end
 
 

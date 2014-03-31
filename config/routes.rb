@@ -1,7 +1,8 @@
 PpdExplorer::Application.routes.draw do
   root 'ppd#index'
 
-  resources :ppd, only: [:index, :create]
+  resources :ppd, only: [:index]
+  resources :search
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
