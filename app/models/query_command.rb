@@ -67,12 +67,12 @@ class QueryCommand < DataService
     min_date:   RangeAspect.new( :min_date,
                                   "ppd:transactionDate",
                                   operator: "@ge",
-                                  presentation_label: "earliest date",
+                                  presentation_label: "on or after",
                                   value_type: :date ),
     max_date:   RangeAspect.new( :max_date,
                                   "ppd:transactionDate",
                                   operator: "@le",
-                                  presentation_label: "latest date",
+                                  presentation_label: "on or before",
                                   value_type: :date )
   }
 
