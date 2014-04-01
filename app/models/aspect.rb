@@ -29,12 +29,32 @@ class Aspect
     preferences.param( key )
   end
 
+  # Return a preference value as a particular typed object
+  def preference_value_as_type( value_type, preferences )
+    case value_type
+    when :numeric
+      preference_value_numeric( preferences )
+    when :date
+      preference_value_date( preferences )
+    else
+      raise "Unknown value type: #{value_type}"
+    end
+
+  end
+
   # Return a preference value as a number, if possible
   def preference_value_numeric( preferences )
     s = preference_value( preferences )
     Integer( s )
     rescue ArgumentError
       Float( s )
+  end
+
+  # Return a preference value as a date, if possible
+  def preference_value_date( preferences )
+    s = preference_value( preferences )
+    raise "No preference value" unless s
+    Date.parse( s )
   end
 
   def key_as_label()

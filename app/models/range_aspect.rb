@@ -5,7 +5,7 @@ class RangeAspect < Aspect
   end
 
   def add_range_clause( query, preferences )
-    query.op( operator, aspect_property, preference_value_numeric( preferences ))
+    query.op( operator, aspect_property, preference_value_as_type( value_type, preferences ))
   end
 
   def operator
@@ -13,8 +13,17 @@ class RangeAspect < Aspect
   end
 
   def search_term( value, preferences )
-    val = preference_value_numeric( preferences )
-    SearchTerm.new( key, "#{key_as_label} is &pound;#{val}".html_safe, val )
+    val = preference_value_as_type( value_type, preferences )
+    SearchTerm.new( key, prompt( val ), val )
+  end
+
+  def value_type
+    option( :value_type )
+  end
+
+  def prompt( val )
+    prompt_string = option( :prompt ) || "%s %s"
+    (prompt_string % [key_as_label, val]).html_safe
   end
 
 

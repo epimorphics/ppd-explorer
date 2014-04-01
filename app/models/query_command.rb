@@ -55,19 +55,25 @@ class QueryCommand < DataService
     min_price:  RangeAspect.new( :min_price,
                                   "ppd:pricePaid",
                                   operator: "@ge",
-                                  presentation_label: "minimum price" ),
+                                  presentation_label: "minimum price",
+                                  value_type: :numeric,
+                                  prompt: "%s is &pound;%s" ),
     max_price:  RangeAspect.new( :max_price,
                                   "ppd:pricePaid",
                                   operator: "@le",
-                                  presentation_label: "maximum price" ),
+                                  presentation_label: "maximum price",
+                                  value_type: :numeric,
+                                  prompt: "%s is &pound;%s" ),
     min_date:   RangeAspect.new( :min_date,
                                   "ppd:transactionDate",
                                   operator: "@ge",
-                                  presentation_label: "earliest date" ),
+                                  presentation_label: "earliest date",
+                                  value_type: :date ),
     max_date:   RangeAspect.new( :max_date,
                                   "ppd:transactionDate",
                                   operator: "@le",
-                                  presentation_label: "latest date" )
+                                  presentation_label: "latest date",
+                                  value_type: :date )
   }
 
   def assemble_query
