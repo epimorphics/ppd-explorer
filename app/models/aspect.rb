@@ -77,12 +77,22 @@ class Aspect
     option( :key_property )
   end
 
+  # By default, aspects do not display as checked
+  def display_checked?( preferences, value )
+    false
+  end
+
   private
 
   # Return true if at least one, but not all, of this aspect's values are present in the parameters
   def only_some_present?( values, preferences )
     presence = values.map {|value| preferences.present?( key, value )}
     presence.include?( true ) && presence.include?( false )
+  end
+
+  # Return true if all of the given aspect valukes are present
+  def all_present?( values, preferences )
+    values.map {|v| preferences.present?( key, v )} .inject( &:& )
   end
 
 end

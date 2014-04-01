@@ -63,6 +63,12 @@ class UserPreferences
     path.gsub( /^/, "#{ENV['RAILS_RELATIVE_URL_ROOT']}" )
   end
 
+  # Return true if a given option should be displayed as checked, given the
+  # state of the user's selections
+  def display_checked?( key, value )
+    QueryCommand.find_aspect( key ).display_checked?( self, value )
+  end
+
   private
 
   def whitelist_params

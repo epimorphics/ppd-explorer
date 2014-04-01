@@ -28,5 +28,10 @@ class FilterAspect < Aspect
     SearchTerm.new( key, "#{key_as_label} is #{uri_as_label( value )}", value, option( :values ) )
   end
 
+  def display_checked?( preferences, value )
+    only_some_present?( option( :values ), preferences ) ? preferences.present?( key, value ) : true
+  end
+
+
 
 end

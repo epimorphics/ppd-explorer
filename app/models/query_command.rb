@@ -92,4 +92,7 @@ class QueryCommand < DataService
     @search_results = SearchResults.new( @all_results )
   end
 
+  def self.find_aspect( key )
+    ASPECTS[key]
+  end
 end

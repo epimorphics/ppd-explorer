@@ -11,38 +11,38 @@
       .form-group
         %label.col-sm-4.control-label{ for: "paon" } Property name or number
         .col-sm-8
-          %input#paon.form-control{ type: "text", name: "paon" }
+          %input#paon.form-control{ type: "text", name: "paon", value: @preferences.param( :paon ) }
 
       .form-group
         %label.col-sm-4.control-label{ for: "street" } Street
         .col-sm-8
-          %input#street.form-control{ type: "text", name: "street" }
-
-      .form-group
-        %label.col-sm-4.control-label{ for: "town" } Town or city
-        .col-sm-8
-          %input#town.form-control{ type: "text", name: "town" }
+          %input#street.form-control{ type: "text", name: "street", value: @preferences.param( :street ) }
 
       .form-group
         %label.col-sm-4.control-label{ for: "locality" } Locality
         .col-sm-8
-          %input#locality.form-control{ type: "text", name: "locality" }
+          %input#locality.form-control{ type: "text", name: "locality", value: @preferences.param( :locality ) }
+
+      .form-group
+        %label.col-sm-4.control-label{ for: "town" } Town or city
+        .col-sm-8
+          %input#town.form-control{ type: "text", name: "town", value: @preferences.param( :town ) }
 
       .form-group
         %label.col-sm-4.control-label{ for: "district" } District
         .col-sm-8
-          %input#district.form-control{ type: "text", name: "district" }
+          %input#district.form-control{ type: "text", name: "district", value: @preferences.param( :district ) }
 
       .form-group
         %label.col-sm-4.control-label{ for: "county" } County
         .col-sm-8
-          %input#county.form-control{ type: "text", name: "county" }
+          %input#county.form-control{ type: "text", name: "county", value: @preferences.param( :county ) }
 
 
       .form-group
         %label.col-sm-4.control-label{ for: "postcode" } Postcode
         .col-sm-8
-          %input#postcode.form-control{ type: "text", name: "postcode" }
+          %input#postcode.form-control{ type: "text", name: "postcode", value: @preferences.param( :postcode ) }
 
       .form-group
         %label.col-sm-4.control-label{ for: "ptype" } Property type
@@ -51,22 +51,22 @@
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ptype[]", value: "lrcommon:detached", checked: true }
+                  %input{ type: "checkbox", name: "ptype[]", value: "lrcommon:detached", checked: @preferences.display_checked?( :ptype, "lrcommon:detached") }
                   detached
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ptype[]", value: "lrcommon:semi-detached", checked: true }
+                  %input{ type: "checkbox", name: "ptype[]", value: "lrcommon:semi-detached", checked: @preferences.display_checked?( :ptype, "lrcommon:semi-detached") }
                   semi-detached
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ptype[]", value: "lrcommon:terraced", checked: true }
+                  %input{ type: "checkbox", name: "ptype[]", value: "lrcommon:terraced", checked: @preferences.display_checked?( :ptype, "lrcommon:terraced") }
                   terraced
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ptype[]", value: "lrcommon:flat-maisonette", checked: true }
+                  %input{ type: "checkbox", name: "ptype[]", value: "lrcommon:flat-maisonette", checked: @preferences.display_checked?( :ptype, "lrcommon:flat-maisonette") }
                   flat/maisonette
 
       .form-group
@@ -76,12 +76,12 @@
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "nb[]", value: "true", checked: true }
+                  %input{ type: "checkbox", name: "nb[]", value: "true", checked: @preferences.display_checked?( :nb, "true" ) }
                   new-build
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "nb[]", value: "false", checked: true }
+                  %input{ type: "checkbox", name: "nb[]", value: "false", checked: @preferences.display_checked?( :nb, "false" ) }
                   not new-build
 
       .form-group
@@ -91,12 +91,12 @@
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ten[]", value: "lrcommon:freehold", checked: true }/
+                  %input{ type: "checkbox", name: "ten[]", value: "lrcommon:freehold", checked: @preferences.display_checked?( :ten, "lrcommon:freehold" ) }
                   freehold
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ten[]", value: "lrcommon:leasehold", checked: true }/
+                  %input{ type: "checkbox", name: "ten[]", value: "lrcommon:leasehold", checked: @preferences.display_checked?( :ten, "lrcommon:freehold" ) }
                   leasehold
 
       .form-group
@@ -106,12 +106,12 @@
             %li
               %div
                 %label
-                  %input{ type: "number", name: :min_price }
+                  %input{ type: "number", name: :min_price, value: @preferences.param( :min_price ) }
                   min
             %li
               %div
                 %label
-                  %input{ type: "number", name: :max_price }
+                  %input{ type: "number", name: :max_price, value: @preferences.param( :max_price ) }
                   max
 
 
@@ -122,12 +122,12 @@
             %li
               %div
                 %label
-                  %input{ type: "date", name: :min_date }
+                  %input{ type: "date", name: :min_date, value: @preferences.param( :min_date ) }
                   earliest
             %li
               %div
                 %label
-                  %input{ type: "date", name: :max_date }
+                  %input{ type: "date", name: :max_date, value: @preferences.param( :max_date ) }
                   latest
 
       .col-sm-12
