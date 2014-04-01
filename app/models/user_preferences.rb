@@ -44,9 +44,9 @@ class UserPreferences
   end
 
   # Return the current preferences as arguments to the given controller path
-  def as_path( controller, options = {}, remove = [] )
+  def as_path( controller, options = {}, remove = {} )
     path_params = @params.merge( options )
-    process_removes( remove )
+    process_removes( path_params, remove )
 
     path =
       case controller
@@ -79,13 +79,13 @@ class UserPreferences
   end
 
   # Process any instructions to remove a value from the params
-  def process_removes( removes )
+  def process_removes( pparams, removes )
     removes.each do |r,v|
-      if @params[r].is_a?( Array )
-        @params[r].delete( v )
-        @params.delete( r ) if @params[r].empty?
+      if pparams[r].is_a?( Array )
+        pparams[r].delete( v )
+        pparams.delete( r ) if pparams[r].empty?
       else
-        @params.delete( r )
+        pparams.delete( r )
       end
     end
   end

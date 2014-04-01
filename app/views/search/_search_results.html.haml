@@ -7,7 +7,7 @@
     %li
       %label
         = search_term.label
-        %a.btn.btn-default.search-term{ href: @preferences.as_path( :search, {search_term.name => search_term.value } )}
+        %a.btn.btn-default.search-term{ href: @preferences.as_path( :search, {}, {search_term.name => search_term.value } )}
           %i.fa.fa-times-circle.fa-lg
 
 %h2
