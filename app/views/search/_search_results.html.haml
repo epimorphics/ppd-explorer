@@ -1,5 +1,6 @@
 - sr = @query_command.search_results
-%h3
+= render partial: "ppd/workflow_action_buttons"
+%h3.leading-title
   Search summary
 
 %ul.search-terms.list-inline
@@ -7,7 +8,7 @@
     %li
       %label
         = search_term.label
-        %a.btn.btn-default.search-term{ href: @preferences.as_path( :search, {}, {search_term.name => search_term.value } )}
+        %a.search-term{ href: @preferences.as_path( :search, {}, {search_term.name => search_term.value } )}
           %i.fa.fa-times-circle.fa-lg
 
 %h2
