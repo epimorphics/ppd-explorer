@@ -1,0 +1,42 @@
+- if params[:format]
+  A format has been specified, but the default view has been selected. This suggests
+  a bug, or that the format requested is not one that is currently supported.
+- else
+  .download
+    .row
+      .col-md-12
+        %h2
+          Download price paid data
+          = render partial: "ppd/workflow_action_buttons", locals: {no_download: true}
+
+    .row
+      .col-md-4
+        %h3 CSV
+        %p.text-muted
+          Download the selected data as comma-separated value (CSV)
+          file. This is a good choice for loading into a spreadsheet.
+
+        %p
+          %a.btn.btn-lg.btn-primary{ href: @preferences.as_path( :download, {format: :csv} )}
+            download CSV data
+
+      .col-md-4
+        %h3 Turtle
+        %p.text-muted
+          Download the selected data as Turtle syntax file. This is a
+          good choice for integrating the data with other Linked Data
+          applications.
+
+        %p
+          %a.btn.btn-lg.btn-default{ href: @preferences.as_path( :download, {format: :ttl} )}
+            download Turtle data
+
+      .col-md-4
+        %h3 SPARQL
+        %p.text-muted
+          See the SPARQL query that was used to select your data. You can
+          edit the query to further refine your results.
+
+        %p
+          %a.btn.btn-lg.btn-default{ href: @preferences.as_path( :download, {explain: true} )}
+            view SPARQL query
