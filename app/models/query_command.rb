@@ -76,22 +76,6 @@ class QueryCommand < DataService
                                   value_type: :date )
   }
 
-  DOWNLOAD_COLUMNS = %w(
-    ppd:propertyAddressSaon
-    ppd:propertyAddressPaon
-    ppd:propertyAddressStreet
-    ppd:propertyAddressLocality
-    ppd:propertyAddressTown
-    ppd:propertyAddressDistrict
-    ppd:propertyAddressCounty
-    ppd:propertyAddressPostcode
-    ppd:pricePaid
-    ppd:transactionDate
-    ppd:newBuild
-    ppd:propertyType
-    ppd:estateType
-  )
-
   def assemble_query
     ASPECTS.values.reduce( base_query ) do |query, aspect|
       aspect.present?( preferences ) ? aspect.add_clause( query, preferences ) : query

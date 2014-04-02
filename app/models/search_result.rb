@@ -37,10 +37,6 @@ class SearchResult
     value_of( @result[p] )
   end
 
-  def quoted_value_of_property( p )
-    "\"#{value_of_property(p).to_s.gsub( /"/, '\\"' )}\"".html_safe
-  end
-
   def presentation_value_of_property( p )
     v = value_of( @result[p] )
     binding.pry unless v
