@@ -85,18 +85,18 @@
                   not new-build
 
       .form-group
-        %label.col-sm-4.control-label{ for: "ten" } Tenure
+        %label.col-sm-4.control-label{ for: "et" } Estate type
         .col-sm-8
           %ul.list-inline
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ten[]", value: "lrcommon:freehold", checked: @preferences.display_checked?( :ten, "lrcommon:freehold" ) }
+                  %input{ type: "checkbox", name: "et[]", value: "lrcommon:freehold", checked: @preferences.display_checked?( :et, "lrcommon:freehold" ) }
                   freehold
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ten[]", value: "lrcommon:leasehold", checked: @preferences.display_checked?( :ten, "lrcommon:freehold" ) }
+                  %input{ type: "checkbox", name: "et[]", value: "lrcommon:leasehold", checked: @preferences.display_checked?( :et, "lrcommon:freehold" ) }
                   leasehold
 
       .form-group

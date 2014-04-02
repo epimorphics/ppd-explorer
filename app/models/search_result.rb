@@ -53,7 +53,7 @@ class SearchResult
   end
 
   def property_details
-    [property_type, tenure, new_build]
+    [property_type, estate_type, new_build]
   end
 
   def property_type
@@ -61,9 +61,9 @@ class SearchResult
     {uri: pt, label: pt.gsub( /\A.*\//, "" )}
   end
 
-  def tenure
-    ten = id_of_property( "ppd:estateType" )
-    {uri: ten, label: ten.gsub( /\A.*\//, "" )}
+  def estate_type
+    et = id_of_property( "ppd:estateType" )
+    {uri: et, label: et.gsub( /\A.*\//, "" )}
   end
 
   def new_build
