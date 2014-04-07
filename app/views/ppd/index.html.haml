@@ -122,12 +122,12 @@
             %li
               %div
                 %label
-                  %input{ type: "date", name: :min_date, value: @preferences.param( :min_date ) }
+                  %input.date-picker{ type: "text", name: :min_date, value: @preferences.param( :min_date ) }
                   earliest
             %li
               %div
                 %label
-                  %input{ type: "date", name: :max_date, value: @preferences.param( :max_date ) }
+                  %input.date-picker{ type: "text", name: :max_date, value: @preferences.param( :max_date ) }
                   latest
 
       .col-sm-12
