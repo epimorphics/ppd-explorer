@@ -5,6 +5,7 @@ var Ppd = function() {
   };
 
   var initControls = function() {
+    console.log( "Setting datepicker on " + $(".date-picker").length);
     $(".date-picker").datepicker( {
       dateFormat: "yy-mm-dd",
       changeMonth: true,
@@ -21,4 +22,3 @@ var Ppd = function() {
   };
 }();
 
-$( Ppd.init );
