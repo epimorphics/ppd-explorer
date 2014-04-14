@@ -1,4 +1,6 @@
 class QueryCommand < DataService
+  include TurtleFormatter
+
   attr_reader :all_results, :search_results
 
   ASPECTS = {

@@ -1,5 +1,6 @@
 # An individual result returned from the search service
 class SearchResult
+  attr_reader :result
 
   INDEX_KEY_PROPERTIES =
       %w(
@@ -23,6 +24,10 @@ class SearchResult
 
   def key
     @key ||= INDEX_KEY_PROPERTIES.map {|p| index_key_value( p )}
+  end
+
+  def uri
+    id_of( @result )
   end
 
   def <=>( sr )
