@@ -17,7 +17,7 @@
           file. This is a good choice for loading into a spreadsheet.
 
         %p
-          %a.btn.btn-lg.btn-primary{ href: @preferences.as_path( :download, {format: :csv} )}
+          %a.btn.btn-lg.btn-primary{ href: @preferences.as_path( :ppd_data, {format: :csv} )}
             download CSV data
 
       .col-md-4
@@ -28,7 +28,7 @@
           applications.
 
         %p
-          %a.btn.btn-lg.btn-default{ href: @preferences.as_path( :download, {format: :ttl} )}
+          %a.btn.btn-lg.btn-default{ href: @preferences.as_path( :ppd_data, {format: :ttl} )}
             download Turtle data
 
       .col-md-4
@@ -38,5 +38,5 @@
           edit the query to further refine your results.
 
         %p
-          %a.btn.btn-lg.btn-default{ href: @preferences.as_path( :download, {explain: true} )}
+          %a.btn.btn-lg.btn-default{ href: @preferences.as_path( :ppd_data, {explain: true} )}
             view SPARQL query

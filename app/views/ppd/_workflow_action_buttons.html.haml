@@ -3,7 +3,7 @@
     %a.btn.btn-sm.btn-primary{ href: "#{@preferences.as_path( :ppd )}"}
       Change search settings
     - unless defined? no_download
-      %a.btn.btn-sm.btn-primary{ href: "#{@preferences.as_path( :download )}"}
+      %a.btn.btn-sm.btn-primary{ href: "#{@preferences.as_path( :ppd_data )}"}
         Download data
     - unless defined? no_print
       %a.btn.btn-sm.btn-default{ href: "#", alt: "Printable view", title: "Printable view"}

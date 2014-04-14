@@ -17,7 +17,6 @@ class UserPreferences
   # Return truthy if parameter p is present, optionally with value v
   def present?( p, v = nil )
     if v
-        # binding.pry
       param_value = param( p )
       param_value.is_a?( Array ) ? param_value.include?( v ) : (param_value == v)
     else
@@ -54,8 +53,8 @@ class UserPreferences
         ppd_index_path( path_params )
       when :search
         search_index_path( path_params )
-      when :download
-        download_index_path( path_params )
+      when :ppd_data
+        ppd_data_path( path_params )
 
       else
         raise "Do not know how to make path for #{controller}"

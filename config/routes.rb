@@ -3,7 +3,7 @@ PpdExplorer::Application.routes.draw do
 
   resources :ppd, only: [:index]
   resources :search
-  resources :download
+  resource :ppd_data
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

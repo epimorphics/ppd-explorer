@@ -1,5 +1,5 @@
-class DownloadController < ApplicationController
-  def index
+class PpdDataController < ApplicationController
+  def show
     @preferences = UserPreferences.new( params )
 
     if is_explanation?
