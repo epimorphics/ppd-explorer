@@ -1,4 +1,6 @@
 class PpdDataController < ApplicationController
+  include DsapiTurtleFormatter
+
   def show
     @preferences = UserPreferences.new( params )
 
