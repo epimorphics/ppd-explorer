@@ -5,11 +5,7 @@ class SearchAspect < Aspect
   end
 
   def add_search_clause( query, preferences )
-    unless has_search?( query )
-      query.search_aspect_property( aspect_property, key_property, text_index_term( preferences ))
-    else
-      add_search_regex_clause( query, preferences )
-    end
+    query.search_aspect_property( aspect_property, key_property, text_index_term( preferences ))
   end
 
   def add_search_regex_clause( query, preferences )
