@@ -16,7 +16,6 @@
 :ppd a dsapi:Dataset;
     rdfs:label "Property price data";
     dct:description "A dataset of property transactions";
-    dsapi:baseQuery "?item rdf:type ppd:TransactionRecord";
     dsapi:source "source1";
     dsapi:aspect
       [rdfs:label "transaction"              ; dsapi:property ppd:hasTransaction],
