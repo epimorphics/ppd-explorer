@@ -1,9 +1,12 @@
 - sr = @query_command.search_results
 = render partial: "ppd/workflow_action_buttons"
-%h3.leading-title
-  Search summary
+
+%h2
+  Search results
 
 %ul.search-terms.list-inline
+  %li
+    #{sr.summarise} by searching for:
   - @preferences.each_search_term do |search_term|
     %li
       %label
@@ -11,10 +14,6 @@
         %a.search-term{ href: @preferences.as_path( :search, {}, {search_term.name => search_term.value } )}
           %i.fa.fa-times-circle.fa-lg
 
-%h2
-  Search results
-%p.text-muted.small
-  #{sr.properties} properties and #{sr.transactions} transactions found in #{@time_taken}ms
 
 %ul.list-unstyled.ppd-results
   - odd = true

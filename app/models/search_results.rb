@@ -1,4 +1,5 @@
 class SearchResults
+  include ActionView::Helpers::TextHelper
   attr_reader :index, :properties, :transactions
 
   def initialize( results_json )
@@ -18,6 +19,10 @@ class SearchResults
   # for one address
   def each_property_address( &block )
     traverse_property_addresses( index, &block )
+  end
+
+  def summarise
+    "Found #{pluralize transactions, "transaction"} for #{pluralize properties, "property"}"
   end
 
   private
