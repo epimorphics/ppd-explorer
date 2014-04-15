@@ -116,14 +116,6 @@ $lr-footer-link: lighten( $lr-separator, 10 );
     text-transform: capitalize;
   }
 
-  .property-detail-tag {
-    color: #101510;
-    background-color: $lr-footer-grey;
-    padding: 3px 5px;
-    border-radius: 3px;
-    margin-left: 10px;
-  }
-
   .search-terms {
     .btn {
       border: 0;
@@ -135,24 +127,57 @@ $lr-footer-link: lighten( $lr-separator, 10 );
     }
   }
 
-  .detailed-address {
+  .property-details-field-title {
+    color: #777;
+    text-align: right;
+    padding-right: 10px;
+    width: 50%;
+  }
+
+ .detailed-address {
     table {
-      margin-top: 5px;
-      th, td {
-        border: 1px solid #ddd;
-        padding: 2px 3px;
+      td {
+        border: 0;
+        padding: 2px;
       }
-      th {
-        font-weight: normal;
-        text-align: center;
-        color: #777;
-      }
+
+    .property-details-field-title {
+      padding-right: 10px;
+    }
+
     }
 
     .search-zoom-button {
       margin: 1px 3px;
     }
+  }
 
+  .prices {
+    table {
+      margin-bottom: 0;
+    }
+
+    td {
+      padding: 4px;
+    }
+  }
+
+  .ppd-results {
+    h2, h3, h4 {
+      font-family: nta, Arail, sans-serif;
+    }
+
+    h3 {
+      font-size: 18px;
+    }
+  }
+
+  .property-characteristics li {
+    margin: 10px 5px;
+  }
+
+  .property-detail-tag {
+    color: black;
   }
 
   .leading-title {

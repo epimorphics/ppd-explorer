@@ -16,39 +16,59 @@
 %p.text-muted.small
   #{sr.properties} properties and #{sr.transactions} transactions found in #{@time_taken}ms
 
-%ul.list-unstyled
+%ul.list-unstyled.ppd-results
+  - odd = true
   - sr.each_property_address do |results|
-    -result = results.first
-    %li
-      .property
-        %span.address
-          %span.address-text
+    - result = results.first
+    %li{ class: odd ? "property-entry odd" : "property-entry even"}
+      - odd = !odd
+      .row
+        %h3.property-heading.col-md-12
+          %span.address
             = result.formatted_address
-        %span.details
-          - result.property_details.each do |d|
-            %span.property-detail-tag #{d[:label]}
 
-      .detailed-address
-        .small
-          %table
+      .row
+        .col-md-4.detailed-address
+          %table.table
             %thead
               %tr
-                - SearchResult::DETAILED_ADDRESS_ASPECTS.each do |aspect|
+                %th{colspan: 2}
+                  Detailed address
+            %tbody
+              - SearchResult::DETAILED_ADDRESS_ASPECTS.each do |aspect|
+                %tr
                   = address_detail_header( aspect, result )
+                  = address_detail_filter( aspect, result, @preferences )
+
+        .col-md-4.property-characteristics
+          %table.table
+            %thead
+              %tr
+                %th{colspan: 2}
+                  Characteristics
             %tbody
               %tr
-                - SearchResult::DETAILED_ADDRESS_ASPECTS.each do |aspect|
-                  = address_detail_filter( aspect, result, @preferences )
-      .prices.row
+                %td.property-details-field-title
+                  property type
+                %td
+                  = result.property_type[:label]
+              %tr
+                %td.property-details-field-title
+                  estate type
+                %td
+                  = result.estate_type[:label]
+              %tr
+                %td.property-details-field-title
+                  new build?
+                %td
+                  = result.is_new_build
+
         .col-md-4
           %table.table
             %thead
               %tr
-                %th
-                  Date
-                %th.text-right
-                  Price
-                %th
+                %th{colspan: 3}
+                  Transaction history
             %tbody
               - results.each do |result|
                 %tr

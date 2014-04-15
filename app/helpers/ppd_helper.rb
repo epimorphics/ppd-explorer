@@ -2,7 +2,7 @@ module PpdHelper
 
   def address_detail_header( aspect, result )
     if result.presentation_value_of_property( aspect.aspect_key_property )
-      content_tag( "th" ) do
+      content_tag( "td", class: "property-details-field-title" ) do
         aspect.key_as_label
       end
     end

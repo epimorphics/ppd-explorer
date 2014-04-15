@@ -78,14 +78,17 @@ class SearchResult
     {uri: et, label: et.gsub( /\A.*\//, "" )}
   end
 
-  def new_build
+  def new_build?
     nb = value_of_property( "ppd:newBuild" )
+    return !(nb == "false" || nb == false || nb == "no_value")
+  end
 
-    if nb == "false" || nb == false || nb == "no_value"
-      {label: "not new-build"}
-    else
-      {label: "new-build"}
-    end
+  def new_build
+    {label: "#{new_build? ? "" : "not "}new-build"}
+  end
+
+  def is_new_build
+    new_build? ? "yes" : "no"
   end
 
   def formatted_address
