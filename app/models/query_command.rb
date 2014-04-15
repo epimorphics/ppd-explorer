@@ -13,7 +13,7 @@ class QueryCommand < DataService
                                   "ppd:propertyAddress",
                                   key_property: "lrcommon:paon",
                                   aspect_key_property: "ppd:propertyAddressPaon",
-                                  presentation_label: "house name or no." ),
+                                  presentation_label: "building name or no." ),
     street:     SearchAspect.new( :street,
                                   "ppd:propertyAddress",
                                   key_property: "lrcommon:street",
