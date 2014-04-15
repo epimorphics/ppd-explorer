@@ -44,9 +44,16 @@ class SearchResult
 
   def presentation_value_of_property( p )
     v = value_of( @result[p] )
-    binding.pry unless v
-    return nil if v == "no_value"
-    title_case_exception?( p ) ? v : v.titlecase
+
+    if v == "no_value"
+      nil
+    elsif p == "ppd:propertyAddressPaon"
+      format_paon_elements( v ).join( ' ' ).html_safe
+    elsif title_case_exception?( p )
+      v
+    else
+      v.titlecase
+    end
   end
 
   def id_of_property( p )
@@ -89,8 +96,9 @@ class SearchResult
     end
 
     if (paon = value_of_property( "ppd:propertyAddressPaon" )) && paon != "no_value"
-      numeric = paon =~ /\A\d+[A-Za-z]*\Z/
-      fields << "#{paon.titlecase}#{numeric ? "" : ","}"
+      paon_tokens = format_paon_elements( paon )
+      comma_not_needed = paon_tokens.last =~ /\d/
+      fields << "#{paon_tokens.join(' ')}#{comma_not_needed ? "" : ","}"
     end
 
     %w(
@@ -106,7 +114,7 @@ class SearchResult
       fields << postcode
     end
 
-    fields.join( " " )
+    fields.join( " " ).html_safe
   end
 
 
@@ -143,6 +151,19 @@ class SearchResult
 
   def title_case_exception?( p )
     p == "ppd:propertyAddressPostcode"
+  end
+
+  def format_paon_elements( paon )
+    paon.split( ' ' ).map do |token|
+      case token
+      when /\d/
+        token
+      when "-"
+        "&ndash;"
+      else
+        token.titlecase
+      end
+    end
   end
 
 end
