@@ -35,11 +35,7 @@ class SearchResults
 
   def index_result( result )
     key = result.key
-    begin
-      last = key.pop
-    rescue
-      binding.pry
-    end
+    last = key.pop
     ind = key.reduce( index ) {|i,k| i[k]}
 
     @transactions += 1
@@ -71,14 +67,18 @@ class SearchResults
 
   # TODO DRY
   def traverse_property_addresses( index, &block )
-    index.keys.sort.each do |key|
-      v = index[key]
+    begin
+      index.keys.sort.each do |key|
+        v = index[key]
 
-      if v.kind_of?( Hash )
-        traverse_property_addresses( v, &block )
-      else
-        yield v.sort.reverse
+        if v.kind_of?( Hash )
+          traverse_property_addresses( v, &block )
+        else
+          yield v.sort.reverse
+        end
       end
+    rescue
+      binding.pry
     end
   end
 

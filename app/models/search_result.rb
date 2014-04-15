@@ -7,19 +7,31 @@ class SearchResult
         ppd:propertyAddressCounty
         ppd:propertyAddressDistrict
         ppd:propertyAddressTown
-        ppd:propertyAddressLocality
         ppd:propertyAddressStreet
         ppd:propertyAddressPaon
+      )
+
+  DETAILED_ADDRESS_PROPERTIES =
+      %w(
         ppd:propertyAddressSaon
+        ppd:propertyAddressPaon
+        ppd:propertyAddressStreet
+        ppd:propertyAddressLocality
+        ppd:propertyAddressTown
+        ppd:propertyAddressDistrict
+        ppd:propertyAddressCounty
       )
 
   DETAILED_ADDRESS_ASPECTS =
-    (INDEX_KEY_PROPERTIES.reverse + ["ppd:propertyAddressPostcode"]).map do |ap|
+    DETAILED_ADDRESS_PROPERTIES.map do |ap|
       QueryCommand::ASPECTS.values.find {|a| a.aspect_key_property == ap}
     end
 
   def initialize( resultJson )
     @result = resultJson
+    if (paon = @result["ppd:propertyAddressPaon"]) && !paon.empty?
+      paon[0]["@value"] = Paon.to_paon( paon[0]["@value"] )
+    end
   end
 
   def key
