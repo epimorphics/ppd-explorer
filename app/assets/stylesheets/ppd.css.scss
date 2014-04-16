@@ -190,6 +190,10 @@ $lr-footer-link: lighten( $lr-separator, 10 );
     min-height: 10px;
   }
 
+  td.no-border {
+    border: 0;
+  }
+
   // buttons
   a.btn.btn-primary, a.btn.btn-primary:hover, a.btn.btn-primary:visited {
     background-color: $lr-headline;

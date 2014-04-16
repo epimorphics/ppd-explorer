@@ -12,66 +12,93 @@
     .row.spacer
 
     .row
-      .col-md-4
-        %h3 Spreadsheet
-        %p
-          Download the selected data as
-          %a{ href: "http://en.wikipedia.org/wiki/Comma-separated_values"} comma-separated value
-          (CSV) file. This is a good choice for loading into a spreadsheet.
+      .col-md-12
+        %table.table
+          %thead
+            %tr
+              %th Data format
+              %th Guidance
+              %th Options
+              %th
+          %tbody
+            %tr
+              %td{rowspan: 4} Spreadsheet
+              %td{rowspan: 4}
+                Download the selected data as
+                %a{ href: "http://en.wikipedia.org/wiki/Comma-separated_values"} comma-separated value
+                (CSV) file. This is a good choice for loading into a spreadsheet.
+              %td Only selected results
+              %td
+                %a.btn.btn-primary{ href: @preferences.as_path( :ppd_data, {format: :csv} )}
+                  %i.fa.fa-download
+                  get selected results as CSV
+            %tr
+              %td.no-border
+                All matching results (see <strong>note&nbsp;1</strong>)
 
-        %p
-          %a.btn.btn-lg.btn-primary{ href: @preferences.as_path( :ppd_data, {format: :csv} )}
-            get selected results as CSV
+              %td.no-border
+                %a.btn.btn-default{ href: @preferences.as_path( :ppd_data, {format: :csv}, {limit: :any} )}
+                  %i.fa.fa-download
+                  get <strong>all</strong> results as CSV
 
-        %p
-          &nbsp;
+            %tr
+              %td.no-border
+                Only selected results, with column headers (see <strong>note&nbsp;2</strong>)
 
-        - unless @preferences.unlimited?
-          %p
-            Download all matching results, not just the first #{@preferences.selected_limit}
-            (<strong>note</strong>:
-            depending on your query and the speed of your Internet connection, this may
-            take some time and download a significant quantity of data):
-          %p
-            %a.btn.btn-lg.btn-default{ href: @preferences.as_path( :ppd_data, {format: :csv}, {limit: :any} )}
-              get
-              %strong all
-              results as CSV
+              %td.no-border
+                %a.btn.btn-default{ href: @preferences.as_path( :ppd_data, {format: :csv, header: true}, {limit: :any} )}
+                  %i.fa.fa-download
+                  get selected results as CSV with headers
+            %tr
+              %td.no-border
+                All matching results, with column headers (see <strong>notes 1</strong> and <strong>2</strong>)
 
-      .col-md-4
-        %h3 Turtle
-        %p
-          Download the selected data as
-          %a{ href: "http://en.wikipedia.org/wiki/Turtle_(syntax)"}Turtle syntax
-          file. This is a
-          good choice for integrating the data with other Linked Data
-          applications.
+              %td.no-border
+                %a.btn.btn-default{ href: @preferences.as_path( :ppd_data, {format: :csv, headers: true}, {limit: :any} )}
+                  %i.fa.fa-download
+                  get <strong>all</strong> results as CSV with headers
 
-        %p
-          %a.btn.btn-lg.btn-default{ href: @preferences.as_path( :ppd_data, {format: :ttl} )}
-            get selected results as Turtle
+            %tr
+              %td{rowspan: 2} RDF Turtle
+              %td{rowspan: 2}
+                Download the selected data as
+                %a{ href: "http://en.wikipedia.org/wiki/Turtle_(syntax)"}Turtle syntax
+                file. This is a
+                good choice for integrating the data with other Linked Data
+                applications.
+              %td Only selected results
+              %td
+                %a.btn.btn-default{ href: @preferences.as_path( :ppd_data, {format: :ttl} )}
+                  %i.fa.fa-download
+                  get selected results as Turtle
+            %tr
+              %td.no-border
+                All matching results (see <strong>note&nbsp;1</strong>)
 
-        %p
-          &nbsp;
+              %td.no-border
+                %a.btn.btn-default{ href: @preferences.as_path( :ppd_data, {format: :ttl}, {limit: :any} )}
+                  %i.fa.fa-download
+                  get <strong>all</strong> results as Turtle
 
-        - unless @preferences.unlimited?
-          %p
-            Download all matching results, not just the first #{@preferences.selected_limit}
-            (<strong>note</strong>:
-            depending on your query and the speed of your Internet connection, this may
-            take some time and download a significant quantity of data):
-          %p
-            %a.btn.btn-lg.btn-default{ href: @preferences.as_path( :ppd_data, {format: :ttl}, {limit: :any} )}
-              get
-              %strong all
-              results as Turtle
+            %tr
+              %td SPARQL
+              %td
+                See the SPARQL query that was used to select your data. You can
+                edit the query to further refine your results.
+              %td
+              %td
+                %a.btn.btn-default{ href: @preferences.as_path( :ppd_data, {explain: true} )}
+                  %i.fa.fa-eye
+                  view SPARQL query
 
-      .col-md-4
-        %h3 SPARQL
-        %p
-          See the SPARQL query that was used to select your data. You can
-          edit the query to further refine your results.
-
-        %p
-          %a.btn.btn-lg.btn-default{ href: @preferences.as_path( :ppd_data, {explain: true} )}
-            view SPARQL query
+    .row
+      %p
+        %strong Note 1
+        This will download all results that match your query, not just the
+        selected results.
+        Depending on your query and the speed of your Internet connection, this may
+        take some time and download a significant quantity of data.
+      %p
+        %strong Note 2
+        For compatibility with previous releases of the data, column headers are not provided in the CSV file unless
+        you select this option.
