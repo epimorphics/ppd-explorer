@@ -186,6 +186,10 @@ $lr-footer-link: lighten( $lr-separator, 10 );
     // display: inline-block;
   }
 
+  .row.spacer {
+    min-height: 10px;
+  }
+
   // buttons
   a.btn.btn-primary, a.btn.btn-primary:hover, a.btn.btn-primary:visited {
     background-color: $lr-headline;

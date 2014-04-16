@@ -76,6 +76,11 @@ class UserPreferences
     param( "limit" ) || DEFAULT_LIMIT
   end
 
+  # Return true if the user has unlimited data
+  def unlimited?
+    selected_limit == "all"
+  end
+
   private
 
   def whitelist_params

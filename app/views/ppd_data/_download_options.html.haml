@@ -9,31 +9,66 @@
           Download price paid data
           = render partial: "ppd/workflow_action_buttons", locals: {no_download: true}
 
+    .row.spacer
+
     .row
       .col-md-4
-        %h3 CSV
-        %p.text-muted
-          Download the selected data as comma-separated value (CSV)
-          file. This is a good choice for loading into a spreadsheet.
+        %h3 Spreadsheet
+        %p
+          Download the selected data as
+          %a{ href: "http://en.wikipedia.org/wiki/Comma-separated_values"} comma-separated value
+          (CSV) file. This is a good choice for loading into a spreadsheet.
 
         %p
           %a.btn.btn-lg.btn-primary{ href: @preferences.as_path( :ppd_data, {format: :csv} )}
-            download CSV data
+            get selected results as CSV
+
+        %p
+          &nbsp;
+
+        - unless @preferences.unlimited?
+          %p
+            Download all matching results, not just the first #{@preferences.selected_limit}
+            (<strong>note</strong>:
+            depending on your query and the speed of your Internet connection, this may
+            take some time and download a significant quantity of data):
+          %p
+            %a.btn.btn-lg.btn-default{ href: @preferences.as_path( :ppd_data, {format: :csv}, {limit: :any} )}
+              get
+              %strong all
+              results as CSV
 
       .col-md-4
         %h3 Turtle
-        %p.text-muted
-          Download the selected data as Turtle syntax file. This is a
+        %p
+          Download the selected data as
+          %a{ href: "http://en.wikipedia.org/wiki/Turtle_(syntax)"}Turtle syntax
+          file. This is a
           good choice for integrating the data with other Linked Data
           applications.
 
         %p
           %a.btn.btn-lg.btn-default{ href: @preferences.as_path( :ppd_data, {format: :ttl} )}
-            download Turtle data
+            get selected results as Turtle
+
+        %p
+          &nbsp;
+
+        - unless @preferences.unlimited?
+          %p
+            Download all matching results, not just the first #{@preferences.selected_limit}
+            (<strong>note</strong>:
+            depending on your query and the speed of your Internet connection, this may
+            take some time and download a significant quantity of data):
+          %p
+            %a.btn.btn-lg.btn-default{ href: @preferences.as_path( :ppd_data, {format: :ttl}, {limit: :any} )}
+              get
+              %strong all
+              results as Turtle
 
       .col-md-4
         %h3 SPARQL
-        %p.text-muted
+        %p
           See the SPARQL query that was used to select your data. You can
           edit the query to further refine your results.
 
