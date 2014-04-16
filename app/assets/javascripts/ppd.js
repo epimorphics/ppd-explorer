@@ -10,7 +10,9 @@ var Ppd = function() {
       dateFormat: "d MM yy",
       changeMonth: true,
       changeYear: true,
-      onChangeMonthYear: onChangeMonthYear
+      onChangeMonthYear: onChangeMonthYear,
+      minDate: new Date( 1995, 0, 1 ),
+      maxDate: new Date()
     } );
   };
 
