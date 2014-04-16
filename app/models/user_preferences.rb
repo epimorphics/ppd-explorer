@@ -2,7 +2,7 @@
 class UserPreferences
   include Rails.application.routes.url_helpers
 
-  WHITE_LIST = QueryCommand::ASPECTS.keys.map( &:to_s ) + %w(search limit)
+  WHITE_LIST = QueryCommand::ASPECTS.keys.map( &:to_s ) + %w(search limit header)
   DEFAULT_LIMIT = "100"
 
   def initialize( p )

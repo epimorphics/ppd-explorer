@@ -1,3 +1,4 @@
+<% if @preferences.param("header") %><% DownloadRecord::DOWNLOAD_COLUMNS.each_with_index do |col,i| %><%= (i > 0) ? "," : "" %><%= col[:header]%><% end %><% end %>
 <% @query_command.search_results.each_transaction do |sr| %>
 <% DownloadRecord.new( sr ).each_column do |csv_value| %><%= csv_value %><% end %>
 <% end %>

@@ -4,10 +4,18 @@ class DownloadRecord
   attr_reader :search_result
 
   DOWNLOAD_COLUMNS = [
-    {aspect_property: "@id" },
-    {aspect_property: "ppd:pricePaid" },
-    {aspect_property: "ppd:transactionDate" },
-    {aspect_property: "ppd:propertyAddressPostcode" },
+    {aspect_property: "@id",
+     header: "unique_id"
+    },
+    {aspect_property: "ppd:pricePaid",
+     header: "price_paid"
+    },
+    {aspect_property: "ppd:transactionDate",
+     header: "transaction_date"
+    },
+    {aspect_property: "ppd:propertyAddressPostcode",
+     header: "postcode"
+    },
     {aspect_property: "ppd:propertyType",
      codes: {"lrcommon:detached" => "D",
              "http://landregistry.data.gov.uk/def/common/detached" => "D",
@@ -17,29 +25,46 @@ class DownloadRecord
              "http://landregistry.data.gov.uk/def/common/terraced" => "T",
              "lrcommon:flat-maisonette" => "F",
              "http://landregistry.data.gov.uk/def/common/flat-maisonette" => "F"
-            }
+            },
+     header: "property_type"
     },
     {aspect_property: "ppd:newBuild",
      codes: {"true" => "Y",
              true => "Y",
              "false" => "N",
              false => "N"
-            }
+            },
+     header: "new_build"
     },
     {aspect_property: "ppd:estateType",
      codes: {"lrcommon:freehold" => "F",
              "http://landregistry.data.gov.uk/def/common/freehold" => "F",
              "lrcommon:leasehold" => "L",
              "http://landregistry.data.gov.uk/def/common/leasehold" => "L"
-            }
+            },
+     header: "estate_type"
     },
-    {aspect_property: "ppd:propertyAddressSaon" },
-    {aspect_property: "ppd:propertyAddressPaon" },
-    {aspect_property: "ppd:propertyAddressStreet" },
-    {aspect_property: "ppd:propertyAddressLocality" },
-    {aspect_property: "ppd:propertyAddressTown" },
-    {aspect_property: "ppd:propertyAddressDistrict" },
-    {aspect_property: "ppd:propertyAddressCounty" }
+    {aspect_property: "ppd:propertyAddressSaon",
+     header: "saon"
+    },
+    {aspect_property: "ppd:propertyAddressPaon",
+     header: "paon"
+    },
+    {aspect_property: "ppd:propertyAddressStreet",
+     header: "street"
+    },
+    {aspect_property: "ppd:propertyAddressLocality",
+     header: "locality"
+    },
+    {aspect_property: "ppd:propertyAddressTown",
+     header: "town"
+    },
+    {aspect_property: "ppd:propertyAddressDistrict",
+     header: "district"
+    },
+    {aspect_property: "ppd:propertyAddressCounty",
+     header: "county"
+    }
   ]
 
   def initialize( sr )
