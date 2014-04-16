@@ -143,7 +143,11 @@
                 all
       .col-sm-12
         .pull-right
+          = link_to( {controller: :ppd, action: :index}, {class: "btn btn-default"} ) do
+            %i.fa.fa-refresh
+            reset the form
           %button.btn.btn-primary{ type: "submit"}
+            %i.fa.fa-search
             show results
 
 :javascript
