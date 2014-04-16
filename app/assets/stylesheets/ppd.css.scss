@@ -194,6 +194,14 @@ $lr-footer-link: lighten( $lr-separator, 10 );
     border: 0;
   }
 
+  .list-inline label {
+    // margin-bottom: 0;
+  }
+
+  .control-label-adjust {
+    padding-top: 3px;
+  }
+
   // buttons
   a.btn.btn-primary, a.btn.btn-primary:hover, a.btn.btn-primary:visited {
     background-color: $lr-headline;

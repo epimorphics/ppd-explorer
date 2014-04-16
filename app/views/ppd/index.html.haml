@@ -95,7 +95,7 @@
                   leasehold
 
       .form-group
-        %label.col-sm-4.control-label{ for: "price" } Price
+        %label.col-sm-4.control-label.control-label-adjust{ for: "price" } Price
         .col-sm-8
           %ul.list-inline
             %li
@@ -111,19 +111,19 @@
 
 
       .form-group
-        %label.col-sm-4.control-label{ for: "date" } Date
+        %label.col-sm-4.control-label.control-label-adjust{ for: "date" } Date
         .col-sm-8
           %ul.list-inline
             %li
               %div
                 %label
+                  earliest:
                   %input.date-picker{ type: "text", name: :min_date, value: @preferences.param( :min_date ) }
-                  earliest
             %li
               %div
                 %label
+                  latest:
                   %input.date-picker{ type: "text", name: :max_date, value: @preferences.param( :max_date ) }
-                  latest
 
       .form-group
         %label.col-sm-4.control-label{ for: "limit" } How many results?
