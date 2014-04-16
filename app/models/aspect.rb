@@ -44,7 +44,7 @@ class Aspect
 
   # Return a preference value as a number, if possible
   def preference_value_numeric( preferences )
-    s = preference_value( preferences )
+    s = preference_value( preferences ).gsub( /,/, "" )
     Integer( s )
     rescue ArgumentError
       Float( s )

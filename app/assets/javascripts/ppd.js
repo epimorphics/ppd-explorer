@@ -17,7 +17,7 @@ var Ppd = function() {
   };
 
   var bindEvents = function() {
-
+    $("form").on( "submit", onSubmitForm );
   };
 
   var onChangeMonthYear = function( year, month, dp ) {
@@ -39,6 +39,39 @@ var Ppd = function() {
 
   var defaultDayOfMonth = function( year, month, name ) {
     return new Date( year, month - 1, defaultDays[name][month] );
+  };
+
+  var validateAmount = function( selector ) {
+    var elem = $(selector);
+    var amt = $.trim( elem.val() );
+
+    if (amt) {
+      if (!amt.match( /^((\d+)|(\d{1,3})(\,\d{3}|)*)(\.\d{2}|)$/ )) {
+        elem.parents(".form-group")
+            .addClass( "has-error" );
+        elem.parents(".row")
+            .first()
+            .find(".validation-warning")
+            .removeClass("hidden");
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  var onSubmitForm = function( e ) {
+    if (!validateForm()) {
+      e.preventDefault();
+    }
+  }
+
+  var validateForm = function() {
+    $(".has-error").removeClass("has-error");
+    $(".validation-warning").addClass("hidden");
+
+    return validateAmount( "[name=min_price]") &&
+           validateAmount( "[name=max_price]");
   };
 
   return {

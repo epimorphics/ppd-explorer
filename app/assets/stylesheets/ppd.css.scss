@@ -202,6 +202,10 @@ $lr-footer-link: lighten( $lr-separator, 10 );
     padding-top: 3px;
   }
 
+  #ui-datepicker-div {
+    z-index: 10 !important;
+  }
+
   // buttons
   a.btn.btn-primary, a.btn.btn-primary:hover, a.btn.btn-primary:visited {
     background-color: $lr-headline;
