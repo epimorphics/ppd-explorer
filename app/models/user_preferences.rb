@@ -2,7 +2,8 @@
 class UserPreferences
   include Rails.application.routes.url_helpers
 
-  WHITE_LIST = QueryCommand::ASPECTS.keys.map( &:to_s ) + %w(search)
+  WHITE_LIST = QueryCommand::ASPECTS.keys.map( &:to_s ) + %w(search limit)
+  DEFAULT_LIMIT = "100"
 
   def initialize( p )
     @params = indifferent_access( p )
@@ -68,6 +69,11 @@ class UserPreferences
   # state of the user's selections
   def display_checked?( key, value )
     QueryCommand.find_aspect( key ).display_checked?( self, value )
+  end
+
+  # Return the currentely selected limit on number of queries, or the default
+  def selected_limit
+    param( "limit" ) || DEFAULT_LIMIT
   end
 
   private

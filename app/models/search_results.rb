@@ -22,8 +22,18 @@ class SearchResults
   end
 
   def summarise
-    "Found #{pluralize transactions, "transaction"} for #{pluralize properties, "property"}"
+    if @count_phrase
+      "Showing #{pluralize transactions, "transaction"} (from #{@count_phrase} matching transactions) for #{pluralize properties, "property"}"
+    else
+      "Found #{pluralize transactions, "transaction"} for #{pluralize properties, "property"}"
+    end
   end
+
+  def query_count( count_phrase )
+    @count_phrase = count_phrase
+  end
+
+  alias :size :transactions
 
   private
 

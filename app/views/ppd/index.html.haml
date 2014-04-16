@@ -125,6 +125,22 @@
                   %input.date-picker{ type: "text", name: :max_date, value: @preferences.param( :max_date ) }
                   latest
 
+      .form-group
+        %label.col-sm-4.control-label{ for: "limit" } How many results?
+        .col-sm-8
+          %ul.list-inline
+            %li
+              %label.radio
+                %input{ type: "radio", name: :limit, value: "100", checked: @preferences.selected_limit == "100" }
+                at most 100
+            %li
+              %label.radio
+                %input{ type: "radio", name: :limit, value: "1000", checked: @preferences.selected_limit == "1000" }
+                at most 1000
+            %li
+              %label.radio
+                %input{ type: "radio", name: :limit, value: "all", checked: @preferences.selected_limit == "all" }
+                all
       .col-sm-12
         .pull-right
           %button.btn.btn-primary{ type: "submit"}

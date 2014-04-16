@@ -2,6 +2,7 @@ class QueryCommand < DataService
   include TurtleFormatter
 
   attr_reader :all_results, :search_results
+  COUNT_LIMIT = 10000
 
   ASPECTS = {
     saon:       SearchAspect.new( :saon,
@@ -88,13 +89,41 @@ class QueryCommand < DataService
     ppd = dataset( :ppd )
     query = assemble_query
 
+    if limit = query_limit
+      base_query = query
+      query = query.limit( limit )
+      count_query = base_query.count_only.limit( COUNT_LIMIT )
+    end
+
+    save_results( ppd, query )
+
+    if reached_count_limit?( limit )
+      add_count_information( ppd, count_query )
+    end
+  end
+
+  def self.find_aspect( key )
+    ASPECTS[key]
+  end
+
+  def query_limit
+    (l = preferences.selected_limit) =~ /\d/ && l.to_i
+  end
+
+  def save_results( ppd, query )
     Rails.logger.debug "About to ask DsAPI query: #{query.to_json}"
 
     @all_results = ppd.query( query )
     @search_results = SearchResults.new( @all_results )
   end
 
-  def self.find_aspect( key )
-    ASPECTS[key]
+  def reached_count_limit?( limit )
+    limit && @search_results.size >= limit
+  end
+
+  def add_count_information( ppd, count_query )
+    count_result = ppd.query( count_query )
+    count = count_result.first["@count"]
+    @search_results.query_count( "#{count}#{count == COUNT_LIMIT ? " or more" : ""}" )
   end
 end
