@@ -5,7 +5,6 @@ var Ppd = function() {
   };
 
   var initControls = function() {
-    console.log( "Setting datepicker on " + $(".date-picker").length);
     $(".date-picker").datepicker( {
       dateFormat: "d MM yy",
       changeMonth: true,
@@ -14,10 +13,13 @@ var Ppd = function() {
       minDate: new Date( 1995, 0, 1 ),
       maxDate: new Date()
     } );
+
+    $(".js.action-bookmark").removeClass("hidden");
   };
 
   var bindEvents = function() {
     $("form").on( "submit", onSubmitForm );
+    $(".action-bookmark").on( "click", onBookmark );
   };
 
   var onChangeMonthYear = function( year, month, dp ) {
@@ -74,8 +76,40 @@ var Ppd = function() {
            validateAmount( "[name=max_price]");
   };
 
+  /** User wants to save the current location as a bookmark */
+  var onBookmark = function( e ) {
+    e.preventDefault();
+    var elem = $(e.currentTarget);
+
+    var baseURL = "";
+
+    if (elem.data( "url")) {
+      baseURL = window.location.host + elem.data( "url");
+    }
+    else if ($("form.preview").length) {
+      var query = currentInteractionState( "preview", {}, ["utf8", "authenticity_token"] );
+      var queryString = _.keys(query)
+                         .reduce( function(a,k) {
+                            a.push(k+'='+encodeURIComponent(query[k]));
+                            return a
+                          },[])
+                         .join('&');
+      baseURL = sprintf( "%s?%s", window.location.href.replace( /\?[^\?]*/, "" ), queryString );
+    }
+    else {
+      baseURL = window.location.href;
+    }
+
+    $("#bookmark-modal").modal( 'show' );
+    _.defer( function() {
+      $(".bookmark-url").val( baseURL ).select();
+    } );
+  };
+
   return {
     init: init
   };
 }();
 
+
+$(Ppd.init);

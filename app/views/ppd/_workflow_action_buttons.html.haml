@@ -14,3 +14,7 @@
     %a.btn.btn-default{ href: "#", alt: "Printable view" }
       %i.fa.fa-print
       printable view
+  - unless defined? no_bookmark
+    %a.btn.btn-default.js.hidden.action-bookmark{ href: "#", alt: "bookmark this view", data: {url: "#{@preferences.as_path( :search )}" } }
+      %i.fa.fa-share-square-o
+      share view
