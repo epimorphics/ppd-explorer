@@ -27,6 +27,23 @@
             = result.formatted_address
 
       .row
+        .col-md-4
+          %table.table
+            %thead
+              %tr
+                %th{colspan: 3}
+                  Transaction history
+            %tbody
+              - results.each do |result|
+                %tr
+                  %td
+                    = result.value_of_property( "ppd:transactionDate" )
+                  %td.text-right
+                    = number_to_currency( result.value_of_property( "ppd:pricePaid" ), locale: "en-UK", precision: 0, unit: "&pound;".html_safe )
+                  %td.transaction-url
+                    %a{ href: result.value_of_property("@id") }
+                      %i.fa.fa-external-link
+
         .col-md-4.detailed-address
           %table.table
             %thead
@@ -44,7 +61,7 @@
             %thead
               %tr
                 %th{colspan: 2}
-                  Characteristics
+                  Attributes
             %tbody
               %tr
                 %td.property-details-field-title
@@ -62,22 +79,6 @@
                 %td
                   = result.is_new_build
 
-        .col-md-4
-          %table.table
-            %thead
-              %tr
-                %th{colspan: 3}
-                  Transaction history
-            %tbody
-              - results.each do |result|
-                %tr
-                  %td
-                    = result.value_of_property( "ppd:transactionDate" )
-                  %td.text-right
-                    = number_to_currency( result.value_of_property( "ppd:pricePaid" ), locale: "en-UK", precision: 0, unit: "&pound;".html_safe )
-                  %td.transaction-url
-                    %a{ href: result.value_of_property("@id") }
-                      %i.fa.fa-external-link
 
 
 
