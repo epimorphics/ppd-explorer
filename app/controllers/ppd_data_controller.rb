@@ -6,14 +6,16 @@ class PpdDataController < ApplicationController
     template = choose_template
 
     if is_explanation?
-      # explanation = ExplainCommand.new( preferences).load_explanation
-      # redirect_to qonsole_rails.root_path( query: explanation[:sparql] )
-    elsif is_data_request?
-      @query_command = QueryCommand.new( @preferences )
-      @query_command.load_query_results( limit: :all, download: true )
-    end
+      explanation = ExplainCommand.new( @preferences).load_explanation
+      redirect_to "/app/hpi/qonsole?query=#{URI::encode( explanation[:sparql])}"
+    else
+      if is_data_request?
+        @query_command = QueryCommand.new( @preferences )
+        @query_command.load_query_results( limit: :all, download: true )
+      end
 
-    render template
+      render template
+    end
   end
 
   def is_explanation?
