@@ -1,5 +1,5 @@
 - sr = @query_command.search_results
-= render partial: "ppd/workflow_action_buttons"
+= render partial: "ppd/workflow_action_buttons", locals: {no_results: true, no_print: true}
 
 %h2
   Search results

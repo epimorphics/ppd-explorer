@@ -7,7 +7,7 @@
       .col-md-12
         %h2
           Download price paid data
-          = render partial: "ppd/workflow_action_buttons", locals: {no_download: true}
+          = render partial: "ppd/workflow_action_buttons", locals: {no_download: true, no_print: true}
 
     .row.spacer
 
@@ -31,32 +31,32 @@
               %td
                 %a.btn.btn-primary{ href: @preferences.as_path( :ppd_data, {format: :csv} )}
                   %i.fa.fa-download
-                  get selected results as CSV
+                  get <strong>selected</strong> results as CSV
             %tr
               %td.no-border
                 All matching results (see <strong>note&nbsp;1</strong>)
 
               %td.no-border
-                %a.btn.btn-default{ href: @preferences.as_path( :ppd_data, {format: :csv}, {limit: :any} )}
+                %a.btn.btn-primary{ href: @preferences.as_path( :ppd_data, {format: :csv, limit: "all"} )}
                   %i.fa.fa-download
-                  get all results as CSV
+                  get <strong>all</strong> results as CSV
 
             %tr
               %td.no-border
                 Only selected results, with column headers (see <strong>note&nbsp;2</strong>)
 
               %td.no-border
-                %a.btn.btn-default{ href: @preferences.as_path( :ppd_data, {format: :csv, header: true}, {limit: :any} )}
+                %a.btn.btn-default{ href: @preferences.as_path( :ppd_data, {format: :csv, header: true, limit: "all"} )}
                   %i.fa.fa-download
-                  get selected results as CSV with headers
+                  get <strong>selected</strong> results as CSV with headers
             %tr
               %td.no-border
                 All matching results, with column headers (see <strong>notes 1</strong> and <strong>2</strong>)
 
               %td.no-border
-                %a.btn.btn-default{ href: @preferences.as_path( :ppd_data, {format: :csv, header: true}, {limit: :any} )}
+                %a.btn.btn-default{ href: @preferences.as_path( :ppd_data, {format: :csv, header: true, limit: "all"} )}
                   %i.fa.fa-download
-                  get all results as CSV with headers
+                  get <strong>all</strong> results as CSV with headers
 
             %tr
               %td{rowspan: 2} RDF Turtle
@@ -70,15 +70,15 @@
               %td
                 %a.btn.btn-default{ href: @preferences.as_path( :ppd_data, {format: :ttl} )}
                   %i.fa.fa-download
-                  get selected results as Turtle
+                  get <strong>selected</strong> results as Turtle
             %tr
               %td.no-border
                 All matching results (see <strong>note&nbsp;1</strong>)
 
               %td.no-border
-                %a.btn.btn-default{ href: @preferences.as_path( :ppd_data, {format: :ttl}, {limit: :any} )}
+                %a.btn.btn-default{ href: @preferences.as_path( :ppd_data, {format: :ttl, limit: "all"} )}
                   %i.fa.fa-download
-                  get all results as Turtle
+                  get <strong>all</strong> results as Turtle
 
             %tr
               %td SPARQL
