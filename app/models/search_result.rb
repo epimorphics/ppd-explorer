@@ -20,6 +20,7 @@ class SearchResult
         ppd:propertyAddressTown
         ppd:propertyAddressDistrict
         ppd:propertyAddressCounty
+        ppd:propertyAddressPostcode
       )
 
   DETAILED_ADDRESS_ASPECTS =
