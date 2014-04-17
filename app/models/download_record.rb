@@ -4,14 +4,14 @@ class DownloadRecord
   attr_reader :search_result
 
   DOWNLOAD_COLUMNS = [
-    {aspect_property: "@id",
+    {aspect_property: "ppd:transactionId",
      header: "unique_id"
     },
     {aspect_property: "ppd:pricePaid",
      header: "price_paid"
     },
     {aspect_property: "ppd:transactionDate",
-     header: "transaction_date"
+     header: "deed_date"
     },
     {aspect_property: "ppd:propertyAddressPostcode",
      header: "postcode"
@@ -64,7 +64,10 @@ class DownloadRecord
     },
     {aspect_property: "ppd:propertyAddressCounty",
      header: "county"
-    }
+    },
+    {aspect_property: "@id",
+     header: "linked_data_uri"
+    },
   ]
 
   def initialize( sr )
