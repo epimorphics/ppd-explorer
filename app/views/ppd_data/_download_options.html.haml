@@ -39,7 +39,7 @@
               %td.no-border
                 %a.btn.btn-default{ href: @preferences.as_path( :ppd_data, {format: :csv}, {limit: :any} )}
                   %i.fa.fa-download
-                  get <strong>all</strong> results as CSV
+                  get all results as CSV
 
             %tr
               %td.no-border
@@ -54,9 +54,9 @@
                 All matching results, with column headers (see <strong>notes 1</strong> and <strong>2</strong>)
 
               %td.no-border
-                %a.btn.btn-default{ href: @preferences.as_path( :ppd_data, {format: :csv, headers: true}, {limit: :any} )}
+                %a.btn.btn-default{ href: @preferences.as_path( :ppd_data, {format: :csv, header: true}, {limit: :any} )}
                   %i.fa.fa-download
-                  get <strong>all</strong> results as CSV with headers
+                  get all results as CSV with headers
 
             %tr
               %td{rowspan: 2} RDF Turtle
@@ -78,7 +78,7 @@
               %td.no-border
                 %a.btn.btn-default{ href: @preferences.as_path( :ppd_data, {format: :ttl}, {limit: :any} )}
                   %i.fa.fa-download
-                  get <strong>all</strong> results as Turtle
+                  get all results as Turtle
 
             %tr
               %td SPARQL
