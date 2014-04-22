@@ -14,6 +14,11 @@
         %a.search-term{ href: @preferences.as_path( :search, {}, {search_term.name => search_term.value } )}
           %i.fa.fa-times-circle.fa-lg
 
+.search-selection
+  Showing:
+  - UserPreferences::AVAILABLE_LIMITS.each do |limit|
+    %span
+      = results_selection( limit, @preferences )
 
 %ul.list-unstyled.ppd-results
   - odd = true

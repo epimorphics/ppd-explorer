@@ -27,4 +27,19 @@ module PpdHelper
     end
   end
 
+  def results_selection( limit, preferences )
+    if preferences.selected_limit == limit
+      content_tag( "strong" ) do
+        results_selection_summary( limit )
+      end
+    else
+      content_tag( "a", {href: preferences.as_path( :search, {limit: limit} ), class: "btn btn-default"} ) do
+        results_selection_summary( limit )
+      end
+    end
+  end
+
+  def results_selection_summary( limit )
+    (limit == "all") ? "all results" : "first #{limit} results"
+  end
 end

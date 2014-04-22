@@ -4,6 +4,7 @@ class UserPreferences
 
   WHITE_LIST = QueryCommand::ASPECTS.keys.map( &:to_s ) + %w(search limit header explain)
   DEFAULT_LIMIT = "100"
+  AVAILABLE_LIMITS = [DEFAULT_LIMIT, "1000", "all"]
 
   def initialize( p )
     @params = indifferent_access( p )
