@@ -33,7 +33,7 @@ module PpdHelper
         results_selection_summary( limit )
       end
     else
-      content_tag( "a", {href: preferences.as_path( :search, {limit: limit} ), class: "btn btn-default"} ) do
+      content_tag( "a", {href: preferences.as_path( :search, {limit: limit} ), class: "btn btn-default btn-sm"} ) do
         results_selection_summary( limit )
       end
     end

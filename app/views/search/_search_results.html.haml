@@ -4,21 +4,25 @@
 %h2
   Search results
 
-%ul.search-terms.list-inline
-  %li
-    #{sr.summarise} by searching for:
-  - @preferences.each_search_term do |search_term|
+.search-summary
+  %ul.search-terms.list-inline
     %li
-      %label
-        = search_term.label
-        %a.search-term{ href: @preferences.as_path( :search, {}, {search_term.name => search_term.value } )}
-          %i.fa.fa-times-circle.fa-lg
+      #{sr.summarise} by searching for:
+    - @preferences.each_search_term do |search_term|
+      %li.term
+        %label
+          = search_term.label
+          %a.search-term{ href: @preferences.as_path( :search, {}, {search_term.name => search_term.value } )}
+            %i.fa.fa-times-circle.fa-lg
 
-.search-selection
-  Showing:
-  - UserPreferences::AVAILABLE_LIMITS.each do |limit|
-    %span
-      = results_selection( limit, @preferences )
+  .search-selection
+    Current selection:
+    %strong #{results_selection_summary( @preferences.selected_limit )}.
+
+    %span Select instead:
+    - (UserPreferences::AVAILABLE_LIMITS - [@preferences.selected_limit]).each do |limit|
+      %span
+        = results_selection( limit, @preferences )
 
 %ul.list-unstyled.ppd-results
   - odd = true
