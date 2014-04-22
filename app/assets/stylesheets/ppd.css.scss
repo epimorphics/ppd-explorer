@@ -185,7 +185,15 @@ $lr-footer-link: lighten( $lr-separator, 10 );
       font-family: nta, Arail, sans-serif;
     }
 
-    h3 {
+    h3.group-key {
+      font-variant: small-caps;
+      font-size: 10pt;
+      color: #555;
+      margin: 12px 0 7px;
+      text-align: center;
+    }
+
+    h4 {
       font-size: 18px;
     }
   }

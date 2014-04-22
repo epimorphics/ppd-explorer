@@ -25,13 +25,18 @@
         = results_selection( limit, @preferences )
 
 %ul.list-unstyled.ppd-results
-  - odd = true
+  - result = nil
   - sr.each_property_address do |results|
+    - previous_result = result
     - result = results.first
-    %li{ class: odd ? "property-entry odd" : "property-entry even"}
-      - odd = !odd
+
+    - if heading = result.group_heading( previous_result )
+      %h3.group-key
+        = heading
+
+    %li{}
       .row
-        %h3.property-heading.col-md-12
+        %h4.property-heading.col-md-12
           %span.address
             = result.formatted_address
 

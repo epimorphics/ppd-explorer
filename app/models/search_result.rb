@@ -28,6 +28,13 @@ class SearchResult
       QueryCommand::ASPECTS.values.find {|a| a.aspect_key_property == ap}
     end
 
+  GROUP_HEADING_PROPERTIES =
+    %w(
+      ppd:propertyAddressStreet
+      ppd:propertyAddressTown
+      ppd:propertyAddressCounty
+    )
+
   def initialize( resultJson )
     @result = resultJson
     if (paon = @result["ppd:propertyAddressPaon"]) && !paon.empty?
@@ -133,6 +140,16 @@ class SearchResult
     fields.join( " " ).html_safe
   end
 
+  def group_heading( previous )
+    gk = group_key
+    if !previous || gk != previous.group_key
+      gk.select {|v| v}.join( ", ")
+    end
+  end
+
+  def group_key
+    GROUP_HEADING_PROPERTIES.map {|p| value_of_property p}
+  end
 
   private
 
