@@ -16,6 +16,15 @@
           on a Mac) to copy a link to this page.
         %p
           = text_field_tag 'bookmark', "", class: "form-control bookmark-url"
+        .social-media
+          .twitter
+            %a.twitter-share-button{ href: "https://twitter.com/share", data: {url: "", text: "Open data from Land Registry", hashtags:"opendata"}}
+              Tweet
+          .facebook
+            .fb-share-button{ data: {href: "", type: "button_count"}}
+          .gplus
+            #plus-one
+
       .modal-footer
         .row
           %a.btn.btn-default{ href: "#",  data: {dismiss: "modal"} }
