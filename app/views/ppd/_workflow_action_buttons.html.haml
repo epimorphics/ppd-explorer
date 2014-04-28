@@ -1,15 +1,15 @@
 .pull-right
   %a.btn.btn-primary{ href: "#{@preferences.as_path( :ppd )}"}
     %i.fa.fa-edit
-    Change search settings
+    change search settings
   -unless defined? no_results
     %a.btn.btn-primary{ href: "#{@preferences.as_path( :search )}"}
       %i.fa.fa-mail-reply
-      Back to results
+      back to results
   - unless defined? no_download
     %a.btn.btn-primary{ href: "#{@preferences.as_path( :ppd_data )}"}
       %i.fa.fa-download
-      Download data
+      download data
   - unless defined? no_print
     %a.btn.btn-default{ href: "#", alt: "Printable view" }
       %i.fa.fa-print

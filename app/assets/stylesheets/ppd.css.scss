@@ -234,9 +234,16 @@ $lr-footer-link: lighten( $lr-separator, 10 );
   }
 
   // buttons
-  a.btn.btn-primary, a.btn.btn-primary:hover, a.btn.btn-primary:visited {
+  a.btn.btn-primary, a.btn.btn-primary:hover, a.btn.btn-primary:visited, button.btn-primary {
     background-color: $lr-headline;
     color: white;
+    font-family: nta, Arial, sans-serif;
+    border: 1px solid darken( $lr-headline, 5% );
+  }
+
+  a.btn.btn-default, a.btn.btn-default:hover, a.btn.btn-default:visited, button.btn-default {
+    background-color: #f0f0f0;
+    color: $lr-headline;
     font-family: nta, Arial, sans-serif;
     border: 1px solid darken( $lr-headline, 5% );
   }
