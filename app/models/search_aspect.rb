@@ -1,11 +1,13 @@
 # An aspect class that adds a search query term
 class SearchAspect < Aspect
+  DEFAULT_LIMIT = 50000
+
   def add_clause( query, preferences )
     present?( preferences ) ? add_search_clause( query, preferences ) : query
   end
 
   def add_search_clause( query, preferences )
-    query.search_aspect_property( aspect_property, key_property, text_index_term( preferences ))
+    query.search_aspect_property( aspect_property, key_property, text_index_term( preferences ), {"@limit" => DEFAULT_LIMIT})
   end
 
   def add_search_regex_clause( query, preferences )
