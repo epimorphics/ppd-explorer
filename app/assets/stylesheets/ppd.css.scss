@@ -264,10 +264,11 @@ $lr-footer-link: lighten( $lr-separator, 10 );
   }
 
   .social-media {
-    div {
+    > div {
       display: inline-block;
       vertical-align: top !important;
       height: 20px;
+      min-width: 30px;
     }
     .twitter {
     }
