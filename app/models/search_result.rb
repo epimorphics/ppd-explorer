@@ -9,6 +9,7 @@ class SearchResult
         ppd:propertyAddressTown
         ppd:propertyAddressStreet
         ppd:propertyAddressPaon
+        ppd:propertyAddressSaon
       )
 
   DETAILED_ADDRESS_PROPERTIES =
