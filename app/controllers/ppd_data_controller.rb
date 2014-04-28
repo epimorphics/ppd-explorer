@@ -12,6 +12,8 @@ class PpdDataController < ApplicationController
       if is_data_request?
         @query_command = QueryCommand.new( @preferences )
         @query_command.load_query_results( limit: :all, download: true )
+
+        template = "ppd/error" unless @query_command.success?
       end
 
       render template

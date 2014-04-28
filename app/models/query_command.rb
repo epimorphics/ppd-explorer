@@ -1,7 +1,7 @@
 class QueryCommand < DataService
   include TurtleFormatter
 
-  attr_reader :all_results, :search_results
+  attr_reader :all_results, :search_results, :error_message
   COUNT_LIMIT = 10000
 
   ASPECTS = {
@@ -86,19 +86,28 @@ class QueryCommand < DataService
   end
 
   def load_query_results( options = {} )
-    ppd = dataset( :ppd )
-    query = assemble_query
+    begin
+      ppd = dataset( :ppd )
+      query = assemble_query
 
-    if limit = query_limit
-      base_query = query
-      query = query.limit( limit )
-      count_query = base_query.count_only.limit( COUNT_LIMIT )
-    end
+      if limit = query_limit
+        base_query = query
+        query = query.limit( limit )
+        count_query = base_query.count_only.limit( COUNT_LIMIT )
+      end
 
-    save_results( ppd, query )
+      save_results( ppd, query )
 
-    if reached_count_limit?( limit )
-      add_count_information( ppd, count_query )
+      if reached_count_limit?( limit )
+        add_count_information( ppd, count_query )
+      end
+    rescue => e
+      uuid = SecureRandom.uuid
+
+      Rails.logger.error "Query error #{uuid} ::: #{e.message}"
+      Rails.logger.error "Query error #{uuid} ::: #{e.backtrace.join("\n")}"
+
+      @error_message = "The log file reference for this error is: #{uuid}."
     end
   end
 
@@ -125,5 +134,9 @@ class QueryCommand < DataService
     count_result = ppd.query( count_query )
     count = count_result.first["@count"]
     @search_results.query_count( "#{count}#{count == COUNT_LIMIT ? " or more" : ""}" )
+  end
+
+  def success?
+    !error_message
   end
 end

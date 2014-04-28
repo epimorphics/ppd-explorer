@@ -1,0 +1,38 @@
+.row
+  %h2 We're sorry, that didn't work
+  %p
+    We're very sorry, but the query you have just run did not complete. Reasons for
+    this are commonly due to large queries exceeding the time limit,
+    or the result set being too large to transmit.
+
+  %p
+    %strong
+      Things you can try:
+
+  %ul
+    %li
+      Make the query more selective. For example, add values for some of the other search
+      fields, such as county, postcode or street. In particular, if you don't enter values for
+      %em any
+      address fields, you're implicitly doing a search for all addresses across England and Wales.
+    %li
+      Limit the years that the data is selected for. If you don't specify a start date, you
+      will be querying the data going back to January 1995.
+    %li
+      Set the sample size. By limiting the number of results to 100 or 1000, you can try out
+      your queries without risking timeouts in the query engine.
+    %li
+      If you have a large analysis that requires all of the data as input, you may be better
+      to
+      %a{ href: "TODO" } download the raw data
+      and perform your own analysis using your own software.
+
+  %p
+    If you are still having difficulties accessing the data that you want, or you think that
+    your query should have completed normally, please
+    %a{ href: "/index.html#contact-us"}
+      contact us.
+
+  %p
+    = @query_command.error_message
+    You can quote this number to support staff so that they can investigate this specific incident.

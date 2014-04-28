@@ -13,6 +13,8 @@ class SearchController < ApplicationController
       @query_command = QueryCommand.new( @preferences )
       @query_command.load_query_results
       @time_taken = ((Time.now - start) * 1000).to_i
+
+      render template: "ppd/error" unless @query_command.success?
     end
   end
 end
