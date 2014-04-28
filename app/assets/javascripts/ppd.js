@@ -1,4 +1,8 @@
 var Ppd = function() {
+  /** Module variables */
+  var _spinner;
+
+  /** Module initialisation */
   var init = function() {
     initControls();
     bindEvents();
@@ -15,11 +19,25 @@ var Ppd = function() {
     } );
 
     $(".js.action-bookmark").removeClass("hidden");
+
+    // ajax spinner
+    if (!_spinner) {
+      _spinner = new Spinner( {
+        color:'#ACCD40',
+        lines: 12,
+        radius: 20,
+        length: 10,
+        width: 4
+      } );
+    }
   };
 
   var bindEvents = function() {
     $("form").on( "submit", onSubmitForm );
     $(".action-bookmark").on( "click", onBookmark );
+
+    $(document).on( "ajaxSend", onAjaxSend )
+               .on( "ajaxComplete", onAjaxComplete );
   };
 
   var onChangeMonthYear = function( year, month, dp ) {
@@ -66,6 +84,9 @@ var Ppd = function() {
     if (!validateForm()) {
       e.preventDefault();
     }
+    else {
+      _spinner.spin( $(".container")[0] );
+    }
   }
 
   var validateForm = function() {
@@ -108,6 +129,17 @@ var Ppd = function() {
 
       $(".bookmark-url").val( baseURL ).select();
     } );
+  };
+
+  /* Ajax event handling */
+  var onAjaxSend = function( e ) {
+    $("a.btn").addClass( "action-disabled" );
+    _spinner.spin( $(".container")[0] );
+  };
+
+  var onAjaxComplete = function( e ) {
+    $("a.btn").removeClass( "action-disabled" );
+    _spinner.stop();
   };
 
   return {
