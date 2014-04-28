@@ -63,7 +63,7 @@ class Paon < String
     parsed = {}
     tokens = paon.gsub( /(\d+)/, " \\1 " ).split
 
-    parsed[:alpha] = tokens.pop if tokens.last =~ /\A[A-Z]\Z/
+    parsed[:alpha] = tokens.pop if tokens.length > 1 && tokens.last =~ /\A[A-Z]\Z/
     parsed[:number] = tokens.pop.to_i if tokens.last =~ /\d/
     parsed[:name] = tokens.join( " " ) unless tokens.empty?
 
