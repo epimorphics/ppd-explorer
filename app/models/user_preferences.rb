@@ -101,7 +101,7 @@ class UserPreferences
   def process_removes( pparams, removes )
     removes.each do |r,v|
       if pparams[r].is_a?( Array )
-        pparams[r].delete( v )
+        pparams[r] -= [v]
         pparams.delete( r ) if pparams[r].empty?
       else
         pparams.delete( r )
