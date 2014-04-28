@@ -40,6 +40,6 @@ module PpdHelper
   end
 
   def results_selection_summary( limit )
-    (limit == "all") ? "all results" : "first #{limit} results"
+    (limit == "all") ? "all results" : "sample of (at most) #{limit} results"
   end
 end
