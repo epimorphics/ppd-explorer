@@ -1,0 +1,46 @@
+#help-modal.modal
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{ type: "button", data: {dismiss: "modal"}, aria: {hidden: "true"}}
+          &times;
+        %h2.modal-title
+          Help and suggestions
+      .modal-body
+        %h3 Frequently asked questions (FAQ)
+        %p
+          See the
+          %a{href: "TODO"} PPD FAQ
+          for answers to commonly encountered difficulties in using this
+          dataset.
+        %h3 Tips
+        %dl.dl-horizontal
+          %dt
+            %i.fa.fa-print
+          %dd
+            Click the print button for a view of the data optimised for printing
+          %dt
+            %i.fa.fa-share-square-o
+          %dd
+            Use this button to create a link to your results that you can bookmark,
+            copy into email or share by social media sites
+          %dt
+            %i.fa.fa-times-circle
+          %dd
+            Remove a search term from the current search
+          %dt
+            %i.fa.fa-search-plus
+          %dd
+            Add a term to refine the current search
+
+        %h3 Further help and feedback
+        %p
+          If you have additional questions, or you have feedback on this beta service,
+          please email
+          %a{ href:"mailto:commercial.services@landregistry.gsi.gov.uk"}
+            commercial.services@landregistry.gsi.gov.uk
+
+      .modal-footer
+        .row
+          %a.btn.btn-default{ href: "#",  data: {dismiss: "modal"} }
+            OK

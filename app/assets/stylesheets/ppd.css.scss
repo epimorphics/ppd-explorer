@@ -277,6 +277,15 @@ $lr-footer-link: lighten( $lr-separator, 10 );
     }
   }
 
+  #help-modal {
+    dt {
+      width: 60px;
+    }
+    dd {
+      margin-left: 80px;
+    }
+  }
+
   #footer {
     margin-top: 40px;
     background-color: #818181;

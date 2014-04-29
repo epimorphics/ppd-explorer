@@ -152,6 +152,9 @@
                 all
       .col-sm-12
         .pull-right
+          %a.js.hidden.btn.btn-default.action.action-help{ href: "#", alt: "Help and tips", title: "Help and tips" }
+            %i.fa.fa-question-circle
+            help
           = link_to( {controller: :ppd, action: :index}, {class: "btn btn-default"} ) do
             %i.fa.fa-refresh
             reset the form

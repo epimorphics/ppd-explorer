@@ -18,3 +18,7 @@
     %a.btn.btn-default.js.hidden.action-bookmark{ href: "#", alt: "bookmark this view", data: {url: "#{@preferences.as_path( :search )}" } }
       %i.fa.fa-share-square-o
       share view
+  -unless defined? no_help
+    %a.js.hidden.btn.btn-default.action.action-help{ href: "#", alt: "Help and tips", title: "Help and tips" }
+      %i.fa.fa-question-circle
+      help

@@ -18,7 +18,7 @@ var Ppd = function() {
       maxDate: new Date()
     } );
 
-    $(".js.action-bookmark").removeClass("hidden");
+    $(".js.hidden").removeClass("hidden");
 
     // ajax spinner
     if (!_spinner) {
@@ -34,7 +34,8 @@ var Ppd = function() {
 
   var bindEvents = function() {
     $("form").on( "submit", onSubmitForm );
-    $(".action-bookmark").on( "click", onBookmark );
+    $(".container").on( "click", ".action-bookmark", onBookmark );
+    $(".container").on( "click", ".action-help" , onHelp );
 
     $(document).on( "ajaxSend", onAjaxSend )
                .on( "ajaxComplete", onAjaxComplete );
@@ -130,6 +131,14 @@ var Ppd = function() {
       $(".bookmark-url").val( baseURL ).select();
     } );
   };
+
+  /** User wants to see the help page */
+  var onHelp = function( e ) {
+    e.preventDefault();
+    $("#help-modal").modal("show");
+  };
+
+
 
   /* Ajax event handling */
   var onAjaxSend = function( e ) {
