@@ -32,7 +32,7 @@ class SearchAspect < Aspect
   def text_index_term( preferences )
     preference_value( preferences )
         .split( " " )
-        .map {|token| token.gsub( /[[:punct:]]/, "" ) }
+        .map {|token| token.gsub( /[[:punct:]]/, " " ) }
         .reject {|token| token.empty?}
         .join( " AND " )
         .gsub( /\A(.*)\Z/, '( \1 )' )

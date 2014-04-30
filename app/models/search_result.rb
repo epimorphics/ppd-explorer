@@ -73,7 +73,7 @@ class SearchResult
     elsif title_case_exception?( p )
       v
     else
-      v.titlecase
+      titlecase_with_hyphens( v )
     end
   end
 
@@ -198,6 +198,10 @@ class SearchResult
         token.titlecase
       end
     end
+  end
+
+  def titlecase_with_hyphens( str )
+    str.split( "-" ).map( &:titlecase ).join( "-" )
   end
 
 end
