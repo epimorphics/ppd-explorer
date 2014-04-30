@@ -1,12 +1,14 @@
 class SearchResults
   include ActionView::Helpers::TextHelper
-  attr_reader :index, :properties, :transactions
+  attr_reader :index, :properties, :transactions, :max_results_limit_hit
 
-  def initialize( results_json )
+  DEFAULT_MAX_RESULTS = 5000
+
+  def initialize( results_json, max )
     @index = autokey_hash
     @properties = 0
     @transactions = 0
-    index_results( results_json )
+    index_results( results_json, max || DEFAULT_MAX_RESULTS )
   end
 
   # Traverse the index values in sort order, and yield each transaction
@@ -37,13 +39,14 @@ class SearchResults
 
   private
 
-  def index_results( results )
-    results.each do |result|
-      index_result( SearchResult.new( result ) )
+  def index_results( results, max )
+    results.each_with_index do |result, i|
+      @max_results_limit_hit = true if i > max
+      index_result( SearchResult.new( result ), @max_results_limit_hit )
     end
   end
 
-  def index_result( result )
+  def index_result( result, count_only )
     key = result.key
     last = key.pop
     ind = key.reduce( index ) {|i,k| i[k]}
@@ -51,9 +54,9 @@ class SearchResults
     @transactions += 1
 
     if ind.has_key?( last )
-      ind[last] << result
+      ind[last] << result unless count_only
     else
-      ind[last] = [result]
+      ind[last] = [result] unless count_only
       @properties += 1
     end
   end

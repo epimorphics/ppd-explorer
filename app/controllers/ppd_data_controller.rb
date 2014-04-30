@@ -1,5 +1,6 @@
 class PpdDataController < ApplicationController
   include DsapiTurtleFormatter
+  MAX_DOWNLOAD_RESULTS = 1000000
 
   def show
     @preferences = UserPreferences.new( params )
@@ -11,7 +12,7 @@ class PpdDataController < ApplicationController
     else
       if is_data_request?
         @query_command = QueryCommand.new( @preferences )
-        @query_command.load_query_results( limit: :all, download: true )
+        @query_command.load_query_results( limit: :all, download: true, max: MAX_DOWNLOAD_RESULTS )
 
         template = "ppd/error" unless @query_command.success?
       end

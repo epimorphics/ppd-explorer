@@ -233,6 +233,13 @@ $lr-footer-link: lighten( $lr-separator, 10 );
     z-index: 10 !important;
   }
 
+  .search-limit-reached {
+    margin: 10px 0;
+    padding: 8px;
+    border: 1px solid #888;
+    border-radius: 5px;
+  }
+
   // buttons
   a.btn.btn-primary, a.btn.btn-primary:hover, a.btn.btn-primary:visited, button.btn-primary {
     background-color: $lr-headline;

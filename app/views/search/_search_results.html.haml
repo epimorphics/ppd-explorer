@@ -25,6 +25,18 @@
       %span
         = results_selection( limit, @preferences )
 
+- if sr.max_results_limit_hit
+  .search-limit-reached.bg-danger
+    %i.fa.fa-exclamation-triangle
+    We're sorry, but your search returned more results than is practical to display on this
+    page without causing your browser to slow down. We are showing the first
+    #{SearchResults::DEFAULT_MAX_RESULTS} results. If you want to view all of the results
+    that your search returned, please make the query more selective, or
+    %strong
+      %a{ href: "#{@preferences.as_path( :ppd_data )}"}
+        download the data
+    onto your computer.
+
 %ul.list-unstyled.ppd-results
   - result = nil
   - sr.each_property_address do |results|

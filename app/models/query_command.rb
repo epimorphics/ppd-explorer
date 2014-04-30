@@ -96,7 +96,7 @@ class QueryCommand < DataService
         count_query = base_query.count_only.limit( COUNT_LIMIT )
       end
 
-      save_results( ppd, query )
+      save_results( ppd, query, options )
 
       if reached_count_limit?( limit )
         add_count_information( ppd, count_query )
@@ -119,11 +119,11 @@ class QueryCommand < DataService
     (l = preferences.selected_limit) =~ /\d/ && l.to_i
   end
 
-  def save_results( ppd, query )
+  def save_results( ppd, query, options )
     Rails.logger.debug "About to ask DsAPI query: #{query.to_json}"
 
     @all_results = ppd.query( query )
-    @search_results = SearchResults.new( @all_results )
+    @search_results = SearchResults.new( @all_results, options[:max] )
   end
 
   def reached_count_limit?( limit )
