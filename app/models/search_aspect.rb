@@ -31,8 +31,8 @@ class SearchAspect < Aspect
   # Sanitise input and convert to Lucene expression
   def text_index_term( preferences )
     preference_value( preferences )
+        .gsub( /[[:punct:]]/, " " )
         .split( " " )
-        .map {|token| token.gsub( /[[:punct:]]/, " " ) }
         .reject {|token| token.empty?}
         .join( " AND " )
         .gsub( /\A(.*)\Z/, '( \1 )' )
