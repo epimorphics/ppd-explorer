@@ -30,6 +30,9 @@ var Ppd = function() {
         width: 4
       } );
     }
+    else {
+      _spinner.stop();
+    }
   };
 
   var bindEvents = function() {
