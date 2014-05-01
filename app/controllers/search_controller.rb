@@ -15,6 +15,7 @@ class SearchController < ApplicationController
         @query_command.load_query_results
         @time_taken = ((Time.now - start) * 1000).to_i
 
+        Rails.logger.info "Query command success = '#{@query_command.success?}'"
         render template: "ppd/error" unless @query_command.success?
       end
     rescue => e
