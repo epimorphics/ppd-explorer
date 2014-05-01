@@ -16,7 +16,8 @@ class SearchController < ApplicationController
         @time_taken = ((Time.now - start) * 1000).to_i
 
         Rails.logger.info "Query command success = '#{@query_command.success?}'"
-        render template: "ppd/error" unless @query_command.success?
+        # render template: "ppd/error" unless @query_command.success?
+        render plain: "Query timeout"
       end
     rescue => e
       uuid = SecureRandom.uuid
