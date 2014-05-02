@@ -81,7 +81,6 @@ PpdExplorer::Application.configure do
   # Specify that we're not at the root
   config.action_controller.relative_url_root = "/app/ppd"
   config.relative_url_root = "/app/ppd"
-  puts "!!!!!!!!! config.relative_url_root = #{config.relative_url_root}"
 end
 
 # JsRoutes.setup do |config|
