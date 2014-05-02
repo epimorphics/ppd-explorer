@@ -19,14 +19,13 @@
 fetch(:default_env).merge!(rails_env: :production)
 set :stage, :production
 
-server 'lr-app-dev',
-        roles: %w{web, app},
-        user: 'ubuntu',
+server 'lr-pres-staging',
         ssh_options: {
           forward_agent: true
         }
 
-role :web, %w{lr-app-dev}
+role :web, %w{lr-pres-staging}
+role :app, %w{lr-pres-staging}
 
 # you can set custom ssh options
 # it's possible to pass any option but you need to keep in mind that net/ssh understand limited list of options
