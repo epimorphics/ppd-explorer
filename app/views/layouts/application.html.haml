@@ -10,9 +10,9 @@
     %script{ type: "text/javascript", src: "https://apis.google.com/js/plusone.js"}
       {"parsetags": "explicit"}
 
-    /[if IE]
-      = javascript_include_tag "html5shiv.js"
-      = javascript_include_tag "respond.min.js"
+    /[if lt IE 9]
+      %script{ src: "assets/html5shiv.js", type: "application/javascript"}
+      %script{ src: "assets/respond.min.js", type: "application/javascript"}
   %body.government.website.lr.ppd
     :javascript
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
