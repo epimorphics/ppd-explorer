@@ -1,6 +1,6 @@
 # An aspect class that adds a search query term
 class SearchAspect < Aspect
-  DEFAULT_LIMIT = 200000
+  DEFAULT_LIMIT = 3000000
 
   def add_clause( query, preferences )
     present?( preferences ) ? add_search_clause( query, preferences ) : query
