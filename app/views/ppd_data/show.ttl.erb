@@ -3,20 +3,20 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#>.
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
 @prefix sr: <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/>.
-@prefix ppi:   <http://landregistry.data.gov.uk/def/ppi/> .
+@prefix ppd:   <http://landregistry.data.gov.uk/def/ppi/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#>.
-@prefix lrcommon: <http://landregistry.data.gov.uk/def/common/>.
+@prefix common: <http://landregistry.data.gov.uk/def/common/>.
 
 <% @query_command.search_results.each_transaction do |transaction| %>
 <<%= transaction.uri %>>
-  a ppi:TransactionRecord ;
-  <% @query_command.each_property( transaction.result, /ppd:(propertyAddress.+)|(hasTransaction)/ ) do |pv| %>
+  a ppd:TransactionRecord ;
+  <% @query_command.each_property( transaction.result, /ppd:(propertyAddress.+)/ ) do |pv| %>
   <%= "#{pv[:p]} #{pv[:v]} ;".html_safe %>
   <% end %>
   .
 
 <%= @query_command.format_ttl_value( transaction.result["ppd:propertyAddress"] )%>
-  a lrcommon:BS7666Address ;
+  a common:BS7666Address ;
   <% [
     ["common:county", "ppd:propertyAddressCounty"],
     ["common:district", "ppd:propertyAddressDistrict"],
@@ -24,7 +24,8 @@
     ["common:locality", "ppd:propertyAddressLocality"],
     ["common:street", "ppd:propertyAddressStreet"],
     ["common:paon", "ppd:propertyAddressPaon"],
-    ["common:saon", "ppd:propertyAddressSaon"]
+    ["common:saon", "ppd:propertyAddressSaon"],
+    ["common:postcode", "ppd:propertyAddressPostcode"]
   ].each do |p1, p2|%>
   <% if (v = transaction.result[p2]) && v != [] %>
   <%= p1 %> <%= @query_command.format_ttl_value( v ) %> ;

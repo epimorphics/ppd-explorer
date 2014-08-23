@@ -28,6 +28,7 @@
       [rdfs:label "estate type"              ; dsapi:property ppd:estateType;     dsapi:optional true],
       [rdfs:label "new build"                ; dsapi:property ppd:newBuild;       dsapi:optional true],
       [rdfs:label "property type"            ; dsapi:property ppd:propertyType;   dsapi:optional true],
+      [rdfs:label "record status"            ; dsapi:property ppd:recordStatus;   dsapi:optional true],
 
       [rdfs:label "property-paon"            ; dsapi:property ppd:propertyAddressPaon ; dsapi:propertyPath "ppd:propertyAddress/lrcommon:paon";     dsapi:optional true],
       [rdfs:label "property-postcode"        ; dsapi:property ppd:propertyAddressPostcode ; dsapi:propertyPath "ppd:propertyAddress/lrcommon:postcode"; dsapi:optional true],
