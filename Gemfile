@@ -23,7 +23,7 @@ gem 'jquery-rails'
 # gem 'turbolinks'
 
 # Use the more efficient Yajl gem for JSON parsing
-gem 'yajl-ruby', require: 'yajl'
+gem 'yajl-ruby', require: 'yajl', git: "git@github.com:ephemerian/yajl-ruby.git"
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
