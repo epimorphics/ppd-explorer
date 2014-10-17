@@ -8,17 +8,13 @@ GIT
       sass (>= 3.2.0)
 
 GIT
-  remote: git@github.com:ephemerian/yajl-ruby.git
-  revision: 6703fb082fe4909c573bc3e85b7595ca70d2650f
-  specs:
-    yajl-ruby (1.2.1)
-
-GIT
   remote: git@github.com:epimorphics/ds-api-ruby.git
-  revision: 192541438da84b0d6c43a74615b9758ee81bb27f
+  revision: 81118e192bed1fb774e8496782db9c7bf1358592
   specs:
-    data_services_api (0.1.0)
+    data_services_api (0.1.1)
+      faraday_middleware
       json
+      yajl-ruby
 
 GEM
   remote: https://rubygems.org/
@@ -164,6 +160,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.2.1)
+    rb-readline (0.5.1)
     rdoc (4.1.1)
       json (~> 1.4)
     ref (1.0.5)
@@ -214,6 +211,7 @@ GEM
       crack (>= 0.3.2)
     xpath (2.0.0)
       nokogiri (~> 1.3)
+    yajl-ruby (1.2.1)
 
 PLATFORMS
   ruby
@@ -242,10 +240,10 @@ DEPENDENCIES
   pry-stack_explorer
   quiet_assets
   rails (= 4.0.3)
+  rb-readline
   sass-rails (~> 4.0.0)
   sdoc
   therubyracer
   uglifier (>= 1.3.0)
   vcr
   webmock
-  yajl-ruby!
