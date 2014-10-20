@@ -22,9 +22,6 @@ gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 # gem 'turbolinks'
 
-# Use the more efficient Yajl gem for JSON parsing
-gem 'yajl-ruby'#, require: 'yajl', git: "git@github.com:ephemerian/yajl-ruby.git"
-
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
@@ -36,23 +33,20 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.1.2'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
 gem 'capistrano-rails'
 gem 'capistrano-bundler'
 
 # gem 'debugger', group: [:development, :test]
-gem 'pry', group: :development
-gem 'pry-stack_explorer', group: :development
-gem 'quiet_assets', :group => :development
+group :development do
+  gem 'rb-readline'
+  gem 'pry'
+  gem 'pry-stack_explorer'
+  gem 'quiet_assets'
+end
+
 
 gem 'govuk_frontend_toolkit', github: "alphagov/govuk_frontend_toolkit_gem", :submodules => true
 gem 'data_services_api', git: "git@github.com:epimorphics/ds-api-ruby.git"
-#gem 'data_services_api', path: "/home/ian/workspace/ds-api-ruby"
 gem 'font-awesome-rails'
 gem 'faraday', '~> 0.8.8'
 gem "faraday_middleware", "< 0.9.0"
