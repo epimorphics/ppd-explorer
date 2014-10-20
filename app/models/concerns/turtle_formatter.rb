@@ -38,7 +38,7 @@ module TurtleFormatter
         "<#{v["@id"]}>"
       elsif v["@value"] && v["@type"]
         "\"#{v["@value"]}\"^^#{format_ttl_value( v["@type"] )}"
-      elsif v["@value"] &&
+      elsif v["@value"]
         "\"#{v["@value"]}\""
       else
         "default #{v.to_s}"

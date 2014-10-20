@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.3'
+gem 'rails', '4.1.6'
 
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.0'
+gem 'sass-rails', '~> 4.0.3'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -26,7 +26,7 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 1.2'
 
 gem 'haml-rails'
-gem 'bootstrap-sass'
+gem 'bootstrap-sass-rails'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -53,11 +53,11 @@ gem "faraday_middleware", "< 0.9.0"
 gem 'jquery-ui-rails'
 
 group :test do
-  gem 'minitest', '~> 4.7'
+  gem 'minitest', '~> 5.1'
   gem 'minitest-rg', '~> 1.1'
   gem 'capybara-webkit', '~> 1.1'
   gem 'minitest-capybara', '~> 0.4'
-  gem 'minitest-spec-rails', '~> 4.7'
+  gem 'minitest-spec-rails', '~> 5.1'
   gem 'json_expressions', "~> 0.8"
   gem 'vcr'
   gem 'minitest-vcr'

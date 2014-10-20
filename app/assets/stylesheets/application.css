@@ -12,8 +12,8 @@
  *= require bootstrap
  *= require lr-assets
  *= require font-awesome
- *= require jquery.ui.autocomplete
- *= require jquery.ui.datepicker
+ *= require jquery-ui/autocomplete
+ *= require jquery-ui/datepicker
  *= require_tree .
  *= require ppd
  */
