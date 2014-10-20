@@ -46,7 +46,7 @@
                 Only selected results, with column headers (see <strong>note&nbsp;2</strong>)
 
               %td.no-border
-                %a.btn.btn-default{ href: @preferences.as_path( :ppd_data, {format: :csv, header: true, limit: "all"} )}
+                %a.btn.btn-default{ href: @preferences.as_path( :ppd_data, {format: :csv, header: true} )}
                   %i.fa.fa-download
                   get <strong>selected</strong> results as CSV with headers
             %tr
