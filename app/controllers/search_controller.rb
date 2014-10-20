@@ -11,7 +11,8 @@ class SearchController < ApplicationController
         redirect_to controller: :ppd, action: :index
       else
         start = Time.now
-        @query_command = QueryCommand.new( @preferences )
+        Rails.logger.debug "Using compact JSON = #{use_compact_json?}"
+        @query_command = QueryCommand.new( @preferences, use_compact_json? )
         @query_command.load_query_results
         @time_taken = ((Time.now - start) * 1000).to_i
 
@@ -28,5 +29,13 @@ class SearchController < ApplicationController
       render template: "ppd/error"
 
     end
+  end
+
+  def use_compact_json?
+    ! non_compact_formats.include?( request.format )
+  end
+
+  def non_compact_formats
+    ["text/turtle"]
   end
 end

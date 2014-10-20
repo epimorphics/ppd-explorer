@@ -38,8 +38,8 @@ class SearchResult
 
   def initialize( resultJson )
     @result = resultJson
-    if (paon = @result["ppd:propertyAddressPaon"]) && !paon.empty?
-      paon[0]["@value"] = Paon.to_paon( paon[0]["@value"] )
+    if p = paon
+      paon = Paon.to_paon( p )
     end
   end
 
@@ -55,10 +55,6 @@ class SearchResult
     transaction_date <=> sr.transaction_date
   end
 
-  def transaction_date
-    @transaction_date ||= Date.parse( value_of_property( "ppd:transactionDate" ))
-  end
-
   def value_of_property( p )
     value_of( @result[p] )
   end
@@ -66,7 +62,7 @@ class SearchResult
   def presentation_value_of_property( p )
     v = value_of( @result[p] )
 
-    if v == "no_value"
+    if is_no_value?( v )
       nil
     elsif p == "ppd:propertyAddressPaon"
       format_paon_elements( v ).join( ' ' ).html_safe
@@ -75,6 +71,23 @@ class SearchResult
     else
       titlecase_with_hyphens( v )
     end
+  end
+
+  def paon
+    p = value_of( "ppd:propertyAddressPaon" )
+    is_no_value?( p ) ? nil : p
+  end
+
+  def paon=( p )
+    if @result["ppd:propertyAddressPaon"].kind_of?( Array )
+      @result["ppd:propertyAddressPaon"][0]["@value"] = p
+    else
+      @result["ppd:propertyAddressPaon"] = p
+    end
+  end
+
+  def transaction_date
+    @transaction_date ||= Date.parse( value_of_property( "ppd:transactionDate" ))
   end
 
   def id_of_property( p )
@@ -204,4 +217,7 @@ class SearchResult
     str.split( "-" ).map( &:titlecase ).join( "-" )
   end
 
+  def is_no_value?( v )
+    v.nil? || v == "no_value"
+  end
 end

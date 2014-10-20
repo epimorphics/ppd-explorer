@@ -23,7 +23,7 @@ gem 'jquery-rails'
 # gem 'turbolinks'
 
 # Use the more efficient Yajl gem for JSON parsing
-gem 'yajl-ruby', require: 'yajl', git: "git@github.com:ephemerian/yajl-ruby.git"
+gem 'yajl-ruby'#, require: 'yajl', git: "git@github.com:ephemerian/yajl-ruby.git"
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
@@ -52,6 +52,7 @@ gem 'quiet_assets', :group => :development
 
 gem 'govuk_frontend_toolkit', github: "alphagov/govuk_frontend_toolkit_gem", :submodules => true
 gem 'data_services_api', git: "git@github.com:epimorphics/ds-api-ruby.git"
+#gem 'data_services_api', path: "/home/ian/workspace/ds-api-ruby"
 gem 'font-awesome-rails'
 gem 'faraday', '~> 0.8.8'
 gem "faraday_middleware", "< 0.9.0"

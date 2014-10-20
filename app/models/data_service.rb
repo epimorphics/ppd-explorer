@@ -2,8 +2,9 @@
 class DataService
   attr_reader :preferences
 
-  def initialize( preferences )
+  def initialize( preferences, compact = false )
     @preferences = preferences
+    @compact = compact
   end
 
   # Return a data service object
@@ -18,7 +19,13 @@ class DataService
 
   # Return a new empty query generator
   def base_query
-    DataServicesApi::QueryGenerator.new
+    q = DataServicesApi::QueryGenerator.new
+    compact? ? q.compact_json : q
+  end
+
+  # Return true if the service should generate compact JSON
+  def compact?
+    @compact
   end
 
   # Delegate parameter checking to the user preferences object

@@ -79,6 +79,10 @@ class QueryCommand < DataService
                                   value_type: :date )
   }
 
+  def initialize( preferences, compact = false )
+    super( preferences, compact )
+  end
+
   def assemble_query
     ASPECTS.values.reduce( base_query ) do |query, aspect|
       aspect.present?( preferences ) ? aspect.add_clause( query, preferences ) : query

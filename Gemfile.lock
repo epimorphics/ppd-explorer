@@ -8,17 +8,13 @@ GIT
       sass (>= 3.2.0)
 
 GIT
-  remote: git@github.com:ephemerian/yajl-ruby.git
-  revision: 6703fb082fe4909c573bc3e85b7595ca70d2650f
-  specs:
-    yajl-ruby (1.2.1)
-
-GIT
   remote: git@github.com:epimorphics/ds-api-ruby.git
-  revision: 192541438da84b0d6c43a74615b9758ee81bb27f
+  revision: 3a25d10df8df05f03b55a5ea795b7d1a4d4380e6
   specs:
-    data_services_api (0.1.0)
+    data_services_api (0.2.0)
+      faraday_middleware
       json
+      yajl-ruby
 
 GEM
   remote: https://rubygems.org/
@@ -214,6 +210,7 @@ GEM
       crack (>= 0.3.2)
     xpath (2.0.0)
       nokogiri (~> 1.3)
+    yajl-ruby (1.2.1)
 
 PLATFORMS
   ruby
@@ -248,4 +245,4 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   vcr
   webmock
-  yajl-ruby!
+  yajl-ruby
