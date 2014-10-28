@@ -104,12 +104,12 @@ class SearchResult
 
   def property_type
     pt = id_of_property( "ppd:propertyType" )
-    {uri: pt, label: pt.gsub( /\A.*\//, "" )}
+    {uri: pt, label: without_leading_segment( pt )}
   end
 
   def estate_type
     et = id_of_property( "ppd:estateType" )
-    {uri: et, label: et.gsub( /\A.*\//, "" )}
+    {uri: et, label: without_leading_segment( et )}
   end
 
   def new_build?
@@ -219,5 +219,9 @@ class SearchResult
 
   def is_no_value?( v )
     v.nil? || v == "no_value"
+  end
+
+  def without_leading_segment( term )
+    term && term.gsub( /\A.*\//, "" )
   end
 end
