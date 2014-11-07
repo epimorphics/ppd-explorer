@@ -4,6 +4,7 @@ class SearchResult
 
   INDEX_KEY_PROPERTIES =
       %w(
+        ppd:propertyAddressPostcode
         ppd:propertyAddressCounty
         ppd:propertyAddressDistrict
         ppd:propertyAddressTown
