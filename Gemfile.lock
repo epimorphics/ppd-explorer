@@ -121,6 +121,7 @@ GEM
     multipart-post (1.2.0)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
+    profanity_filter (0.1.1)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -213,6 +214,7 @@ DEPENDENCIES
   minitest-rg (~> 1.1)
   minitest-spec-rails (~> 5.1)
   minitest-vcr
+  profanity_filter
   pry
   pry-stack_explorer
   quiet_assets
