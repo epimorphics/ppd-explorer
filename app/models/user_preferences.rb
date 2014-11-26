@@ -92,9 +92,11 @@ class UserPreferences
     whitelist_params.include?( param.to_s )
   end
 
-  # Remove any non-whitelisted parameters
+  # Remove any non-whitelisted parameters, or params with empty values
   def sanitise!
-    @params.keep_if {|k,v| whitelisted? k}
+    @params.keep_if do |k,v|
+      whitelisted?( k ) &&  !v.to_s.strip.empty?
+    end
   end
 
   # Process any instructions to remove a value from the params
