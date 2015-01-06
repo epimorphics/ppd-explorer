@@ -24,11 +24,15 @@ class SearchTerm
   end
 
   def label
-    "#{@label_prompt} matches #{long_label_term? ? truncated_label_term : clean_label_term}".html_safe
+    if @label_term
+      "#{@label_prompt} matches #{long_label_term? ? truncated_label_term : clean_label_term}".html_safe
+    else
+      @label_prompt
+    end
   end
 
   def long_label_term?
-    @label_term.length > MAX_LABEL_TERM_LENGTH
+    @label_term && @label_term.length > MAX_LABEL_TERM_LENGTH
   end
 
   def truncated_label_term
