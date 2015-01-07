@@ -40,6 +40,7 @@ class SearchTerm
   end
 
   def clean_label_term
-    @clean_label_term ||= ProfanityFilter::Base.clean( @label_term, 'hollow')
+    # previously we added a profanity filter here, but it was decided not to keep that feature
+    @label_term
   end
 end
