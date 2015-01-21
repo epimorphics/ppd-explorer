@@ -52,16 +52,15 @@ class SearchResults
 
   def index_result( result, count_only )
     @transactions += 1
-    @properties << result.key_str
+    @properties << result.key_hash
 
-    key = result.key
+    key = result.key.clone
     last = key.pop
     ind = key.reduce( index ) {|i,k| i[k]}
 
-    if ind.has_key?( last )
-      ind[last] << result unless count_only
-    else
-      ind[last] = [result] unless count_only
+    unless count_only
+      ind[last] = [] unless ind.has_key?( last )
+      ind[last] << result
     end
   end
 
