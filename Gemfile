@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.6'
+gem 'rails', '4.2.0'
 
 
 # Use SCSS for stylesheets
@@ -47,11 +47,11 @@ gem "faraday_middleware", "< 0.9.0"
 gem 'jquery-ui-rails'
 
 group :test do
-  gem 'minitest', '~> 5.1'
-  gem 'minitest-rg', '~> 1.1'
+  gem 'minitest', '~> 5.5 '
+  gem 'minitest-rg', '~> 5.1'
   gem 'capybara-webkit', '~> 1.1'
   gem 'minitest-capybara', '~> 0.4'
-  gem 'minitest-spec-rails', '~> 5.1'
+  gem 'minitest-spec-rails', '~> 5.2'
   gem 'json_expressions', "~> 0.8"
   gem 'vcr'
   gem 'minitest-vcr'
