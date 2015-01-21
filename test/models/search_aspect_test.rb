@@ -19,6 +19,6 @@ describe "SearchAspect" do
     q = @aspect.add_clause( @query, prefs )
 
     q.to_json
-     .must_match_json_expression( {"foo:street" => {"@search" => {"@value" => "jklm","@property" => "foo_key:street"}}} )
+     .must_match_json_expression( {"@and" => [{"foo:street" => {"@search" => {"@value" => "( jklm )","@property" => "foo_key:street", "@limit" => 3000000}}}]} )
   end
 end

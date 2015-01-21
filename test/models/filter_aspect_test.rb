@@ -36,8 +36,8 @@ describe "FilterAspect" do
 
     q.to_json
      .must_match_json_expression(
-        {"foo:propertyType" => {
-          "@or" => [{"@eq" => {"@id" => "a"}}, {"@eq" => {"@id" => "b"}}]}
-        } )
+        {"@and" => [{"foo:propertyType" => {
+          "@oneof" => [{"@value" => "a"}, {"@value" => "b"}]}
+        }]} )
   end
 end
