@@ -48,6 +48,10 @@ class SearchResult
     @key ||= INDEX_KEY_PROPERTIES.map {|p| index_key_value( p )}
   end
 
+  def key_str
+    @key_str ||= key.join( '|' )
+  end
+
   def uri
     id_of( @result )
   end

@@ -176,7 +176,7 @@ describe "SearchResults" do
               PAD => {"@value" => "a-district"},
               PAT => {"@value" => "a-town"},
               PAS => {"@value" => "a-street"},
-              PAP => {"@value" => "a-paon"},
+              PAP => {"@value" => "b-paon"},
               PASN => {"@value" => ""},
               "ppd:pricePaid" => 101,
               "ppd:transactionDate" => {"@value" => "2013-01-01"}
