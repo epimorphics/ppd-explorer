@@ -49,18 +49,17 @@ class UserPreferences
     path_params = @params.merge( options )
     process_removes( path_params, remove )
 
-    path =
+    action =
       case controller
-      when :ppd
-        ppd_index_path( path_params )
-      when :search
-        search_index_path( path_params )
+      when :ppd, :search
+        :index
       when :ppd_data
-        ppd_data_path( path_params )
-
+        :show
       else
         raise "Do not know how to make path for #{controller}"
       end
+
+    path = url_for( path_params.merge( {controller: controller, action: action, only_path: true} ) )
 
     # this shouldn't be necessay if ENV[RAILS_RELATIVE_ROOT] was working correctly
     path.gsub( /^/, "#{ENV['RAILS_RELATIVE_URL_ROOT']}" )
