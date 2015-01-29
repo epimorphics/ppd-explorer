@@ -29,4 +29,11 @@ describe "SearchAspect" do
     q.to_json
      .must_match_json_expression( {"@and" => [{"foo:street" => {"@search" => {"@value" => "( there AND backagain )","@property" => "foo_key:street", "@limit" => 3000000}}}]} )
   end
+
+  it "should not generate a search expression that uses a double quote (issue-71)" do
+    prefs = UserPreferences.new( {"street" => "\""})
+    assert_raises( MalformedSearchError ) do
+      @aspect.add_clause( @query, prefs )
+    end
+  end
 end

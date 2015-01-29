@@ -90,28 +90,19 @@ class QueryCommand < DataService
   end
 
   def load_query_results( options = {} )
-    begin
-      ppd = dataset( :ppd )
-      query = assemble_query
+    ppd = dataset( :ppd )
+    query = assemble_query
 
-      if limit = query_limit
-        base_query = query
-        query = query.limit( limit )
-        count_query = base_query.count_only.limit( COUNT_LIMIT )
-      end
+    if limit = query_limit
+      base_query = query
+      query = query.limit( limit )
+      count_query = base_query.count_only.limit( COUNT_LIMIT )
+    end
 
-      save_results( ppd, query, options )
+    save_results( ppd, query, options )
 
-      if reached_count_limit?( limit )
-        add_count_information( ppd, count_query )
-      end
-    rescue => e
-      uuid = SecureRandom.uuid
-
-      Rails.logger.error "Query error #{uuid} ::: #{e.message}"
-      Rails.logger.error "Query error #{uuid} ::: #{e.backtrace.join("\n")}"
-
-      @error_message = "The log file reference for this error is: #{uuid}."
+    if reached_count_limit?( limit )
+      add_count_information( ppd, count_query )
     end
   end
 

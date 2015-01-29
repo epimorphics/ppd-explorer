@@ -32,11 +32,17 @@ class SearchAspect < Aspect
 
   # Sanitise input and convert to Lucene expression
   def text_index_term( preferences )
-    preference_value( preferences )
+    terms = preference_value( preferences )
         .gsub( /[[:punct:]]/, " " )
         .split( " " )
         .reject {|token| LUCENE_KEYWORDS.include?( token.downcase )}
         .reject {|token| token.empty?}
+
+    if terms.empty?
+      raise MalformedSearchError.new( "Sorry, '#{preference_value( preferences )}' is not a permissible search term" )
+    end
+
+    terms
         .join( " AND " )
         .gsub( /\A(.*)\Z/, '( \1 )' )
   end

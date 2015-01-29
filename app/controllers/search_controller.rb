@@ -11,17 +11,26 @@ class SearchController < ApplicationController
         redirect_to controller: :ppd, action: :index
       else
         start = Time.now
-        Rails.logger.debug "Using compact JSON = #{use_compact_json?}"
+
         @query_command = QueryCommand.new( @preferences, use_compact_json? )
         @query_command.load_query_results
         @time_taken = ((Time.now - start) * 1000).to_i
 
         render template: "ppd/error" unless @query_command.success?
       end
-    rescue => e
+    rescue MalformedSearchError => e
       uuid = SecureRandom.uuid
 
       Rails.logger.error "Top-level error trap in search_controller #{uuid}"
+      Rails.logger.error "Malformed search error #{uuid} ::: #{e.message}"
+
+      @error_message = "<span class='error bg-warning'>#{e.message}.</span><br />The log file reference for this error is: #{uuid}.".html_safe
+      render template: "ppd/error", status: 400
+
+    rescue => e
+      uuid = SecureRandom.uuid
+
+      Rails.logger.error "TTTTop-level error trap in search_controller #{uuid}"
       Rails.logger.error "Query error #{uuid} ::: #{e.message}"
       Rails.logger.error "Query error #{uuid} ::: #{e.backtrace.join("\n")}"
 
