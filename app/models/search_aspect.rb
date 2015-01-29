@@ -35,7 +35,7 @@ class SearchAspect < Aspect
     preference_value( preferences )
         .gsub( /[[:punct:]]/, " " )
         .split( " " )
-        .reject {|token| LUCENE_KEYWORDS.include?( token )}
+        .reject {|token| LUCENE_KEYWORDS.include?( token.downcase )}
         .reject {|token| token.empty?}
         .join( " AND " )
         .gsub( /\A(.*)\Z/, '( \1 )' )

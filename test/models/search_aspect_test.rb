@@ -23,7 +23,7 @@ describe "SearchAspect" do
   end
 
   it "should not generate a search expression that uses a Lucene keyword" do
-    prefs = UserPreferences.new( {"street" => "there and backagain"})
+    prefs = UserPreferences.new( {"street" => "there aNd backagain"})
     q = @aspect.add_clause( @query, prefs )
 
     q.to_json
