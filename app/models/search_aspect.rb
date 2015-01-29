@@ -2,7 +2,7 @@
 class SearchAspect < Aspect
   DEFAULT_LIMIT = 3000000
 
-  LUCENE_KEYWORDS = %w( and or not )
+  LUCENE_KEYWORDS = %w( and or not to )
 
   def add_clause( query, preferences )
     present?( preferences ) ? add_search_clause( query, preferences ) : query
