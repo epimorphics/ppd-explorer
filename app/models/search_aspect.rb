@@ -33,6 +33,7 @@ class SearchAspect < Aspect
   # Sanitise input and convert to Lucene expression
   def text_index_term( preferences )
     terms = preference_value( preferences )
+        .gsub( /([[:alnum:]])[[:punct:]]([[:alnum:]])/, "\\1\\2" )
         .gsub( /[[:punct:]]/, " " )
         .split( " " )
         .reject {|token| LUCENE_KEYWORDS.include?( token.downcase )}

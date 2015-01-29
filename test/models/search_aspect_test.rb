@@ -36,4 +36,12 @@ describe "SearchAspect" do
       @aspect.add_clause( @query, prefs )
     end
   end
+
+  it "should not tokenise terms when sanitising away punctuation" do
+    prefs = UserPreferences.new( {"street" => "augustine's"})
+    q = @aspect.add_clause( @query, prefs )
+
+    q.to_json
+     .must_match_json_expression( {"@and" => [{"foo:street" => {"@search" => {"@value" => "( augustines )","@property" => "foo_key:street", "@limit" => 3000000}}}]} )
+  end
 end
