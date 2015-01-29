@@ -2,6 +2,8 @@
 class SearchAspect < Aspect
   DEFAULT_LIMIT = 3000000
 
+  LUCENE_KEYWORDS = %w( and or not )
+
   def add_clause( query, preferences )
     present?( preferences ) ? add_search_clause( query, preferences ) : query
   end
@@ -33,6 +35,7 @@ class SearchAspect < Aspect
     preference_value( preferences )
         .gsub( /[[:punct:]]/, " " )
         .split( " " )
+        .reject {|token| LUCENE_KEYWORDS.include?( token )}
         .reject {|token| token.empty?}
         .join( " AND " )
         .gsub( /\A(.*)\Z/, '( \1 )' )

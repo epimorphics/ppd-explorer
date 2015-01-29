@@ -21,4 +21,12 @@ describe "SearchAspect" do
     q.to_json
      .must_match_json_expression( {"@and" => [{"foo:street" => {"@search" => {"@value" => "( jklm )","@property" => "foo_key:street", "@limit" => 3000000}}}]} )
   end
+
+  it "should not generate a search expression that uses a Lucene keyword" do
+    prefs = UserPreferences.new( {"street" => "there and backagain"})
+    q = @aspect.add_clause( @query, prefs )
+
+    q.to_json
+     .must_match_json_expression( {"@and" => [{"foo:street" => {"@search" => {"@value" => "( there AND backagain )","@property" => "foo_key:street", "@limit" => 3000000}}}]} )
+  end
 end
