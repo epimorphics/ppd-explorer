@@ -54,7 +54,11 @@ class Aspect
   def preference_value_date( preferences )
     s = preference_value( preferences )
     raise "No preference value" unless s
-    Date.parse( s )
+    begin
+      Date.parse( s )
+    rescue ArgumentError => e
+      throw MalformedSearchError.new( "'#{s}' is not a valid date" )
+    end
   end
 
   def key_as_label()
