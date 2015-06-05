@@ -30,8 +30,8 @@ class SearchController < ApplicationController
     rescue => e
       uuid = SecureRandom.uuid
 
-      Rails.logger.error "TTTTop-level error trap in search_controller #{uuid}"
-      Rails.logger.error "Query error #{uuid} ::: #{e.message}"
+      Rails.logger.error "Top-level error trap in search_controller #{uuid}"
+      Rails.logger.error "Query error #{uuid} ::: #{e.message} ::: #{e.class}"
       Rails.logger.error "Query error #{uuid} ::: #{e.backtrace.join("\n")}"
 
       @error_message = "The log file reference for this error is: #{uuid}."
