@@ -2,6 +2,8 @@
 class SearchResult
   attr_reader :result
 
+  PPD = "http://landregistry.data.gov.uk/def/ppi/"
+
   INDEX_KEY_PROPERTIES =
       %w(
         ppd:propertyAddressPostcode
@@ -168,6 +170,18 @@ class SearchResult
 
   def group_key
     GROUP_HEADING_PROPERTIES.map {|p| value_of_property p}
+  end
+
+
+  def formatted_transaction_category
+    case value_of_property( "ppd:transactionCategory" )
+    when "#{PPD}additionalPricePaidTransaction"
+      "Add"
+    when "#{PPD}standardPricePaidTransaction"
+      "Std"
+    else
+      ""
+    end
   end
 
   private

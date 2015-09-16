@@ -56,9 +56,18 @@
               %tr
                 %th{colspan: 3}
                   Transaction history
+              %tr.hidden
+                %th
+                  Transaction category
+                %th
+                  Date
+                %th
+                  Price
             %tbody
               - results.each do |result|
                 %tr
+                  %td
+                    = result.formatted_transaction_category
                   %td
                     = result.value_of_property( "ppd:transactionDate" )
                   %td.text-right
