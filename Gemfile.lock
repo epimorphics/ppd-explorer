@@ -60,10 +60,6 @@ GEM
       debug_inspector (>= 0.0.1)
     bootstrap-sass (3.1.0.2)
       sass (~> 3.2)
-    bootstrap-sass-rails (3.1.0.0)
-      bootstrap-sass (~> 3.1.0.0)
-      railties (>= 3.2.0)
-      sass-rails (>= 3.2.0)
     builder (3.2.2)
     capybara (2.5.0)
       mime-types (>= 1.16)
@@ -225,7 +221,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bootstrap-sass-rails
+  bootstrap-sass
   capybara-webkit (~> 1.1)
   data_services_api!
   faraday (~> 0.8.8)

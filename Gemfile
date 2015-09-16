@@ -23,7 +23,7 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 2.3'
 
 gem 'haml-rails'
-gem 'bootstrap-sass-rails'
+gem 'bootstrap-sass'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
