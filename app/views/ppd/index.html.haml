@@ -95,6 +95,21 @@
                   leasehold
 
       .form-group
+        %label.col-sm-4.control-label{ for: "et" } Transaction category
+        .col-sm-8
+          %ul.list-inline
+            %li
+              .checkbox
+                %label
+                  %input{ type: "checkbox", name: "et[]", value: "ppd:standardPricePaidTransaction", checked: @preferences.display_checked?( :tt, "ppd:standardPricePaidTransaction" ) }
+                  standard
+            %li
+              .checkbox
+                %label
+                  %input{ type: "checkbox", name: "et[]", value: "ppd:additionalPricePaidTransaction", checked: @preferences.display_checked?( :tt, "ppd:additionalPricePaidTransaction" ) }
+                  additional
+
+      .form-group
         %label.col-sm-4.control-label{ for: "min_price" } Minimum price
         .col-sm-8
           .row
