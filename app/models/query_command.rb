@@ -55,7 +55,7 @@ class QueryCommand < DataService
                                   values: %w{lrcommon:freehold lrcommon:leasehold},
                                   uri_value: true,
                                   presentation_label: "estate type" ),
-    tt:         FilterAspect.new( :tt,
+    tc:         FilterAspect.new( :tc,
                                   "ppd:transactionCategory",
                                   values: %w{ppd:standardPricePaidTransaction ppd:additionalPricePaidTransaction},
                                   uri_value: true,

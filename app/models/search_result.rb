@@ -176,11 +176,11 @@ class SearchResult
   def formatted_transaction_category
     case value_of_property( "ppd:transactionCategory" )
     when "#{PPD}additionalPricePaidTransaction"
-      "Add"
+      {display: "A", label: "Additional price paid transaction"}
     when "#{PPD}standardPricePaidTransaction"
-      "Std"
+      {display: "S", label: "Standard price paid transaction"}
     else
-      ""
+      {display: "", label: ""}
     end
   end
 

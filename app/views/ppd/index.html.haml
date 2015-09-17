@@ -95,18 +95,18 @@
                   leasehold
 
       .form-group
-        %label.col-sm-4.control-label{ for: "et" } Transaction category
+        %label.col-sm-4.control-label{ for: "tc" } Transaction category
         .col-sm-8
           %ul.list-inline
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "et[]", value: "ppd:standardPricePaidTransaction", checked: @preferences.display_checked?( :tt, "ppd:standardPricePaidTransaction" ) }
+                  %input{ type: "checkbox", name: "tc[]", value: "ppd:standardPricePaidTransaction", checked: @preferences.display_checked?( :tc, "ppd:standardPricePaidTransaction" ) }
                   standard
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "et[]", value: "ppd:additionalPricePaidTransaction", checked: @preferences.display_checked?( :tt, "ppd:additionalPricePaidTransaction" ) }
+                  %input{ type: "checkbox", name: "tc[]", value: "ppd:additionalPricePaidTransaction", checked: @preferences.display_checked?( :tc, "ppd:additionalPricePaidTransaction" ) }
                   additional
 
       .form-group

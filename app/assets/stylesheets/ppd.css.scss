@@ -240,6 +240,12 @@ $lr-footer-link: lighten( $lr-separator, 10 );
     border-radius: 5px;
   }
 
+  .transaction-category {
+    background-color: lighten( $lr-logo-grey, 20% );
+    padding: 3px;
+    border-radius: 3px;
+  }
+
   // buttons
   a.btn.btn-primary, a.btn.btn-primary:hover, a.btn.btn-primary:visited, button.btn-primary {
     background-color: $lr-headline;

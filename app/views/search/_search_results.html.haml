@@ -54,7 +54,7 @@
           %table.table
             %thead
               %tr
-                %th{colspan: 3}
+                %th{colspan: 4}
                   Transaction history
               %tr.hidden
                 %th
@@ -67,7 +67,8 @@
               - results.each do |result|
                 %tr
                   %td
-                    = result.formatted_transaction_category
+                    %span.transaction-category{title: result.formatted_transaction_category[:label]}
+                      = result.formatted_transaction_category[:display]
                   %td
                     = result.value_of_property( "ppd:transactionDate" )
                   %td.text-right
