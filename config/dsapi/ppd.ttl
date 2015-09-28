@@ -19,7 +19,6 @@
     dsapi:source "source1";
     dsapi:aspect
       [rdfs:label "transaction"              ; dsapi:property ppd:hasTransaction],
-      [rdfs:label "publish date"             ; dsapi:property ppd:publishDate],
       [rdfs:label "transaction date"         ; dsapi:property ppd:transactionDate],
       [rdfs:label "transaction ID"           ; dsapi:property ppd:transactionId],
       [rdfs:label "transaction category"     ; dsapi:property ppd:transactionCategory; dsapi:codeList ppd:transactionCategoryConceptScheme],
