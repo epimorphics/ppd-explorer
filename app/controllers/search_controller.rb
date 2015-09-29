@@ -18,25 +18,16 @@ class SearchController < ApplicationController
 
         render template: "ppd/error" unless @query_command.success?
       end
-    rescue MalformedSearchError => e
-      uuid = SecureRandom.uuid
+    rescue => err
+      e = err.cause || err
+      status = case e
+        when MalformedSearchError, ArgumentError
+          400
+        else
+          500
+        end
 
-      Rails.logger.error "Top-level error trap in search_controller #{uuid}"
-      Rails.logger.error "Malformed search error #{uuid} ::: #{e.message}"
-
-      @error_message = "<span class='error bg-warning'>#{e.message}.</span><br />The log file reference for this error is: #{uuid}.".html_safe
-      render template: "ppd/error", status: 400
-
-    rescue => e
-      uuid = SecureRandom.uuid
-
-      Rails.logger.error "Top-level error trap in search_controller #{uuid}"
-      Rails.logger.error "Query error #{uuid} ::: #{e.message} ::: #{e.class}"
-      Rails.logger.error "Query error #{uuid} ::: #{e.backtrace.join("\n")}"
-
-      @error_message = "The log file reference for this error is: #{uuid}."
-      render template: "ppd/error"
-
+      render_error( e, e.message, status )
     end
   end
 
@@ -46,5 +37,18 @@ class SearchController < ApplicationController
 
   def non_compact_formats
     ["text/turtle"]
+  end
+
+  :private
+
+  def render_error( e, message, status, template = "ppd/error" )
+    uuid = SecureRandom.uuid
+
+    Rails.logger.error "#{e.class.name} error #{uuid} ::: #{message} ::: #{e.class}"
+    Rails.logger.error "Query error #{uuid} ::: #{e.backtrace.join("\n")}" if Rails.application.config.consider_all_requests_local
+
+    @error_message = "<span class='error bg-warning'>#{message}.</span><br />The log file reference for this error is: #{uuid}.".html_safe
+    render( template: template, status: status )
+
   end
 end
