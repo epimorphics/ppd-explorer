@@ -10,7 +10,7 @@ class PpdDataController < ApplicationController
 
     if is_explanation?
       explanation = ExplainCommand.new( @preferences).load_explanation
-      redirect_to "/app/hpi/qonsole?query=#{URI::encode( explanation[:sparql])}"
+      redirect_to "/app/hpi/qonsole?q=#{URI::encode( explanation[:sparql])}"
     else
       if is_data_request?
         @query_command = QueryCommand.new( @preferences )
