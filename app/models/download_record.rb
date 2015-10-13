@@ -24,7 +24,9 @@ class DownloadRecord
              "lrcommon:terraced" => "T",
              "http://landregistry.data.gov.uk/def/common/terraced" => "T",
              "lrcommon:flat-maisonette" => "F",
-             "http://landregistry.data.gov.uk/def/common/flat-maisonette" => "F"
+             "http://landregistry.data.gov.uk/def/common/flat-maisonette" => "F",
+             "lrcommon:non-residential" => "O",
+             "http://landregistry.data.gov.uk/def/common/non-residential" => "O"
             },
      header: "property_type"
     },

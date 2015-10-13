@@ -41,7 +41,7 @@ class QueryCommand < DataService
                                   aspect_key_property: "ppd:propertyAddressPostcode" ),
     ptype:      FilterAspect.new( :ptype,
                                   "ppd:propertyType",
-                                  values: %w{lrcommon:detached lrcommon:semi-detached lrcommon:terraced lrcommon:flat-maisonette },
+                                  values: %w{lrcommon:detached lrcommon:semi-detached lrcommon:terraced lrcommon:flat-maisonette lrcommon:non-residential },
                                   uri_value: true,
                                   presentation_label: "property type" ),
     nb:         FilterAspect.new( :nb,
