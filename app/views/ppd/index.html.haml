@@ -66,8 +66,8 @@
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ptype[]", value: "lrcommon:non-residential", checked: @preferences.display_checked?( :ptype, "lrcommon:non-residential") }
-                  non-residential
+                  %input{ type: "checkbox", name: "ptype[]", value: "lrcommon:non-residential", checked: @preferences.display_checked?( :ptype, "lrcommon:other") }
+                  other
 
       .form-group
         %label.col-sm-4.control-label{ for: "nb" } New build?
