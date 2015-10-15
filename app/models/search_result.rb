@@ -111,7 +111,7 @@ class SearchResult
 
   def property_type
     pt = id_of_property( "ppd:propertyType" )
-    {uri: pt, label: without_leading_segment( pt )}
+    {uri: pt, label: without_leading_segment( pt ).underscore.humanize.downcase}
   end
 
   def estate_type
