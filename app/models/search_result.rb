@@ -111,7 +111,15 @@ class SearchResult
 
   def property_type
     pt = id_of_property( "ppd:propertyType" )
-    {uri: pt, label: without_leading_segment( pt ).underscore.humanize.downcase}
+    {uri: pt, label: property_type_label}
+  end
+
+  # TODO workaround for DsAPI bug - should have access to the @label
+  def property_type_label
+    pt = id_of_property( "ppd:propertyType" )
+    pt_label = without_leading_segment( pt ).underscore.humanize.downcase
+
+    pt_label.gsub( / property type/, "" )
   end
 
   def estate_type
