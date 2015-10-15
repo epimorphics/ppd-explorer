@@ -40,7 +40,7 @@ class UserPreferences
   # Return true if there are no params set
   def empty?
     QueryCommand::ASPECTS.keys.reduce( true ) do |acc, aspect_name|
-      acc && !present?( aspect_name, param( aspect_name ) )
+      acc && !present?( aspect_name )
     end
   end
 
