@@ -63,6 +63,11 @@
                 %label
                   %input{ type: "checkbox", name: "ptype[]", value: "lrcommon:flat-maisonette", checked: @preferences.display_checked?( :ptype, "lrcommon:flat-maisonette") }
                   flat/maisonette
+            %li
+              .checkbox
+                %label
+                  %input{ type: "checkbox", name: "ptype[]", value: "lrcommon:otherPropertyType", checked: @preferences.display_checked?( :ptype, "lrcommon:otherPropertyType") }
+                  other
 
       .form-group
         %label.col-sm-4.control-label{ for: "nb" } New build?
@@ -93,6 +98,21 @@
                 %label
                   %input{ type: "checkbox", name: "et[]", value: "lrcommon:leasehold", checked: @preferences.display_checked?( :et, "lrcommon:leasehold" ) }
                   leasehold
+
+      .form-group
+        %label.col-sm-4.control-label{ for: "tc" } Transaction category
+        .col-sm-8
+          %ul.list-inline
+            %li
+              .checkbox
+                %label
+                  %input{ type: "checkbox", name: "tc[]", value: "ppd:standardPricePaidTransaction", checked: @preferences.display_checked?( :tc, "ppd:standardPricePaidTransaction" ) }
+                  standard
+            %li
+              .checkbox
+                %label
+                  %input{ type: "checkbox", name: "tc[]", value: "ppd:additionalPricePaidTransaction", checked: @preferences.display_checked?( :tc, "ppd:additionalPricePaidTransaction" ) }
+                  additional
 
       .form-group
         %label.col-sm-4.control-label{ for: "min_price" } Minimum price

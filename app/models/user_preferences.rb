@@ -40,7 +40,7 @@ class UserPreferences
   # Return true if there are no params set
   def empty?
     QueryCommand::ASPECTS.keys.reduce( true ) do |acc, aspect_name|
-      acc && !present?( aspect_name, param( aspect_name ) )
+      acc && !present?( aspect_name )
     end
   end
 
@@ -60,9 +60,6 @@ class UserPreferences
       end
 
     path = url_for( path_params.merge( {controller: controller, action: action, only_path: true} ) )
-
-    # this shouldn't be necessay if ENV[RAILS_RELATIVE_ROOT] was working correctly
-    path.gsub( /^/, "#{ENV['RAILS_RELATIVE_URL_ROOT']}" )
   end
 
   # Return true if a given option should be displayed as checked, given the
