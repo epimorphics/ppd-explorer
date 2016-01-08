@@ -46,7 +46,7 @@
                   %a{ href: "#{relative_root}/ppd", class: ppd_active }
                     Price Paid Data
                 %li
-                  %a{ href: "#{relative_root}/stdreps", class: stdreports_active }
+                  %a{ href: "#{relative_root.gsub(/ppd/, "stdreps")}", class: stdreports_active }
                     Standard Reports
                 %li
                   %a{ href: "#{relative_root.gsub(/ppd/, "hpi/qonsole")}", class: qonsole_active }
