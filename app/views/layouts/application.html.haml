@@ -45,9 +45,9 @@
                 %li
                   %a{ href: "#{relative_root}/ppd", class: ppd_active }
                     Price Paid Data
-                -# %li
-                -#   %a{ href: "#{relative_root.gsub(/ppd/, "standard-reports")}", class: stdreports_active }
-                -#     Standard Reports
+                %li
+                  %a{ href: "#{relative_root.gsub(/ppd/, "standard-reports")}", class: stdreports_active }
+                    Standard Reports
                 %li
                   %a{ href: "#{relative_root.gsub(/ppd/, "hpi/qonsole")}", class: qonsole_active }
                     SPARQL query
