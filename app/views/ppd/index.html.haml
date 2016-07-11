@@ -159,17 +159,20 @@
         .col-sm-8
           %ul.list-inline
             %li
-              %label.radio
-                %input{ type: "radio", name: :limit, value: "100", checked: @preferences.selected_limit == "100" }
-                at most 100
+              .radio
+                %label
+                  %input{ type: "radio", name: :limit, value: "100", checked: @preferences.selected_limit == "100" }
+                  at most 100
             %li
-              %label.radio
-                %input{ type: "radio", name: :limit, value: "1000", checked: @preferences.selected_limit == "1000" }
-                at most 1000
+              .radio
+                %label
+                  %input{ type: "radio", name: :limit, value: "1000", checked: @preferences.selected_limit == "1000" }
+                  at most 1000
             %li
-              %label.radio
-                %input{ type: "radio", name: :limit, value: "all", checked: @preferences.selected_limit == "all" }
-                all
+              .radio
+                %label
+                  %input{ type: "radio", name: :limit, value: "all", checked: @preferences.selected_limit == "all" }
+                  all
       .col-sm-12
         .pull-right
           %a.js.hidden.btn.btn-default{ href: "http://www.youtube.com/watch?v=g15OQ4j-bnA", target: "_", alt: "Video tutorial", title: "Video tutorial" }
