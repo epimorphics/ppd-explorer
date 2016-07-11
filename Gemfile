@@ -41,9 +41,10 @@ end
 
 gem 'govuk_frontend_toolkit', github: "alphagov/govuk_frontend_toolkit_gem", :submodules => true
 gem 'data_services_api', git: "git@github.com:epimorphics/ds-api-ruby.git"
+gem 'yajl-ruby', require: 'yajl'
 gem 'font-awesome-rails'
-gem 'faraday', '~> 0.8.8'
-gem "faraday_middleware", "< 0.9.0"
+gem 'faraday', '~> 0.9.2'
+gem "faraday_middleware", "~> 0.10.0"
 gem 'jquery-ui-rails'
 
 group :test do
