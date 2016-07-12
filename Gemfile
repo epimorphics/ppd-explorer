@@ -33,19 +33,18 @@ end
 # gem 'debugger', group: [:development, :test]
 group :development do
   gem 'rb-readline'
-  gem 'pry'
-  gem 'pry-stack_explorer'
+  gem 'byebug'
   gem 'quiet_assets'
 end
 
 
-gem 'govuk_frontend_toolkit', github: "alphagov/govuk_frontend_toolkit_gem", :submodules => true
 gem 'data_services_api', git: "git@github.com:epimorphics/ds-api-ruby.git"
 gem 'yajl-ruby', require: 'yajl'
 gem 'font-awesome-rails'
 gem 'faraday', '~> 0.9.2'
 gem "faraday_middleware", "~> 0.10.0"
 gem 'jquery-ui-rails'
+gem 'lr_common_styles', github: "epimorphics/lr_common_styles"
 
 group :test do
   gem 'minitest', '~> 5.5 '
