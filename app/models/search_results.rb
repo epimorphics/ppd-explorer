@@ -83,6 +83,7 @@ class SearchResults
 
   # TODO DRY
   def traverse_property_addresses( index, &block )
+    begin
     index.keys.sort.each do |key|
       v = index[key]
 
@@ -91,6 +92,9 @@ class SearchResults
       else
         yield v.sort.reverse
       end
+    end
+    rescue Exception => e
+      byebug
     end
   end
 

@@ -70,9 +70,9 @@
                     %span.transaction-category{title: result.formatted_transaction_category[:label]}
                       = result.formatted_transaction_category[:display]
                   %td
-                    = result.value_of_property( "ppd:transactionDate" )
+                    = result.value_of_property( :"ppd:transactionDate" )
                   %td.text-right
-                    = number_to_currency( result.value_of_property( "ppd:pricePaid" ), locale: "en", precision: 0, unit: "&pound;".html_safe )
+                    = number_to_currency( result.value_of_property( :"ppd:pricePaid" ), locale: "en", precision: 0, unit: "&pound;".html_safe )
                   %td.transaction-url
                     %a{ href: result.value_of_property("@id") }
                       %i.fa.fa-external-link

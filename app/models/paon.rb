@@ -49,7 +49,7 @@ class Paon < String
   end
 
   def self.to_paon( s )
-    s.is_a?( Paon ) ? s : Paon.new( s )
+    s.is_a?( Paon ) ? s : Paon.new( s.to_s )
   end
 
   # private

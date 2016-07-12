@@ -46,27 +46,27 @@
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ptype[]", value: "lrcommon:detached", checked: @preferences.display_checked?( :ptype, "lrcommon:detached") }
+                  %input{ type: "checkbox", name: "ptype[]", value: :"lrcommon:detached", checked: @preferences.display_checked?( :ptype, "lrcommon:detached") }
                   detached
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ptype[]", value: "lrcommon:semi-detached", checked: @preferences.display_checked?( :ptype, "lrcommon:semi-detached") }
+                  %input{ type: "checkbox", name: "ptype[]", value: :"lrcommon:semi-detached", checked: @preferences.display_checked?( :ptype, "lrcommon:semi-detached") }
                   semi-detached
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ptype[]", value: "lrcommon:terraced", checked: @preferences.display_checked?( :ptype, "lrcommon:terraced") }
+                  %input{ type: "checkbox", name: "ptype[]", value: :"lrcommon:terraced", checked: @preferences.display_checked?( :ptype, "lrcommon:terraced") }
                   terraced
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ptype[]", value: "lrcommon:flat-maisonette", checked: @preferences.display_checked?( :ptype, "lrcommon:flat-maisonette") }
+                  %input{ type: "checkbox", name: "ptype[]", value: :"lrcommon:flat-maisonette", checked: @preferences.display_checked?( :ptype, "lrcommon:flat-maisonette") }
                   flat/maisonette
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "ptype[]", value: "lrcommon:otherPropertyType", checked: @preferences.display_checked?( :ptype, "lrcommon:otherPropertyType") }
+                  %input{ type: "checkbox", name: "ptype[]", value: :"lrcommon:otherPropertyType", checked: @preferences.display_checked?( :ptype, "lrcommon:otherPropertyType") }
                   other
 
       .form-group
@@ -91,12 +91,12 @@
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "et[]", value: "lrcommon:freehold", checked: @preferences.display_checked?( :et, "lrcommon:freehold" ) }
+                  %input{ type: "checkbox", name: "et[]", value: :"lrcommon:freehold", checked: @preferences.display_checked?( :et, :"lrcommon:freehold" ) }
                   freehold
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "et[]", value: "lrcommon:leasehold", checked: @preferences.display_checked?( :et, "lrcommon:leasehold" ) }
+                  %input{ type: "checkbox", name: "et[]", value: :"lrcommon:leasehold", checked: @preferences.display_checked?( :et, :"lrcommon:leasehold" ) }
                   leasehold
 
       .form-group
@@ -106,12 +106,12 @@
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "tc[]", value: "ppd:standardPricePaidTransaction", checked: @preferences.display_checked?( :tc, "ppd:standardPricePaidTransaction" ) }
+                  %input{ type: "checkbox", name: "tc[]", value: :"ppd:standardPricePaidTransaction", checked: @preferences.display_checked?( :tc, :"ppd:standardPricePaidTransaction" ) }
                   standard
             %li
               .checkbox
                 %label
-                  %input{ type: "checkbox", name: "tc[]", value: "ppd:additionalPricePaidTransaction", checked: @preferences.display_checked?( :tc, "ppd:additionalPricePaidTransaction" ) }
+                  %input{ type: "checkbox", name: "tc[]", value: :"ppd:additionalPricePaidTransaction", checked: @preferences.display_checked?( :tc, :"ppd:additionalPricePaidTransaction" ) }
                   additional
 
       .form-group
