@@ -45,6 +45,7 @@ gem 'faraday', '~> 0.9.2'
 gem "faraday_middleware", "~> 0.10.0"
 gem 'jquery-ui-rails'
 gem 'lr_common_styles', github: "epimorphics/lr_common_styles"
+# gem 'lr_common_styles', path: '/home/ian/workspace/land-registry/lr_common_styles'
 
 group :test do
   gem 'minitest', '~> 5.5 '
