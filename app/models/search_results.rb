@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SearchResults
   include ActionView::Helpers::TextHelper
   attr_reader :index, :transactions, :max_results_limit_hit

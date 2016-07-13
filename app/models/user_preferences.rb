@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Model to encapsulate user's search preferences
 class UserPreferences
   include Rails.application.routes.url_helpers

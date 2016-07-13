@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Adapter pattern for search result, which presents a linked-data
 # resource in the standard format LR use for downloading PPD results
 class DownloadRecord

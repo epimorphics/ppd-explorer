@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PpdHelper
 
   def address_detail_header( aspect, result )

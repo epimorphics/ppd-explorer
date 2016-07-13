@@ -16,9 +16,8 @@ GIT
       rails (~> 4.2.6)
       sass-rails (~> 5.0.4)
 
-GIT
-  remote: git@github.com:epimorphics/ds-api-ruby.git
-  revision: 189d6f6b1254e20be4c4f0be3fc5fd5ee24fa73d
+PATH
+  remote: /home/ian/workspace/epimorphics/ds-api-ruby
   specs:
     data_services_api (0.3.1)
       faraday_middleware
