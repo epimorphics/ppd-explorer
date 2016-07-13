@@ -91,13 +91,13 @@ class SearchResults
       if v.kind_of?( Hash )
         traverse_property_addresses( v, &block )
       else
-        yield v.sort.reverse
+        yield v.sort!.reverse
       end
     end
   end
 
   def traverse_in_date_order( search_results, &block )
-    st = search_results.sort
+    st = search_results.sort!
     st.reverse.each &block
   end
 end
