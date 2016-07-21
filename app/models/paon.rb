@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # LR PAONs, which are strings with a custom sort order
 class Paon < String
   def <=>( paon1 )

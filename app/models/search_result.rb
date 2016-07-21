@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # An individual result returned from the search service
 class SearchResult
   attr_reader :result

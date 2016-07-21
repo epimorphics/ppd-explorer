@@ -14,9 +14,19 @@ class SearchController < ApplicationController
 
         @query_command = QueryCommand.new( @preferences, use_compact_json? )
         @query_command.load_query_results
-        @time_taken = ((Time.now - start) * 1000).to_i
+        after_query = Time.now
+        @time_taken = ((after_query - start) * 1000).to_i
+        Rails.logger.debug "Time taken for query phase: #{@time_taken}ms"
 
-        render template: "ppd/error" unless @query_command.success?
+        if @query_command.success?
+          begin
+            render stream: true
+          ensure
+            Rails.logger.debug "Time taken for render phase: #{((Time.now - after_query) * 1000).to_i}ms"
+          end
+        else
+          render template: "ppd/error"
+        end
       end
     rescue => err
       e = err.cause || err

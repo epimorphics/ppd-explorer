@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Base class to represent an aspect that the user can query for
 class Aspect
   attr_reader :aspect_property, :key, :options

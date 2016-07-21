@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # An aspect class that adds a search query term
 class SearchAspect < Aspect
   DEFAULT_LIMIT = 3000000

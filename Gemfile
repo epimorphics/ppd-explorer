@@ -44,7 +44,8 @@ end
 
 
 # gem 'data_services_api', git: "git@github.com:epimorphics/ds-api-ruby.git"
-gem 'data_services_api', path: '/home/ian/workspace/epimorphics/ds-api-ruby'
+gem 'data_services_api', git: "git@github.com:epimorphics/ds-api-ruby.git"
+# gem 'data_services_api', path: "/home/ian/workspace/epimorphics/ds-api-ruby"
 gem 'yajl-ruby', require: 'yajl'
 gem 'font-awesome-rails'
 gem 'faraday', '~> 0.9.2'
