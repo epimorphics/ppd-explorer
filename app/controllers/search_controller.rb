@@ -20,7 +20,7 @@ class SearchController < ApplicationController
 
         if @query_command.success?
           begin
-            render stream: true
+            render
           ensure
             Rails.logger.debug "Time taken for render phase: #{((Time.now - after_query) * 1000).to_i}ms"
           end

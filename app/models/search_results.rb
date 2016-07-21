@@ -96,7 +96,8 @@ class SearchResults
       end
     end
     rescue Exception => e
-      Rails.log.debug "Error in search_results: #{e.inspect}"
+      byebug
+      Rails.logger.debug "Error in search_results: #{e.inspect}"
     end
   end
 

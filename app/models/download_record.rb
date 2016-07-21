@@ -6,79 +6,79 @@ class DownloadRecord
   attr_reader :search_result
 
   DOWNLOAD_COLUMNS = [
-    {aspect_property: :"ppd:transactionId",
-     header: :"unique_id"
+    {aspect_property: "ppd:transactionId",
+     header: "unique_id"
     },
-    {aspect_property: :"ppd:pricePaid",
-     header: :"price_paid"
+    {aspect_property: "ppd:pricePaid",
+     header: "price_paid"
     },
-    {aspect_property: :"ppd:transactionDate",
-     header: :"deed_date"
+    {aspect_property: "ppd:transactionDate",
+     header: "deed_date"
     },
-    {aspect_property: :"ppd:propertyAddressPostcode",
-     header: :"postcode"
+    {aspect_property: "ppd:propertyAddressPostcode",
+     header: "postcode"
     },
-    {aspect_property: :"ppd:propertyType",
-     codes: {:"lrcommon:detached" => "D",
-             :"http://landregistry.data.gov.uk/def/common/detached" => "D",
-             :"lrcommon:semi-detached" => "S",
-             :"http://landregistry.data.gov.uk/def/common/semi-detached" => "S",
-             :"lrcommon:terraced" => "T",
-             :"http://landregistry.data.gov.uk/def/common/terraced" => "T",
-             :"lrcommon:flat-maisonette" => "F",
-             :"http://landregistry.data.gov.uk/def/common/flat-maisonette" => "F",
-             :"lrcommon:otherPropertyType" => "O",
-             :"http://landregistry.data.gov.uk/def/common/otherPropertyType" => "O"
+    {aspect_property: "ppd:propertyType",
+     codes: {"lrcommon:detached" => "D",
+             "http://landregistry.data.gov.uk/def/common/detached" => "D",
+             "lrcommon:semi-detached" => "S",
+             "http://landregistry.data.gov.uk/def/common/semi-detached" => "S",
+             "lrcommon:terraced" => "T",
+             "http://landregistry.data.gov.uk/def/common/terraced" => "T",
+             "lrcommon:flat-maisonette" => "F",
+             "http://landregistry.data.gov.uk/def/common/flat-maisonette" => "F",
+             "lrcommon:otherPropertyType" => "O",
+             "http://landregistry.data.gov.uk/def/common/otherPropertyType" => "O"
             },
-     header: :"property_type"
+     header: "property_type"
     },
-    {aspect_property: :"ppd:newBuild",
-     codes: {:"true" => :"Y",
-             true => :"Y",
-             :"false" => :"N",
-             false => :"N"
+    {aspect_property: "ppd:newBuild",
+     codes: {"true" => "Y",
+             true => "Y",
+             "false" => "N",
+             false => "N"
             },
-     header: :"new_build"
+     header: "new_build"
     },
-    {aspect_property: :"ppd:estateType",
-     codes: {:"lrcommon:freehold" => "F",
-             :"http://landregistry.data.gov.uk/def/common/freehold" => "F",
-             :"lrcommon:leasehold" => "L",
-             :"http://landregistry.data.gov.uk/def/common/leasehold" => "L"
+    {aspect_property: "ppd:estateType",
+     codes: {"lrcommon:freehold" => "F",
+             "http://landregistry.data.gov.uk/def/common/freehold" => "F",
+             "lrcommon:leasehold" => "L",
+             "http://landregistry.data.gov.uk/def/common/leasehold" => "L"
             },
-     header: :"estate_type"
+     header: "estate_type"
     },
-    {aspect_property: :"ppd:propertyAddressSaon",
-     header: :"saon"
+    {aspect_property: "ppd:propertyAddressSaon",
+     header: "saon"
     },
-    {aspect_property: :"ppd:propertyAddressPaon",
-     header: :"paon"
+    {aspect_property: "ppd:propertyAddressPaon",
+     header: "paon"
     },
-    {aspect_property: :"ppd:propertyAddressStreet",
-     header: :"street"
+    {aspect_property: "ppd:propertyAddressStreet",
+     header: "street"
     },
-    {aspect_property: :"ppd:propertyAddressLocality",
-     header: :"locality"
+    {aspect_property: "ppd:propertyAddressLocality",
+     header: "locality"
     },
-    {aspect_property: :"ppd:propertyAddressTown",
-     header: :"town"
+    {aspect_property: "ppd:propertyAddressTown",
+     header: "town"
     },
-    {aspect_property: :"ppd:propertyAddressDistrict",
-     header: :"district"
+    {aspect_property: "ppd:propertyAddressDistrict",
+     header: "district"
     },
-    {aspect_property: :"ppd:propertyAddressCounty",
-     header: :"county"
+    {aspect_property: "ppd:propertyAddressCounty",
+     header: "county"
     },
-    {aspect_property: :"ppd:transactionCategory",
-     codes: {:"ppd:standardPricePaidTransaction" => "A",
-             :"http://landregistry.data.gov.uk/def/ppi/standardPricePaidTransaction" => "A",
-             :"ppd:additionalPricePaidTransaction" => "B",
-             :"http://landregistry.data.gov.uk/def/ppi/additionalPricePaidTransaction" => "B"
+    {aspect_property: "ppd:transactionCategory",
+     codes: {"ppd:standardPricePaidTransaction" => "A",
+             "http://landregistry.data.gov.uk/def/ppi/standardPricePaidTransaction" => "A",
+             "ppd:additionalPricePaidTransaction" => "B",
+             "http://landregistry.data.gov.uk/def/ppi/additionalPricePaidTransaction" => "B"
             },
-     header: :"transaction_category"
+     header: "transaction_category"
     },
-    {aspect_property: :"@id",
-     header: :"linked_data_uri"
+    {aspect_property: "@id",
+     header: "linked_data_uri"
     },
   ]
 

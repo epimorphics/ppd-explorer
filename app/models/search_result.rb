@@ -7,7 +7,7 @@ class SearchResult
   PPD = "http://landregistry.data.gov.uk/def/ppi/"
 
   INDEX_KEY_PROPERTIES =
-      %i(
+      %w(
         ppd:propertyAddressPostcode
         ppd:propertyAddressCounty
         ppd:propertyAddressDistrict
@@ -18,7 +18,7 @@ class SearchResult
       )
 
   DETAILED_ADDRESS_PROPERTIES =
-      %i(
+      %w(
         ppd:propertyAddressSaon
         ppd:propertyAddressPaon
         ppd:propertyAddressStreet
@@ -35,7 +35,7 @@ class SearchResult
     end
 
   GROUP_HEADING_PROPERTIES =
-    %i(
+    %w(
       ppd:propertyAddressStreet
       ppd:propertyAddressTown
       ppd:propertyAddressCounty
@@ -73,7 +73,7 @@ class SearchResult
 
     if is_no_value?( v )
       nil
-    elsif p == :"ppd:propertyAddressPaon"
+    elsif p == "ppd:propertyAddressPaon"
       format_paon_elements( v ).join( ' ' ).html_safe
     elsif title_case_exception?( p )
       v
@@ -83,20 +83,20 @@ class SearchResult
   end
 
   def paon
-    p = value_of( :"ppd:propertyAddressPaon" )
+    p = value_of( "ppd:propertyAddressPaon" )
     is_no_value?( p ) ? nil : p
   end
 
   def paon=( p )
-    if @result[:"ppd:propertyAddressPaon"].kind_of?( Array )
-      @result[:"ppd:propertyAddressPaon"][0]["@value"] = p
+    if @result["ppd:propertyAddressPaon"].kind_of?( Array )
+      @result["ppd:propertyAddressPaon"][0]["@value"] = p
     else
-      @result[:"ppd:propertyAddressPaon"] = p
+      @result["ppd:propertyAddressPaon"] = p
     end
   end
 
   def transaction_date
-    @transaction_date ||= Date.parse( value_of_property( :"ppd:transactionDate" ))
+    @transaction_date ||= Date.parse( value_of_property( "ppd:transactionDate" ))
   end
 
   def id_of_property( p )
@@ -112,25 +112,25 @@ class SearchResult
   end
 
   def property_type
-    pt = id_of_property( :"ppd:propertyType" )
+    pt = id_of_property( "ppd:propertyType" )
     {uri: pt, label: property_type_label}
   end
 
   # TODO workaround for DsAPI bug - should have access to the @label
   def property_type_label
-    pt = id_of_property( :"ppd:propertyType" )
+    pt = id_of_property( "ppd:propertyType" )
     pt_label = without_leading_segment( pt ).underscore.humanize.downcase
 
     pt_label.gsub( / property type/, "" )
   end
 
   def estate_type
-    et = id_of_property( :"ppd:estateType" )
+    et = id_of_property( "ppd:estateType" )
     {uri: et, label: without_leading_segment( et )}
   end
 
   def new_build?
-    nb = value_of_property( :"ppd:newBuild" )
+    nb = value_of_property( "ppd:newBuild" )
     return !(nb == "false" || nb == false || nb == "no_value")
   end
 
@@ -145,17 +145,17 @@ class SearchResult
   def formatted_address
     fields = []
 
-    if saon = presentation_value_of_property( :"ppd:propertyAddressSaon" )
+    if saon = presentation_value_of_property( "ppd:propertyAddressSaon" )
       fields << "#{saon},"
     end
 
-    if (paon = value_of_property( :"ppd:propertyAddressPaon" )) && paon != "no_value"
+    if (paon = value_of_property( "ppd:propertyAddressPaon" )) && paon != "no_value"
       paon_tokens = format_paon_elements( paon )
       comma_not_needed = paon_tokens.last =~ /\d/
       fields << "#{paon_tokens.join(' ')}#{comma_not_needed ? "" : ","}"
     end
 
-    %i(
+    %w(
       ppd:propertyAddressStreet
       ppd:propertyAddressTown
     ).each do |p|
@@ -164,7 +164,7 @@ class SearchResult
       end
     end
 
-    if (postcode = value_of_property( :"ppd:propertyAddressPostcode" )) && postcode != "no_value"
+    if (postcode = value_of_property( "ppd:propertyAddressPostcode" )) && postcode != "no_value"
       fields << postcode
     end
 
@@ -184,7 +184,7 @@ class SearchResult
 
 
   def formatted_transaction_category
-    case value_of_property( :"ppd:transactionCategory" )
+    case value_of_property( "ppd:transactionCategory" )
     when "#{PPD}additionalPricePaidTransaction"
       {display: "B", label: "Additional price paid transaction"}
     when "#{PPD}standardPricePaidTransaction"
@@ -197,7 +197,7 @@ class SearchResult
   private
 
   def index_key_value( p )
-    v = @result[p.to_sym]
+    v = @result[p]
     return "no_value" unless v
     return "no_value" if empty_string?( v )
     value_of( v )
@@ -208,7 +208,7 @@ class SearchResult
       v = v.empty? ? "no_value" : v.first
     end
 
-    v = (v["@value"] || v[:"@value"] || "no_value") if v.kind_of?( Hash )
+    v = (v["@value"] || v["@value"] || "no_value") if v.kind_of?( Hash )
     empty_string?( v ) ? "no_value" : v
   end
 
@@ -217,7 +217,7 @@ class SearchResult
       v = v.empty? ? "no_value" : v.first
     end
 
-    v = (v["@id"] || v[:"@id"] || "no_value") if v.kind_of?( Hash )
+    v = (v["@id"] || v["@id"] || "no_value") if v.kind_of?( Hash )
     empty_string?( v ) ? "no_value" : v
   end
 
