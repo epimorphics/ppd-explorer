@@ -55,13 +55,14 @@ gem 'lr_common_styles', github: "epimorphics/lr_common_styles"
 # gem 'lr_common_styles', path: '/home/ian/workspace/land-registry/lr_common_styles'
 
 group :test do
-  gem 'minitest', '~> 5.5 '
-  gem 'minitest-rg', '~> 5.1'
-  gem 'capybara-webkit', '~> 1.1'
-  gem 'minitest-capybara', '~> 0.4'
-  gem 'minitest-spec-rails', '~> 5.2'
+  gem 'minitest-spec-rails'
+  gem 'minitest-rails-capybara'
+  gem 'minitest-reporters'
+  gem 'capybara_minitest_spec'
+  gem 'mocha'
   gem 'json_expressions', "~> 0.8"
   gem 'vcr'
   gem 'minitest-vcr'
   gem 'webmock'
+  gem 'simplecov', :require => false
 end
