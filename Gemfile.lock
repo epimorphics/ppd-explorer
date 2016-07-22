@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/epimorphics/lr_common_styles.git
-  revision: dabb620191bccdb1f6cb620e523be5e3648d44c3
+  revision: 9b7f67666ce7fbb7bb5a3fb3c582da0fa3c8eab0
   specs:
-    lr_common_styles (1.1.0)
+    lr_common_styles (1.2.0)
       bootstrap-sass (~> 3.3.6)
       font-awesome-rails (~> 4.6.3.0)
       govuk_elements_rails (~> 1.1.2)
@@ -120,7 +120,7 @@ GEM
       nokogiri (~> 1.6.0)
       ruby_parser (~> 3.5)
     i18n (0.7.0)
-    jbuilder (2.5.0)
+    jbuilder (2.6.0)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
     jquery-rails (4.1.1)
@@ -218,7 +218,7 @@ GEM
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
     sexp_processor (4.7.0)
-    sprockets (3.6.3)
+    sprockets (3.7.0)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
     sprockets-rails (3.1.1)
