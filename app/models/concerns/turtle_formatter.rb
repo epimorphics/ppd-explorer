@@ -23,7 +23,7 @@ module TurtleFormatter
   def format_ttl_value( v )
     f =
       if v == nil
-        nil
+        ""
       elsif v.is_a?( Array )
         v.map {|v| format_ttl_value v} .join( ", " )
       elsif v.is_a? Numeric
