@@ -2,6 +2,8 @@
 class SearchResult
   attr_reader :result
 
+  PPD = "http://landregistry.data.gov.uk/def/ppi/"
+
   INDEX_KEY_PROPERTIES =
       %w(
         ppd:propertyAddressPostcode
@@ -109,7 +111,15 @@ class SearchResult
 
   def property_type
     pt = id_of_property( "ppd:propertyType" )
-    {uri: pt, label: without_leading_segment( pt )}
+    {uri: pt, label: property_type_label}
+  end
+
+  # TODO workaround for DsAPI bug - should have access to the @label
+  def property_type_label
+    pt = id_of_property( "ppd:propertyType" )
+    pt_label = without_leading_segment( pt ).underscore.humanize.downcase
+
+    pt_label.gsub( / property type/, "" )
   end
 
   def estate_type
@@ -168,6 +178,18 @@ class SearchResult
 
   def group_key
     GROUP_HEADING_PROPERTIES.map {|p| value_of_property p}
+  end
+
+
+  def formatted_transaction_category
+    case value_of_property( "ppd:transactionCategory" )
+    when "#{PPD}additionalPricePaidTransaction"
+      {display: "B", label: "Additional price paid transaction"}
+    when "#{PPD}standardPricePaidTransaction"
+      {display: "A", label: "Standard price paid transaction"}
+    else
+      {display: "", label: ""}
+    end
   end
 
   private

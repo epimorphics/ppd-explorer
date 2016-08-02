@@ -21,6 +21,7 @@
       [rdfs:label "transaction"              ; dsapi:property ppd:hasTransaction],
       [rdfs:label "transaction date"         ; dsapi:property ppd:transactionDate],
       [rdfs:label "transaction ID"           ; dsapi:property ppd:transactionId],
+      [rdfs:label "transaction category"     ; dsapi:property ppd:transactionCategory; dsapi:codeList ppd:transactionCategoryConceptScheme],
       [rdfs:label "price paid"               ; dsapi:property ppd:pricePaid],
       [rdfs:label "property address"         ; dsapi:property ppd:propertyAddress],
 

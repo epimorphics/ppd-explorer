@@ -25,8 +25,8 @@ class DownloadRecord
              "http://landregistry.data.gov.uk/def/common/terraced" => "T",
              "lrcommon:flat-maisonette" => "F",
              "http://landregistry.data.gov.uk/def/common/flat-maisonette" => "F",
-             "lrcommon:non-residential" => "O",
-             "http://landregistry.data.gov.uk/def/common/non-residential" => "O"
+             "lrcommon:otherPropertyType" => "O",
+             "http://landregistry.data.gov.uk/def/common/otherPropertyType" => "O"
             },
      header: "property_type"
     },
@@ -66,6 +66,14 @@ class DownloadRecord
     },
     {aspect_property: "ppd:propertyAddressCounty",
      header: "county"
+    },
+    {aspect_property: "ppd:transactionCategory",
+     codes: {"ppd:standardPricePaidTransaction" => "A",
+             "http://landregistry.data.gov.uk/def/ppi/standardPricePaidTransaction" => "A",
+             "ppd:additionalPricePaidTransaction" => "B",
+             "http://landregistry.data.gov.uk/def/ppi/additionalPricePaidTransaction" => "B"
+            },
+     header: "transaction_category"
     },
     {aspect_property: "@id",
      header: "linked_data_uri"
