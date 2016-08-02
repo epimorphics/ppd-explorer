@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SearchResults
   include ActionView::Helpers::TextHelper
   attr_reader :index, :transactions, :max_results_limit_hit
@@ -83,19 +85,24 @@ class SearchResults
 
   # TODO DRY
   def traverse_property_addresses( index, &block )
+    begin
     index.keys.sort.each do |key|
       v = index[key]
 
       if v.kind_of?( Hash )
         traverse_property_addresses( v, &block )
       else
-        yield v.sort.reverse
+        yield v.sort!.reverse
       end
+    end
+    rescue Exception => e
+      # byebug
+      Rails.logger.debug "Error in search_results: #{e.inspect}"
     end
   end
 
   def traverse_in_date_order( search_results, &block )
-    st = search_results.sort
+    st = search_results.sort!
     st.reverse.each &block
   end
 end

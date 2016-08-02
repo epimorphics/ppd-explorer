@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # An aspect class that adds a range query
 class RangeAspect < Aspect
   def add_clause( query, preferences )

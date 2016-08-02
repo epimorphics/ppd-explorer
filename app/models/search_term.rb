@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SearchTerm
   MAX_LABEL_TERM_LENGTH = 15
 

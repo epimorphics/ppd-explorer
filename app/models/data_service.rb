@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Base class for objects that interact with the data services API
 class DataService
   attr_reader :preferences

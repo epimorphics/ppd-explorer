@@ -1,3 +1,5 @@
+-# frozen_string_literal: true
+
 - sr = @query_command.search_results
 = render partial: "ppd/workflow_action_buttons", locals: {no_results: true, no_print: true}
 
@@ -113,6 +115,5 @@
                   = result.is_new_build
 
 = render partial: "ppd/workflow_action_buttons", locals: {no_results: true, no_print: true}
-
-
-
+= render partial: "ppd/bookmark_modal"
+= render partial: "ppd/help_modal"

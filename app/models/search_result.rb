@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # An individual result returned from the search service
 class SearchResult
   attr_reader :result
@@ -206,7 +208,7 @@ class SearchResult
       v = v.empty? ? "no_value" : v.first
     end
 
-    v = (v["@value"] || "no_value") if v.kind_of?( Hash )
+    v = (v["@value"] || v["@value"] || "no_value") if v.kind_of?( Hash )
     empty_string?( v ) ? "no_value" : v
   end
 
@@ -215,7 +217,7 @@ class SearchResult
       v = v.empty? ? "no_value" : v.first
     end
 
-    v = (v["@id"] || "no_value") if v.kind_of?( Hash )
+    v = (v["@id"] || v["@id"] || "no_value") if v.kind_of?( Hash )
     empty_string?( v ) ? "no_value" : v
   end
 
@@ -224,7 +226,7 @@ class SearchResult
   end
 
   def title_case_exception?( p )
-    p == "ppd:propertyAddressPostcode"
+    p.to_s == "ppd:propertyAddressPostcode"
   end
 
   def format_paon_elements( paon )

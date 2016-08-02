@@ -1,87 +1,13 @@
-@import "_colours.scss";
-@import "_conditionals.scss";
-@import "_css3.scss";
-@import "_typography.scss";
-@import "design-patterns/_buttons.scss";
-@import "design-patterns/_alpha-beta.scss";
-@import "uk-gov-lite.scss";
-
-/* variables */
-$lr-green-dark: #5A8006;
-$lr-yellow: #e5ea08;
-$lr-logo-green-light: #a6d71c;
-$lr-logo-green-dark: #66c430;
-$lr-logo-grey: #a7a5a6;
-$lr-green-nav: #ACCD40;
-
-$lr-headline: $lr-green-dark;
-$lr-separator: $lr-green-nav;
-$lr-link: $lr-headline;
-$lr-link-quiet: $lr-logo-green-light;
-$lr-focus: $lr-logo-green-dark;
-$lr-top-line: $lr-green-nav;
-$lr-footer-grey: #f0f5f0;
-$lr-footer-link: lighten( $lr-separator, 10 );
-
-
-
-/* styles */
-
-.beta-banner {
-  @include phase-banner(beta);
-}
-.beta-tag{
-  @include phase-tag(beta);
+@media (min-width: 641px) {
+  .lr main {
+      font-size: 16px;
+      line-height: 1.31578947;
+  }
 }
 
 .lr {
-  #global-header {
-    background-color: white;
-  }
-
-  #global-header .header-proposition #proposition-links li a {
-    color: $lr-link-quiet;
-  }
-
-  #global-header .header-proposition #proposition-links li a.active {
-    color: $lr-link;
-  }
-
-  #global-header .header-proposition #proposition-name {
-    color: $lr-headline;
-    font-family: GeoHeadlineRegular;
-  }
-
-  #global-header .header-proposition a.menu {
-    color: $lr-headline;
-  }
-
-  :focus, a:focus, input:focus {
-    outline: 1px solid $lr-focus;
-    background-color: inherit;
-  }
-
-  .form-control:focus {
-    border: 0;
-    box-shadow: none;
-    -webkit-box-shadow: none;
-  }
-
-  .lr-top-bar {
-    width: 100%;
-    height: 3px;
-    background-color: $lr-top-line;
-    margin: 5px 0;
-  }
-
   .container {
     max-width: 960px;
-  }
-
-  section {
-    border-top: 10px solid $lr-separator;
-    margin-top: 10px;
-    margin-bottom: 10px;
   }
 
   #date-slider {
@@ -89,7 +15,6 @@ $lr-footer-link: lighten( $lr-separator, 10 );
   }
 
   h2, h3 {
-    font-family: GeoHeadlineRegular;
     margin-top: 8px;
   }
 
@@ -151,6 +76,7 @@ $lr-footer-link: lighten( $lr-separator, 10 );
     text-align: right;
     padding-right: 10px;
     width: 50%;
+    font-size: 14px;
   }
 
  .detailed-address {
@@ -219,10 +145,6 @@ $lr-footer-link: lighten( $lr-separator, 10 );
 
   td.no-border {
     border: 0;
-  }
-
-  .list-inline label {
-    // margin-bottom: 0;
   }
 
   .control-label-adjust {
@@ -299,38 +221,6 @@ $lr-footer-link: lighten( $lr-separator, 10 );
     }
   }
 
-  #footer {
-    margin-top: 40px;
-    background-color: #818181;
-    border-top: 8px solid $lr-separator;
-    font-size: 11pt;
-
-    h2 {
-      img {
-        max-height: 18px;
-        margin-right: 15px;
-      }
-
-      a {
-        line-height: normal;
-        padding: 0;
-        margin: 0;
-        font-size: 15pt;
-      }
-
-      line-height: normal;
-      font-size: 15pt;
-    }
-
-    a {
-      color: $lr-footer-link;
-    }
-
-    .ogl p {
-      color: #303030;
-      font-size: 11pt;
-    }
-  }
 }
 
 

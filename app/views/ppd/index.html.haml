@@ -1,3 +1,5 @@
+-# frozen_string_literal: true
+
 .row
   %h2.col-md-12
     Search the price paid dataset:
@@ -159,22 +161,22 @@
         .col-sm-8
           %ul.list-inline
             %li
-              %label.radio
-                %input{ type: "radio", name: :limit, value: "100", checked: @preferences.selected_limit == "100" }
-                at most 100
+              .radio
+                %label
+                  %input{ type: "radio", name: :limit, value: "100", checked: @preferences.selected_limit == "100" }
+                  at most 100
             %li
-              %label.radio
-                %input{ type: "radio", name: :limit, value: "1000", checked: @preferences.selected_limit == "1000" }
-                at most 1000
+              .radio
+                %label
+                  %input{ type: "radio", name: :limit, value: "1000", checked: @preferences.selected_limit == "1000" }
+                  at most 1000
             %li
-              %label.radio
-                %input{ type: "radio", name: :limit, value: "all", checked: @preferences.selected_limit == "all" }
-                all
+              .radio
+                %label
+                  %input{ type: "radio", name: :limit, value: "all", checked: @preferences.selected_limit == "all" }
+                  all
       .col-sm-12
         .pull-right
-          %a.js.hidden.btn.btn-default{ href: "http://www.youtube.com/watch?v=g15OQ4j-bnA", target: "_", alt: "Video tutorial", title: "Video tutorial" }
-            %i.fa.fa-youtube
-            tutorial
           %a.js.hidden.btn.btn-default.action.action-help{ href: "#", alt: "Help and tips", title: "Help and tips" }
             %i.fa.fa-question-circle
             help
@@ -184,3 +186,6 @@
           %button.btn.btn-primary{ type: "submit"}
             %i.fa.fa-search
             show results
+
+= render partial: "bookmark_modal"
+= render partial: "help_modal"

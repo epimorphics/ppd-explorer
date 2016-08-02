@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # LR PAONs, which are strings with a custom sort order
 class Paon < String
   def <=>( paon1 )
@@ -49,7 +51,7 @@ class Paon < String
   end
 
   def self.to_paon( s )
-    s.is_a?( Paon ) ? s : Paon.new( s )
+    s.is_a?( Paon ) ? s : Paon.new( s.to_s )
   end
 
   # private

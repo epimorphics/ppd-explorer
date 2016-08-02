@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.4'
+gem 'rails', '4.2.7'
 
 
 # Use SCSS for stylesheets
@@ -33,27 +33,36 @@ end
 # gem 'debugger', group: [:development, :test]
 group :development do
   gem 'rb-readline'
-  gem 'pry'
-  gem 'pry-stack_explorer'
+  gem 'byebug'
   gem 'quiet_assets'
+
+  gem 'rack-mini-profiler'
+  gem 'flamegraph'
+  gem 'stackprof' # ruby 2.1+ only
+  gem 'memory_profiler'
 end
 
 
-gem 'govuk_frontend_toolkit', github: "alphagov/govuk_frontend_toolkit_gem", :submodules => true
+# gem 'data_services_api', git: "git@github.com:epimorphics/ds-api-ruby.git"
 gem 'data_services_api', git: "git@github.com:epimorphics/ds-api-ruby.git"
+# gem 'data_services_api', path: "/home/ian/workspace/epimorphics/ds-api-ruby"
+gem 'yajl-ruby', require: 'yajl'
 gem 'font-awesome-rails'
-gem 'faraday', '~> 0.8.8'
-gem "faraday_middleware", "< 0.9.0"
+gem 'faraday', '~> 0.9.2'
+gem "faraday_middleware", "~> 0.10.0"
 gem 'jquery-ui-rails'
+gem 'lr_common_styles', github: "epimorphics/lr_common_styles"
+# gem 'lr_common_styles', path: '/home/ian/workspace/land-registry/lr_common_styles'
 
 group :test do
-  gem 'minitest', '~> 5.5 '
-  gem 'minitest-rg', '~> 5.1'
-  gem 'capybara-webkit', '~> 1.1'
-  gem 'minitest-capybara', '~> 0.4'
-  gem 'minitest-spec-rails', '~> 5.2'
+  gem 'minitest-spec-rails'
+  gem 'minitest-rails-capybara'
+  gem 'minitest-reporters'
+  gem 'capybara_minitest_spec'
+  gem 'mocha'
   gem 'json_expressions', "~> 0.8"
   gem 'vcr'
   gem 'minitest-vcr'
   gem 'webmock'
+  gem 'simplecov', :require => false
 end

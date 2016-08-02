@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Model to encapsulate user's search preferences
 class UserPreferences
   include Rails.application.routes.url_helpers
@@ -55,8 +57,12 @@ class UserPreferences
         :index
       when :ppd_data
         :show
+      when :view
+        # an artefact of lr-common-styles layout template
+        controller = :ppd
+        :index
       else
-        raise "Do not know how to make path for #{controller}"
+        raise "Do not know how to make path for #{controller.inspect}"
       end
 
     path = url_for( path_params.merge( {controller: controller, action: action, only_path: true} ) )
