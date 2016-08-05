@@ -47,8 +47,10 @@ module DsapiTurtleFormatter
         "\"#{v["@value"]}\"^^#{format_ttl_value( v["@type"] )}"
       elsif v["@value"] &&
         "\"#{v["@value"]}\""
+      elsif v.is_a? String
+        "\"#{v}\""
       else
-        "default #{v.to_s}"
+        "\"#{v.to_s}\"^^<#{v.class.name}> # warning: default formatting rule (likely to be a bug)"
       end
 
     f.html_safe
