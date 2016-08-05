@@ -19,7 +19,7 @@ class PpdDataController < ApplicationController
         template = "ppd/error" unless @query_command.success?
       end
 
-      render template, stream: true
+      render template
     end
   end
 
