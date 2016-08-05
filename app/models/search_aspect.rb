@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require "byebug"
 
 # An aspect class that adds a search query term
 class SearchAspect < Aspect
@@ -34,12 +35,10 @@ class SearchAspect < Aspect
 
   # Sanitise input and convert to Lucene expression
   def text_index_term( preferences )
-    terms = preference_value( preferences )
-        .gsub( /([[:alnum:]])[[:punct:]]([[:alnum:]])/, "\\1\\2" )
-        .gsub( /[[:punct:]]/, " " )
-        .split( " " )
-        .reject {|token| LUCENE_KEYWORDS.include?( token.downcase )}
-        .reject {|token| token.empty?}
+    terms = sanitise_punctuation( preference_value( preferences ) )
+      .split( " " )
+      .reject {|token| LUCENE_KEYWORDS.include?( token.downcase )}
+      .reject {|token| token.empty?}
 
     if terms.empty?
       raise MalformedSearchError.new( "Sorry, '#{preference_value( preferences )}' is not a permissible search term" )
@@ -48,5 +47,24 @@ class SearchAspect < Aspect
     terms
         .join( " AND " )
         .gsub( /\A(.*)\Z/, '( \1 )' )
+  end
+
+  :private
+
+  # Remove punctuation characters, but allow single apostrophes to remain
+  def sanitise_punctuation( str )
+    unless has_single_apostrophe?( str )
+      str = str.gsub( /([[:alnum:]])[[:punct:]]([[:alnum:]])/, "\\1\\2" )
+               .gsub( /[[:punct:]]/, " " )
+    end
+
+    str
+  end
+
+  def has_single_apostrophe?( str )
+    punctuation_filter = /[[:punct:]]/
+    punctuation_chars = str.scan( punctuation_filter ).length
+    has_apostrophe = str.match( /([[:alnum:]]')|('[[:alnum:]])/ )
+    (punctuation_chars == 1) && has_apostrophe
   end
 end

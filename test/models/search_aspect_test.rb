@@ -38,10 +38,34 @@ describe "SearchAspect" do
   end
 
   it "should not tokenise terms when sanitising away punctuation" do
-    prefs = UserPreferences.new( {"street" => "augustine's"})
+    prefs = UserPreferences.new( {"street" => "augustine-s"})
     q = @aspect.add_clause( @query, prefs )
 
     q.to_json
      .must_match_json_expression( {"@and" => [{"foo:street" => {"@search" => {"@value" => "( augustines )","@property" => "foo_key:street", "@limit" => 3000000}}}]} )
+  end
+
+  it "should not sanitise away a single quote character" do
+    prefs = UserPreferences.new( {"street" => "augustine's"})
+    q = @aspect.add_clause( @query, prefs )
+
+    q.to_json
+     .must_match_json_expression( {"@and" => [{"foo:street" => {"@search" => {"@value" => "( augustine's )","@property" => "foo_key:street", "@limit" => 3000000}}}]} )
+  end
+
+  it "should sanitise away multiple quote characters" do
+    prefs = UserPreferences.new( {"street" => "'augustine's"})
+    q = @aspect.add_clause( @query, prefs )
+
+    q.to_json
+     .must_match_json_expression( {"@and" => [{"foo:street" => {"@search" => {"@value" => "( augustines )","@property" => "foo_key:street", "@limit" => 3000000}}}]} )
+  end
+
+  it "should sanitise away a standalone single quote character" do
+    prefs = UserPreferences.new( {"street" => "augustine '"})
+    q = @aspect.add_clause( @query, prefs )
+
+    q.to_json
+     .must_match_json_expression( {"@and" => [{"foo:street" => {"@search" => {"@value" => "( augustine )","@property" => "foo_key:street", "@limit" => 3000000}}}]} )
   end
 end
