@@ -39,7 +39,10 @@ class ApplicationController < ActionController::Base
 
     respond_to do |format|
       format.html { render_html_error_page( status ) }
-      format.all { render nothing: true, status: status }
+      format.all do
+        Rails.logger.info "About to render nothing with status #{status}"
+        render nothing: true, status: status
+      end
     end
   end
 
