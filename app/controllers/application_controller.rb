@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
     reset_response
 
     respond_to do |format|
-      format.html { render_html_error_page( status )
+      format.html { render_html_error_page( status ) }
       format.all { render nothing: true, status: status }
     end
   end
