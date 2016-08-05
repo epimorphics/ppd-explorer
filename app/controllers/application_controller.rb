@@ -29,12 +29,12 @@ class ApplicationController < ActionController::Base
   end
 
   def render_403( e = nil )
-    Rails.logger.info( "403 #{e.inspect}")
-    Rails.logger.info( "403 #{e.backtrace.inspect}")
     render_error( 403 )
   end
 
   def render_error( status )
+    self.response_body = nil
+
     respond_to do |format|
       format.html { render( layout: false,
                             file: Rails.root.join( 'public', 'landing', status.to_s ),
