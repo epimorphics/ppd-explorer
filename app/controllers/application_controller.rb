@@ -24,6 +24,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  :private
+
   def render_404( e = nil )
     render_error( 404 )
   end
@@ -33,15 +35,30 @@ class ApplicationController < ActionController::Base
   end
 
   def render_error( status )
-    Rails.logger.info "render_error #{status} #{request.inspect}"
-    self.response_body = nil
+    reset_response
 
     respond_to do |format|
-      format.html { render( layout: false,
-                            file: Rails.root.join( 'public', 'landing', status.to_s ),
-                            status: status ) }
+      format.html { render_html_error_page( status )
       format.all { render nothing: true, status: status }
     end
   end
 
+  def render_html_error_page( status )
+    begin
+      render( layout: false,
+              file: Rails.root.join( 'public', 'landing', status.to_s ),
+              status: status )
+    rescue ActionController::InvalidCrossOriginRequest
+      reset_response
+      render nothing: true, status: 403
+    rescue Exception => e
+      rails.logger.info "Unexpected error during error handling: #{e.inspect}"
+      reset_response
+      render nothing: true, status: status
+    end
+  end
+
+  def reset_response
+    self.response_body = nil
+  end
 end
