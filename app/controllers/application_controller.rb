@@ -5,7 +5,6 @@ class ApplicationController < ActionController::Base
 
   before_action :set_phase
   def set_phase
-    Rails.logger.debug( "setting phase")
     @phase = :released
   end
 
@@ -42,26 +41,15 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.html { render_html_error_page( status ) }
       format.all do
-        Rails.logger.info "About to render nothing with status #{status}"
         render nothing: true, status: status
       end
     end
   end
 
   def render_html_error_page( status )
-    Rails.logger.info "render_html_error_page #{status}"
-    begin
-      render( layout: false,
-              file: Rails.root.join( 'public', 'landing', status.to_s ),
-              status: status )
-    rescue ActionController::InvalidCrossOriginRequest
-      reset_response
-      render nothing: true, status: 403
-    rescue Exception => e
-      rails.logger.info "Unexpected error during error handling: #{e.inspect}"
-      reset_response
-      render nothing: true, status: status
-    end
+    render( layout: false,
+            file: Rails.root.join( 'public', 'landing', status.to_s ),
+            status: status )
   end
 
   def reset_response
