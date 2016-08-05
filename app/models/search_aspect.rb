@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require "byebug"
 
 # An aspect class that adds a search query term
 class SearchAspect < Aspect
