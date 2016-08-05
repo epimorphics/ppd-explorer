@@ -33,6 +33,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_error( status )
+    Rails.logger.info "render_error #{status} #{request.inspect}"
     self.response_body = nil
 
     respond_to do |format|
