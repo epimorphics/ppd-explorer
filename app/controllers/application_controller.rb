@@ -44,6 +44,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_html_error_page( status )
+    Rails.logger.info "render_html_error_page #{status}"
     begin
       render( layout: false,
               file: Rails.root.join( 'public', 'landing', status.to_s ),
