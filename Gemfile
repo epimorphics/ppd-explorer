@@ -1,8 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.7'
-
+gem 'rails', '5.0.0.1'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0.4'
@@ -34,14 +33,13 @@ end
 group :development do
   gem 'rb-readline'
   gem 'byebug'
-  gem 'quiet_assets'
+  # gem 'quiet_assets'
 
   gem 'rack-mini-profiler'
   gem 'flamegraph'
   gem 'stackprof' # ruby 2.1+ only
   gem 'memory_profiler'
 end
-
 
 # gem 'data_services_api', git: "git@github.com:epimorphics/ds-api-ruby.git"
 gem 'data_services_api', git: "git@github.com:epimorphics/ds-api-ruby.git"
@@ -64,5 +62,5 @@ group :test do
   gem 'vcr'
   gem 'minitest-vcr'
   gem 'webmock'
-  gem 'simplecov', :require => false
+  gem 'simplecov', require: false
 end

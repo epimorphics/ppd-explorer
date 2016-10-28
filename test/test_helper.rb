@@ -14,3 +14,7 @@ require 'json_expressions/minitest'
 
 require "minitest/reporters"
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+
+def params_object(p)
+  ActionController::Parameters.new(p)
+end
