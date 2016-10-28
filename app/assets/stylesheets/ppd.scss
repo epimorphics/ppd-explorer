@@ -109,7 +109,7 @@
 
   .ppd-results {
     h2, h3, h4 {
-      font-family: nta, Arail, sans-serif;
+      font-family: Arial, sans-serif;
     }
 
     h3.group-key {
@@ -122,6 +122,10 @@
 
     h4 {
       font-size: 18px;
+    }
+
+    td {
+      font-size: 16px;
     }
   }
 
@@ -172,14 +176,14 @@
   a.btn.btn-primary, a.btn.btn-primary:hover, a.btn.btn-primary:visited, button.btn-primary {
     background-color: $lr-headline;
     color: white;
-    font-family: nta, Arial, sans-serif;
+    font-family: Arial, sans-serif;
     border: 1px solid darken( $lr-headline, 5% );
   }
 
   a.btn.btn-default, a.btn.btn-default:hover, a.btn.btn-default:visited, button.btn-default {
     background-color: #f0f0f0;
     color: $lr-headline;
-    font-family: nta, Arial, sans-serif;
+    font-family: Arial, sans-serif;
     border: 1px solid darken( $lr-headline, 5% );
   }
 
