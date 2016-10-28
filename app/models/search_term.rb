@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
+# Value object encapsulating a user search term
 class SearchTerm
   MAX_LABEL_TERM_LENGTH = 15
 
   attr_reader :name, :value, :values
 
-  def initialize( n, l, v, vs = nil )
+  def initialize(n, l, v, vs = nil)
     @name = n
-    @label_prompt, @label_term = l.split( 'matches' )
+    @label_prompt, @label_term = l.split("matches")
     @value = v
     @values = vs
   end
@@ -27,7 +28,8 @@ class SearchTerm
 
   def label
     if @label_term
-      "#{@label_prompt} matches #{long_label_term? ? truncated_label_term : clean_label_term}".html_safe
+      "#{@label_prompt} matches #{long_label_term? ? truncated_label_term : clean_label_term}"
+        .html_safe
     else
       @label_prompt
     end
@@ -38,7 +40,7 @@ class SearchTerm
   end
 
   def truncated_label_term
-    "#{clean_label_term.slice( 0, MAX_LABEL_TERM_LENGTH )}&hellip;'".html_safe
+    "#{clean_label_term.slice(0, MAX_LABEL_TERM_LENGTH)}&hellip;'".html_safe
   end
 
   def clean_label_term

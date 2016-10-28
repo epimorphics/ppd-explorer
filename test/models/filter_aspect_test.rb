@@ -44,4 +44,32 @@ describe "FilterAspect" do
       ]
     )
   end
+
+  it "should produce a reasonable label with a URI filter value" do
+    aspect = FilterAspect.new(
+      "test_aspect_type",
+      "test_property",
+      values: %w(lrcommon:freehold lrcommon:leasehold),
+      uri_value: true,
+      presentation_label: "estate type"
+    )
+
+    term = aspect.search_term("lrcommon:freehold", {})
+    term.label.must_match "estate type is freehold"
+  end
+
+  it "should produce a reasonable label with a non-URI filter value" do
+    aspect = FilterAspect.new(
+      "test_aspect_type",
+      "test_property",
+      values: %w(true false),
+      uri_value: false,
+      value_type: "xsd:boolean",
+      presentation_label: "new build?",
+      value_labels: { "true" => "new build only", "false" => "existing buildings only" }
+    )
+
+    term = aspect.search_term("true", {})
+    term.label.must_match "new build only"
+  end
 end

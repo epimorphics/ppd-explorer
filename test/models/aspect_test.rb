@@ -39,7 +39,7 @@ describe "Aspect" do
           .must_equal 10
   end
 
-  it "should parse a preference value as an float" do
+  it "should parse a preference value as a float" do
     aspect = Aspect.new(:min_price, "")
     aspect.preference_value_numeric(UserPreferences.new(params_object("min_price" => "10.1")))
           .must_be_within_epsilon 10.1
