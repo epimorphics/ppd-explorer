@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.0.0.1'
+gem 'rails', '5.0.2'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0.4'
@@ -41,15 +41,15 @@ group :development do
   gem 'memory_profiler'
 end
 
-# gem 'data_services_api', git: "git@github.com:epimorphics/ds-api-ruby.git"
-gem 'data_services_api', git: "git@github.com:epimorphics/ds-api-ruby.git"
-# gem 'data_services_api', path: "/home/ian/workspace/epimorphics/ds-api-ruby"
+# gem 'data_services_api', git: 'git@github.com:epimorphics/ds-api-ruby.git'
+gem 'data_services_api', git: 'git@github.com:epimorphics/ds-api-ruby.git'
+# gem 'data_services_api', path: '/home/ian/workspace/epimorphics/ds-api-ruby'
 gem 'yajl-ruby', require: 'yajl'
 gem 'font-awesome-rails'
-gem 'faraday', '~> 0.9.2'
-gem "faraday_middleware", "~> 0.10.0"
+gem 'faraday', '~> 0.11.0'
+gem 'faraday_middleware', '~> 0.11.0.1'
 gem 'jquery-ui-rails'
-gem 'lr_common_styles', github: "epimorphics/lr_common_styles"
+gem 'lr_common_styles', github: 'epimorphics/lr_common_styles'
 # gem 'lr_common_styles', path: '/home/ian/workspace/land-registry/lr_common_styles'
 
 group :test do
@@ -58,7 +58,7 @@ group :test do
   gem 'minitest-reporters'
   gem 'capybara_minitest_spec'
   gem 'mocha'
-  gem 'json_expressions', "~> 0.8"
+  gem 'json_expressions', '~> 0.8'
   gem 'vcr'
   gem 'minitest-vcr'
   gem 'webmock'
