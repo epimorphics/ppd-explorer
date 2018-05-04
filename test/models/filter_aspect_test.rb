@@ -1,75 +1,75 @@
-require 'test_helper'
+# frozen_string_literal: true
 
-# rubocop:disable Metrics/BlockLength
-describe "FilterAspect" do
+require 'test_helper'
+describe 'FilterAspect' do
   before do
     @query = DataServicesApi::QueryGenerator.new
-    @aspect = FilterAspect.new(:ptype, "foo:propertyType", values: %w(a b c))
+    @aspect = FilterAspect.new(:ptype, 'foo:propertyType', values: %w[a b c])
   end
 
-  it "should not add a clause if no preference matches" do
-    prefs = UserPreferences.new(params_object("max_price" => "1000"))
+  it 'should not add a clause if no preference matches' do
+    prefs = UserPreferences.new(params_object('max_price' => '1000'))
     q = @aspect.add_clause(@query, prefs)
 
     q.to_json.must_match_json_expression({})
   end
 
-  it "should not add a clause if all preference values are selected" do
-    prefs = UserPreferences.new(params_object("ptype" => %w(a b c)))
+  it 'should not add a clause if all preference values are selected' do
+    prefs = UserPreferences.new(params_object('ptype' => %w[a b c]))
     q = @aspect.add_clause(@query, prefs)
 
     q.to_json
      .must_match_json_expression({})
   end
 
-  it "should not add a clause if no preference values are selected" do
-    prefs = UserPreferences.new(params_object("ptype" => %w()))
+  it 'should not add a clause if no preference values are selected' do
+    prefs = UserPreferences.new(params_object('ptype' => %w[]))
     q = @aspect.add_clause(@query, prefs)
 
     q.to_json
      .must_match_json_expression({})
   end
 
-  it "should add a clause if some values are selected" do
-    prefs = UserPreferences.new(params_object("ptype" => %w(a b)))
+  it 'should add a clause if some values are selected' do
+    prefs = UserPreferences.new(params_object('ptype' => %w[a b]))
     q = @aspect.add_clause(@query, prefs)
 
     q.to_json.must_match_json_expression(
-      "@and" => [
+      '@and' => [
         {
-          "foo:propertyType" => {
-            "@oneof" => [{ "@value" => "a" }, { "@value" => "b" }]
+          'foo:propertyType' => {
+            '@oneof' => [{ '@value' => 'a' }, { '@value' => 'b' }]
           }
         }
       ]
     )
   end
 
-  it "should produce a reasonable label with a URI filter value" do
+  it 'should produce a reasonable label with a URI filter value' do
     aspect = FilterAspect.new(
-      "test_aspect_type",
-      "test_property",
-      values: %w(lrcommon:freehold lrcommon:leasehold),
+      'test_aspect_type',
+      'test_property',
+      values: %w[lrcommon:freehold lrcommon:leasehold],
       uri_value: true,
-      presentation_label: "estate type"
+      presentation_label: 'estate type'
     )
 
-    term = aspect.search_term("lrcommon:freehold", {})
-    term.label.must_match "estate type is freehold"
+    term = aspect.search_term('lrcommon:freehold', {})
+    term.label.must_match 'estate type is freehold'
   end
 
-  it "should produce a reasonable label with a non-URI filter value" do
+  it 'should produce a reasonable label with a non-URI filter value' do
     aspect = FilterAspect.new(
-      "test_aspect_type",
-      "test_property",
-      values: %w(true false),
+      'test_aspect_type',
+      'test_property',
+      values: %w[true false],
       uri_value: false,
-      value_type: "xsd:boolean",
-      presentation_label: "new build?",
-      value_labels: { "true" => "new build only", "false" => "existing buildings only" }
+      value_type: 'xsd:boolean',
+      presentation_label: 'new build?',
+      value_labels: { 'true' => 'new build only', 'false' => 'existing buildings only' }
     )
 
-    term = aspect.search_term("true", {})
-    term.label.must_match "new build only"
+    term = aspect.search_term('true', {})
+    term.label.must_match 'new build only'
   end
 end

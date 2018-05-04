@@ -8,7 +8,7 @@ class SearchTerm
 
   def initialize(n, l, v, vs = nil)
     @name = n
-    @label_prompt, @label_term = l.split("matches")
+    @label_prompt, @label_term = l.split('matches')
     @value = v
     @values = vs
   end

@@ -4,7 +4,7 @@
 class DataService
   attr_reader :preferences
 
-  def initialize( preferences, compact = false )
+  def initialize(preferences, compact = false)
     @preferences = preferences
     @compact = compact
   end
@@ -15,8 +15,8 @@ class DataService
   end
 
   # Return a dataset wrapper object for the named dataset
-  def dataset( ds_name )
-    data_service.dataset( ds_name.to_s )
+  def dataset(ds_name)
+    data_service.dataset(ds_name.to_s)
   end
 
   # Return a new empty query generator
@@ -31,7 +31,7 @@ class DataService
   end
 
   # Delegate parameter checking to the user preferences object
-  def param( p )
-    @preferences.param( p )
+  def param(p)
+    @preferences.param(p)
   end
 end

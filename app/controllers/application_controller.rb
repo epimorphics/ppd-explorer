@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# :nodoc:
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -9,47 +12,47 @@ class ApplicationController < ActionController::Base
   end
 
   unless Rails.application.config.consider_all_requests_local
-    rescue_from ActionController::RoutingError, :with => :render_404
-    rescue_from ActionController::InvalidCrossOriginRequest, :with => :render_403
+    rescue_from ActionController::RoutingError, with: :render_404
+    rescue_from ActionController::InvalidCrossOriginRequest, with: :render_403
     rescue_from Exception, with: :render_exception
   end
 
-  def render_exception( e )
+  def render_exception(e)
     if e.instance_of? ArgumentError
-      render_error( 400 )
+      render_error(400)
     elsif e.instance_of? ActionController::InvalidCrossOriginRequest
-      render_error( 403 )
+      render_error(403)
     else
       Rails.logger.warn "No explicit error page for exception #{e} - #{e.class.name}"
-      render_error( 500 )
+      render_error(500)
     end
   end
 
-  :private
+  private
 
-  def render_404( e = nil )
-    render_error( 404 )
+  def render_404(_e = nil)
+    render_error(404)
   end
 
-  def render_403( e = nil )
-    render_error( 403 )
+  def render_403(_e = nil)
+    render_error(403)
   end
 
-  def render_error( status )
+  def render_error(status)
     reset_response
 
     respond_to do |format|
-      format.html { render_html_error_page( status ) }
+      format.html { render_html_error_page(status) }
       format.all do
         render nothing: true, status: status
       end
     end
   end
 
-  def render_html_error_page( status )
-    render( layout: false,
-            file: Rails.root.join( 'public', 'landing', status.to_s ),
-            status: status )
+  def render_html_error_page(status)
+    render(layout: false,
+           file: Rails.root.join('public', 'landing', status.to_s),
+           status: status)
   end
 
   def reset_response

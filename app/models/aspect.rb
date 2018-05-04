@@ -45,7 +45,7 @@ class Aspect
 
   # Return a preference value as a number, if possible
   def preference_value_numeric(preferences)
-    s = preference_value(preferences).delete(",")
+    s = preference_value(preferences).delete(',')
     Integer(s)
   rescue ArgumentError
     Float(s)
@@ -54,19 +54,19 @@ class Aspect
   # Return a preference value as a date, if possible
   def preference_value_date(preferences)
     s = preference_value(preferences)
-    raise "No preference value" unless s
+    raise 'No preference value' unless s
     Date.parse(s)
   rescue ArgumentError
     throw MalformedSearchError.new("'#{s}' is not a valid date")
   end
 
   def key_as_label
-    option(:presentation_label) || key.to_s.tr("_", " ")
+    option(:presentation_label) || key.to_s.tr('_', ' ')
   end
 
   def uri_as_label(value)
-    value.gsub(%r{\A[^/#:]+.}, "")
-         .tr("_", " ")
+    value.gsub(%r{\A[^/#:]+.}, '')
+         .tr('_', ' ')
   end
 
   # The key property which gives the key value given an observation, may be different from
