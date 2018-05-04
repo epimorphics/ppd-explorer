@@ -63,18 +63,18 @@ class SearchResult # rubocop:disable Metrics/ClassLength
     transaction_date <=> other.transaction_date
   end
 
-  def value_of_property(p)
-    value_of(@result[p])
+  def value_of_property(prop)
+    value_of(@result[prop])
   end
 
-  def presentation_value_of_property(p)
-    v = value_of(@result[p])
+  def presentation_value_of_property(prop)
+    v = value_of(@result[prop])
 
     if is_no_value?(v)
       nil
-    elsif p == 'ppd:propertyAddressPaon'
+    elsif prop == 'ppd:propertyAddressPaon'
       format_paon_elements(v).join(' ').html_safe
-    elsif title_case_exception?(p)
+    elsif title_case_exception?(prop)
       v
     else
       titlecase_with_hyphens(v)
@@ -82,15 +82,15 @@ class SearchResult # rubocop:disable Metrics/ClassLength
   end
 
   def paon
-    p = value_of('ppd:propertyAddressPaon')
+    p = value_of_property('ppd:propertyAddressPaon')
     is_no_value?(p) ? nil : p
   end
 
-  def paon=(p)
+  def paon=(new_paon)
     if @result['ppd:propertyAddressPaon'].is_a?(Array)
-      @result['ppd:propertyAddressPaon'][0]['@value'] = p
+      @result['ppd:propertyAddressPaon'][0]['@value'] = new_paon
     else
-      @result['ppd:propertyAddressPaon'] = p
+      @result['ppd:propertyAddressPaon'] = new_paon
     end
   end
 
@@ -98,12 +98,12 @@ class SearchResult # rubocop:disable Metrics/ClassLength
     @transaction_date ||= Date.parse(value_of_property('ppd:transactionDate'))
   end
 
-  def id_of_property(p)
-    id_of(@result[p])
+  def id_of_property(prop)
+    id_of(@result[prop])
   end
 
-  def different_key?(sr)
-    key != sr.key
+  def different_key?(other)
+    key != other.key
   end
 
   def property_details
@@ -196,37 +196,30 @@ class SearchResult # rubocop:disable Metrics/ClassLength
 
   private
 
-  def index_key_value(p)
-    v = @result[p]
-    return 'no_value' unless v
-    return 'no_value' if empty_string?(v)
-    value_of(v)
+  def index_key_value(prop)
+    value_of(@result[prop])
   end
 
-  def value_of(v) # rubocop:disable Metrics/CyclomaticComplexity
-    if v.is_a?(Array)
-      v = v.empty? ? 'no_value' : v.first
+  def value_of(value, key_pred = '@value')
+    if value.is_a?(Array)
+      value.empty? ? 'no_value' : value_of(value.first)
+    elsif value.is_a?(Hash)
+      value_of(value[key_pred])
+    else
+      !value || empty_string?(value) ? 'no_value' : value
     end
-
-    v = (v['@value'] || v['@value'] || 'no_value') if v.is_a?(Hash)
-    empty_string?(v) ? 'no_value' : v
   end
 
-  def id_of(v) # rubocop:disable Metrics/CyclomaticComplexity
-    if v.is_a?(Array)
-      v = v.empty? ? 'no_value' : v.first
-    end
-
-    v = (v['@id'] || v['@id'] || 'no_value') if v.is_a?(Hash)
-    empty_string?(v) ? 'no_value' : v
+  def id_of(value)
+    value_of(value, '@id')
   end
 
-  def empty_string?(v)
-    v.is_a?(String) && v.empty?
+  def empty_string?(value)
+    value.is_a?(String) && value.empty?
   end
 
-  def title_case_exception?(p)
-    p.to_s == 'ppd:propertyAddressPostcode'
+  def title_case_exception?(prop)
+    prop.to_s == 'ppd:propertyAddressPostcode'
   end
 
   def format_paon_elements(paon)
@@ -246,11 +239,11 @@ class SearchResult # rubocop:disable Metrics/ClassLength
     str.split('-').map(&:titlecase).join('-')
   end
 
-  def is_no_value?(v) # rubocop:disable Metrics/PredicateName
-    v.nil? || v == 'no_value'
+  def is_no_value?(value) # rubocop:disable Metrics/PredicateName
+    value.nil? || value == 'no_value'
   end
 
   def without_leading_segment(term)
-    term && term.gsub(%r{\A.*/}, '')
+    term&.gsub(%r{\A.*/}, '')
   end
 end

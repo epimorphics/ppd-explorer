@@ -7,16 +7,16 @@ SimpleCov.start do
 end
 
 ENV['RAILS_ENV'] ||= 'test'
-require File.expand_path('../../config/environment', __FILE__)
+require File.expand_path('../config/environment', __dir__)
 require 'rails/test_help'
 
 require 'minitest/rails/capybara'
-require 'mocha/mini_test'
+require 'mocha/minitest'
 require 'json_expressions/minitest'
 
 require 'minitest/reporters'
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
-def params_object(p)
-  ActionController::Parameters.new(p)
+def params_object(params)
+  ActionController::Parameters.new(params)
 end

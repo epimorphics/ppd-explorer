@@ -31,9 +31,9 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-# gem 'debugger', group: [:development, :test]
+gem 'byebug', group: %i[development test]
+
 group :development do
-  gem 'byebug'
   gem 'rb-readline'
   # gem 'quiet_assets'
 
