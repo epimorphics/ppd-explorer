@@ -39,7 +39,6 @@ group :development do
 
   gem 'flamegraph'
   gem 'memory_profiler'
-  gem 'rack-mini-profiler'
   gem 'stackprof' # ruby 2.1+ only
 end
 

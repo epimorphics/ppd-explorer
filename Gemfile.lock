@@ -194,8 +194,6 @@ GEM
       mini_portile2 (~> 2.3.0)
     public_suffix (3.0.2)
     rack (2.0.5)
-    rack-mini-profiler (1.0.0)
-      rack (>= 1.2.0)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (5.0.2)
@@ -306,7 +304,6 @@ DEPENDENCIES
   minitest-spec-rails
   minitest-vcr
   mocha
-  rack-mini-profiler
   rails (= 5.0.2)
   rb-readline
   sass-rails (~> 5.0.4)
@@ -320,4 +317,4 @@ DEPENDENCIES
   yajl-ruby
 
 BUNDLED WITH
-   1.14.3
+   1.16.1
