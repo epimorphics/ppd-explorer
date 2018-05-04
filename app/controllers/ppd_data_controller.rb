@@ -14,7 +14,7 @@ class PpdDataController < ApplicationController
 
     if is_explanation?
       explanation = ExplainCommand.new(@preferences).load_explanation
-      redirect_to "/app/hpi/qonsole?q=#{URI.encode(explanation[:sparql])}"
+      redirect_to "/app/hpi/qonsole?q=#{URI.encode_www_form_component(explanation[:sparql])}"
     else
       if is_data_request?
         @query_command = QueryCommand.new(@preferences)
@@ -53,10 +53,10 @@ class PpdDataController < ApplicationController
     template
   end
 
-  def render_malformed_search_error(e = nil)
+  def render_malformed_search_error(exception = nil)
     uuid = SecureRandom.uuid
 
-    Rails.logger.error "Malformed search error #{uuid} ::: #{e ? e.message : 'no message'}"
+    Rails.logger.error "Malformed search error #{uuid} :: #{exception&.message || 'no message'}"
 
     render nothing: true, status: 400
   end

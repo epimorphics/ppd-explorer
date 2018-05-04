@@ -35,26 +35,26 @@ module DsapiTurtleFormatter
 
   # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
-  def format_ttl_value(v)
+  def format_ttl_value(value)
     f =
-      if v.is_a?(Array)
-        v.map { |v0| format_ttl_value v0 } .join(', ')
-      elsif v.is_a? Numeric
-        v.to_s
-      elsif v.match?(%r{\Ahttp://.*})
-        "<#{v}>"
-      elsif v.match?(/\A[[:word:]]+:.*/)
-        v.to_s
-      elsif v['@id']
-        "<#{v['@id']}>"
-      elsif v['@value'] && v['@type']
-        "\"#{v['@value']}\"^^#{format_ttl_value(v['@type'])}"
-      elsif v['@value']
-        "\"#{v['@value']}\""
-      elsif v.is_a? String
-        "\"#{v}\""
+      if value.is_a?(Array)
+        value.map { |v0| format_ttl_value v0 } .join(', ')
+      elsif value.is_a? Numeric
+        value.to_s
+      elsif value.match?(%r{\Ahttp://.*})
+        "<#{value}>"
+      elsif value.match?(/\A[[:word:]]+:.*/)
+        value.to_s
+      elsif value['@id']
+        "<#{value['@id']}>"
+      elsif value['@value'] && value['@type']
+        "\"#{value['@value']}\"^^#{format_ttl_value(value['@type'])}"
+      elsif value['@value']
+        "\"#{value['@value']}\""
+      elsif value.is_a? String
+        "\"#{value}\""
       else
-        "\"#{v}\"^^<#{v.class.name}> # warning: default formatting rule (likely to be a bug)"
+        "\"#{value}\"^^<#{value.class.name}> # warning: default formatting rule"
       end
 
     f.html_safe

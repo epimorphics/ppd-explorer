@@ -31,7 +31,7 @@ class DataService
   end
 
   # Delegate parameter checking to the user preferences object
-  def param(p)
-    @preferences.param(p)
+  def param(prop)
+    @preferences.param(prop)
   end
 end

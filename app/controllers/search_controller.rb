@@ -28,7 +28,7 @@ class SearchController < ApplicationController
         render template: 'ppd/error'
       end
     end
-  rescue => err
+  rescue StandardError => err
     e = err.cause || err
     status = case e
              when MalformedSearchError, ArgumentError
@@ -39,6 +39,8 @@ class SearchController < ApplicationController
 
     render_error(e, e.message, status)
   end
+  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def use_compact_json?
     !non_compact_formats.include?(request.format)
@@ -50,10 +52,10 @@ class SearchController < ApplicationController
 
   private
 
-  def render_error(e, message, status, template = 'ppd/error')
+  def render_error(err, message, status, template = 'ppd/error')
     uuid = SecureRandom.uuid
 
-    Rails.logger.error "#{e.class.name} error #{uuid} ::: #{message} ::: #{e.class}"
+    Rails.logger.error "#{err.class.name} error #{uuid} ::: #{message} ::: #{err.class}"
 
     @error_message =
       ["<span class='error bg-warning'>#{message}.</span>",

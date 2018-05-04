@@ -62,8 +62,8 @@ class DownloadRecord
       header: 'linked_data_uri' }
   ].freeze
 
-  def initialize(sr)
-    @search_result = sr
+  def initialize(search_result)
+    @search_result = search_result
   end
 
   def each_column
@@ -74,12 +74,12 @@ class DownloadRecord
 
   private
 
-  def column_value(col, i)
-    quoted(comma_separator(i), coded_value_of(col)).html_safe
+  def column_value(col, index)
+    quoted(comma_separator(index), coded_value_of(col)).html_safe
   end
 
-  def quoted(sep, v)
-    "#{sep}\"#{v.to_s.gsub(/"/, '\\"')}\""
+  def quoted(sep, value)
+    "#{sep}\"#{value.to_s.gsub(/"/, '\\"')}\""
   end
 
   def coded_value_of(col)
@@ -91,16 +91,16 @@ class DownloadRecord
     end
   end
 
-  def value_of(p)
-    v = search_result.value_of_property(p)
+  def value_of(prop)
+    v = search_result.value_of_property(prop)
     v == 'no_value' ? '' : v
   end
 
-  def id_of(p)
-    search_result.id_of_property(p)
+  def id_of(prop)
+    search_result.id_of_property(prop)
   end
 
-  def comma_separator(i)
-    i.positive? ? ',' : ''
+  def comma_separator(index)
+    index.positive? ? ',' : ''
   end
 end

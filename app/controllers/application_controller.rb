@@ -17,24 +17,24 @@ class ApplicationController < ActionController::Base
     rescue_from Exception, with: :render_exception
   end
 
-  def render_exception(e)
-    if e.instance_of? ArgumentError
+  def render_exception(exception)
+    if exception.instance_of? ArgumentError
       render_error(400)
-    elsif e.instance_of? ActionController::InvalidCrossOriginRequest
+    elsif exception.instance_of? ActionController::InvalidCrossOriginRequest
       render_error(403)
     else
-      Rails.logger.warn "No explicit error page for exception #{e} - #{e.class.name}"
+      Rails.logger.warn "No explicit error page for exception #{exception} - #{exception.class}"
       render_error(500)
     end
   end
 
   private
 
-  def render_404(_e = nil)
+  def render_404(_exception = nil)
     render_error(404)
   end
 
-  def render_403(_e = nil)
+  def render_403(_exception = nil)
     render_error(403)
   end
 

@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 # Command object providing a service for driving the DsAPI
-# rubocop:disable Metrics/ClassLength
-class QueryCommand < DataService
+class QueryCommand < DataService # rubocop:disable Metrics/ClassLength
   include TurtleFormatter
 
   attr_reader :all_results, :search_results, :error_message

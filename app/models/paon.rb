@@ -54,8 +54,8 @@ class Paon < String # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
   # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
-  def self.to_paon(s)
-    s.is_a?(Paon) ? s : Paon.new(s.to_s)
+  def self.to_paon(value)
+    value.is_a?(Paon) ? value : Paon.new(value.to_s)
   end
 
   # private
@@ -76,71 +76,71 @@ class Paon < String # rubocop:disable Metrics/ClassLength
     parsed
   end
 
-  def simple_text?(pe)
-    not_range?(pe) && name?(pe) && !number?(pe)
+  def simple_text?(paon_elem)
+    not_range?(paon_elem) && name?(paon_elem) && !number?(paon_elem)
   end
 
-  def numeric_following_text?(pe)
-    not_range?(pe) && name?(pe) && number?(pe) && !alpha?(pe)
+  def numeric_following_text?(paon_elem)
+    not_range?(paon_elem) && name?(paon_elem) && number?(paon_elem) && !alpha?(paon_elem)
   end
 
-  def not_range?(pe)
-    pe.size == 1
+  def not_range?(paon_elem)
+    paon_elem.size == 1
   end
 
-  def range?(pe)
-    pe.size == 2
+  def range?(paon_elem)
+    paon_elem.size == 2
   end
 
-  def simple_numeric?(pe)
-    not_range?(pe) && !name?(pe) && number?(pe) && !alpha?(pe)
+  def simple_numeric?(paon_elem)
+    not_range?(paon_elem) && !name?(paon_elem) && number?(paon_elem) && !alpha?(paon_elem)
   end
 
-  def numeric_with_alpha?(pe)
-    not_range?(pe) && !name?(pe) && number?(pe) && alpha?(pe)
+  def numeric_with_alpha?(paon_elem)
+    not_range?(paon_elem) && !name?(paon_elem) && number?(paon_elem) && alpha?(paon_elem)
   end
 
-  def numeric_range_no_alpha?(pe)
-    range?(pe) && !alpha?(pe, 0) && !alpha?(pe, 1)
+  def numeric_range_no_alpha?(paon_elem)
+    range?(paon_elem) && !alpha?(paon_elem, 0) && !alpha?(paon_elem, 1)
   end
 
-  def compare_names(pe0, pe1)
-    compare_values(:name, pe0, pe1)
+  def compare_names(paon_elem0, paon_elem1)
+    compare_values(:name, paon_elem0, paon_elem1)
   end
 
-  def compare_numbers(pe0, pe1, i = 0)
-    compare_values(:number, pe0, pe1, i)
+  def compare_numbers(paon_elem0, paon_elem1, index = 0)
+    compare_values(:number, paon_elem0, paon_elem1, index)
   end
 
-  def compare_alphas(pe0, pe1)
-    compare_values(:alpha, pe0, pe1)
+  def compare_alphas(paon_elem0, paon_elem1)
+    compare_values(:alpha, paon_elem0, paon_elem1)
   end
 
-  def compare_values(v, pe0, pe1, i = 0)
-    pe0[i][v] <=> pe1[i][v]
+  def compare_values(value, paon_elem0, paon_elem1, index = 0)
+    paon_elem0[index][value] <=> paon_elem1[index][value]
   end
 
-  def same_name?(pe0, pe1, i = 0)
-    pe0[i][:name] == pe1[i][:name]
+  def same_name?(paon_elem0, paon_elem1, index = 0)
+    paon_elem0[index][:name] == paon_elem1[index][:name]
   end
 
-  def same_number?(pe0, pe1, i = 0)
-    pe0[i][:number] == pe1[i][:number]
+  def same_number?(paon_elem0, paon_elem1, index = 0)
+    paon_elem0[index][:number] == paon_elem1[index][:number]
   end
 
-  def name?(pe, i = 0)
-    pe[i][:name]
+  def name?(paon_elem, index = 0)
+    paon_elem[index][:name]
   end
 
-  def number?(pe, i = 0)
-    number(pe, i)
+  def number?(paon_elem, index = 0)
+    number(paon_elem, index)
   end
 
-  def number(pe, i = 0)
-    pe[i][:number]
+  def number(paon_elem, index = 0)
+    paon_elem[index][:number]
   end
 
-  def alpha?(pe, i = 0)
-    pe[i][:alpha]
+  def alpha?(paon_elem, index = 0)
+    paon_elem[index][:alpha]
   end
 end
