@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/epimorphics/lr_common_styles.git
-  revision: a6e89274bd68d386a50bb82a7fb14acc5535f65f
+  revision: 3125e675c92b475e6711c548f644f448cce17aa8
   specs:
-    lr_common_styles (1.4.2)
+    lr_common_styles (1.4.3)
       bootstrap-sass (~> 3.3.7)
       font-awesome-rails (~> 4.7.0.1)
       govuk_elements_rails (~> 2.0.0)
@@ -69,7 +69,7 @@ GEM
       public_suffix (>= 2.0.2, < 4.0)
     ansi (1.5.0)
     arel (7.1.4)
-    autoprefixer-rails (8.4.1)
+    autoprefixer-rails (8.5.0)
       execjs
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
