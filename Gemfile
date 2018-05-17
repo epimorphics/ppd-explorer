@@ -50,7 +50,7 @@ gem 'font-awesome-rails'
 gem 'jquery-ui-rails'
 gem 'lr_common_styles', git: 'https://github.com/epimorphics/lr_common_styles'
 gem 'yajl-ruby', require: 'yajl'
-# gem 'lr_common_styles', path: '/home/ian/workspace/land-registry/lr_common_styles'
+# gem 'lr_common_styles', path: '/home/ian/workspace/hmlr/lr_common_styles'
 
 group :test do
   gem 'capybara_minitest_spec'
