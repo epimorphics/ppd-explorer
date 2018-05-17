@@ -1,5 +1,14 @@
 GIT
-  remote: git://github.com/epimorphics/lr_common_styles.git
+  remote: git@github.com:epimorphics/ds-api-ruby.git
+  revision: 2c7bca75b05aea79009ccadd1138ab9443d0467d
+  specs:
+    data_services_api (0.4.2)
+      faraday_middleware
+      json
+      yajl-ruby
+
+GIT
+  remote: https://github.com/epimorphics/lr_common_styles
   revision: 3125e675c92b475e6711c548f644f448cce17aa8
   specs:
     lr_common_styles (1.4.3)
@@ -15,15 +24,6 @@ GIT
       modulejs-rails (~> 2.2.0.0)
       rails (~> 5.0.2)
       sass-rails (~> 5.0.4)
-
-GIT
-  remote: git@github.com:epimorphics/ds-api-ruby.git
-  revision: 2c7bca75b05aea79009ccadd1138ab9443d0467d
-  specs:
-    data_services_api (0.4.2)
-      faraday_middleware
-      json
-      yajl-ruby
 
 GEM
   remote: https://rubygems.org/
