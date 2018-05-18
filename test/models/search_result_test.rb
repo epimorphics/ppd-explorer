@@ -129,7 +129,7 @@ class SearchResultTest < ActiveSupport::TestCase
     end
 
     it 'should return "yes" or "no" for new-build' do
-      SearchResult.new(search_result_fixture).is_new_build.must_equal 'no'
+      SearchResult.new(search_result_fixture).new_build_formatted.must_equal 'no'
     end
   end
 

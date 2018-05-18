@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # An individual result returned from the search service
-class SearchResult
+class SearchResult # rubocop:disable Metrics/ClassLength
   attr_reader :result
 
   PPD = 'http://landregistry.data.gov.uk/def/ppi/'
@@ -41,12 +41,9 @@ class SearchResult
       ppd:propertyAddressCounty
     ].freeze
 
-  def initialize(resultJson)
-    @result = resultJson
-
-    if p = paon
-      paon = Paon.to_paon(p)
-    end
+  def initialize(result_json)
+    @result = result_json
+    ensure_paon_sortable
   end
 
   def key
@@ -61,22 +58,22 @@ class SearchResult
     id_of(@result)
   end
 
-  def <=>(sr)
-    transaction_date <=> sr.transaction_date
+  def <=>(other)
+    transaction_date <=> other.transaction_date
   end
 
-  def value_of_property(p)
-    value_of(@result[p])
+  def value_of_property(prop)
+    value_of(@result[prop])
   end
 
-  def presentation_value_of_property(p)
-    v = value_of(@result[p])
+  def presentation_value_of_property(prop)
+    v = value_of(@result[prop])
 
-    if is_no_value?(v)
+    if no_value?(v)
       nil
-    elsif p == 'ppd:propertyAddressPaon'
+    elsif prop == 'ppd:propertyAddressPaon'
       format_paon_elements(v).join(' ').html_safe
-    elsif title_case_exception?(p)
+    elsif title_case_exception?(prop)
       v
     else
       titlecase_with_hyphens(v)
@@ -86,7 +83,7 @@ class SearchResult
   def paon
     puts 'Warning; old buggy paon() method being called'
     p = value_of_property('ppd:propertyAddressPaon')
-    is_no_value?(p) ? nil : p
+    no_value?(p) ? nil : p
   end
 
   def paon=(new_paon)
@@ -97,12 +94,12 @@ class SearchResult
     @transaction_date ||= Date.parse(value_of_property('ppd:transactionDate'))
   end
 
-  def id_of_property(p)
-    id_of(@result[p])
+  def id_of_property(prop)
+    id_of(@result[prop])
   end
 
-  def different_key?(sr)
-    key != sr.key
+  def different_key?(other)
+    key != other.key
   end
 
   def property_details
@@ -136,35 +133,16 @@ class SearchResult
     { label: "#{new_build? ? '' : 'not '}new-build" }
   end
 
-  def is_new_build
+  def new_build_formatted
     new_build? ? 'yes' : 'no'
   end
 
   def formatted_address
     fields = []
-
-    if saon = presentation_value_of_property('ppd:propertyAddressSaon')
-      fields << "#{saon},"
-    end
-
-    if (paon = value_of_property('ppd:propertyAddressPaon')) && paon != 'no_value'
-      paon_tokens = format_paon_elements(paon)
-      comma_not_needed = paon_tokens.last =~ /\d/
-      fields << "#{paon_tokens.join(' ')}#{comma_not_needed ? '' : ','}"
-    end
-
-    %w[
-      ppd:propertyAddressStreet
-      ppd:propertyAddressTown
-    ].each do |p|
-      if f = presentation_value_of_property(p)
-        fields << "#{f},"
-      end
-    end
-
-    if (postcode = value_of_property('ppd:propertyAddressPostcode')) && postcode != 'no_value'
-      fields << postcode
-    end
+    formatted_address_saon(fields)
+    formatted_address_paon(fields)
+    formatted_address_street_town(fields)
+    formatted_address_postcode(fields)
 
     fields.join(' ').html_safe
   end
@@ -182,8 +160,8 @@ class SearchResult
 
   private
 
-  def index_key_value(p)
-    v = @result[p]
+  def index_key_value(prop)
+    v = @result[prop]
     return 'no_value' unless v
     return 'no_value' if empty_string?(v)
     value_of(v)
@@ -209,30 +187,58 @@ class SearchResult
     end
   end
 
-  def value_of(v)
-    if v.is_a?(Array)
-      v = v.empty? ? 'no_value' : v.first
-    end
-
-    v = (v['@value'] || v['@value'] || 'no_value') if v.is_a?(Hash)
-    empty_string?(v) ? 'no_value' : v
+  def value_of(val)
+    return 'no_value' unless val && !empty_string?(val)
+    return value_of(val.first) if val.is_a?(Array)
+    return value_of(val['@value']) if val.is_a?(Hash)
+    val
   end
 
-  def id_of(v)
-    if v.is_a?(Array)
-      v = v.empty? ? 'no_value' : v.first
-    end
-
-    v = (v['@id'] || v['@id'] || 'no_value') if v.is_a?(Hash)
-    empty_string?(v) ? 'no_value' : v
+  def id_of(val)
+    return 'no_value' unless val && !empty_string?(val)
+    return id_of(val.first) if val.is_a?(Array)
+    return id_of(val['@id']) if val.is_a?(Hash)
+    val
   end
 
-  def empty_string?(v)
-    v.is_a?(String) && v.empty?
+  def empty_string?(val)
+    val.is_a?(String) && val.empty?
   end
 
-  def title_case_exception?(p)
-    p.to_s == 'ppd:propertyAddressPostcode'
+  def title_case_exception?(prop)
+    prop.to_s == 'ppd:propertyAddressPostcode'
+  end
+
+  def titlecase_with_hyphens(str)
+    str.split('-').map(&:titlecase).join('-')
+  end
+
+  def no_value?(val)
+    val.nil? || val == 'no_value'
+  end
+
+  def without_leading_segment(term)
+    term&.gsub(%r{\A.*/}, '')
+  end
+
+  # If there is a PAON value, wrap it in an object wrapper that provides sorting
+  # according to HMLR rules
+  def ensure_paon_sortable
+    return unless (p = paon)
+    self.paon = Paon.to_paon(p)
+  end
+
+  def formatted_address_saon(fields)
+    return unless (saon = presentation_value_of_property('ppd:propertyAddressSaon'))
+    fields << "#{saon},"
+  end
+
+  def formatted_address_paon(fields)
+    return unless (paon = value_of_property('ppd:propertyAddressPaon')) && paon != 'no_value'
+
+    paon_tokens = format_paon_elements(paon)
+    comma_not_needed = paon_tokens.last =~ /\d/
+    fields << "#{paon_tokens.join(' ')}#{comma_not_needed ? '' : ','}"
   end
 
   def format_paon_elements(paon)
@@ -248,15 +254,20 @@ class SearchResult
     end
   end
 
-  def titlecase_with_hyphens(str)
-    str.split('-').map(&:titlecase).join('-')
+  def formatted_address_street_town(fields)
+    %w[
+      ppd:propertyAddressStreet
+      ppd:propertyAddressTown
+    ].each do |p|
+      if (f = presentation_value_of_property(p))
+        fields << "#{f},"
+      end
+    end
   end
 
-  def is_no_value?(v)
-    v.nil? || v == 'no_value'
-  end
-
-  def without_leading_segment(term)
-    term && term.gsub(/\A.*\//, '')
+  def formatted_address_postcode(fields)
+    return unless (postcode = value_of_property('ppd:propertyAddressPostcode'))
+    return if postcode == 'no_value'
+    fields << postcode
   end
 end
