@@ -8,7 +8,7 @@ class SearchResults
   DEFAULT_MAX_RESULTS = 5000
 
   def initialize(results_json, max)
-    @index = autokey_hash
+    @index = AutoExtendHash.new
     @properties = Set.new
     @transactions = 0
     index_results(results_json, max || DEFAULT_MAX_RESULTS)
@@ -66,10 +66,6 @@ class SearchResults
     return if count_only
     ind[last] = [] unless ind.key?(last)
     ind[last] << result
-  end
-
-  def autokey_hash
-    Hash.new { |h, k| h[k] = autokey_hash }
   end
 
   # TODO: DRY
