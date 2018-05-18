@@ -20,3 +20,10 @@ Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 def params_object(params)
   ActionController::Parameters.new(params)
 end
+
+module ActiveSupport
+  # Set up fixtures and such
+  class TestCase
+    self.file_fixture_path = 'test/fixtures/files'
+  end
+end
