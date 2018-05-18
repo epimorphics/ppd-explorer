@@ -28,11 +28,11 @@ class PpdDataController < ApplicationController
   end
   # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
-  def is_explanation? # rubocop:disable Style/PredicateName
+  def is_explanation? # rubocop:disable Naming/PredicateName
     params[:explain]
   end
 
-  def is_data_request? # rubocop:disable Style/PredicateName
+  def is_data_request? # rubocop:disable Naming/PredicateName
     request.format == Mime::Type.lookup_by_extension(:ttl) ||
       request.format == Mime::Type.lookup_by_extension(:csv)
   end
@@ -42,12 +42,7 @@ class PpdDataController < ApplicationController
 
     if @preferences.param('header')
       template = 'show_with_header'
-      @header = ''
-
-      DownloadRecord::DOWNLOAD_COLUMNS.each_with_index do |col, i|
-        @header << ',' if i.positive?
-        @header << col[:header]
-      end
+      create_download_header
     end
 
     template
@@ -59,5 +54,12 @@ class PpdDataController < ApplicationController
     Rails.logger.error "Malformed search error #{uuid} :: #{exception&.message || 'no message'}"
 
     render nothing: true, status: 400
+  end
+
+  private
+
+  def create_download_header
+    headers = DownloadRecord::DOWNLOAD_COLUMNS.map { |col| col[:header] }
+    @header = headers.join(',')
   end
 end
