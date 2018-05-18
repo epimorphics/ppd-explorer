@@ -132,4 +132,13 @@ class SearchResultTest < ActiveSupport::TestCase
       SearchResult.new(search_result_fixture).is_new_build.must_equal 'no'
     end
   end
+
+  describe 'formatted address' do
+    it 'should format the address correctly' do
+      SearchResult
+        .new(search_result_fixture)
+        .formatted_address
+        .must_equal 'Rowan House, 6 Church Lane, Bristol, BS39 5SF'
+    end
+  end
 end
