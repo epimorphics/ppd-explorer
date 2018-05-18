@@ -14,11 +14,6 @@ class SearchResultsTest < ActiveSupport::TestCase
     PAP = 'ppd:propertyAddressPaon'
     PASN = 'ppd:propertyAddressSaon'
 
-    let(:search_result_fixture) do
-      file_content = file_fixture('search-result.json').read
-      JSON.parse(file_content, symbolize_names: false)
-    end
-
     it 'should index a sample result' do
       result = { PAC => { '@value' => 'a-county' },
                  PAL => { '@value' => 'a-locality' },
@@ -38,6 +33,7 @@ class SearchResultsTest < ActiveSupport::TestCase
       sr.index['no_value']['a-county']['a-district']['a-town'].must_be_kind_of Hash
       sr.index['no_value']['a-county']['a-district']['a-town']['a-street'].must_be_kind_of Hash
       sr.index['no_value']['a-county']['a-district']['a-town']['a-street']['a-paon'].must_be_kind_of Hash
+      byebug
       sr.index['no_value']['a-county']['a-district']['a-town']['a-street']['a-paon']['a-saon'].must_be_kind_of Array
       sr.index['no_value']['a-county']['a-district']['a-town']['a-street']['a-paon']['a-saon'][0].value_of_property('ppd:pricePaid').must_equal 100
     end
@@ -180,13 +176,6 @@ class SearchResultsTest < ActiveSupport::TestCase
 
       sr = SearchResults.new([result0, result1], 1)
       sr.properties.must_equal 2
-    end
-
-    describe '#uri' do
-      it 'should return the URI of the result object' do
-        search_result = SearchResult.new(search_result_fixture)
-        search_result.uri.must_match %r{^http://landregistry.data.gov.uk/data/ppi/}
-      end
     end
   end
 end
