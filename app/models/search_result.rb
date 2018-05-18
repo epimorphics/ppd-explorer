@@ -170,15 +170,6 @@ class SearchResult
     fields.join(' ').html_safe
   end
 
-  def group_heading(previous)
-    gk = group_key
-    gk.select { |v| v }.join(', ') if !previous || gk != previous.group_key
-  end
-
-  def group_key
-    GROUP_HEADING_PROPERTIES.map { |p| value_of_property p }
-  end
-
   def formatted_transaction_category
     case value_of_property('ppd:transactionCategory')
     when "#{PPD}additionalPricePaidTransaction"
