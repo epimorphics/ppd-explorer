@@ -43,6 +43,8 @@ class SearchResult
 
   def initialize(resultJson)
     @result = resultJson
+    AutoExtendHash.auto_extend(resultJson)
+
     if p = paon
       paon = Paon.to_paon(p)
     end
@@ -83,16 +85,13 @@ class SearchResult
   end
 
   def paon
-    p = value_of('ppd:propertyAddressPaon')
+    puts 'Warning; old buggy paon() method being called'
+    p = value_of_property('ppd:propertyAddressPaon')
     is_no_value?(p) ? nil : p
   end
 
-  def paon=(p)
-    if @result['ppd:propertyAddressPaon'].is_a?(Array)
-      @result['ppd:propertyAddressPaon'][0]['@value'] = p
-    else
-      @result['ppd:propertyAddressPaon'] = p
-    end
+  def paon=(new_paon)
+    update_value_for_property(@result, 'ppd:propertyAddressPaon', new_paon)
   end
 
   def transaction_date
@@ -198,6 +197,26 @@ class SearchResult
     return 'no_value' unless v
     return 'no_value' if empty_string?(v)
     value_of(v)
+  end
+
+  def update_value_for_property(obj, prop, value)
+    target = obj.key?(prop) && obj[prop]
+
+    if target&.is_a?(Array)
+      update_value_array(target, value)
+    elsif target&.is_a?(Hash)
+      target['@value'] = value
+    else
+      obj[prop] = value
+    end
+  end
+
+  def update_value_array(target, value)
+    if target[0].is_a?(Hash)
+      target[0]['@value'] = value
+    else
+      target[0] = value
+    end
   end
 
   def value_of(v)
