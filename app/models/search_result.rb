@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # An individual result returned from the search service
-class SearchResult # rubocop:disable Metrics/ClassLength
+class SearchResult
   attr_reader :result
 
   PPD = 'http://landregistry.data.gov.uk/def/ppi/'
@@ -41,10 +41,11 @@ class SearchResult # rubocop:disable Metrics/ClassLength
       ppd:propertyAddressCounty
     ].freeze
 
-  def initialize(result_json)
-    @result = result_json
-    return unless (p = paon)
-    self.paon = Paon.to_paon(p)
+  def initialize(resultJson)
+    @result = resultJson
+    if p = paon
+      paon = Paon.to_paon(p)
+    end
   end
 
   def key
@@ -59,22 +60,22 @@ class SearchResult # rubocop:disable Metrics/ClassLength
     id_of(@result)
   end
 
-  def <=>(other)
-    transaction_date <=> other.transaction_date
+  def <=>(sr)
+    transaction_date <=> sr.transaction_date
   end
 
-  def value_of_property(prop)
-    value_of(@result[prop])
+  def value_of_property(p)
+    value_of(@result[p])
   end
 
-  def presentation_value_of_property(prop)
-    v = value_of(@result[prop])
+  def presentation_value_of_property(p)
+    v = value_of(@result[p])
 
     if is_no_value?(v)
       nil
-    elsif prop == 'ppd:propertyAddressPaon'
+    elsif p == 'ppd:propertyAddressPaon'
       format_paon_elements(v).join(' ').html_safe
-    elsif title_case_exception?(prop)
+    elsif title_case_exception?(p)
       v
     else
       titlecase_with_hyphens(v)
@@ -82,15 +83,15 @@ class SearchResult # rubocop:disable Metrics/ClassLength
   end
 
   def paon
-    p = value_of_property('ppd:propertyAddressPaon')
+    p = value_of('ppd:propertyAddressPaon')
     is_no_value?(p) ? nil : p
   end
 
-  def paon=(new_paon)
+  def paon=(p)
     if @result['ppd:propertyAddressPaon'].is_a?(Array)
-      @result['ppd:propertyAddressPaon'][0]['@value'] = new_paon
+      @result['ppd:propertyAddressPaon'][0]['@value'] = p
     else
-      @result['ppd:propertyAddressPaon'] = new_paon
+      @result['ppd:propertyAddressPaon'] = p
     end
   end
 
@@ -98,12 +99,12 @@ class SearchResult # rubocop:disable Metrics/ClassLength
     @transaction_date ||= Date.parse(value_of_property('ppd:transactionDate'))
   end
 
-  def id_of_property(prop)
-    id_of(@result[prop])
+  def id_of_property(p)
+    id_of(@result[p])
   end
 
-  def different_key?(other)
-    key != other.key
+  def different_key?(sr)
+    key != sr.key
   end
 
   def property_details
@@ -137,16 +138,14 @@ class SearchResult # rubocop:disable Metrics/ClassLength
     { label: "#{new_build? ? '' : 'not '}new-build" }
   end
 
-  def new_build_yes_no
+  def is_new_build
     new_build? ? 'yes' : 'no'
   end
 
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def formatted_address
     fields = []
 
-    if (saon = presentation_value_of_property('ppd:propertyAddressSaon'))
+    if saon = presentation_value_of_property('ppd:propertyAddressSaon')
       fields << "#{saon},"
     end
 
@@ -160,7 +159,7 @@ class SearchResult # rubocop:disable Metrics/ClassLength
       ppd:propertyAddressStreet
       ppd:propertyAddressTown
     ].each do |p|
-      if (f = presentation_value_of_property(p))
+      if f = presentation_value_of_property(p)
         fields << "#{f},"
       end
     end
@@ -171,8 +170,6 @@ class SearchResult # rubocop:disable Metrics/ClassLength
 
     fields.join(' ').html_safe
   end
-  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
-  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def group_heading(previous)
     gk = group_key
@@ -196,30 +193,37 @@ class SearchResult # rubocop:disable Metrics/ClassLength
 
   private
 
-  def index_key_value(prop)
-    value_of(@result[prop])
+  def index_key_value(p)
+    v = @result[p]
+    return 'no_value' unless v
+    return 'no_value' if empty_string?(v)
+    value_of(v)
   end
 
-  def value_of(value, key_pred = '@value')
-    if value.is_a?(Array)
-      value.empty? ? 'no_value' : value_of(value.first)
-    elsif value.is_a?(Hash)
-      value_of(value[key_pred])
-    else
-      !value || empty_string?(value) ? 'no_value' : value
+  def value_of(v)
+    if v.is_a?(Array)
+      v = v.empty? ? 'no_value' : v.first
     end
+
+    v = (v['@value'] || v['@value'] || 'no_value') if v.is_a?(Hash)
+    empty_string?(v) ? 'no_value' : v
   end
 
-  def id_of(value)
-    value_of(value, '@id')
+  def id_of(v)
+    if v.is_a?(Array)
+      v = v.empty? ? 'no_value' : v.first
+    end
+
+    v = (v['@id'] || v['@id'] || 'no_value') if v.is_a?(Hash)
+    empty_string?(v) ? 'no_value' : v
   end
 
-  def empty_string?(value)
-    value.is_a?(String) && value.empty?
+  def empty_string?(v)
+    v.is_a?(String) && v.empty?
   end
 
-  def title_case_exception?(prop)
-    prop.to_s == 'ppd:propertyAddressPostcode'
+  def title_case_exception?(p)
+    p.to_s == 'ppd:propertyAddressPostcode'
   end
 
   def format_paon_elements(paon)
@@ -239,11 +243,11 @@ class SearchResult # rubocop:disable Metrics/ClassLength
     str.split('-').map(&:titlecase).join('-')
   end
 
-  def is_no_value?(value) # rubocop:disable Metrics/PredicateName
-    value.nil? || value == 'no_value'
+  def is_no_value?(v)
+    v.nil? || v == 'no_value'
   end
 
   def without_leading_segment(term)
-    term&.gsub(%r{\A.*/}, '')
+    term && term.gsub(/\A.*\//, '')
   end
 end
