@@ -58,6 +58,23 @@ class AutoExtendHashTest < ActiveSupport::TestCase
         orig[:foo][:bar] = 'wombles'
         orig[:foo][:bar].must_equal 'wombles'
       end
+
+      it 'should convert nested hashes to auto-extend' do
+        orig = { foo: {} }
+        AutoExtendHash.auto_extend(orig)
+
+        refute orig[:foo].key?(:bar)
+        orig[:foo][:bar][:fubar] = 'wombles'
+        orig[:foo][:bar][:fubar].must_equal 'wombles'
+      end
+
+      it 'should not change existing default_proc behaviour' do
+        orig = Hash.new { |hash, key| hash[key] = :chewbacca }
+        AutoExtendHash.auto_extend(orig)
+
+        refute orig.key?(:foo)
+        orig[:foo].must_equal :chewbacca
+      end
     end
   end
 end
