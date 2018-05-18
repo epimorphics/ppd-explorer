@@ -34,13 +34,6 @@ class SearchResult # rubocop:disable Metrics/ClassLength
       QueryCommand::ASPECTS.values.find { |a| a.aspect_key_property == ap }
     end
 
-  GROUP_HEADING_PROPERTIES =
-    %w[
-      ppd:propertyAddressStreet
-      ppd:propertyAddressTown
-      ppd:propertyAddressCounty
-    ].freeze
-
   def initialize(result_json)
     @result = result_json
     ensure_paon_sortable
@@ -81,7 +74,6 @@ class SearchResult # rubocop:disable Metrics/ClassLength
   end
 
   def paon
-    puts 'Warning; old buggy paon() method being called'
     p = value_of_property('ppd:propertyAddressPaon')
     no_value?(p) ? nil : p
   end
