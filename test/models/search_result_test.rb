@@ -114,4 +114,22 @@ class SearchResultTest < ActiveSupport::TestCase
       (s2 <=> s1).must_be :>, 0
     end
   end
+
+  describe 'property details' do
+    it 'should compute a vector of property detail attributes' do
+      search_result = SearchResult.new(search_result_fixture)
+      search_result.property_details.must_equal(
+        [
+          { uri: 'http://landregistry.data.gov.uk/def/common/semi-detached',
+            label: 'semi detached' },
+          { uri: 'http://landregistry.data.gov.uk/def/common/freehold', label: 'freehold' },
+          { label: 'not new-build' }
+        ]
+      )
+    end
+
+    it 'should return "yes" or "no" for new-build' do
+      SearchResult.new(search_result_fixture).is_new_build.must_equal 'no'
+    end
+  end
 end
