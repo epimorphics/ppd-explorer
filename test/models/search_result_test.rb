@@ -87,6 +87,14 @@ class SearchResultTest < ActiveSupport::TestCase
 
       search_result.key_hash.must_be_kind_of(Numeric)
     end
+
+    it 'should know when two keys are different' do
+      s1 = SearchResult.new(search_result_fixture)
+      s2 = SearchResult.new(JSON.parse(file_fixture('search-result-2.json').read))
+
+      assert s1.different_key?(s2)
+      assert s2.different_key?(s1)
+    end
   end
 
   describe 'transaction date' do
@@ -94,6 +102,16 @@ class SearchResultTest < ActiveSupport::TestCase
       SearchResult.new(search_result_fixture)
                   .transaction_date
                   .must_equal(Date.new(2006, 9, 28))
+    end
+  end
+
+  describe 'comparison' do
+    it 'should sort results by date' do
+      s1 = SearchResult.new(search_result_fixture)
+      s2 = SearchResult.new(JSON.parse(file_fixture('search-result-2.json').read))
+
+      (s1 <=> s2).must_be :<, 0
+      (s2 <=> s1).must_be :>, 0
     end
   end
 end
