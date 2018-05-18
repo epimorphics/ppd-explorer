@@ -33,7 +33,6 @@ class SearchResultsTest < ActiveSupport::TestCase
       sr.index['no_value']['a-county']['a-district']['a-town'].must_be_kind_of Hash
       sr.index['no_value']['a-county']['a-district']['a-town']['a-street'].must_be_kind_of Hash
       sr.index['no_value']['a-county']['a-district']['a-town']['a-street']['a-paon'].must_be_kind_of Hash
-      byebug
       sr.index['no_value']['a-county']['a-district']['a-town']['a-street']['a-paon']['a-saon'].must_be_kind_of Array
       sr.index['no_value']['a-county']['a-district']['a-town']['a-street']['a-paon']['a-saon'][0].value_of_property('ppd:pricePaid').must_equal 100
     end
