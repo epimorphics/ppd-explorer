@@ -70,4 +70,30 @@ class SearchResultTest < ActiveSupport::TestCase
                    .must_equal 'Totally not the PAON'
     end
   end
+
+  describe 'generating an index key' do
+    it 'should create an index key based on the properties of the result' do
+      json = {}.merge(search_result_fixture)
+      search_result = SearchResult.new(json)
+
+      key = search_result.key
+      key.must_be_kind_of Array
+      refute(key.find { |k| !k.is_a?(String) })
+    end
+
+    it 'should generate a hashcode from the key' do
+      json = {}.merge(search_result_fixture)
+      search_result = SearchResult.new(json)
+
+      search_result.key_hash.must_be_kind_of(Numeric)
+    end
+  end
+
+  describe 'transaction date' do
+    it 'should parse the transaction date' do
+      SearchResult.new(search_result_fixture)
+                  .transaction_date
+                  .must_equal(Date.new(2006, 9, 28))
+    end
+  end
 end
