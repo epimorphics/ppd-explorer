@@ -43,7 +43,6 @@ class SearchResult
 
   def initialize(resultJson)
     @result = resultJson
-    AutoExtendHash.auto_extend(resultJson)
 
     if p = paon
       paon = Paon.to_paon(p)
