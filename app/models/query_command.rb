@@ -153,4 +153,8 @@ class QueryCommand < DataService # rubocop:disable Metrics/ClassLength
   def success?
     !error_message
   end
+
+  def size
+    @search_results&.size
+  end
 end

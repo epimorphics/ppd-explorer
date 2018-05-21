@@ -13,7 +13,7 @@ class PpdDataController < ApplicationController
     if explanation?
       show_sparql_explanation(preferences)
     else
-      prepare_data_download(preferences)
+      download_data(preferences)
     end
   end
 
@@ -46,16 +46,12 @@ class PpdDataController < ApplicationController
     redirect_to "/app/hpi/qonsole?q=#{URI.encode_www_form_component(explanation[:sparql])}"
   end
 
-  def prepare_data_download(preferences)
+  def download_data(preferences)
     template = choose_template(preferences)
+    template = prepare_data_download(preferences, template) if data_download?
 
-    if data_download?
-      @query_command = QueryCommand.new(preferences)
-      @query_command.load_query_results(limit: :all, download: true, max: MAX_DOWNLOAD_RESULTS)
-
-      template = 'ppd/error' unless @query_command.success?
-    end
-
+    return unless template
+    @preferences = preferences
     render template
   end
 
@@ -67,7 +63,22 @@ class PpdDataController < ApplicationController
       create_download_header
     end
 
-    @preferences = preferences
     template
+  end
+
+  def prepare_data_download(preferences, template)
+    query_command = QueryCommand.new(preferences)
+    query_command.load_query_results(limit: :all, download: true, max: MAX_DOWNLOAD_RESULTS)
+
+    if large_resultset?(query_command)
+      puts 'bang!!!!'
+    else
+      @query_command = query_command
+      query_command.success? ? template : 'ppd/error'
+    end
+  end
+
+  def large_resultset?(_query_command)
+    false
   end
 end
