@@ -19,7 +19,7 @@ class SearchAspect < Aspect
     query.matches(aspect_key_property, preference_value_as_regex(preferences), flags: 'i')
   end
 
-  def has_search?(query) # rubocop:disable Style/PredicateName
+  def has_search?(query) # rubocop:disable Naming/PredicateName
     query.terms.key?(aspect_property) &&
       query.terms[aspect_property].key?('@search')
   end
