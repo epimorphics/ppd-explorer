@@ -4,7 +4,9 @@
 class PpdDataController < ApplicationController
   include DsapiTurtleFormatter
   MAX_DOWNLOAD_RESULTS = 1_000_000
-  LARGE_RESULTSET_THRESHOLD = 1
+
+  # Above this number of results in a resultset, we write the CSV to a file first
+  LARGE_RESULTSET_THRESHOLD = 1000
 
   rescue_from MalformedSearchError, with: :render_malformed_search_error
 
@@ -96,6 +98,7 @@ class PpdDataController < ApplicationController
     send_file(csv_file, filename: 'ppd---data.csv', type: 'text/csv')
   ensure
     csv_file&.close
+    csv_file&.unlink
   end
 
   def write_csv_file(query_command)
