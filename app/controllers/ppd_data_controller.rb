@@ -95,29 +95,26 @@ class PpdDataController < ApplicationController
 
   def render_csv_file(query_command)
     csv_file = write_csv_file(query_command)
-    send_file(csv_file, filename: 'ppd---data.csv', type: 'text/csv')
+    send_file(csv_file, filename: 'ppd_data.csv', type: 'text/csv')
   ensure
     csv_file&.close
-    csv_file&.unlink
   end
 
   def write_csv_file(query_command)
     file = Tempfile.new(%w[ppd_data csv])
-    Rails.logger.debug "Tempfile is #{file.path}"
-    file.open('w+') do |f|
+
+    File.open(file, 'w') do |f|
       f << @headers if @headers
       write_csv_rows(query_command, f)
     end
 
-    file.rewind
     file
   end
 
   def write_csv_rows(query_command, file)
     query_command.search_results.each_transaction do |sr|
-      row = []
-      DownloadRecord.new(sr).each_column { |csv_value| row << csv_value }
-      file << row.join(',')
+      DownloadRecord.new(sr).each_column { |csv_value| file << csv_value }
+      file << "\n"
     end
   end
 end
