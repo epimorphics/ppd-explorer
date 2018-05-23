@@ -53,7 +53,10 @@ gem 'yajl-ruby', require: 'yajl'
 # gem 'lr_common_styles', path: '/home/ian/workspace/hmlr/lr_common_styles'
 
 group :test do
+  gem 'capybara', '~> 2.13'
+  gem 'capybara-selenium'
   gem 'capybara_minitest_spec'
+  gem 'chromedriver-helper'
   gem 'json_expressions', '~> 0.8'
   gem 'minitest-rails-capybara'
   gem 'minitest-reporters'
