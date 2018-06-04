@@ -1,0 +1,27 @@
+AllCops:
+  TargetRubyVersion: 2.4
+  Exclude:
+    - 'node_modules/**/*'
+
+# Customize rules
+Metrics/LineLength:
+  Max: 100
+  Exclude:
+    - bin/**/*
+    - config/**/*
+
+Metrics/ClassLength:
+  Exclude:
+    - test/**/*
+
+Metrics/BlockLength:
+  Exclude:
+    - test/**/*
+    - lib/tasks/**/*
+
+Metrics/MethodLength:
+  Exclude:
+    - lib/tasks/location.rake
+
+Style/FormatStringToken:
+  Enabled: false

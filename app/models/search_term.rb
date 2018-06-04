@@ -6,11 +6,11 @@ class SearchTerm
 
   attr_reader :name, :value, :values
 
-  def initialize(n, l, v, vs = nil)
-    @name = n
-    @label_prompt, @label_term = l.split("matches")
-    @value = v
-    @values = vs
+  def initialize(name, label, value, values = nil)
+    @name = name
+    @label_prompt, @label_term = label.split('matches')
+    @value = value
+    @values = values
   end
 
   def button_value

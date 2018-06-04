@@ -6,28 +6,28 @@ class UserPreferences
 
   WHITE_LIST = QueryCommand::ASPECTS.map do |key, aspect|
     aspect.values ? { key => [] } : key
-  end + %i(search limit header explain)
+  end + %i[search limit header explain]
 
-  DEFAULT_LIMIT = "100".freeze
-  AVAILABLE_LIMITS = [DEFAULT_LIMIT, "1000", "all"].freeze
+  DEFAULT_LIMIT = '100'
+  AVAILABLE_LIMITS = [DEFAULT_LIMIT, '1000', 'all'].freeze
 
   def initialize(user_params)
     @params = user_params.permit(WHITE_LIST).to_h
     sanitise!
   end
 
-  def param(p)
-    val = @params[p]
-    val == "" ? nil : val
+  def param(prop)
+    val = @params[prop]
+    val == '' ? nil : val
   end
 
   # Return truthy if parameter p is present, optionally with value v
-  def present?(p, v = nil)
-    if v
-      param_value = param(p)
-      param_value.is_a?(Array) ? param_value.include?(v) : (param_value == v)
+  def present?(prop, value = nil)
+    if value
+      param_value = param(prop)
+      param_value.is_a?(Array) ? param_value.include?(value) : (param_value == value)
     else
-      param(p)
+      param(prop)
     end
   end
 
@@ -72,12 +72,12 @@ class UserPreferences
 
   # Return the currentely selected limit on number of queries, or the default
   def selected_limit
-    param("limit") || DEFAULT_LIMIT
+    param('limit') || DEFAULT_LIMIT
   end
 
   # Return true if the user has unlimited data
   def unlimited?
-    selected_limit == "all"
+    selected_limit == 'all'
   end
 
   private

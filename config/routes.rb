@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 PpdExplorer::Application.routes.draw do
   root 'ppd#index'
 

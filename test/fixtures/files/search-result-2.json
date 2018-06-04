@@ -1,0 +1,47 @@
+{
+  "ppd:propertyAddressPostcode" : [ "BA2 9EZ" ] ,
+  "ppd:propertyAddressSaon" : [  ] ,
+  "ppd:transactionCategory" : {
+    "@id" : "http://landregistry.data.gov.uk/def/ppi/standardPricePaidTransaction"
+  }
+   ,
+  "ppd:propertyAddressCounty" : [ "BATH AND NORTH EAST SOMERSET" ] ,
+  "ppd:estateType" : [ {
+    "@id" : "http://landregistry.data.gov.uk/def/common/freehold"
+  }
+   ] ,
+  "ppd:propertyAddressPaon" : [ "ROWAN COTTAGE, 39" ] ,
+  "ppd:recordStatus" : [ {
+    "@id" : "http://landregistry.data.gov.uk/def/ppi/add"
+  }
+   ] ,
+  "ppd:propertyAddressStreet" : [ "CORSTON FIELDS" ] ,
+  "ppd:transactionId" : {
+    "@value" : "51C7CA4A-C486-439B-AAAB-89C42C034F85" ,
+    "@type" : "http://landregistry.data.gov.uk/def/ppi/TransactionIdDatatype"
+  }
+   ,
+  "ppd:propertyAddressTown" : [ "BATH" ] ,
+  "ppd:pricePaid" : 495000 ,
+  "ppd:propertyAddressLocality" : [ "CORSTON" ] ,
+  "ppd:hasTransaction" : {
+    "@id" : "http://landregistry.data.gov.uk/data/ppi/transaction/51C7CA4A-C486-439B-AAAB-89C42C034F85"
+  }
+   ,
+  "ppd:transactionDate" : {
+    "@value" : "2009-10-09" ,
+    "@type" : "http://www.w3.org/2001/XMLSchema#date"
+  }
+   ,
+  "ppd:propertyAddress" : {
+    "@id" : "http://landregistry.data.gov.uk/data/ppi/address/1f0b0b02a995e061af9dd7531128bcbfe5519969"
+  }
+   ,
+  "@id" : "http://landregistry.data.gov.uk/data/ppi/transaction/51C7CA4A-C486-439B-AAAB-89C42C034F85/current" ,
+  "ppd:newBuild" : [ false ] ,
+  "ppd:propertyAddressDistrict" : [ "BATH AND NORTH EAST SOMERSET" ] ,
+  "ppd:propertyType" : [ {
+    "@id" : "http://landregistry.data.gov.uk/def/common/detached"
+  }
+   ]
+}

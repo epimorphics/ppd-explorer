@@ -18,7 +18,7 @@ class FilterAspect < Aspect
     option(:operator)
   end
 
-  def is_uri_value?
+  def is_uri_value? # rubocop:disable Metrics/PredicateName
     option(:uri_value)
   end
 
@@ -37,9 +37,11 @@ class FilterAspect < Aspect
   private
 
   def filter_value_label(value)
-    option(:value_labels) ?
-      select_filter_value_label(value) :
+    if option(:value_labels)
+      select_filter_value_label(value)
+    else
       generate_filter_value_label(value)
+    end
   end
 
   def generate_filter_value_label(value)

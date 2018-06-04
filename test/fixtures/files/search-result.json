@@ -1,0 +1,47 @@
+{
+  "ppd:propertyAddressPostcode" : [ "BS39 5SF" ] ,
+  "ppd:propertyAddressSaon" : [  ] ,
+  "ppd:transactionCategory" : {
+    "@id" : "http://landregistry.data.gov.uk/def/ppi/standardPricePaidTransaction"
+  }
+   ,
+  "ppd:propertyAddressCounty" : [ "BATH AND NORTH EAST SOMERSET" ] ,
+  "ppd:estateType" : [ {
+    "@id" : "http://landregistry.data.gov.uk/def/common/freehold"
+  }
+   ] ,
+  "ppd:propertyAddressPaon" : [ "ROWAN HOUSE, 6" ] ,
+  "ppd:recordStatus" : [ {
+    "@id" : "http://landregistry.data.gov.uk/def/ppi/add"
+  }
+   ] ,
+  "ppd:propertyAddressStreet" : [ "CHURCH LANE" ] ,
+  "ppd:transactionId" : {
+    "@value" : "F9AADC37-9F3D-4CAD-9868-918AED037D20" ,
+    "@type" : "http://landregistry.data.gov.uk/def/ppi/TransactionIdDatatype"
+  }
+   ,
+  "ppd:propertyAddressTown" : [ "BRISTOL" ] ,
+  "ppd:pricePaid" : 175000 ,
+  "ppd:propertyAddressLocality" : [ "CLUTTON" ] ,
+  "ppd:hasTransaction" : {
+    "@id" : "http://landregistry.data.gov.uk/data/ppi/transaction/F9AADC37-9F3D-4CAD-9868-918AED037D20"
+  }
+   ,
+  "ppd:transactionDate" : {
+    "@value" : "2006-09-28" ,
+    "@type" : "http://www.w3.org/2001/XMLSchema#date"
+  }
+   ,
+  "ppd:propertyAddress" : {
+    "@id" : "http://landregistry.data.gov.uk/data/ppi/address/344854d5e051f274b4a381669e495bf41ef41f72"
+  }
+   ,
+  "@id" : "http://landregistry.data.gov.uk/data/ppi/transaction/F9AADC37-9F3D-4CAD-9868-918AED037D20/current" ,
+  "ppd:newBuild" : [ false ] ,
+  "ppd:propertyAddressDistrict" : [ "BATH AND NORTH EAST SOMERSET" ] ,
+  "ppd:propertyType" : [ {
+    "@id" : "http://landregistry.data.gov.uk/def/common/semi-detached"
+  }
+   ]
+}
