@@ -28,8 +28,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  private
-
   def render_404(_exception = nil)
     render_error(404)
   end
