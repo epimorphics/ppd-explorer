@@ -3,10 +3,13 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.0.2'
+gem 'rails', '~> 5.2.1'
+
+# Use Puma as the app server
+gem 'puma', '~> 3.11'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0.4'
+gem 'sass-rails'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -44,8 +47,8 @@ end
 
 gem 'data_services_api', git: 'git@github.com:epimorphics/ds-api-ruby.git'
 # gem 'data_services_api', path: '/home/ian/workspace/epimorphics/ds-api-ruby'
-gem 'faraday', '~> 0.11.0'
-gem 'faraday_middleware', '~> 0.11.0.1'
+gem 'faraday'
+gem 'faraday_middleware'
 gem 'font-awesome-rails'
 gem 'jquery-ui-rails'
 gem 'lr_common_styles', git: 'https://github.com/epimorphics/lr_common_styles'
@@ -53,12 +56,12 @@ gem 'yajl-ruby', require: 'yajl'
 # gem 'lr_common_styles', path: '/home/ian/workspace/hmlr/lr_common_styles'
 
 group :test do
-  gem 'capybara', '~> 2.13'
+  gem 'capybara'
   gem 'capybara-selenium'
   gem 'capybara_minitest_spec'
   gem 'chromedriver-helper'
   gem 'json_expressions', '~> 0.8'
-  gem 'minitest-rails-capybara'
+  gem 'minitest-rails'
   gem 'minitest-reporters'
   gem 'minitest-spec-rails'
   gem 'minitest-vcr'
