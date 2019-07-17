@@ -12,6 +12,7 @@ module PpdHelper
 
   def address_detail_filter(aspect, result, preferences) # rubocop:disable Metrics/MethodLength
     return unless (vp = result.presentation_value_of_property(aspect.aspect_key_property))
+
     val = result.value_of_property(aspect.aspect_key_property)
 
     content_tag('td') do

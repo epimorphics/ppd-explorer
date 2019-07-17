@@ -61,6 +61,7 @@ class PpdDataController < ApplicationController
     template = prepare_data_download(preferences, template) if data_download?
 
     return unless template
+
     @preferences = preferences
     render template
   end
