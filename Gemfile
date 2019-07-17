@@ -6,7 +6,7 @@ source 'https://rubygems.org'
 gem 'rails', '~> 5.2.1'
 
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 4.0.1'
 
 # Use SCSS for stylesheets
 gem 'sass-rails'
@@ -51,15 +51,15 @@ gem 'faraday'
 gem 'faraday_middleware'
 gem 'font-awesome-rails'
 gem 'jquery-ui-rails'
-gem 'lr_common_styles', git: 'https://github.com/epimorphics/lr_common_styles'
+# gem 'lr_common_styles', git: 'https://github.com/epimorphics/lr_common_styles'
+gem 'lr_common_styles', path: '/home/ian/projects/hmlr/lr_common_styles'
 gem 'yajl-ruby', require: 'yajl'
-# gem 'lr_common_styles', path: '/home/ian/workspace/hmlr/lr_common_styles'
 
 group :test do
   gem 'capybara'
   gem 'capybara-selenium'
   gem 'capybara_minitest_spec'
-  gem 'chromedriver-helper'
+  # gem 'chromedriver-helper'
   gem 'json_expressions', '~> 0.8'
   gem 'minitest-rails'
   gem 'minitest-reporters'
@@ -68,5 +68,6 @@ group :test do
   gem 'mocha'
   gem 'simplecov', require: false
   gem 'vcr'
+  gem 'webdrivers'
   gem 'webmock'
 end

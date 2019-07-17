@@ -12,6 +12,7 @@ module TurtleFormatter
 
     result.map do |property, value|
       next if value.respond_to?(:'empty?') && value.empty?
+
       if property == '@id'
         ttl_value[:uri] = format_ttl_value(value)
       else

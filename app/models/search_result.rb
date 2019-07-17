@@ -118,7 +118,7 @@ class SearchResult # rubocop:disable Metrics/ClassLength
 
   def new_build?
     nb = value_of_property('ppd:newBuild')
-    !(nb == 'false' || nb == false || nb == 'no_value')
+    !['false', 'no_value'].include?(nb.to_s)
   end
 
   def new_build
@@ -156,6 +156,7 @@ class SearchResult # rubocop:disable Metrics/ClassLength
     v = @result[prop]
     return 'no_value' unless v
     return 'no_value' if empty_string?(v)
+
     value_of(v)
   end
 
@@ -183,6 +184,7 @@ class SearchResult # rubocop:disable Metrics/ClassLength
     return 'no_value' unless val && !empty_string?(val)
     return value_of(val.first) if val.is_a?(Array)
     return value_of(val['@value']) if val.is_a?(Hash)
+
     val
   end
 
@@ -190,6 +192,7 @@ class SearchResult # rubocop:disable Metrics/ClassLength
     return 'no_value' unless val && !empty_string?(val)
     return id_of(val.first) if val.is_a?(Array)
     return id_of(val['@id']) if val.is_a?(Hash)
+
     val
   end
 
@@ -217,11 +220,13 @@ class SearchResult # rubocop:disable Metrics/ClassLength
   # according to HMLR rules
   def ensure_paon_sortable
     return unless (p = paon)
+
     self.paon = Paon.to_paon(p)
   end
 
   def formatted_address_saon(fields)
     return unless (saon = presentation_value_of_property('ppd:propertyAddressSaon'))
+
     fields << "#{saon},"
   end
 
@@ -260,6 +265,7 @@ class SearchResult # rubocop:disable Metrics/ClassLength
   def formatted_address_postcode(fields)
     return unless (postcode = value_of_property('ppd:propertyAddressPostcode'))
     return if postcode == 'no_value'
+
     fields << postcode
   end
 end

@@ -12,6 +12,7 @@ class AutoExtendHash < Hash
   # nested values to auto-extend as well.
   def self.auto_extend(hash)
     return unless hash.is_a?(Hash)
+
     conditionally_set_default_proc(hash)
     hash.values.each { |value| AutoExtendHash.auto_extend(value) }
   end
@@ -22,6 +23,7 @@ class AutoExtendHash < Hash
 
   def self.conditionally_set_default_proc(hash)
     return if hash.default_proc
+
     hash.default_proc = ->(hsh, key) { hsh[key] = AutoExtendHash.new }
   end
 end
