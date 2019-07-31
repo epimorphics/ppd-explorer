@@ -28,8 +28,8 @@ class SearchController < ApplicationController
         render template: 'ppd/error'
       end
     end
-  rescue StandardError => err
-    e = err.cause || err
+  rescue StandardError => e
+    e = e.cause || e
     status = case e
              when MalformedSearchError, ArgumentError
                400

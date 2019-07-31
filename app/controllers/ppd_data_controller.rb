@@ -46,9 +46,10 @@ class PpdDataController < ApplicationController
     request.format == Mime::Type.lookup_by_extension(:ttl)
   end
 
-  def create_download_header
-    headers = DownloadRecord::DOWNLOAD_COLUMNS.map { |col| col[:header] }
-    @header = headers.join(',')
+  def download_header
+    DownloadRecord::DOWNLOAD_COLUMNS
+      .map { |col| col[:header] }
+      .join(',')
   end
 
   def show_sparql_explanation(preferences)
@@ -57,31 +58,29 @@ class PpdDataController < ApplicationController
   end
 
   def download_data(preferences)
-    template = choose_template(preferences)
-    template = prepare_data_download(preferences, template) if data_download?
+    template, headers = choose_template(preferences)
+    template = prepare_data_download(preferences, template, headers) if data_download?
 
     return unless template
+
     @preferences = preferences
-    render template
+    render template, locals: { headers: headers }
   end
 
   def choose_template(preferences)
-    template = 'show'
-
     if preferences.param('header')
-      template = 'show_with_header'
-      create_download_header
+      ['show_with_header', download_header]
+    else
+      ['show', nil]
     end
-
-    template
   end
 
-  def prepare_data_download(preferences, template)
+  def prepare_data_download(preferences, template, headers)
     query_command = QueryCommand.new(preferences)
     query_command.load_query_results(limit: :all, download: true, max: MAX_DOWNLOAD_RESULTS)
 
     if large_csv_resultset?(query_command)
-      render_csv_file(query_command)
+      render_csv_file(query_command, headers)
       nil
     else
       @query_command = query_command
@@ -93,18 +92,18 @@ class PpdDataController < ApplicationController
     csv_data_download? && query_command.size > LARGE_RESULTSET_THRESHOLD
   end
 
-  def render_csv_file(query_command)
-    csv_file = write_csv_file(query_command)
+  def render_csv_file(query_command, headers)
+    csv_file = write_csv_file(query_command, headers)
     send_file(csv_file, filename: 'ppd_data.csv', type: 'text/csv')
   ensure
     csv_file&.close
   end
 
-  def write_csv_file(query_command)
+  def write_csv_file(query_command, headers)
     file = Tempfile.new(%w[ppd_data csv])
 
     File.open(file, 'w') do |f|
-      f << @headers if @headers
+      f << headers if headers
       write_csv_rows(query_command, f)
     end
 

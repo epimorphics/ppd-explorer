@@ -64,6 +64,7 @@ class SearchResults
     ind = key.reduce(index) { |i, k| i[k] }
 
     return if count_only
+
     ind[last] = [] unless ind.key?(last)
     ind[last] << result
   end

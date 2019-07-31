@@ -22,6 +22,7 @@ module DsapiTurtleFormatter
 
     result.map do |property, value|
       next if value.respond_to?(:size) && value.empty?
+
       if property == '@id'
         ttl_value[:uri] = format_ttl_value(value)
       else
