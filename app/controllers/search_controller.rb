@@ -9,6 +9,7 @@ class SearchController < ApplicationController
   # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   # rubocop:disable Metrics/PerceivedComplexity
   def create
+    log_request
     @preferences = UserPreferences.new(params)
 
     if @preferences.empty?
@@ -61,5 +62,10 @@ class SearchController < ApplicationController
       ["<span class='error bg-warning'>#{message}.</span>",
        "The log file reference for this error is: #{uuid}."].join('<br />').html_safe
     render(template: template, status: status)
+  end
+
+  def log_request
+    external_headers = request.headers.env.reject { |key| key.to_s.include?('.') }
+    Rails.logger.debug(JSON.generate(external_headers))
   end
 end

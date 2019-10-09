@@ -3,10 +3,10 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.1'
+gem 'rails', '< 6.0.0'
 
 # Use Puma as the app server
-gem 'puma', '~> 4.0.1'
+gem 'puma'
 
 # Use SCSS for stylesheets
 gem 'sass-rails'
@@ -24,7 +24,7 @@ gem 'jquery-rails'
 # gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.3'
+gem 'jbuilder'
 
 gem 'bootstrap-sass'
 gem 'haml-rails'
@@ -51,8 +51,8 @@ gem 'faraday'
 gem 'faraday_middleware'
 gem 'font-awesome-rails'
 gem 'jquery-ui-rails'
-gem 'lr_common_styles', git: 'https://github.com/epimorphics/lr_common_styles'
-# gem 'lr_common_styles', path: '/home/ian/projects/hmlr/lr_common_styles'
+# gem 'lr_common_styles', git: 'https://github.com/epimorphics/lr_common_styles'
+gem 'lr_common_styles', path: '/home/ian/projects/hmlr/lr_common_styles'
 gem 'yajl-ruby', require: 'yajl'
 
 group :test do
@@ -60,7 +60,7 @@ group :test do
   gem 'capybara-selenium'
   gem 'capybara_minitest_spec'
   # gem 'chromedriver-helper'
-  gem 'json_expressions', '~> 0.8'
+  gem 'json_expressions'
   gem 'minitest-rails'
   gem 'minitest-reporters'
   gem 'minitest-spec-rails'

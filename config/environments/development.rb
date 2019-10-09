@@ -28,4 +28,7 @@ PpdExplorer::Application.configure do
 
   # Don't print a log message every time an asset file is loaded
   config.assets.quiet = true
+
+  config.log_tags = %i[subdomain request_id request_method]
+  # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 end
