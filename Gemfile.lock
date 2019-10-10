@@ -7,10 +7,11 @@ GIT
       json
       yajl-ruby
 
-PATH
-  remote: /home/ian/projects/hmlr/lr_common_styles
+GIT
+  remote: git@github.com:epimorphics/lr_common_styles.git
+  revision: dc8366e836b2302a745c941823cf53f542844379
   specs:
-    lr_common_styles (1.4.8)
+    lr_common_styles (1.4.9)
       bootstrap-sass (~> 3.4.0)
       font-awesome-rails (~> 4.7.0.1)
       govuk_elements_rails (~> 2.0.0)
