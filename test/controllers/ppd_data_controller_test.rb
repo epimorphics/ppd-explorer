@@ -35,9 +35,9 @@ class PpdDataControllerTest < ActionDispatch::IntegrationTest
         download_file = File.new(DownloadHelpers.download)
         assert File.exist?(download_file)
         csv = CSV.read(download_file)
-        csv.must_be_kind_of Array
-        csv.first.must_be_kind_of Array
-        csv.length.must_be :>, 10
+        _(csv).must_be_kind_of Array
+        _(csv.first).must_be_kind_of Array
+        _(csv.length).must_be :>, 10
       end
     end
 
@@ -51,12 +51,12 @@ class PpdDataControllerTest < ActionDispatch::IntegrationTest
         download_file = File.new(DownloadHelpers.download)
         assert File.exist?(download_file)
         csv = CSV.read(download_file)
-        csv.must_be_kind_of Array
-        csv.first.must_be_kind_of Array
-        csv.length.must_be :>, 10
+        _(csv).must_be_kind_of Array
+        _(csv.first).must_be_kind_of Array
+        _(csv.length).must_be :>, 10
 
         headers = csv.first
-        headers.first.must_equal 'unique_id'
+        _(headers.first).must_equal 'unique_id'
       end
     end
 
@@ -73,9 +73,9 @@ class PpdDataControllerTest < ActionDispatch::IntegrationTest
 
         download_file = File.new(DownloadHelpers.download)
         csv = CSV.read(download_file)
-        csv.must_be_kind_of Array
-        csv.first.must_be_kind_of Array
-        csv.length.must_be :>, 1000
+        _(csv).must_be_kind_of Array
+        _(csv.first).must_be_kind_of Array
+        _(csv.length).must_be :>, 1000
       end
     end
   end
