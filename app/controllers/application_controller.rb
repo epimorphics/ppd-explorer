@@ -11,11 +11,21 @@ class ApplicationController < ActionController::Base
     @phase = :released
   end
 
+  around_action :log_request_result
+  def log_request_result
+    start = Time.now
+    yield
+    duration = Time.now - start
+    detailed_request_log(duration)
+  end
+
   unless Rails.application.config.consider_all_requests_local
     rescue_from ActionController::RoutingError, with: :render_404
     rescue_from ActionController::InvalidCrossOriginRequest, with: :render_403
     rescue_from Exception, with: :render_exception
   end
+
+  private
 
   def render_exception(exception)
     if exception.instance_of? ArgumentError
@@ -55,5 +65,22 @@ class ApplicationController < ActionController::Base
 
   def reset_response
     self.response_body = nil
+  end
+
+  def detailed_request_log(duration) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    env = request.env
+
+    log_fields = {
+      timeTakenMS: duration * 1_000,
+      requestPath: env['REQUEST_PATH'],
+      queryString: env['QUERY_STRING'],
+      httpUserAgent: env['HTTP_USER_AGENT'],
+      xRequestID: env['X_REQUEST_ID'],
+      xForwardedFor: env['X_FORWARDED_FOR'],
+      body: request.body.gets&.gsub("\n", '\n'),
+      responseStatus: response.status
+    }
+
+    Rails.logger.debug(JSON.generate(log_fields))
   end
 end

@@ -9,19 +9,13 @@ class SearchController < ApplicationController
   # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   # rubocop:disable Metrics/PerceivedComplexity
   def create
-    log_request
     @preferences = UserPreferences.new(params)
 
     if @preferences.empty?
       redirect_to controller: :ppd, action: :index
     else
-      start = Time.now
-
       @query_command = QueryCommand.new(@preferences, use_compact_json?)
       @query_command.load_query_results
-      after_query = Time.now
-      @time_taken = ((after_query - start) * 1000).to_i
-      Rails.logger.debug "Time taken for query phase: #{@time_taken}ms"
 
       if @query_command.success?
         render
@@ -62,10 +56,5 @@ class SearchController < ApplicationController
       ["<span class='error bg-warning'>#{message}.</span>",
        "The log file reference for this error is: #{uuid}."].join('<br />').html_safe
     render(template: template, status: status)
-  end
-
-  def log_request
-    external_headers = request.headers.env.reject { |key| key.to_s.include?('.') }
-    Rails.logger.debug(JSON.generate(external_headers))
   end
 end
