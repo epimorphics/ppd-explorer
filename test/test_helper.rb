@@ -92,8 +92,8 @@ Capybara.javascript_driver = driver
 # VCR Setup
 VCR.configure do |config|
   config.cassette_library_dir = 'test/fixtures/vcr_cassettes'
-  config.hook_into :webmock
-  config.ignore_localhost = true
+  config.hook_into(:faraday)
+  # config.ignore_localhost = true
 
   # re-record every 7 days, but only if we're running in development not CI
   c.default_cassette_options = { re_record_interval: 7.days } if Rails.env.development?
