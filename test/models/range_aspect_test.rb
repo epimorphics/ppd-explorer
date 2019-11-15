@@ -20,6 +20,6 @@ describe 'RangeAspect' do
     q = @aspect.add_clause(@query, prefs)
 
     _(q.to_json)
-     .must_match_json_expression('@and' => [{ 'foo:price' => { '@ge' => 1000 } }])
+      .must_match_json_expression('@and' => [{ 'foo:price' => { '@ge' => 1000 } }])
   end
 end

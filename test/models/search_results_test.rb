@@ -3,7 +3,6 @@
 require 'test_helper'
 require_relative '../../app/models/search_result'
 
-# rubocop:disable Metrics/LineLength
 class SearchResultsTest < ActiveSupport::TestCase
   describe 'SearchResults' do
     PAC = 'ppd:propertyAddressCounty'
@@ -88,7 +87,7 @@ class SearchResultsTest < ActiveSupport::TestCase
 
       sr = SearchResults.new([result0, resultb, result1], 100)
       txs = sr.index['no_value']['a-county']['a-district']['a-town']['a-street']['a-paon']['no_value']
-      _(txs.map { |t| t.value_of_property('ppd:pricePaid') } ).must_equal [100, 101]
+      _(txs.map { |t| t.value_of_property('ppd:pricePaid') }).must_equal [100, 101]
     end
 
     it 'should traverse in order' do
@@ -178,4 +177,3 @@ class SearchResultsTest < ActiveSupport::TestCase
     end
   end
 end
-# rubocop:enable Metrics/LineLength
