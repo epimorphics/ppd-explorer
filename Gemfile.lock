@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:epimorphics/ds-api-ruby.git
+  remote: https://github.com/epimorphics/ds-api-ruby.git
   revision: 0b3b4a025907acf020905d6ddc8e187f487867f0
   specs:
     data_services_api (0.4.5)
@@ -8,7 +8,7 @@ GIT
       yajl-ruby
 
 GIT
-  remote: git@github.com:epimorphics/lr_common_styles.git
+  remote: https://github.com/epimorphics/lr_common_styles.git
   revision: 624ed9d3debc6eb1e89d43d31ff0a2c96192db25
   specs:
     lr_common_styles (1.4.10)

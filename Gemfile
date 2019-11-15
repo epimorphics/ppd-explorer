@@ -45,13 +45,13 @@ group :development do
   gem 'stackprof' # ruby 2.1+ only
 end
 
-gem 'data_services_api', git: 'git@github.com:epimorphics/ds-api-ruby.git'
+gem 'data_services_api', git: 'https://github.com/epimorphics/ds-api-ruby.git'
 # gem 'data_services_api', path: '/home/ian/workspace/epimorphics/ds-api-ruby'
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'font-awesome-rails'
 gem 'jquery-ui-rails'
-gem 'lr_common_styles', git: 'git@github.com:epimorphics/lr_common_styles.git'
+gem 'lr_common_styles', git: 'https://github.com/epimorphics/lr_common_styles.git'
 # gem 'lr_common_styles', path: '/home/ian/projects/hmlr/lr_common_styles'
 gem 'yajl-ruby', require: 'yajl'
 
