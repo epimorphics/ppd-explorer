@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'syslog/logger'
+
 PpdExplorer::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -51,7 +53,7 @@ PpdExplorer::Application.configure do
   config.log_tags = %i[subdomain request_id]
 
   # Use a different logger for distributed setups.
-  config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
+  config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new)
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
