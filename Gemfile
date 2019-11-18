@@ -54,6 +54,7 @@ gem 'jquery-ui-rails'
 gem 'lr_common_styles', git: 'https://github.com/epimorphics/lr_common_styles.git'
 # gem 'lr_common_styles', path: '/home/ian/projects/hmlr/lr_common_styles'
 gem 'yajl-ruby', require: 'yajl'
+gem 'sentry-raven'
 
 group :test do
   gem 'capybara'

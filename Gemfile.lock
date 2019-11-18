@@ -253,6 +253,8 @@ GEM
     selenium-webdriver (3.142.6)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
+    sentry-raven (2.12.3)
+      faraday (>= 0.7.6, < 1.0)
     sexp_processor (4.13.0)
     simplecov (0.17.1)
       docile (~> 1.1)
@@ -325,6 +327,7 @@ DEPENDENCIES
   rb-readline
   sass-rails
   sdoc
+  sentry-raven
   simplecov
   stackprof
   therubyracer
