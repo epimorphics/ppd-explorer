@@ -11,14 +11,14 @@ describe 'SearchAspect' do
     prefs = UserPreferences.new(params_object('town' => 'jklm'))
     q = @aspect.add_clause(@query, prefs)
 
-    q.to_json.must_match_json_expression({})
+    _(q.to_json).must_match_json_expression({})
   end
 
   it 'should add a clause if a preference matches' do
     prefs = UserPreferences.new(params_object('street' => 'jklm'))
     q = @aspect.add_clause(@query, prefs)
 
-    q.to_json.must_match_json_expression(
+    _(q.to_json).must_match_json_expression(
       '@and' => [
         { 'foo:street' => {
           '@search' => {
@@ -35,7 +35,7 @@ describe 'SearchAspect' do
     prefs = UserPreferences.new(params_object('street' => 'there aNd backagain'))
     q = @aspect.add_clause(@query, prefs)
 
-    q.to_json.must_match_json_expression(
+    _(q.to_json).must_match_json_expression(
       '@and' => [
         { 'foo:street' => {
           '@search' => {
@@ -59,7 +59,7 @@ describe 'SearchAspect' do
     prefs = UserPreferences.new(params_object('street' => 'augustine-s'))
     q = @aspect.add_clause(@query, prefs)
 
-    q.to_json.must_match_json_expression(
+    _(q.to_json).must_match_json_expression(
       '@and' => [
         { 'foo:street' => {
           '@search' => {
@@ -76,7 +76,7 @@ describe 'SearchAspect' do
     prefs = UserPreferences.new(params_object('street' => "augustine's"))
     q = @aspect.add_clause(@query, prefs)
 
-    q.to_json.must_match_json_expression(
+    _(q.to_json).must_match_json_expression(
       '@and' => [
         { 'foo:street' => {
           '@search' => {
@@ -93,7 +93,7 @@ describe 'SearchAspect' do
     prefs = UserPreferences.new(params_object('street' => "'augustine's"))
     q = @aspect.add_clause(@query, prefs)
 
-    q.to_json.must_match_json_expression(
+    _(q.to_json).must_match_json_expression(
       '@and' => [
         { 'foo:street' => {
           '@search' => {
@@ -110,7 +110,7 @@ describe 'SearchAspect' do
     prefs = UserPreferences.new(params_object('street' => "augustine '"))
     q = @aspect.add_clause(@query, prefs)
 
-    q.to_json.must_match_json_expression(
+    _(q.to_json).must_match_json_expression(
       '@and' => [
         { 'foo:street' => {
           '@search' => {

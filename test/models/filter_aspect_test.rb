@@ -11,30 +11,28 @@ describe 'FilterAspect' do
     prefs = UserPreferences.new(params_object('max_price' => '1000'))
     q = @aspect.add_clause(@query, prefs)
 
-    q.to_json.must_match_json_expression({})
+    _(q.to_json).must_match_json_expression({})
   end
 
   it 'should not add a clause if all preference values are selected' do
     prefs = UserPreferences.new(params_object('ptype' => %w[a b c]))
     q = @aspect.add_clause(@query, prefs)
 
-    q.to_json
-     .must_match_json_expression({})
+    _(q.to_json).must_match_json_expression({})
   end
 
   it 'should not add a clause if no preference values are selected' do
     prefs = UserPreferences.new(params_object('ptype' => %w[]))
     q = @aspect.add_clause(@query, prefs)
 
-    q.to_json
-     .must_match_json_expression({})
+    _(q.to_json).must_match_json_expression({})
   end
 
   it 'should add a clause if some values are selected' do
     prefs = UserPreferences.new(params_object('ptype' => %w[a b]))
     q = @aspect.add_clause(@query, prefs)
 
-    q.to_json.must_match_json_expression(
+    _(q.to_json).must_match_json_expression(
       '@and' => [
         {
           'foo:propertyType' => {
@@ -55,7 +53,7 @@ describe 'FilterAspect' do
     )
 
     term = aspect.search_term('lrcommon:freehold', {})
-    term.label.must_match 'estate type is freehold'
+    _(term.label).must_match 'estate type is freehold'
   end
 
   it 'should produce a reasonable label with a non-URI filter value' do
@@ -70,6 +68,6 @@ describe 'FilterAspect' do
     )
 
     term = aspect.search_term('true', {})
-    term.label.must_match 'new build only'
+    _(term.label).must_match 'new build only'
   end
 end

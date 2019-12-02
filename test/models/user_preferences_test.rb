@@ -5,13 +5,13 @@ require 'test_helper'
 describe 'UserPreferences' do
   it 'should provide access to the query parameters' do
     prefs = UserPreferences.new(params_object('street' => 'bar'))
-    prefs.param('street').must_equal 'bar'
-    prefs.param('town').must_be_nil
+    _(prefs.param('street')).must_equal 'bar'
+    _(prefs.param('town')).must_be_nil
   end
 
   it 'should santize unrecognised inputs' do
     prefs = UserPreferences.new(params_object('fribble' => 'bar'))
-    prefs.param('fribble').must_be_nil
+    _(prefs.param('fribble')).must_be_nil
   end
 
   it 'should report a parameter as present, or not' do

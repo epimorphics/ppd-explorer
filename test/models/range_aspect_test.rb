@@ -12,14 +12,14 @@ describe 'RangeAspect' do
     prefs = UserPreferences.new(params_object('max_price' => '1000'))
     q = @aspect.add_clause(@query, prefs)
 
-    q.to_json.must_match_json_expression({})
+    _(q.to_json).must_match_json_expression({})
   end
 
   it 'should add a clause if a preference matches' do
     prefs = UserPreferences.new(params_object('min_price' => '1000'))
     q = @aspect.add_clause(@query, prefs)
 
-    q.to_json
-     .must_match_json_expression('@and' => [{ 'foo:price' => { '@ge' => 1000 } }])
+    _(q.to_json)
+      .must_match_json_expression('@and' => [{ 'foo:price' => { '@ge' => 1000 } }])
   end
 end

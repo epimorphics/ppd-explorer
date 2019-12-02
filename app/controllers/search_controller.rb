@@ -14,13 +14,8 @@ class SearchController < ApplicationController
     if @preferences.empty?
       redirect_to controller: :ppd, action: :index
     else
-      start = Time.now
-
       @query_command = QueryCommand.new(@preferences, use_compact_json?)
       @query_command.load_query_results
-      after_query = Time.now
-      @time_taken = ((after_query - start) * 1000).to_i
-      Rails.logger.debug "Time taken for query phase: #{@time_taken}ms"
 
       if @query_command.success?
         render

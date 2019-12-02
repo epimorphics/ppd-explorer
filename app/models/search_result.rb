@@ -118,7 +118,7 @@ class SearchResult # rubocop:disable Metrics/ClassLength
 
   def new_build?
     nb = value_of_property('ppd:newBuild')
-    !['false', 'no_value'].include?(nb.to_s)
+    !%w[false no_value].include?(nb.to_s)
   end
 
   def new_build

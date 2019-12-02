@@ -9,6 +9,7 @@ Metrics/LineLength:
   Exclude:
     - bin/**/*
     - config/**/*
+    - test/**/*
 
 Metrics/ClassLength:
   Exclude:
@@ -25,3 +26,7 @@ Metrics/MethodLength:
 
 Style/FormatStringToken:
   Enabled: false
+
+Style/Documentation:
+  Exclude:
+    - test/**/*
