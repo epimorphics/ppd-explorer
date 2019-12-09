@@ -32,7 +32,7 @@ class SearchController < ApplicationController
                500
              end
 
-    render_error(e, e.message, status)
+    render_error_page(e, e.message, status)
   end
   # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
   # rubocop:enable Metrics/PerceivedComplexity
@@ -47,7 +47,7 @@ class SearchController < ApplicationController
 
   private
 
-  def render_error(err, message, status, template = 'ppd/error')
+  def render_error_page(err, message, status, template = 'ppd/error')
     uuid = SecureRandom.uuid
 
     Rails.logger.error "#{err.class.name} error #{uuid} ::: #{message} ::: #{err.class}"
