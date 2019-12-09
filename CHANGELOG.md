@@ -3,10 +3,12 @@
 This app allows the user to explore HMLR price-paid open
 linked data.
 
-## 1.1.2 - 2019-12-09
+## 1.1.3 - 2019-12-09
 
 - Add `ActionController::BadRequest` to the list of ignored
   exceptions for Sentry
+- Fix method name clash with `ApplicationController.render_error`
+  and `SearchController.render_error` leading to Sentry warning
 
 ## 2019-11-15
 
