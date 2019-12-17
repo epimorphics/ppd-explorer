@@ -3,6 +3,11 @@
 This app allows the user to explore HMLR price-paid open
 linked data.
 
+## 1.2.0 - 2019-12-17
+
+- Changed minor version number as we've switched to using a
+  separate Sentry project for this app.
+
 ## 1.1.3 - 2019-12-09
 
 - Add `ActionController::BadRequest` to the list of ignored
