@@ -3,6 +3,10 @@
 This app allows the user to explore HMLR price-paid open
 linked data.
 
+## 1.2.2 - 2020-07-06
+
+- Update gem dependencies following CVE warnings
+
 ## 1.2.1 - 2020-03-19
 
 - Update some dependent gems to resolve CVE warnings, but keep
