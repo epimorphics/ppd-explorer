@@ -3,7 +3,7 @@
 - sr = @query_command.search_results
 = render partial: "ppd/workflow_action_buttons", locals: {no_results: true, no_print: true}
 
-%h2
+%h1
   Search results
 
 .search-summary
@@ -46,7 +46,7 @@
 
     %li{}
       .row
-        %h4.property-heading.col-md-12
+        %h2.property-heading.col-md-12
           %span.address
             = result.formatted_address
 
