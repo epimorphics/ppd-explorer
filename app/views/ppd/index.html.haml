@@ -124,7 +124,7 @@
               .input-group
                 %span.input-group-addon
                   &pound;
-                %input.form-control{ type: "text", name: :min_price, value: @preferences.param( :min_price ) }
+                %input#min_price.form-control{ type: "text", name: :min_price, value: @preferences.param( :min_price ) }
             .col-sm-8.hidden.validation-warning
               %p.bg-warning
                 Please enter a valid numerical value, or leave blank
@@ -136,7 +136,7 @@
               .input-group
                 %span.input-group-addon
                   &pound;
-                %input.form-control{ type: "text", name: :max_price, value: @preferences.param( :max_price ) }
+                %input#max_price.form-control{ type: "text", name: :max_price, value: @preferences.param( :max_price ) }
             .col-sm-8.hidden.validation-warning
               %p.bg-warning
                 Please enter a valid numerical value, or leave blank
