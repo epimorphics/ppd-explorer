@@ -39,13 +39,13 @@ module PpdHelper
     else
       content_tag('a',
                   href: preferences.as_path(:search, limit: limit),
-                  class: 'btn btn-default btn-sm') do
+                  class: 'button button--secondary') do
         results_selection_summary(limit)
       end
     end
   end
 
   def results_selection_summary(limit)
-    limit == 'all' ? 'all results' : "sample of (at most) #{limit} results"
+    limit == 'all' ? 'show all results' : "show a sample of at most #{limit} results"
   end
 end

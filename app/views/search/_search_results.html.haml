@@ -7,24 +7,23 @@
   Search results
 
 .search-summary
-  %ul.search-terms.list-inline
-    %li
-      #{sr.summarise} by searching for:
+  %p
+    #{sr.summarise} by searching for:
+  %ul.search-terms.list.list-bullet
     - @preferences.each_search_term do |search_term|
-      %li.term
+      %li
         %label
           = search_term.label
           - st_path = @preferences.as_path( :search, {}, {search_term.name => search_term.value } )
           %a.search-term{ href: st_path }
             %i.fa.fa-times-circle.fa-lg
 
-  .search-selection
+  %p.search-selection
     Current selection:
     %strong #{results_selection_summary( @preferences.selected_limit )}.
-
-    %span Select instead:
+  %ul.list.list-bullet
     - (UserPreferences::AVAILABLE_LIMITS - [@preferences.selected_limit]).each do |limit|
-      %span
+      %li
         = results_selection( limit, @preferences )
 
 - if sr.max_results_limit_hit
