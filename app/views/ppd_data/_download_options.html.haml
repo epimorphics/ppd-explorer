@@ -7,9 +7,9 @@
   .download
     .row
       .col-md-12
-        %h2
+        = render partial: "ppd/workflow_action_buttons", locals: {no_download: true, no_print: true, no_help: true, no_bookmark: true}
+        %h1
           Download price paid data
-          = render partial: "ppd/workflow_action_buttons", locals: {no_download: true, no_print: true}
 
     .row.spacer
 
@@ -31,7 +31,7 @@
                 (CSV) file. This is a good choice for loading into a spreadsheet.
               %td Only selected results
               %td
-                %a.btn.btn-primary{ href: @preferences.as_path( :ppd_data, {format: :csv} )}
+                %a.button{ href: @preferences.as_path( :ppd_data, {format: :csv} )}
                   %i.fa.fa-download
                   get <strong>selected</strong> results as CSV
             %tr
@@ -39,7 +39,7 @@
                 All matching results (see <strong>note&nbsp;1</strong>)
 
               %td.no-border
-                %a.btn.btn-primary{ href: @preferences.as_path( :ppd_data, {format: :csv, limit: "all"} )}
+                %a.button{ href: @preferences.as_path( :ppd_data, {format: :csv, limit: "all"} )}
                   %i.fa.fa-download
                   get <strong>all</strong> results as CSV
 
@@ -48,7 +48,7 @@
                 Only selected results, with column headers (see <strong>note&nbsp;2</strong>)
 
               %td.no-border
-                %a.btn.btn-default{ href: @preferences.as_path( :ppd_data, {format: :csv, header: true} )}
+                %a.button.button--secondary{ href: @preferences.as_path( :ppd_data, {format: :csv, header: true} )}
                   %i.fa.fa-download
                   get <strong>selected</strong> results as CSV with headers
             %tr
@@ -56,7 +56,7 @@
                 All matching results, with column headers (see <strong>notes 1</strong> and <strong>2</strong>)
 
               %td.no-border
-                %a.btn.btn-default{ href: @preferences.as_path( :ppd_data, {format: :csv, header: true, limit: "all"} )}
+                %a.button.button--secondary{ href: @preferences.as_path( :ppd_data, {format: :csv, header: true, limit: "all"} )}
                   %i.fa.fa-download
                   get <strong>all</strong> results as CSV with headers
 
@@ -70,7 +70,7 @@
                 applications.
               %td Only selected results
               %td
-                %a.btn.btn-default{ href: @preferences.as_path( :ppd_data, {format: :ttl} )}
+                %a.button.button--secondary{ href: @preferences.as_path( :ppd_data, {format: :ttl} )}
                   %i.fa.fa-download
                   get <strong>selected</strong> results as Turtle
             %tr
@@ -78,7 +78,7 @@
                 All matching results (see <strong>note&nbsp;1</strong>)
 
               %td.no-border
-                %a.btn.btn-default{ href: @preferences.as_path( :ppd_data, {format: :ttl, limit: "all"} )}
+                %a.button.button--secondary{ href: @preferences.as_path( :ppd_data, {format: :ttl, limit: "all"} )}
                   %i.fa.fa-download
                   get <strong>all</strong> results as Turtle
 
@@ -89,7 +89,7 @@
                 edit the query to further refine your results.
               %td
               %td
-                %a.btn.btn-default{ href: @preferences.as_path( :ppd_data, {explain: true} )}
+                %a.button.button--secondary{ href: @preferences.as_path( :ppd_data, {explain: true} )}
                   %i.fa.fa-eye
                   view SPARQL query
 
