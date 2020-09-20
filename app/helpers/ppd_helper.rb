@@ -10,9 +10,8 @@ module PpdHelper
     end
   end
 
-  def address_detail_filter(aspect, result, preferences) # rubocop:disable Metrics/MethodLength
-    return unless (vp = result.presentation_value_of_property(aspect.aspect_key_property))
-
+  def address_detail_filter(aspect, result, preferences) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    vp = result.presentation_value_of_property(aspect.aspect_key_property)
     val = result.value_of_property(aspect.aspect_key_property)
 
     content_tag('td') do
@@ -22,7 +21,8 @@ module PpdHelper
         concat(
           content_tag(:a, {
                         href: preferences.as_path(:search, aspect.key => val),
-                        class: 'search-zoom-button'
+                        class: 'search-zoom-button',
+                        'aria-label' => "add a filter for #{aspect.key_as_label}"
                       }, {}) do
             content_tag(:i, nil, class: 'fa fa-search-plus')
           end
