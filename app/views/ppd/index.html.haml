@@ -3,7 +3,7 @@
 .row
   %h2.col-md-12
     Search the price paid dataset:
-  %p.col-md-12.text-muted
+  %p.col-md-12
     Enter one or more search terms to locate the property transactions
     you are interested in.
 
@@ -176,16 +176,19 @@
                   %input{ type: "radio", name: :limit, value: "all", checked: @preferences.selected_limit == "all" }
                   all
       .col-sm-12
-        .pull-right
-          %a.js.hidden.btn.btn-default.action.action-help{ href: "#", alt: "Help and tips", title: "Help and tips" }
-            %i.fa.fa-question-circle
-            help
-          = link_to( {controller: :ppd, action: :index}, {class: "btn btn-default"} ) do
-            %i.fa.fa-refresh
-            reset the form
-          %button.btn.btn-primary{ type: "submit"}
-            %i.fa.fa-search
-            show results
+        .pull-right.search-form-actions
+          .search-form-action
+            %button.js.hidden.button.button--secondary.action-help{ href: "#", alt: "Help and tips", title: "Help and tips" }
+              %i.fa.fa-question-circle
+              help
+          .search-form-action
+            = link_to( {controller: :ppd, action: :index}, {class: "button button--secondary"} ) do
+              %i.fa.fa-refresh
+              reset the form
+          .search-form-action
+            %button.button{ type: 'submit' }
+              %i.fa.fa-search
+              show results
 
 = render partial: "bookmark_modal"
 = render partial: "help_modal"
