@@ -1,26 +1,26 @@
 -# frozen_string_literal: true
 
-.pull-right
-  %a.btn.btn-primary{ href: "#{@preferences.as_path( :ppd )}"}
+.workflow-actions
+  %a.button.button--secondary{ href: "#{@preferences.as_path( :ppd )}"}
     %i.fa.fa-edit
     change search settings
   -unless defined? no_results
-    %a.btn.btn-primary{ href: "#{@preferences.as_path( :search )}"}
+    %a.button.button--secondary{ href: "#{@preferences.as_path( :search )}"}
       %i.fa.fa-mail-reply
       back to results
   - unless defined? no_download
-    %a.btn.btn-primary{ href: "#{@preferences.as_path( :ppd_data )}"}
+    %a.button.button--secondary{ href: "#{@preferences.as_path( :ppd_data )}"}
       %i.fa.fa-download
       download data
   - unless defined? no_print
-    %a.btn.btn-default{ href: "#", alt: "Printable view" }
+    %a.button.button--secondary{ href: "#", alt: "Printable view" }
       %i.fa.fa-print
       printable view
   - unless defined? no_bookmark
-    %a.btn.btn-default.js.hidden.action-bookmark{ href: "#", alt: "bookmark this view", data: {url: "#{@preferences.as_path( :search )}" } }
+    %a.button.button--secondary.js.hidden.action-bookmark{ href: "#", alt: "bookmark this view", data: {url: "#{@preferences.as_path( :search )}" } }
       %i.fa.fa-share-square-o
       share view
   -unless defined? no_help
-    %a.js.hidden.btn.btn-default.action.action-help{ href: "#", alt: "Help and tips", title: "Help and tips" }
+    %a.js.hidden.button.button--secondary.action.action-help{ href: "#", alt: "Help and tips", title: "Help and tips" }
       %i.fa.fa-question-circle
       help

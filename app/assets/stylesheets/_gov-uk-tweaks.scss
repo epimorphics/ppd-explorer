@@ -1,0 +1,11 @@
+/* expect this file to go away when we move to GovUK design system */@at-root
+
+.button--secondary,
+.button--secondary:visited,
+.button--secondary:focus,
+.button--secondary:hover {
+  color: #0b0c0c !important;
+  background-color: #f3f2f1;
+  -webkit-box-shadow: 0 2px 0 #929191;
+  box-shadow: 0 2px 0 #929191;
+}

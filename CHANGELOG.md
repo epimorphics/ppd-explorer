@@ -3,6 +3,11 @@
 This app allows the user to explore HMLR price-paid open
 linked data.
 
+## 1.3.0 - 2020-09-20 (Ian)
+
+- A collection of WCAG fixes under GH-117. Pending manual testing,
+  this should bring the app into WCAG compliance
+
 ## 1.2.2 - 2020-07-06
 
 - Update gem dependencies following CVE warnings
