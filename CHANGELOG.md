@@ -3,6 +3,10 @@
 This app allows the user to explore HMLR price-paid open
 linked data.
 
+## 1.4.1 - 2020-09-22 (Ian)
+
+- added accessibility statement
+
 ## 1.4.0 - 2020-09-22 (Ian)
 
 - switched from JQuery datePicker component to use browser date
