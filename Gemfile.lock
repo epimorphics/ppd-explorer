@@ -7,8 +7,9 @@ GIT
       json
       yajl-ruby
 
-PATH
-  remote: /home/ian/projects/hmlr/lr_common_styles
+GIT
+  remote: https://github.com/epimorphics/lr_common_styles.git
+  revision: 3f14efcc2d6c806b77b5e1c91fa567fe3aa6e94d
   specs:
     lr_common_styles (1.6.0)
       bootstrap-sass (~> 3.4.0)
