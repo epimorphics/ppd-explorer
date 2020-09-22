@@ -142,19 +142,19 @@
                 Please enter a valid numerical value, or leave blank
 
       .form-group
-        %label.col-sm-4.control-label.control-label-adjust{ for: "date" } Date
+        %label.col-sm-4.control-label.control-label-adjust{ for: 'date' } Date
         .col-sm-8
           %ul.list-inline
             %li
               %div
                 %label
                   earliest:
-                  %input.date-picker{ type: "text", name: :min_date, value: @preferences.param( :min_date ) }
+                  %input{ type: 'date', name: :min_date, value: @preferences.param( :min_date ), min: "1995-01-01", max: Date.today.iso8601 }
             %li
               %div
                 %label
                   latest:
-                  %input.date-picker{ type: "text", name: :max_date, value: @preferences.param( :max_date ) }
+                  %input{ type: 'date', name: :max_date, value: @preferences.param( :max_date ), min: "1995-01-01", max: Date.today.iso8601 }
 
       .form-group
         %label.col-sm-4.control-label{ for: "limit" } How many results?
