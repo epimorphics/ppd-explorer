@@ -17,7 +17,7 @@ class QueryCommand < DataService # rubocop:disable Metrics/ClassLength
                            'ppd:propertyAddress',
                            key_property: 'lrcommon:paon',
                            aspect_key_property: 'ppd:propertyAddressPaon',
-                           presentation_label: 'building name or no.'),
+                           presentation_label: 'building name or&nbsp;number'.html_safe),
     street: SearchAspect.new(:street,
                              'ppd:propertyAddress',
                              key_property: 'lrcommon:street',

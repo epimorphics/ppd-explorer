@@ -3,28 +3,27 @@
 - sr = @query_command.search_results
 = render partial: "ppd/workflow_action_buttons", locals: {no_results: true, no_print: true}
 
-%h2
+%h1
   Search results
 
 .search-summary
-  %ul.search-terms.list-inline
-    %li
-      #{sr.summarise} by searching for:
+  %p
+    #{sr.summarise} by searching for:
+  %ul.search-terms.list.list-bullet
     - @preferences.each_search_term do |search_term|
-      %li.term
+      %li
         %label
           = search_term.label
           - st_path = @preferences.as_path( :search, {}, {search_term.name => search_term.value } )
-          %a.search-term{ href: st_path }
+          %a.search-term{ href: st_path, 'aria-label' => "Remove search term #{search_term.label}" }
             %i.fa.fa-times-circle.fa-lg
 
-  .search-selection
+  %p.search-selection
     Current selection:
     %strong #{results_selection_summary( @preferences.selected_limit )}.
-
-    %span Select instead:
+  %ul.list.list-bullet
     - (UserPreferences::AVAILABLE_LIMITS - [@preferences.selected_limit]).each do |limit|
-      %span
+      %li
         = results_selection( limit, @preferences )
 
 - if sr.max_results_limit_hit
@@ -47,24 +46,20 @@
 
     %li{}
       .row
-        %h4.property-heading.col-md-12
+        %h2.property-heading.col-md-12
           %span.address
             = result.formatted_address
 
       .row
-        .col-md-4
+        .col-md-4.transaction-history
+          %h3.transaction-history__title Transaction history
           %table.table
             %thead
-              %tr
-                %th{colspan: 4}
-                  Transaction history
               %tr.hidden
-                %th
-                  Transaction category
-                %th
-                  Date
-                %th
-                  Price
+                %th{ scope: 'col' } Transaction category
+                %th{ scope: 'col' } Date
+                %th{ scope: 'col' } Price
+                %th{ scope: 'col' } Link to transaction record
             %tbody
               - results.each do |result|
                 %tr
@@ -76,27 +71,34 @@
                   %td.text-right
                     = number_to_currency( result.value_of_property( "ppd:pricePaid" ), locale: "en", precision: 0, unit: "&pound;".html_safe )
                   %td.transaction-url
-                    %a{ href: result.value_of_property("@id") }
+                    %a{ href: result.value_of_property("@id"), 'aria-label' => 'show transaction raw data', rel: 'nofollow ' }
                       %i.fa.fa-external-link
 
         .col-md-4.detailed-address
+          %h3.detailed-address__title Detailed address
           %table.table
             %thead
-              %tr
-                %th{colspan: 2}
-                  Detailed address
+              %tr.hidden
+                %th{ scope: 'col' }
+                  Address field key
+                %th{ scope: 'col' }
+                  Address field value
             %tbody
               - SearchResult::DETAILED_ADDRESS_ASPECTS.each do |aspect|
-                %tr
-                  = address_detail_header( aspect, result )
-                  = address_detail_filter( aspect, result, @preferences )
+                - if result.presentation_value_of_property(aspect.aspect_key_property)
+                  %tr
+                    = address_detail_header( aspect, result )
+                    = address_detail_filter( aspect, result, @preferences )
 
         .col-md-4.property-characteristics
+          %h3.property-characteristics__title Attributes
           %table.table
             %thead
-              %tr
-                %th{colspan: 2}
-                  Attributes
+              %tr.hidden
+                %th{ scope: 'col' }
+                  Attribute field key
+                %th{ scope: 'col' }
+                  Attribute field value
             %tbody
               %tr
                 %td.property-details-field-title

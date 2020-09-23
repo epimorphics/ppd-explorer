@@ -85,8 +85,6 @@ PpdExplorer::Application.configure do
   # Specify that we're not at the root
   config.action_controller.relative_url_root = '/app/ppd'
   config.relative_url_root = '/app/ppd'
-end
 
-# JsRoutes.setup do |config|
-#   config.prefix = "/app/ppd"
-# end
+  config.accessibility_document_path = '/accessibility'
+end
