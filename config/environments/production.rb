@@ -86,5 +86,5 @@ PpdExplorer::Application.configure do
   config.action_controller.relative_url_root = '/app/ppd'
   config.relative_url_root = '/app/ppd'
 
-  config.accessibility_document_path = '/app/root/doc/accessibility'
+  config.accessibility_document_path = '/accessibility'
 end
