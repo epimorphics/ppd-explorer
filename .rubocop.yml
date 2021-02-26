@@ -2,9 +2,10 @@ AllCops:
   TargetRubyVersion: 2.4
   Exclude:
     - 'node_modules/**/*'
+  NewCops: enable
 
 # Customize rules
-Metrics/LineLength:
+Layout/LineLength:
   Max: 100
   Exclude:
     - bin/**/*
@@ -30,3 +31,13 @@ Style/FormatStringToken:
 Style/Documentation:
   Exclude:
     - test/**/*
+
+Style/OptionalBooleanParameter:
+  Enabled: false
+
+Lint/ConstantDefinitionInBlock:
+  Exclude:
+    - test/**/*
+
+Lint/DuplicateBranch:
+  Enabled: false

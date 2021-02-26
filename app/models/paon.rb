@@ -61,7 +61,7 @@ class Paon < String # rubocop:disable Metrics/ClassLength
   # private
 
   def elements(paon)
-    components = paon.match?(/\A *(\d+[A-Z]*) *\- *(\d+[A-Z]*) *\Z/) ? paon.split('-') : [paon]
+    components = paon.match?(/\A *(\d+[A-Z]*) *- *(\d+[A-Z]*) *\Z/) ? paon.split('-') : [paon]
     components.map { |p| parse_paon(p) }
   end
 

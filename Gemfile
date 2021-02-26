@@ -42,9 +42,9 @@ group :development do
 
   gem 'flamegraph'
   gem 'memory_profiler'
-  gem 'stackprof' # ruby 2.1+ only
   gem 'rubocop'
   gem 'rubocop-rails'
+  gem 'stackprof' # ruby 2.1+ only
 end
 
 gem 'data_services_api', git: 'https://github.com/epimorphics/ds-api-ruby.git'
@@ -61,8 +61,8 @@ gem 'lr_common_styles', git: 'https://github.com/epimorphics/lr_common_styles.gi
 
 group :test do
   gem 'capybara'
-  gem 'capybara-selenium'
   gem 'capybara_minitest_spec'
+  gem 'capybara-selenium'
   # gem 'chromedriver-helper'
   gem 'json_expressions'
   gem 'minitest-rails'

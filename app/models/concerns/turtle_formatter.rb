@@ -11,7 +11,7 @@ module TurtleFormatter
     ttl_value = { properties: [] }
 
     result.map do |property, value|
-      next if value.respond_to?(:'empty?') && value.empty?
+      next if value.respond_to?(:empty?) && value.empty?
 
       if property == '@id'
         ttl_value[:uri] = format_ttl_value(value)
@@ -31,12 +31,12 @@ module TurtleFormatter
       if value.nil?
         ''
       elsif value.is_a?(Array)
-        value.map { |v| format_ttl_value(v) } .join(', ')
+        value.map { |v| format_ttl_value(v) }.join(', ')
       elsif value.is_a? Numeric
         value.to_s
-      elsif value.respond_to?(:'match?') && value.match?(%r{\Ahttp://.*})
+      elsif value.respond_to?(:match?) && value.match?(%r{\Ahttp://.*})
         "<#{value}>"
-      elsif value.respond_to?(:'match?') && value.match?(/\A[[:word:]]+:.*/)
+      elsif value.respond_to?(:match?) && value.match?(/\A[[:word:]]+:.*/)
         value.to_s
       elsif [false, true].include?(value)
         value.to_s
