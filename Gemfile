@@ -43,6 +43,8 @@ group :development do
   gem 'flamegraph'
   gem 'memory_profiler'
   gem 'stackprof' # ruby 2.1+ only
+  gem 'rubocop'
+  gem 'rubocop-rails'
 end
 
 gem 'data_services_api', git: 'https://github.com/epimorphics/ds-api-ruby.git'
