@@ -28,9 +28,9 @@ class SearchResults
 
   def summarise
     if @count_phrase
-      # rubocop:disable Metrics/LineLength
+      # rubocop:disable Layout/LineLength
       "Showing #{pluralize transactions, 'transaction'} (from #{@count_phrase} matching transactions) for #{pluralize properties, 'property'}"
-      # rubocop:enable Metrics/LineLength
+      # rubocop:enable Layout/LineLength
     else
       "Found #{pluralize transactions, 'transaction'} for #{pluralize properties, 'property'}"
     end
