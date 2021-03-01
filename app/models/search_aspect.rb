@@ -36,7 +36,7 @@ class SearchAspect < Aspect
   # Sanitise input and convert to Lucene expression
   def text_index_term(preferences) # rubocop:disable Metrics/MethodLength
     terms = sanitise_punctuation(preference_value(preferences))
-            .split(' ')
+            .split
             .reject { |token| LUCENE_KEYWORDS.include?(token.downcase) }
             .reject(&:empty?)
 
