@@ -19,18 +19,12 @@ gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-# gem 'turbolinks'
-
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'
 
 gem 'bootstrap-sass'
 gem 'haml-rails'
 
 group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
 end
 
@@ -38,7 +32,6 @@ gem 'byebug', group: %i[development test]
 
 group :development do
   gem 'rb-readline'
-  # gem 'quiet_assets'
 
   gem 'flamegraph'
   gem 'memory_profiler'
@@ -63,7 +56,6 @@ group :test do
   gem 'capybara'
   gem 'capybara_minitest_spec'
   gem 'capybara-selenium'
-  # gem 'chromedriver-helper'
   gem 'json_expressions'
   gem 'minitest-rails'
   gem 'minitest-reporters'
