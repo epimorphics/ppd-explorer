@@ -3,6 +3,11 @@
 This app allows the user to explore HMLR price-paid open
 linked data.
 
+## 1.4.2 - 2020-03-01
+
+- (Ian) Gem update, fix rubocop warnings
+- (Ian) Switch from Travis to Github Actions for CI
+
 ## 1.4.1 - 2020-09-22 (Ian)
 
 - added accessibility statement
