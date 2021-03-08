@@ -10,7 +10,7 @@ module PpdHelper
     end
   end
 
-  def address_detail_filter(aspect, result, preferences) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  def address_detail_filter(aspect, result, preferences) # rubocop:disable Metrics/MethodLength
     vp = result.presentation_value_of_property(aspect.aspect_key_property)
     val = result.value_of_property(aspect.aspect_key_property)
 

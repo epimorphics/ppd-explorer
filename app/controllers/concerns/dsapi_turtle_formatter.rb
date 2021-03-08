@@ -39,7 +39,7 @@ module DsapiTurtleFormatter
   def format_ttl_value(value)
     f =
       if value.is_a?(Array)
-        value.map { |v0| format_ttl_value v0 } .join(', ')
+        value.map { |v0| format_ttl_value v0 }.join(', ')
       elsif value.is_a? Numeric
         value.to_s
       elsif value.match?(%r{\Ahttp://.*})

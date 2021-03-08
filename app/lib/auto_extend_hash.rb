@@ -14,7 +14,7 @@ class AutoExtendHash < Hash
     return unless hash.is_a?(Hash)
 
     conditionally_set_default_proc(hash)
-    hash.values.each { |value| AutoExtendHash.auto_extend(value) }
+    hash.each_value { |value| AutoExtendHash.auto_extend(value) }
   end
 
   def auto_extending_hash(hash, key)

@@ -20,8 +20,8 @@ class ApplicationController < ActionController::Base
   end
 
   unless Rails.application.config.consider_all_requests_local
-    rescue_from ActionController::RoutingError, with: :render_404
-    rescue_from ActionController::InvalidCrossOriginRequest, with: :render_403
+    rescue_from ActionController::RoutingError, with: :render404
+    rescue_from ActionController::InvalidCrossOriginRequest, with: :render403
     rescue_from Exception, with: :render_exception
   end
 
@@ -38,11 +38,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def render_404(_exception = nil)
+  def render404(_exception = nil)
     render_error(404)
   end
 
-  def render_403(_exception = nil)
+  def render403(_exception = nil)
     render_error(403)
   end
 
