@@ -163,9 +163,10 @@ class SearchResult # rubocop:disable Metrics/ClassLength
   def update_value_for_property(obj, prop, value)
     target = obj.key?(prop) && obj[prop]
 
-    if target&.is_a?(Array)
+    case target
+    when Array
       update_value_array(target, value)
-    elsif target&.is_a?(Hash)
+    when Hash
       target['@value'] = value
     else
       obj[prop] = value
@@ -239,7 +240,7 @@ class SearchResult # rubocop:disable Metrics/ClassLength
   end
 
   def format_paon_elements(paon)
-    paon.split(' ').map do |token|
+    paon.split.map do |token|
       case token
       when /\d/
         token

@@ -5,6 +5,7 @@ class QueryCommand < DataService # rubocop:disable Metrics/ClassLength
   include TurtleFormatter
 
   attr_reader :all_results, :search_results, :error_message
+
   COUNT_LIMIT = 10_000
 
   ASPECTS = {

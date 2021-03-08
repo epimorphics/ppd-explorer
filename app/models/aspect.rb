@@ -96,6 +96,6 @@ class Aspect
 
   # Return true if all of the given aspect valukes are present
   def all_present?(values, preferences)
-    values.map { |v| preferences.present?(key, v) } .inject(&:&)
+    values.map { |v| preferences.present?(key, v) }.inject(&:&)
   end
 end

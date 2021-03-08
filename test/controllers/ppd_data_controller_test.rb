@@ -11,15 +11,15 @@ class PpdDataControllerTest < ActionDispatch::IntegrationTest
   describe 'PpdDataController' do
     let(:base_params) do
       {
-        'et': ['lrcommon:freehold', 'lrcommon:leasehold'],
-        'limit': 100,
-        'min_date': '1 January 2016',
-        'max_date': '31 January 2016',
-        'nb': [true, false],
-        'ptype': ['lrcommon:detached', 'lrcommon:semi-detached', 'lrcommon:terraced',
-                  'lrcommon:flat-maisonette', 'lrcommon:otherPropertyType'],
-        'tc': ['ppd:standardPricePaidTransaction', 'ppd:additionalPricePaidTransaction'],
-        'town': 'glastonbury'
+        et: ['lrcommon:freehold', 'lrcommon:leasehold'],
+        limit: 100,
+        min_date: '1 January 2016',
+        max_date: '31 January 2016',
+        nb: [true, false],
+        ptype: ['lrcommon:detached', 'lrcommon:semi-detached', 'lrcommon:terraced',
+                'lrcommon:flat-maisonette', 'lrcommon:otherPropertyType'],
+        tc: ['ppd:standardPricePaidTransaction', 'ppd:additionalPricePaidTransaction'],
+        town: 'glastonbury'
       }
     end
 
