@@ -3,6 +3,10 @@
 This app allows the user to explore HMLR price-paid open
 linked data.
 
+## 1.4.3 - 2021-04-27
+
+- (Ian) Updated correction to email address (GH-3)
+
 ## 1.4.2 - 2020-03-01
 
 - (Ian) Gem update, fix rubocop warnings

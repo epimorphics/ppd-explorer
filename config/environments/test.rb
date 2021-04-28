@@ -37,4 +37,6 @@ PpdExplorer::Application.configure do
   config.active_support.deprecation = :stderr
 
   config.accessibility_document_path = '/doc/accessibility'
+
+  config.contact_email_address = 'data.services@mail.landregistry.gov.uk'
 end
