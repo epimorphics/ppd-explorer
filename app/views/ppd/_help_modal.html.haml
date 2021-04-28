@@ -39,8 +39,7 @@
         %p
           If you have additional questions, or you have feedback on this beta service,
           please email
-          %a{ href: "mailto:data.services@mail.landregistry.gov.uk"}
-            data.services@mail.landregistry.gov.uk
+          = mail_to(Rails.application.config.contact_email_address)
 
       .modal-footer
         .row
