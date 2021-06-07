@@ -35,4 +35,6 @@ PpdExplorer::Application.configure do
   config.api_service_url = ENV['API_SERVICE_URL'] || 'https://lr-ppd-dev-pres.epimorphics.net'
 
   config.accessibility_document_path = '/doc/accessibility'
+
+  config.contact_email_address = 'data.services@mail.landregistry.gov.uk'
 end
