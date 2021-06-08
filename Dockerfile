@@ -4,9 +4,9 @@ ARG RAILS_ENV="production"
 # Defining ruby version
 FROM ruby:2.6.6
 
-# Copy app and set working dir
-COPY . /application
-WORKDIR /application
+# Set working dir and copy app
+WORKDIR /usr/src/app
+COPY . .
 
 # Prerequisites for gems install
 RUN rm -rf /application/Gemfile.lock
