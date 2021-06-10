@@ -14,7 +14,7 @@ RUN apt-get install tzdata \
 
 # Install bundler and gems
 RUN gem install bundler
-RUN bundle install --without="development"
+RUN bundle install
 
 # Set environment variables and expose the running port
 ENV RAILS_ENV=$RAILS_ENV
