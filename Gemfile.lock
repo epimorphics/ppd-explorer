@@ -9,9 +9,9 @@ GIT
 
 GIT
   remote: https://github.com/epimorphics/lr_common_styles.git
-  revision: 4adb3580e47e2c6bf1acf793075aaa8fb98eb689
+  revision: 423fddbb2ee1d2a76036ef16f07eb3dc8d36de5b
   specs:
-    lr_common_styles (1.8.0)
+    lr_common_styles (1.8.1)
       bootstrap-sass (~> 3.4.0)
       font-awesome-rails (~> 4.7.0.1)
       govuk_elements_rails (~> 2.0.0)
