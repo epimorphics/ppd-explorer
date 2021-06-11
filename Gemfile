@@ -41,7 +41,7 @@ end
 
 gem 'data_services_api', git: 'https://github.com/epimorphics/ds-api-ruby.git'
 # gem 'data_services_api', path: '/home/ian/workspace/epimorphics/ds-api-ruby'
-gem 'faraday'
+gem 'faraday', '< 1.4.2'
 gem 'faraday_middleware'
 gem 'font-awesome-rails'
 gem 'jquery-ui-rails'
@@ -53,8 +53,8 @@ gem 'lr_common_styles', git: 'https://github.com/epimorphics/lr_common_styles.gi
 
 group :test do
   gem 'capybara'
-  gem 'capybara_minitest_spec'
   gem 'capybara-selenium'
+  gem 'capybara_minitest_spec'
   gem 'json_expressions'
   gem 'minitest-rails'
   gem 'minitest-reporters'
