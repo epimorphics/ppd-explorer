@@ -1,8 +1,8 @@
-# Params
+ARG RUBY_VERSION=2.6.6
 ARG RAILS_ENV="production"
 
 # Defining ruby version
-FROM ruby:2.6.6
+FROM ruby:$RUBY_VERSION
 
 # Set working dir and copy app
 WORKDIR /usr/src/app
