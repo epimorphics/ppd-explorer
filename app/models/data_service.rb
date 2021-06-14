@@ -11,7 +11,7 @@ class DataService
 
   # Return a data service object
   def data_service
-    DataServicesApi::Service.new
+    DataServicesApi::Service.new(url: api_service_url)
   end
 
   # Return a dataset wrapper object for the named dataset
@@ -33,5 +33,9 @@ class DataService
   # Delegate parameter checking to the user preferences object
   def param(prop)
     @preferences.param(prop)
+  end
+
+  def api_service_url
+    Rails.application.config.api_service_url
   end
 end
