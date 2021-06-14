@@ -32,7 +32,7 @@ PpdExplorer::Application.configure do
   config.log_tags = %i[subdomain request_id request_method]
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
-  config.api_service_url = ENV['API_SERVICE_URL'] || 'https://lr-ppd-dev-pres.epimorphics.net'
+  config.api_service_url = ENV['API_SERVICE_URL'] || 'http://localhost:8080'
 
   config.accessibility_document_path = '/doc/accessibility'
 

@@ -87,6 +87,10 @@ PpdExplorer::Application.configure do
   config.action_controller.relative_url_root = '/app/ppd'
   config.relative_url_root = '/app/ppd'
 
+  # API location can be specified in the environment
+  # But defaults to the dev service
+  config.api_service_url = ENV['API_SERVICE_URL'] || 'http://localhost:8080'
+
   config.accessibility_document_path = '/accessibility'
 
   config.contact_email_address = 'data.services@mail.landregistry.gov.uk'
