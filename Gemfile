@@ -41,7 +41,7 @@ end
 
 gem 'data_services_api', git: 'https://github.com/epimorphics/ds-api-ruby.git'
 # gem 'data_services_api', path: '/home/ian/workspace/epimorphics/ds-api-ruby'
-gem 'faraday', '< 1.4.2'
+gem 'faraday'
 gem 'faraday_middleware'
 gem 'font-awesome-rails'
 gem 'jquery-ui-rails'
