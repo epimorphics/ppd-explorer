@@ -1,5 +1,5 @@
 ARG RUBY_VERSION=2.6.6
-ARG RAILS_ENV="production"
+ARG BUNDLER_VERSION=2.1.4
 
 # Defining ruby version
 FROM ruby:$RUBY_VERSION
@@ -13,7 +13,7 @@ RUN apt-get install tzdata \
                     git
 
 # Install bundler and gems
-RUN gem install bundler
+RUN gem install bundler:$BUNDLER_VERSION
 RUN bundle install
 
 # Set environment variables and expose the running port
