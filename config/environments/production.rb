@@ -90,7 +90,7 @@ PpdExplorer::Application.configure do
 
   # API location can be specified in the environment
   # But defaults to the dev service
-  config.api_service_url = ENV['API_SERVICE_URL'] || 'http://localhost:8080'
+  config.api_service_url = ENV['API_SERVICE_URL']
 
   config.accessibility_document_path = '/accessibility'
 
