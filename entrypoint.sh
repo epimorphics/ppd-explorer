@@ -7,12 +7,9 @@ then
 fi
 
 # Handle secrets based on env
-if [ "$RAILS_ENV" = "production" ]
+if [ "$RAILS_ENV" = "production" ] && [ -z "$SECRET_KEY_BASE" ]
 then
-  if [ -z "$SECRET_KEY_BASE" ]
-  then
-    export SECRET_KEY_BASE=`./bin/rails secret`
-  fi
+  export SECRET_KEY_BASE=`./bin/rails secret`
 fi
 
 # Run the rails app
