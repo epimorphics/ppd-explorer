@@ -53,8 +53,8 @@ gem 'lr_common_styles', git: 'https://github.com/epimorphics/lr_common_styles.gi
 
 group :test do
   gem 'capybara'
-  gem 'capybara-selenium'
   gem 'capybara_minitest_spec'
+  gem 'capybara-selenium'
   gem 'json_expressions'
   gem 'minitest-rails'
   gem 'minitest-reporters'
