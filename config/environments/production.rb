@@ -87,6 +87,7 @@ PpdExplorer::Application.configure do
   config.relative_url_root = '/app/ppd'
 
   config.accessibility_document_path = '/accessibility'
+  config.privacy_document_path = '/privacy'
 
   config.contact_email_address = 'data.services@mail.landregistry.gov.uk'
 end
