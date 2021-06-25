@@ -3,6 +3,10 @@
 This app allows the user to explore HMLR price-paid open
 linked data.
 
+## 1.4.4 - 2021-06-25
+
+- (Joseph) Small config change to allow linking to privacy notice.
+
 ## 1.4.3 - 2021-04-27
 
 - (Ian) Updated correction to email address (GH-3)
