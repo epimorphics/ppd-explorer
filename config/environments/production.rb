@@ -93,6 +93,7 @@ PpdExplorer::Application.configure do
   config.api_service_url = ENV['API_SERVICE_URL']
 
   config.accessibility_document_path = '/accessibility'
+  config.privacy_document_path = '/privacy'
 
   config.contact_email_address = 'data.services@mail.landregistry.gov.uk'
 end
