@@ -82,7 +82,7 @@ PpdExplorer::Application.configure do
   # config.autoflush_log = false
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
-  config.log_formatter = ::Logger::Formatter.new
+  # config.log_formatter = ::Logger::Formatter.new
 
   # Specify that we're not at the root
   config.action_controller.relative_url_root = ENV['RELATIVE_URL_ROOT'] || '/'
