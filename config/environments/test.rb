@@ -36,6 +36,10 @@ PpdExplorer::Application.configure do
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
+  # API location can be specified in the environment
+  # But defaults to the dev service
+  config.api_service_url = ENV['API_SERVICE_URL']
+
   config.accessibility_document_path = '/doc/accessibility'
 
   config.contact_email_address = 'data.services@mail.landregistry.gov.uk'

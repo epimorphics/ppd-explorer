@@ -2,6 +2,8 @@
 
 source 'https://rubygems.org'
 
+gem 'execjs', '< 2.8.0'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '< 6.0.0'
 
@@ -39,8 +41,9 @@ group :development do
   gem 'stackprof' # ruby 2.1+ only
 end
 
-gem 'data_services_api', git: 'https://github.com/epimorphics/ds-api-ruby.git'
+gem 'data_services_api', git: 'https://github.com/epimorphics/ds-api-ruby.git', branch: 'task/infrastructure-update'
 # gem 'data_services_api', path: '/home/ian/workspace/epimorphics/ds-api-ruby'
+
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'font-awesome-rails'
@@ -50,6 +53,8 @@ gem 'yajl-ruby', require: 'yajl'
 
 gem 'lr_common_styles', git: 'https://github.com/epimorphics/lr_common_styles.git'
 # gem 'lr_common_styles', path: '/home/ian/projects/hmlr/lr_common_styles'
+
+gem 'json_rails_logger', git: 'https://github.com/epimorphics/json-rails-logger.git', branch: 'main'
 
 group :test do
   gem 'capybara'
