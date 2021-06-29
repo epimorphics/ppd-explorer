@@ -4,7 +4,7 @@
 class UserPreferences
   include Rails.application.routes.url_helpers
 
-  WHITE_LIST = QueryCommand::ASPECTS.map do |key, aspect|
+  ALLOW_LIST = QueryCommand::ASPECTS.map do |key, aspect|
     aspect.values ? { key => [] } : key
   end + %i[search limit header explain]
 
@@ -12,7 +12,7 @@ class UserPreferences
   AVAILABLE_LIMITS = [DEFAULT_LIMIT, '1000', 'all'].freeze
 
   def initialize(user_params)
-    @params = user_params.permit(WHITE_LIST).to_h
+    @params = user_params.permit(ALLOW_LIST).to_h
     sanitise!
   end
 
@@ -82,7 +82,7 @@ class UserPreferences
 
   private
 
-  # Remove any non-whitelisted parameters, or params with empty values
+  # Remove any non-allowlisted parameters, or params with empty values
   def sanitise!
     @params.keep_if do |_k, v|
       !v.to_s.strip.empty?
