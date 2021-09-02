@@ -22,9 +22,9 @@ publish: image
 	@echo Done.
 
 assets:
-	@bundler exec ./bin/bundle config set --local without 'development'
-	@bundler exec ./bin/bundle install
-	@bundler exec ./bin/rails assets:clean assets:precompile
+	@./bin/bundle config set --local without 'development'
+	@./bin/bundle install
+	@./bin/rails assets:clean assets:precompile
 
 run:
 	@-docker stop ppd_explorer
@@ -35,10 +35,10 @@ tag:
 	@echo ${TAG}
 
 test: assets
-	@bundler exec ./bin/rake test
+	@./bin/rake test
 
 clean:
-	@bundler exec ./bin/rails assets:clobber
+	@./bin/rails assets:clobber
 
 vars:
 	@echo "Docker: ${REPO}:${TAG}"
