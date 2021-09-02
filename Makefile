@@ -1,8 +1,9 @@
 .PHONY:	image publish
 
+ACCOUNT?=$(shell aws sts get-caller-identity | jq -r .Account)
 STAGE?=dev
 NAME?=$(shell awk -F: '$$1=="name" {print $$2}' deployment.yaml | sed -e 's/\s//g')
-ECR?=018852084843.dkr.ecr.eu-west-1.amazonaws.com
+ECR?=${ACCOUNT}.dkr.ecr.eu-west-1.amazonaws.com
 TAG?=$(shell if git describe > /dev/null 2>&1 ; then   git describe; else   git rev-parse --short HEAD; fi)
 
 IMAGE?=${NAME}/${STAGE}
@@ -21,8 +22,8 @@ publish: image
 	@echo Done.
 
 assets:
-	@bundler exec bundle config set --local without 'development'
-	@bundler exec bundle install
+	@bundler exec ./bin/bundle config set --local without 'development'
+	@bundler exec ./bin/bundle install
 	@bundler exec ./bin/rails assets:clean assets:precompile
 
 run:
