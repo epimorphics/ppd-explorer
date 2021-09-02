@@ -38,7 +38,7 @@ test: assets
 	@./bin/rake test
 
 clean:
-	@./bin/rails assets:clobber
+	@[ -d public/assets ] && ./bin/rails assets:clobber || :
 
 vars:
 	@echo "Docker: ${REPO}:${TAG}"
