@@ -72,7 +72,7 @@ jobs:
           TAG: ${{ steps.gettag.outputs.tag }}
         shell: bash
         run: |
-          make publish
+          PAT=${{ secrets.EPI_GPR_ACCESS_TOKEN }} make publish
 
 
   deploy:
