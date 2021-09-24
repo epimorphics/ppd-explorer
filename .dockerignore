@@ -1,0 +1,9 @@
+.dockerignore
+.git/
+.github/
+.gitignore
+CHANGELOG.md
+Dockerfile
+Makefile
+README.md
+deployment.yaml
