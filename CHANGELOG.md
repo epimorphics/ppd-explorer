@@ -3,6 +3,10 @@
 This app allows the user to explore HMLR price-paid open
 linked data.
 
+## 1.4.5 - 2021-09-28
+
+- (Mairead) Add locality to search fields
+
 ## 1.4.4 - 2021-06-25
 
 - (Joseph) Small config change to allow linking to privacy notice.
