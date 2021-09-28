@@ -21,8 +21,8 @@ jobs:
     runs-on: ubuntu-20.04
     outputs:
       deploy: ${{ steps.mapper.outputs.deploy }}
+      key: ${{ steps.mapper.outputs.key }}
       tag: ${{ steps.gittag.outputs.tag }}
-      key: ${{ steps.gittag.outputs.key }}
 
     steps:
     - name: "Checkout"
