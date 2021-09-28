@@ -11,7 +11,7 @@ REPO?=${ECR}/${IMAGE}
 
 all: publish
 
-image: assets
+image: test
 	@echo Building ${REPO}:${TAG} ...
 	@docker build --tag ${REPO}:${TAG} .
 	@echo Done.
@@ -22,9 +22,7 @@ publish: image
 	@echo Done.
 
 assets:
-	@./bin/bundle config set --local without 'development'
 	@./bin/bundle install
-	@./bin/rails assets:clean assets:precompile
 
 run:
 	@-docker stop ppd_explorer
@@ -35,7 +33,8 @@ tag:
 	@echo ${TAG}
 
 test: assets
-	@./bin/rake test
+	@./bin/bundle exec rubocop
+	@./bin/bundle exec rails test
 
 clean:
 	@[ -d public/assets ] && ./bin/rails assets:clobber || :
