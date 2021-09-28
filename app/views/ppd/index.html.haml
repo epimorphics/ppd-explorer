@@ -35,6 +35,10 @@
         .col-sm-8
           %input#county.form-control{ type: "text", name: "county", value: @preferences.param( :county ), placeholder: "For example: Devon" }
 
+      .form-group
+        %label.col-sm-4.control-label{ for: "locality" } Locality
+        .col-sm-8
+          %input#locality.form-control{ type: "text", name: "locality", value: @preferences.param( :locality ), placeholder: "For example: Chilterns" }
 
       .form-group
         %label.col-sm-4.control-label{ for: "postcode" } Postcode
