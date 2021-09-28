@@ -120,7 +120,8 @@ jobs:
         then
           git config --global user.name "Github CICD"
           git config --global user.email "noreply@epimorphics.com"
-          git commit -am "Github/CICD: ${{ needs.publish.outputs.key }}:${{ needs.publish.outputs.tag }}"
+          git commit -am "Github/CICD: ${{ needs.publish.outputs.deploy }}/${{ needs.publish.outputs.key }}:${{ needs.publish.outputs.tag }}"
+          git remote -v
           git push
         else
           echo "No changes to commit"
