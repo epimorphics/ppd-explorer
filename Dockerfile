@@ -9,14 +9,13 @@ RUN apt-get install tzdata \
 
 # Set working dir and copy app
 WORKDIR /usr/src/app
-COPY Gemfile Rakefile ./
+COPY Gemfile Rakefile config.ru entrypoint.sh ./
 COPY app app
 COPY bin bin
 COPY config config
 COPY lib lib
 COPY public public
 COPY vendor vendor
-COPY entrypoint.sh .
 
 RUN mkdir log
 

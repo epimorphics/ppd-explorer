@@ -7,3 +7,5 @@ Dockerfile
 Makefile
 README.md
 deployment.yaml
+log
+test
