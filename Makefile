@@ -1,4 +1,4 @@
-.PHONY:	image publish
+.PHONY:	all clean image publish tag test vars
 
 ACCOUNT?=$(shell aws sts get-caller-identity | jq -r .Account)
 STAGE?=dev
@@ -11,12 +11,12 @@ REPO?=${ECR}/${IMAGE}
 
 all: publish
 
-image: test
+image:
 	@echo Building ${REPO}:${TAG} ...
 	@docker build --tag ${REPO}:${TAG} .
 	@echo Done.
 
-publish: image
+publish: test image
 	@echo Publishing image: ${REPO}:${TAG} ...
 	@docker push ${REPO}:${TAG} 2>&1
 	@echo Done.
