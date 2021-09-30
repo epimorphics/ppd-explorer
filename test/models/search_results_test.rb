@@ -39,7 +39,8 @@ class SearchResultsTest < ActiveSupport::TestCase
     it 'should search on locality' do
       result = {
         PAL => { '@value' => 'a-locality' },
-        'ppd:pricePaid' => 100 }
+        'ppd:pricePaid' => 100
+      }
       sr = SearchResults.new([result], 1)
 
       _(sr.index['no_value']['a-locality']).must_be_kind_of Hash
