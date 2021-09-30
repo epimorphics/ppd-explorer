@@ -15,7 +15,7 @@ class SearchResultsTest < ActiveSupport::TestCase
 
     it 'should index a sample result' do
       result = { PAC => { '@value' => 'a-county' },
-                 PAL => { '@value' => 'a-locality' },
+                 PAL => { '@value' => '' },
                  PAD => { '@value' => 'a-district' },
                  PAT => { '@value' => 'a-town' },
                  PAS => { '@value' => 'a-street' },
@@ -29,15 +29,17 @@ class SearchResultsTest < ActiveSupport::TestCase
       _(sr.index['no_value']['a-county']).must_be_kind_of Hash
       _(sr.index['no_value']['a-county']).must_be_kind_of Hash
       _(sr.index['no_value']['a-county']['a-district']).must_be_kind_of Hash
-      _(sr.index['no_value']['a-county']['a-district']['a-town']).must_be_kind_of Hash
-      _(sr.index['no_value']['a-county']['a-district']['a-town']['a-street']).must_be_kind_of Hash
-      _(sr.index['no_value']['a-county']['a-district']['a-town']['a-street']['a-paon']).must_be_kind_of Hash
-      _(sr.index['no_value']['a-county']['a-district']['a-town']['a-street']['a-paon']['a-saon']).must_be_kind_of Array
-      _(sr.index['no_value']['a-county']['a-district']['a-town']['a-street']['a-paon']['a-saon'][0].value_of_property('ppd:pricePaid')).must_equal 100
+      _(sr.index['no_value']['a-county']['a-district']['a-locality']).must_be_kind_of Hash
+      _(sr.index['no_value']['a-county']['a-district']['a-locality']['a-town']).must_be_kind_of Hash
+      _(sr.index['no_value']['a-county']['a-district']['a-locality']['a-town']['a-street']).must_be_kind_of Hash
+      _(sr.index['no_value']['a-county']['a-district']['a-locality']['a-town']['a-street']['a-paon']).must_be_kind_of Hash
+      _(sr.index['no_value']['a-county']['a-district']['a-locality']['a-town']['a-street']['a-paon']['a-saon']).must_be_kind_of Array
+      _(sr.index['no_value']['a-county']['a-district']['a-locality']['a-town']['a-street']['a-paon']['a-saon'][0].value_of_property('ppd:pricePaid')).must_equal 100
     end
 
     it 'should index in the face of missing values' do
       result = { PAC => { '@value' => 'a-county' },
+                 PAL => { '@value' => '' },
                  PAD => { '@value' => 'a-district' },
                  PAT => { '@value' => 'a-town' },
                  PAS => { '@value' => 'a-street' },
@@ -51,15 +53,17 @@ class SearchResultsTest < ActiveSupport::TestCase
       _(sr.index['no_value']).must_be_kind_of Hash
       _(sr.index['no_value']['a-county']).must_be_kind_of Hash
       _(sr.index['no_value']['a-county']['a-district']).must_be_kind_of Hash
-      _(sr.index['no_value']['a-county']['a-district']['a-town']).must_be_kind_of Hash
-      _(sr.index['no_value']['a-county']['a-district']['a-town']['a-street']).must_be_kind_of Hash
-      _(sr.index['no_value']['a-county']['a-district']['a-town']['a-street']['a-paon']).must_be_kind_of Hash
-      _(sr.index['no_value']['a-county']['a-district']['a-town']['a-street']['a-paon']['no_value']).must_be_kind_of Array
-      _(sr.index['no_value']['a-county']['a-district']['a-town']['a-street']['a-paon']['no_value'][0].value_of_property('ppd:pricePaid')).must_equal 100
+      _(sr.index['no_value']['a-county']['a-district']['a-locality']).must_be_kind_of Hash
+      _(sr.index['no_value']['a-county']['a-district']['a-locality']['a-town']).must_be_kind_of Hash
+      _(sr.index['no_value']['a-county']['a-district']['a-locality']['a-town']['a-street']).must_be_kind_of Hash
+      _(sr.index['no_value']['a-county']['a-district']['a-locality']['a-town']['a-street']['a-paon']).must_be_kind_of Hash
+      _(sr.index['no_value']['a-county']['a-district']['a-locality']['a-town']['a-street']['a-paon']['no_value']).must_be_kind_of Array
+      _(sr.index['no_value']['a-county']['a-district']['a-locality']['a-town']['a-street']['a-paon']['no_value'][0].value_of_property('ppd:pricePaid')).must_equal 100
     end
 
     it 'should collate results with the same address' do
       result0 = { PAC => { '@value' => 'a-county' },
+                  PAL => { '@value' => 'a-locality' },
                   PAD => { '@value' => 'a-district' },
                   PAT => { '@value' => 'a-town' },
                   PAS => { '@value' => 'a-street' },
@@ -69,6 +73,7 @@ class SearchResultsTest < ActiveSupport::TestCase
                   'ppd:transactionDate' => { '@value' => '2013-01-02' } }
 
       resultb = { PAC => { '@value' => 'b-county' },
+                  PAL => { '@value' => '' },
                   PAD => { '@value' => 'a-district' },
                   PAT => { '@value' => 'a-town' },
                   PAS => { '@value' => 'a-street' },
@@ -77,6 +82,7 @@ class SearchResultsTest < ActiveSupport::TestCase
                   'ppd:pricePaid' => 200 }
 
       result1 = { PAC => { '@value' => 'a-county' },
+                  PAL => { '@value' => 'a-locality' },
                   PAD => { '@value' => 'a-district' },
                   PAT => { '@value' => 'a-town' },
                   PAS => { '@value' => 'a-street' },
@@ -86,7 +92,7 @@ class SearchResultsTest < ActiveSupport::TestCase
                   'ppd:transactionDate' => { '@value' => '2013-01-01' } }
 
       sr = SearchResults.new([result0, resultb, result1], 100)
-      txs = sr.index['no_value']['a-county']['a-district']['a-town']['a-street']['a-paon']['no_value']
+      txs = sr.index['no_value']['a-county']['a-locality']['a-district']['a-town']['a-street']['a-paon']['no_value']
       _(txs.map { |t| t.value_of_property('ppd:pricePaid') }).must_equal [100, 101]
     end
 
@@ -155,6 +161,7 @@ class SearchResultsTest < ActiveSupport::TestCase
 
     it 'should count correctly when the limit is hit' do
       result0 = { PAC => { '@value' => 'a-county' },
+                  PAL => { '@value' => 'a-locality' },
                   PAD => { '@value' => 'a-district' },
                   PAT => { '@value' => 'a-town' },
                   PAS => { '@value' => 'a-street' },
@@ -164,6 +171,7 @@ class SearchResultsTest < ActiveSupport::TestCase
                   'ppd:transactionDate' => { '@value' => '2013-01-02' } }
 
       result1 = { PAC => { '@value' => 'a-county' },
+                  PAL => { '@value' => 'a-locality' },
                   PAD => { '@value' => 'a-district' },
                   PAT => { '@value' => 'a-town' },
                   PAS => { '@value' => 'a-street' },
