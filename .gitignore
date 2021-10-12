@@ -17,3 +17,6 @@
 .byebug_history
 coverage/
 q1.json
+
+# Ignore static files
+public/
