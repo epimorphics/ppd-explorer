@@ -2,7 +2,7 @@ ARG ALPINE_VERSION=3.10
 ARG RUBY_VERSION=2.6.6
 
 # Defines base image which builder and final stage use
-FROM ruby:$RUBY_VERSION-alpine$ALPINE_VERSION as base
+FROM ruby:2.3.1-slim as base
 
 # Change this if Gemfile.lock bundler version changes
 ARG BUNDLER_VERSION=2.2.17
