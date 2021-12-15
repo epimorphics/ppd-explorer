@@ -7,17 +7,17 @@ FROM ruby:2.3.1-slim as base
 # Change this if Gemfile.lock bundler version changes
 ARG BUNDLER_VERSION=2.2.17
 
-RUN apk add --update \
+RUN apt-get add --update \
     tzdata \
     git \
     nodejs \
-    && rm -rf /var/cache/apk/* \
+    # && rm -rf /var/cache/apk/* \
     && gem install bundler:$BUNDLER_VERSION \
     && bundle config --global frozen 1
 
 FROM base as builder
 
-RUN apk add --update build-base
+RUN apt-get add --update build-base
 
 WORKDIR /usr/src/app
 COPY . .
