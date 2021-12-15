@@ -10,7 +10,6 @@ ARG BUNDLER_VERSION=2.2.17
 RUN apk add --update \
     tzdata \
     git \
-    # nodejs \
     && rm -rf /var/cache/apk/* \
     && gem install bundler:$BUNDLER_VERSION \
     && bundle config --global frozen 1
@@ -43,12 +42,3 @@ USER app
 # Add a script to be executed every time the container starts.
 COPY entrypoint.sh /app
 ENTRYPOINT ["sh", "/app/entrypoint.sh"]
-
-
-# # Set environment variables and expose the running port
-# ENV RAILS_ENV="production"
-# ENV RAILS_SERVE_STATIC_FILES="true"
-# ENV RELATIVE_URL_ROOT="/app/ppd"
-# ENV SCRIPT_NAME="/app/ppd"
-# ENV API_SERVICE_URL="http://localhost:8080"
-
