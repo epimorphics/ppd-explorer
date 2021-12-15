@@ -25,6 +25,9 @@ gem 'jquery-rails'
 gem 'bootstrap-sass'
 gem 'haml-rails'
 
+gem 'rubocop'
+gem 'rubocop-rails'
+
 group :doc do
   gem 'sdoc', require: false
 end
@@ -36,8 +39,7 @@ group :development do
 
   gem 'flamegraph'
   gem 'memory_profiler'
-  gem 'rubocop'
-  gem 'rubocop-rails'
+
   gem 'stackprof' # ruby 2.1+ only
 end
 
