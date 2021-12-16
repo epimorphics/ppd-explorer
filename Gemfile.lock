@@ -181,6 +181,8 @@ GEM
     json_expressions (0.9.0)
     libv8-node (16.10.0.0)
     libv8-node (16.10.0.0-aarch64-linux)
+    libv8-node (16.10.0.0-x86_64-darwin)
+    libv8-node (16.10.0.0-x86_64-linux)
     lodash-rails (4.17.21)
       railties (>= 3.1)
     lograge (0.11.2)
@@ -225,6 +227,10 @@ GEM
     nio4r (2.5.8)
     nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
+      racc (~> 1.4)
+    nokogiri (1.12.5-x86_64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.12.5-x86_64-linux)
       racc (~> 1.4)
     parallel (1.21.0)
     parser (3.0.3.2)
@@ -355,6 +361,8 @@ GEM
 PLATFORMS
   -darwin-20
   aarch64-linux
+  x86_64-darwin-17
+  x86_64-linux
 
 DEPENDENCIES
   bootstrap-sass
