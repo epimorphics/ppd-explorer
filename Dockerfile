@@ -5,7 +5,7 @@ ARG RUBY_VERSION=2.6.6
 FROM ruby:${RUBY_VERSION}-alpine${ALPINE_VERSION} as base
 
 # Change this if Gemfile.lock bundler version changes
-ARG BUNDLER_VERSION=2.2.17
+ARG BUNDLER_VERSION=2.2.33
 
 RUN apk add --update \
     tzdata \
@@ -21,6 +21,7 @@ RUN apk add --update build-base
 
 WORKDIR /usr/src/app
 COPY . .
+RUN mkdir log
 
 RUN bundle config set --local without 'development' \
   && bundle install \

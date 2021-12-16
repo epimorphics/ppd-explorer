@@ -18,7 +18,7 @@ gem 'uglifier', '>= 1.3.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
-gem 'libv8-node'
+gem 'libv8-node',  '>= 16.10.0.0'
 
 gem 'jbuilder'
 gem 'jquery-rails'
