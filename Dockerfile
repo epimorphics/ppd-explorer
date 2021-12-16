@@ -2,22 +2,22 @@ ARG ALPINE_VERSION=3.10
 ARG RUBY_VERSION=2.6.6
 
 # Defines base image which builder and final stage use
-FROM ruby:2.3.1-slim as base
+FROM ruby:${RUBY_VERSION}-alpine${ALPINE_VERSION} as base
 
 # Change this if Gemfile.lock bundler version changes
 ARG BUNDLER_VERSION=2.2.17
 
-RUN apt-get add --update \
+RUN apk add --update \
     tzdata \
     git \
     nodejs \
-    # && rm -rf /var/cache/apk/* \
+    && rm -rf /var/cache/apk/* \
     && gem install bundler:$BUNDLER_VERSION \
     && bundle config --global frozen 1
 
 FROM base as builder
 
-RUN apt-get add --update build-base
+RUN apk add --update build-base
 
 WORKDIR /usr/src/app
 COPY . .
