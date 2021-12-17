@@ -27,7 +27,7 @@ assets:
 run:
 	@-docker stop ppd_explorer
 	@-docker rm ppd_explorer && sleep 20
-	@docker run -p 3000:3000 --rm --name ppd_explorer -e RAILS_RELATIVE_URL_ROOT='' ${REPO}:${TAG}
+	@docker run -p 3000:3000 --rm --name ppd_explorer ${REPO}:${TAG}
 
 tag:
 	@echo ${TAG}
