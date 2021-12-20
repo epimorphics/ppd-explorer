@@ -85,8 +85,7 @@ PpdExplorer::Application.configure do
   # config.log_formatter = ::Logger::Formatter.new
 
   # Specify that we're not at the root
-  config.action_controller.relative_url_root = ENV['RELATIVE_URL_ROOT'] || '/'
-  config.relative_url_root = ENV['RELATIVE_URL_ROOT'] || '/'
+  config.relative_url_root = ENV['RAILS_RELATIVE_URL_ROOT'] || '/'
 
   # API location can be specified in the environment
   # But defaults to the dev service
