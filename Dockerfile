@@ -28,7 +28,7 @@ RUN bundle install
 # Set environment variables and expose the running port
 ENV RAILS_ENV="production"
 ENV RAILS_SERVE_STATIC_FILES="true"
-ENV RELATIVE_URL_ROOT="/app/ppd"
+ENV RAILS_RELATIVE_URL_ROOT="/app/ppd"
 ENV SCRIPT_NAME="/app/ppd"
 ENV API_SERVICE_URL="http://localhost:8080"
 EXPOSE 3000
