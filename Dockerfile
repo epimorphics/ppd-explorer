@@ -37,10 +37,10 @@ EXPOSE 3000
 WORKDIR /usr/src/app
 
 COPY --from=builder --chown=app /usr/local/bundle /usr/local/bundle
-COPY --from=builder --chown=app /usr/src/app     ./app
+COPY --from=builder --chown=app /usr/src/app     .
 
 USER app
 
 # Add a script to be executed every time the container starts.
-COPY entrypoint.sh /app
+COPY entrypoint.sh "/app/entrypoint.sh"
 ENTRYPOINT ["sh", "/app/entrypoint.sh"]
