@@ -3,6 +3,10 @@
 This app allows the user to explore HMLR price-paid open
 linked data.
 
+## 1.4.4 - 2021-12-15
+
+- (Mairead) Update deployment workflow, dockerfile and assisting scripts
+
 ## 1.4.3 - 2021-04-27
 
 - (Ian) Updated correction to email address (GH-3)

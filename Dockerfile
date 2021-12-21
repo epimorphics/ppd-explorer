@@ -1,38 +1,46 @@
+ARG ALPINE_VERSION=3.10
 ARG RUBY_VERSION=2.6.6
 
-# Defining ruby version
-FROM ruby:$RUBY_VERSION
+# Defines base image which builder and final stage use
+FROM ruby:${RUBY_VERSION}-alpine${ALPINE_VERSION} as base
 
-# Prerequisites for gems install
-RUN apt-get install tzdata \
-                    git
+# Change this if Gemfile.lock bundler version changes
+ARG BUNDLER_VERSION=2.2.33
 
-# Set working dir and copy app
+RUN apk add --update \
+    tzdata \
+    git \
+    nodejs \
+    && rm -rf /var/cache/apk/* \
+    && gem install bundler:$BUNDLER_VERSION \
+    && bundle config --global frozen 1
+
+FROM base as builder
+
+RUN apk add --update build-base
+
 WORKDIR /usr/src/app
-COPY Gemfile Rakefile config.ru entrypoint.sh ./
-COPY app app
-COPY bin bin
-COPY config config
-COPY lib lib
-COPY public public
-COPY vendor vendor
-
+COPY . .
 RUN mkdir log
 
-ARG BUNDLER_VERSION=2.1.4
+RUN bundle config set --local without 'development' \
+  && bundle install \
+  && RAILS_ENV=production bundle exec rake assets:precompile \
+  && mkdir -p 777 /usr/src/app/coverage
 
-# Install bundler and gems
-RUN gem install bundler:$BUNDLER_VERSION
-RUN bundle install
+# Start a new build stage to minimise the final image size
+FROM base
 
-# Set environment variables and expose the running port
-ENV RAILS_ENV="production"
-ENV RAILS_SERVE_STATIC_FILES="true"
-ENV RELATIVE_URL_ROOT="/app/ppd"
-ENV SCRIPT_NAME="/app/ppd"
-ENV API_SERVICE_URL="http://localhost:8080"
+RUN addgroup -S app && adduser -S -G app app
 EXPOSE 3000
 
-# Precompile assets and add entrypoint script
-RUN rake assets:precompile
-ENTRYPOINT [ "sh", "./entrypoint.sh" ]
+WORKDIR /usr/src/app
+
+COPY --from=builder --chown=app /usr/local/bundle /usr/local/bundle
+COPY --from=builder --chown=app /usr/src/app     ./app
+
+USER app
+
+# Add a script to be executed every time the container starts.
+COPY entrypoint.sh /app
+ENTRYPOINT ["sh", "/app/entrypoint.sh"]

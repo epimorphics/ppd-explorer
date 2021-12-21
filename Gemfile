@@ -17,13 +17,17 @@ gem 'sass-rails'
 gem 'uglifier', '>= 1.3.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-gem 'therubyracer', platforms: :ruby
+# gem 'therubyracer', platforms: :ruby
+gem 'libv8-node',  '>= 16.10.0.0'
 
 gem 'jbuilder'
 gem 'jquery-rails'
 
 gem 'bootstrap-sass'
 gem 'haml-rails'
+
+gem 'rubocop'
+gem 'rubocop-rails'
 
 group :doc do
   gem 'sdoc', require: false
@@ -36,13 +40,11 @@ group :development do
 
   gem 'flamegraph'
   gem 'memory_profiler'
-  gem 'rubocop'
-  gem 'rubocop-rails'
+
   gem 'stackprof' # ruby 2.1+ only
 end
 
 gem 'data_services_api', git: 'https://github.com/epimorphics/ds-api-ruby.git', branch: 'task/infrastructure-update'
-# gem 'data_services_api', path: '/home/ian/workspace/epimorphics/ds-api-ruby'
 
 gem 'faraday'
 gem 'faraday_middleware'
@@ -52,7 +54,6 @@ gem 'sentry-raven'
 gem 'yajl-ruby', require: 'yajl'
 
 gem 'lr_common_styles', git: 'https://github.com/epimorphics/lr_common_styles.git'
-# gem 'lr_common_styles', path: '/home/ian/projects/hmlr/lr_common_styles'
 
 gem 'json_rails_logger', git: 'https://github.com/epimorphics/json-rails-logger.git', branch: 'main'
 

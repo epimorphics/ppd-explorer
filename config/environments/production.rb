@@ -25,7 +25,7 @@ PpdExplorer::Application.configure do
 
   # Disable Rails's static asset server (Apache or nginx will already do this).
   # config.serve_static_assets = false
-  config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'] || true
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
@@ -85,12 +85,11 @@ PpdExplorer::Application.configure do
   # config.log_formatter = ::Logger::Formatter.new
 
   # Specify that we're not at the root
-  config.action_controller.relative_url_root = ENV['RELATIVE_URL_ROOT'] || '/'
-  config.relative_url_root = ENV['RELATIVE_URL_ROOT'] || '/'
+  config.relative_url_root = ENV['RAILS_RELATIVE_URL_ROOT'] || '/'
 
   # API location can be specified in the environment
   # But defaults to the dev service
-  config.api_service_url = ENV['API_SERVICE_URL']
+  config.api_service_url = ENV['API_SERVICE_URL'] || 'http://localhost:8080'
 
   config.accessibility_document_path = '/accessibility'
   config.privacy_document_path = '/privacy'

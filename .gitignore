@@ -4,19 +4,22 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
-# Ignore bundler config.
+!/log/.keep
+.byebug_history
+.github-token
+.tags
 /.bundle
-
-# Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
-
-# Ignore all logfiles and tempfiles.
 /log/*.log
+/public/packs
+/public/packs-test
 /tmp
-.byebug_history
 coverage/
-q1.json
-
-# Ignore static files
+fc.json
+fc_simple.json
+index-names.txt
+index.json
 public/
+public/assets/
+tags
