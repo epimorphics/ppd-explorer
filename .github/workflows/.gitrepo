@@ -7,6 +7,6 @@
 	remote = git@github.com:epimorphics/github-workflows.git
 	branch = hmlr
 	commit = 9dd1010a12150e05c17e45897be4956a682c1137
-	parent = e53269d9b37aeb90c79b504ab7bdb5830bf7b8ed
+	parent = de63bdcb8c33c9d88888798211a794fc2cd2168a
 	method = merge
 	cmdver = 0.4.3
