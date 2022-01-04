@@ -61,6 +61,14 @@ run:
 	@-docker rm ppd_explorer && sleep 20
 	@docker run -p 3000:3000 --rm --name ppd_explorer ${REPO}:${TAG}
 
+# localrun is useful for developers running the app in a container, locally
+# on their own machine. It assumes that localhost:8080 has an instance of the
+# API running, e.g. by ssh tunneling to the dev host
+localrun:
+	@-docker stop ppd_explorer
+	@-docker rm ppd_explorer && sleep 20
+	@docker run --network host -e  --rm -e RAILS_RELATIVE_URL_ROOT=/ -e API_SERVICE_URL=http://localhost:8080 --name ppd_explorer ${REPO}:${TAG}
+
 tag:
 	@echo ${TAG}
 
