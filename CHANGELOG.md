@@ -3,9 +3,15 @@
 This app allows the user to explore HMLR price-paid open
 linked data.
 
-## 1.4.4 - 2021-12-15
+## 1.5.0 - 2022-01-10
 
 - (Mairead) Update deployment workflow, dockerfile and assisting scripts
+- (Mairead) Add locality to search fields
+- (Ian) unify `dev` and `dev-infra` branches in 1.5.0 release
+
+## 1.4.4 - 2021-06-25
+
+- (Joseph) Small config change to allow linking to privacy notice.
 
 ## 1.4.3 - 2021-04-27
 

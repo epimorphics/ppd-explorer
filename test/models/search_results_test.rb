@@ -36,6 +36,16 @@ class SearchResultsTest < ActiveSupport::TestCase
       _(sr.index['no_value']['a-county']['a-district']['a-town']['a-street']['a-paon']['a-saon'][0].value_of_property('ppd:pricePaid')).must_equal 100
     end
 
+    it 'should search on locality' do
+      result = {
+        PAL => { '@value' => 'a-locality' },
+        'ppd:pricePaid' => 100
+      }
+      sr = SearchResults.new([result], 1)
+
+      _(sr.index['no_value']['a-locality']).must_be_kind_of Hash
+    end
+
     it 'should index in the face of missing values' do
       result = { PAC => { '@value' => 'a-county' },
                  PAD => { '@value' => 'a-district' },
