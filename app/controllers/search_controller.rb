@@ -2,6 +2,8 @@
 
 # Controller for user queries
 class SearchController < ApplicationController
+  attr_reader :preferences, :query_command
+
   def index
     create
   end

@@ -147,7 +147,7 @@ class QueryCommand < DataService # rubocop:disable Metrics/ClassLength
 
   def add_count_information(ppd, count_query)
     count_result = ppd.query(count_query)
-    count = count_result.first['@count']
+    count = count_result.first['ppd:count']
     @search_results.query_count("#{count}#{count == COUNT_LIMIT ? ' or more' : ''}")
   end
 
