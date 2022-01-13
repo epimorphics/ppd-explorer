@@ -8,8 +8,7 @@ class SearchController < ApplicationController
     create
   end
 
-  # rubocop:disable Metrics/MethodLength
-  def create
+  def create # rubocop:disable Metrics/MethodLength
     @preferences = UserPreferences.new(params)
 
     if @preferences.empty?
@@ -36,7 +35,6 @@ class SearchController < ApplicationController
     render_error_page(e, e.message, status)
   end
 
-  # rubocop:enable Metrics/MethodLength
   def use_compact_json?
     !non_compact_formats.include?(request.format)
   end
