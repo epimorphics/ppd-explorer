@@ -55,6 +55,7 @@ PpdExplorer::Application.configure do
 
   # Use a different logger for distributed setups.
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new)
+  $stdout.sync = true
   config.logger = JsonRailsLogger::Logger.new($stdout)
 
   # Use a different cache store in production.
