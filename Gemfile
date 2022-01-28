@@ -49,7 +49,9 @@ gem 'data_services_api', git: 'https://github.com/epimorphics/ds-api-ruby.git', 
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'font-awesome-rails'
+gem 'get_process_mem'
 gem 'jquery-ui-rails'
+gem 'prometheus-client'
 gem 'sentry-raven'
 gem 'yajl-ruby', require: 'yajl'
 
