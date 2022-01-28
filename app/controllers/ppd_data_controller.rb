@@ -54,7 +54,7 @@ class PpdDataController < ApplicationController
 
   def show_sparql_explanation(preferences)
     explanation = ExplainCommand.new(preferences).load_explanation
-    redirect_to "/app/hpi/qonsole?q=#{URI.encode_www_form_component(explanation[:sparql])}"
+    redirect_to "/app/qonsole?q=#{URI.encode_www_form_component(explanation[:sparql])}"
   end
 
   def download_data(preferences)

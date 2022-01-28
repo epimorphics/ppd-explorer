@@ -3,6 +3,10 @@
 This app allows the user to explore HMLR price-paid open
 linked data.
 
+## 1.5.1 - 2022-01-28
+
+- (Joseph) Change to as SPARQL query redirect url
+
 ## 1.5.0 - 2022-01-10
 
 - (Mairead) Update deployment workflow, dockerfile and assisting scripts
