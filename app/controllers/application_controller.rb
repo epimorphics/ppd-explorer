@@ -25,8 +25,6 @@ class ApplicationController < ActionController::Base
     rescue_from Exception, with: :render_exception
   end
 
-  private
-
   def render_exception(exception)
     if exception.instance_of? ArgumentError
       render_error(400)
@@ -34,15 +32,16 @@ class ApplicationController < ActionController::Base
       render_error(403)
     else
       Rails.logger.warn "No explicit error page for exception #{exception} - #{exception.class}"
+      instrument_internal_error(exception)
       render_error(500)
     end
   end
 
-  def render404(_exception = nil)
+  def render_404(_exception = nil) # rubocop:disable Naming/VariableNumber
     render_error(404)
   end
 
-  def render403(_exception = nil)
+  def render_403(_exception = nil) # rubocop:disable Naming/VariableNumber
     render_error(403)
   end
 
@@ -82,5 +81,9 @@ class ApplicationController < ActionController::Base
     }
 
     Rails.logger.debug(JSON.generate(log_fields))
+  end
+
+  def instrument_internal_error(exception)
+    ActiveSupport::Notifications.instrument('internal_error.application', exception: exception)
   end
 end
