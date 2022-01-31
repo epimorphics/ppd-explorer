@@ -6,6 +6,10 @@ linked data.
 ## 1.6.0 - 2022-01-31
 
 - (Ian) Added Prometheus metrics for observability in production
+- 
+## 1.5.1 - 2022-01-28
+
+- (Joseph) Change to as SPARQL query redirect url
 
 ## 1.5.0 - 2022-01-10
 
