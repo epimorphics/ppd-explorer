@@ -3,6 +3,10 @@
 This app allows the user to explore HMLR price-paid open
 linked data.
 
+## 1.6.0 - 2022-01-31
+
+- (Ian) Added Prometheus metrics for observability in production
+
 ## 1.5.0 - 2022-01-10
 
 - (Mairead) Update deployment workflow, dockerfile and assisting scripts
