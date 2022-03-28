@@ -1,9 +1,9 @@
 ARG ALPINE_VERSION
 ARG RUBY_VERSION
-ARG BUNDLER_VERSION
 
 # Defines base image which builder and final stage use
 FROM ruby:${RUBY_VERSION}-alpine${ALPINE_VERSION} as base
+ARG BUNDLER_VERSION
 
 RUN apk add --update \
     tzdata \
@@ -36,7 +36,7 @@ COPY .bundle/config /root/.bundle/config
 
 RUN ./bin/bundle config set --local without 'development test'
 
-RUN bundle install \
+RUN ./bin/bundle install \
   && RAILS_ENV=production bundle exec rake assets:precompile \
   && mkdir -p 777 /usr/src/app/coverage
 
