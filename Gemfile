@@ -44,8 +44,6 @@ group :development do
   gem 'stackprof' # ruby 2.1+ only
 end
 
-gem 'data_services_api', git: 'https://github.com/epimorphics/ds-api-ruby.git', branch: 'task/infrastructure-update'
-
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'font-awesome-rails'
@@ -55,9 +53,11 @@ gem 'prometheus-client'
 gem 'sentry-raven'
 gem 'yajl-ruby', require: 'yajl'
 
-gem 'lr_common_styles', git: 'https://github.com/epimorphics/lr_common_styles.git'
-
-gem 'json_rails_logger', git: 'https://github.com/epimorphics/json-rails-logger.git', branch: 'main'
+source 'https://rubygems.pkg.github.com/epimorphics' do
+  gem 'data_services_api'
+  gem 'json_rails_logger'
+  gem 'lr_common_styles'
+end
 
 group :test do
   gem 'capybara'
