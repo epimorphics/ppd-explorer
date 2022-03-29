@@ -65,16 +65,20 @@ or the application will throw an error and exit before starting
 [Prometheus](https://prometheus.io) is set up to provide metrics on the
 `/metrics` endpoint. The following metrics are recorded:
 
-- `data_api_status` (counter)
-  Response from data API
-- `data_api_connection_failure` (counter)
-  Could not connect to back-end data API'
-- `data_api_service_exception` (counter)
-  The response from the back-end data API was not processed'
+- `api_status` (counter)
+  Response from data API, labelled by response status code
+- `api_requests` (counter)
+  Count of requests to the data API, labelled by succeeded true/false
+- `api_connection_failure` (counter)
+  Could not connect to back-end data API, labelled by message
+- `api_service_exception` (counter)
+  The response from the back-end data API was not processed, labelled by message
 - `internal_application_error` (counter)
-  Unexpected events and internal error count
+  Unexpected events and internal error count, labelled by message
 - `memory_used_mb` (gauge)
   Process memory usage in megabytes
+- `api_response_times` (histogram)
+  Histogram of response times of successful API calls.
 
 Internally, we use ActiveSupport Notifications to emit events which are
 monitored and collected by the Prometheus store. Relevant pieces of the

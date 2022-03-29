@@ -6,6 +6,7 @@ linked data.
 ## 1.6.1-pending - 2022-03-22
 
 - (Ian) Switch to using local gems from GitHub Package Registry
+- (Ian) Update Prometheus metric to follow local best practice
 
 ## 1.6.0 - 2022-01-31
 

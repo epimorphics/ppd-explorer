@@ -18,25 +18,21 @@ module Prometheus
       @lookup_table = {}
     end
 
-    def self.register_metric(metric_class, name, docstring, labels = nil)
-      instance.register_metric(metric_class, name, docstring, labels)
+    def self.register_metric(metric_class, name, docstring, params = {})
+      instance.register_metric(metric_class, name, docstring, params)
     end
 
     def self.[](name)
       instance.lookup_table.fetch(name)
     end
 
-    def register_metric(metric_class, name, docstring, labels)
+    def register_metric(metric_class, name, docstring, params)
       return if lookup_table.key?(name)
 
-      params = { docstring: docstring }
-      params[:labels] = labels if labels
-
-      counter = metric_class.new(name, params)
+      counter = metric_class.new(name, params.merge(docstring: docstring))
 
       lookup_table[name] = counter
       registry.register(counter)
-      puts("Created a Prometheus counter of cls #{metric_class} named #{name}")
     end
   end
 end
