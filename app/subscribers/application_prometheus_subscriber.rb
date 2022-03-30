@@ -4,7 +4,8 @@
 class ApplicationPrometheusSubscriber < ActiveSupport::Subscriber
   attach_to :application
 
-  def internal_error(_event)
-    Prometheus::Metrics[:internal_application_error].increment
+  def internal_error(event)
+    message = event.payload[:exception]
+    Prometheus::Metrics[:internal_application_error].increment(labels: { message: message.to_s })
   end
 end
