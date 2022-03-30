@@ -7,6 +7,7 @@ linked data.
 
 - (Ian) Switch to using local gems from GitHub Package Registry
 - (Ian) Update Prometheus metric to follow local best practice
+- (Ian) Ensure Rails and Puma startup messages log as JSON
 
 ## 1.6.0 - 2022-01-31
 
