@@ -63,9 +63,15 @@ Which should produce something like:
 "message":"No active profile set, falling back to default profiles: default"}
 ```
 
-Note that the identity of the Docker image will change periodically. There's
-probably a smart way to find out which is the latest version to run, but I'm
-not sure what it is.
+Note that the identity of the Docker image will change periodically. The
+currently deployed dev api image version is given by the `api` tag in the ansible
+[dev configuration](https://github.com/epimorphics/hmlr-ansible-deployment/blob/master/ansible/group_vars/dev/tags.yml).
+
+If you need to run a different API version then the easiest route to
+discovering the most recent is to use the [AWS
+ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084843/epimorphics/lr-data-api/dev?region=eu-west-1)
+console or look at the hash to the relevant commit in
+[lr-data-api](https://github.com/epimorphics/lr-data-api).
 
 ### Coding standards
 
