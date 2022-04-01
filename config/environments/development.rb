@@ -30,7 +30,8 @@ PpdExplorer::Application.configure do
   config.assets.quiet = true
 
   config.log_tags = %i[subdomain request_id request_method]
-  # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
+  $stdout.sync = true
+  config.logger = JsonRailsLogger::Logger.new($stdout)
 
   config.api_service_url = ENV['API_SERVICE_URL'] || 'http://localhost:8080'
 
