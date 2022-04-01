@@ -21,10 +21,57 @@ definition_ (DSD), to convert the DSL queries to SPARQL.
 
 ### Accessing the API during development
 
-In deployment, the Rails app will be run in an environment in
-which the DS-API is available on `localhost:8080`. In development,
-the script `bin/sr-tunnel-daemon` can be used to simulate that
-environment, using ssh to proxy the remote dev API onto `localhost`.
+The back-end data API for PPD is a SapiNT instance, running in its own
+Kubernetes pod. For operations reasons, it is not possible to access that pod
+from outside the cluster, which means there is no easy way to use the cluster
+to provide a dev API to use with a locally running instance of the application
+during development. Previously, we have used ssh tunnels to proxy the remote
+API onto `localhost`, but this is not a secure or recommended practice.
+
+Instead, developers can run the Docker container that defines the SapiNT API
+directly from the AWS Docker registry. To do this, you will need:
+
+- AWS IAM credentials to connect to the HMLR AWS account (see Dave or Andy)
+- the ECR credentials helper installed locally (see [here](https://github.com/awslabs/amazon-ecr-credential-helper))
+- this line: `"credsStore": "ecr-login"` in `~/.docker/config.json`
+
+With this set up, you should be able to run the container, mapped to
+`localhost:8080` using:
+
+```sh
+$ AWS_PROFILE=hmlr \
+docker run \
+-e SERVER_DATASOURCE_ENDPOINT=http://hmlr-dev-pres.epimorphics.net/landregistry/query \
+-p 8080:8080 \
+018852084843.dkr.ecr.eu-west-1.amazonaws.com/epimorphics/lr-data-api/dev:1.0-SNAPSHOT_a5590d2
+```
+
+Which should produce something like:
+
+```text
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.2.0.RELEASE)
+
+{"ts":"2022-03-21T16:12:26.585Z","version":"1","logger_name":"com.epimorphics.SapiNtApplicationKt",
+"thread_name":"main","level":"INFO","level_value":20000,
+"message":"No active profile set, falling back to default profiles: default"}
+```
+
+Note that the identity of the Docker image will change periodically. The
+currently deployed dev api image version is given by the `api` tag in the ansible
+[dev configuration](https://github.com/epimorphics/hmlr-ansible-deployment/blob/master/ansible/group_vars/dev/tags.yml).
+
+If you need to run a different API version then the easiest route to
+discovering the most recent is to use the [AWS
+ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084843/epimorphics/lr-data-api/dev?region=eu-west-1)
+console or look at the hash to the relevant commit in
+[lr-data-api](https://github.com/epimorphics/lr-data-api).
 
 ### Coding standards
 
