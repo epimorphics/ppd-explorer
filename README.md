@@ -1,4 +1,4 @@
-# PPD Explorer
+# Price Paid Data (PPD) Explorer
 
 This is the repo for the HM Land Registry
 [PPD explorer](http://landregistry.data.gov.uk/app/ppd),
@@ -80,17 +80,22 @@ Rubocop should always return no errors or warnings.
 ### Running the tests
 
 ```sh
-rails -t
+rails test
 ```
 
 ## Deployment
 
-To mimic running the application in a deployed state you can run
-`make image` and this will run through the assets precompilation, linting and testing before creating a Docker image. To view the Docker container you can run `make run`
+To mimic running the application in a deployed state you can run `make image`
+and this will run through the assets precompilation, linting and testing before
+creating a Docker image. To preview the Docker container you can run `make run`
 
-To bypass the need for running locally AWS you can pass a global variable to the command with `ECR=local make image`
+The automated deployment is managed by `deployment.yaml`. At the time of
+writing, the following deployment patterns are defined:
 
-You can run `make help` to view a list of other make commands available
+- git tag matching `vNNN`, e.g. `v1.2.3`<br />
+  Automatically deployed to the production environment
+- git branch `dev-infrastructure`<br />
+  Automatically deployed to the dev environment.
 
 ### entrypoint.sh
 
@@ -115,7 +120,7 @@ or the application will throw an error and exit before starting
 - `api_status` (counter)
   Response from data API, labelled by response status code
 - `api_requests` (counter)
-  Count of requests to the data API, labelled by succeeded true/false
+  Count of requests to the data API, labelled by result success/failure
 - `api_connection_failure` (counter)
   Could not connect to back-end data API, labelled by message
 - `api_service_exception` (counter)
@@ -131,9 +136,6 @@ Internally, we use ActiveSupport Notifications to emit events which are
 monitored and collected by the Prometheus store. Relevant pieces of the
 app include:
 
-- `app/lib/prometheus/metrics.rb`
-  A central register where metrics can be stored and looked-up subsequently
-  by use of a symbol key.
 - `config/initializers/prometheus.rb`
   Defines the Prometheus counters that the app knows about, and registers them
   in the metrics store (see above)
@@ -168,3 +170,13 @@ Prometheus into `~/apps`, a starting command line would be something like:
 ```
 
 Something roughly equivalent should be possible on Windows and Mac as well.
+
+## Configuration environment variables
+
+We use a number of environment variables to determine the runtime behaviour
+of the application:
+
+| name                       | description                                                          | typical value                                    |
+| -------------------------- | -------------------------------------------------------------------- | ------------------------------------------------ |
+| `RAILS_RELATIVE_URL_ROOT`  | The path from the server root to the application                     | `/app/ppd`                                       |
+| `API_SERVICE_URL`          | The base URL from which data is accessed, including the HTTP scheme  | `http://localhost:8080`                          |

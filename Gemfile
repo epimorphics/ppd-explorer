@@ -49,7 +49,7 @@ gem 'faraday_middleware'
 gem 'font-awesome-rails'
 gem 'get_process_mem'
 gem 'jquery-ui-rails'
-gem 'prometheus-client'
+gem 'prometheus-client', '~> 4.0'
 gem 'sentry-raven'
 gem 'yajl-ruby', require: 'yajl'
 
