@@ -15,7 +15,7 @@ Bundler.require(:default, Rails.env)
 
 # Monkey-patch the bit of Rails that emits the start-up log message, so that it
 # is written out in JSON format that our combined logging service can handle
-# This versio is Rails 5.x specific. A different pattern is needed for Rails 6
+# This version is Rails 5.x specific. A different pattern is needed for Rails 6
 # applications.
 module Rails
   # :nodoc:
