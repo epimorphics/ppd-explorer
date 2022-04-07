@@ -1,48 +1,43 @@
 # frozen_string_literal: true
 
+registry = Prometheus::Client.registry
+
 # Prometheus counters
-Prometheus::Metrics.register_metric(
-  Prometheus::Client::Counter,
+registry.counter(
   :api_status,
-  'Response from back-end API',
+  docstring: 'Response from back-end API',
   labels: [:status]
 )
-Prometheus::Metrics.register_metric(
-  Prometheus::Client::Counter,
+registry.counter(
   :api_requests,
-  'Overall count of back-end API requests',
-  labels: [:succeeded]
+  docstring: 'Overall count of back-end API requests',
+  labels: [:result]
 )
-Prometheus::Metrics.register_metric(
-  Prometheus::Client::Counter,
+registry.counter(
   :api_connection_failure,
-  'Reasons for back-end API connection failure',
+  docstring: 'Reasons for back-end API connection failure',
   labels: [:message]
 )
-Prometheus::Metrics.register_metric(
-  Prometheus::Client::Counter,
+registry.counter(
   :api_service_exception,
-  'The response from the back-end data API was not processed',
+  docstring: 'The response from the back-end data API was not processed',
   labels: [:message]
 )
-Prometheus::Metrics.register_metric(
-  Prometheus::Client::Counter,
+registry.counter(
   :internal_application_error,
-  'Unexpected events and internal error count',
+  docstring: 'Unexpected events and internal error count',
   labels: [:message]
 )
 
 # Prometheus gauges
-Prometheus::Metrics.register_metric(
-  Prometheus::Client::Gauge,
+registry.gauge(
   :memory_used_mb,
-  'Process memory usage in mb'
+  docstring: 'Process memory usage in mb'
 )
 
 # Prometheus histograms
-Prometheus::Metrics.register_metric(
-  Prometheus::Client::Histogram,
+registry.histogram(
   :api_response_times,
-  'Histogram of response times for API requests',
+  docstring: 'Histogram of response times for API requests',
   buckets: Prometheus::Client::Histogram.exponential_buckets(start: 0.005, count: 16)
 )

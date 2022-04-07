@@ -6,6 +6,8 @@ class ApplicationPrometheusSubscriber < ActiveSupport::Subscriber
 
   def internal_error(event)
     message = event.payload[:exception]
-    Prometheus::Metrics[:internal_application_error].increment(labels: { message: message.to_s })
+    Prometheus::Client.registry
+                      .get(:internal_application_error)
+                      .increment(labels: { message: message.to_s })
   end
 end

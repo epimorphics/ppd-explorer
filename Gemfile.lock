@@ -388,7 +388,7 @@ DEPENDENCIES
   minitest-spec-rails
   minitest-vcr
   mocha
-  prometheus-client
+  prometheus-client (~> 4.0)
   puma
   rails (< 6.0.0)
   rb-readline
