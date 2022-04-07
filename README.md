@@ -176,7 +176,8 @@ Something roughly equivalent should be possible on Windows and Mac as well.
 We use a number of environment variables to determine the runtime behaviour
 of the application:
 
-| name                       | description                                                          | typical value                                    |
-| -------------------------- | -------------------------------------------------------------------- | ------------------------------------------------ |
-| `RAILS_RELATIVE_URL_ROOT`  | The path from the server root to the application                     | `/app/ppd`                                       |
-| `API_SERVICE_URL`          | The base URL from which data is accessed, including the HTTP scheme  | `http://localhost:8080`                          |
+| name                       | description                                                          | typical value              |
+| -------------------------- | -------------------------------------------------------------------- | -------------------------- |
+| `RAILS_RELATIVE_URL_ROOT`  | The path from the server root to the application                     | `/app/ppd`                 |
+| `API_SERVICE_URL`          | The base URL from which data is accessed, including the HTTP scheme  | `http://localhost:8080`    |
+| `SENTRY_API_KEY`           | The DSN for sending reports to the PPD Sentry account                |                            |
