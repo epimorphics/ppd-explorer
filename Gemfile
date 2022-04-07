@@ -50,7 +50,7 @@ gem 'font-awesome-rails'
 gem 'get_process_mem'
 gem 'jquery-ui-rails'
 gem 'prometheus-client', '~> 4.0'
-gem 'sentry-raven'
+gem 'sentry-rails', '~> 5.2'
 gem 'yajl-ruby', require: 'yajl'
 
 source 'https://rubygems.pkg.github.com/epimorphics' do
