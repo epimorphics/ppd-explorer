@@ -3,7 +3,14 @@
 This app allows the user to explore HMLR price-paid open
 linked data.
 
-## 1.6.1-pending - 2022-03-22
+## 1.7.0 - 2022-04-07
+
+- (Ian) Adopt all of the current Epimorphics best-practice deployment patterns,
+  including shared GitHub actions, updated Makefile and Dockerfile, Prometheus
+  monitoring, and updated version of Sentry.
+- (Ian) Updated the README as part of handover.
+
+## 1.6.1 - 2022-03-22
 
 - (Ian) Switch to using local gems from GitHub Package Registry
 - (Ian) Update Prometheus metric to follow local best practice
