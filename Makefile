@@ -13,8 +13,8 @@ STAGE?=dev
 API_SERVICE_URL?= http://localhost:8080
 
 COMMIT=$(shell git rev-parse --short HEAD)
-TAG?=${VERSION}-${COMMIT}
 VERSION?=$(shell /usr/bin/env ruby -e 'require "./app/lib/version" ; puts Version::VERSION')
+TAG?=$(shell printf '%s-%s-%08d' ${VERSION} ${COMMIT} ${GITHUB_RUN_NUMBER})
 
 ${TAG}:
 	@echo ${TAG}
