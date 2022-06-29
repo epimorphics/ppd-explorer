@@ -11,4 +11,4 @@ deployments:
   - branch: "dev-infrastructure"
     deploy: "dev"
     publish: "dev"
-  - branch: "[a-zA-Z0-9]+"
+  - branch: "[A-z0-9/-_]+"
