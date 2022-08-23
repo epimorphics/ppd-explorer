@@ -33,3 +33,7 @@ Rubocop should always return no errors or warnings.
 ### Running the tests
 
     rails -t
+
+## Issues
+
+Please use the [shared issues list](https://github.com/epimorphics/hmlr-linked-data/issues)
