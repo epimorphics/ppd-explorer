@@ -35,6 +35,22 @@ end
 
 gem 'byebug', group: %i[development test]
 
+group :test do
+  gem 'capybara'
+  gem 'capybara_minitest_spec'
+  gem 'capybara-selenium'
+  gem 'json_expressions'
+  gem 'minitest-rails'
+  gem 'minitest-reporters'
+  gem 'minitest-spec-rails'
+  gem 'minitest-vcr'
+  gem 'mocha'
+  gem 'simplecov', require: false
+  gem 'vcr'
+  gem 'webdrivers'
+  gem 'webmock'
+end
+
 group :development do
   gem 'rb-readline'
 
@@ -53,24 +69,14 @@ gem 'prometheus-client', '~> 4.0'
 gem 'sentry-rails', '~> 5.2'
 gem 'yajl-ruby', require: 'yajl'
 
-source 'https://rubygems.pkg.github.com/epimorphics' do
-  gem 'data_services_api'
-  gem 'json_rails_logger'
-  gem 'lr_common_styles'
-end
+# TODO: For running the app locally for testing you can set this to your local path
+# gem 'data_services_api', '~> 1.3.2', path: '~/Epimorphics/shared/data_services_api/'
+# gem 'json_rails_logger', '~> 0.3.4', path: '~/Epimorphics/shared/json-rails-logger/'
+# gem 'lr_common_styles', '~> 1.9.0', path: '~/Epimorphics/clients/land-registry/projects/lr-common-styles/'
 
-group :test do
-  gem 'capybara'
-  gem 'capybara_minitest_spec'
-  gem 'capybara-selenium'
-  gem 'json_expressions'
-  gem 'minitest-rails'
-  gem 'minitest-reporters'
-  gem 'minitest-spec-rails'
-  gem 'minitest-vcr'
-  gem 'mocha'
-  gem 'simplecov', require: false
-  gem 'vcr'
-  gem 'webdrivers'
-  gem 'webmock'
+# TODO: In production you want to set this to the gem from the epimorphics package repo
+source 'https://rubygems.pkg.github.com/epimorphics' do
+  gem 'data_services_api', '~> 1.3.2'
+  gem 'json_rails_logger', '~> 0.3.4'
+  gem 'lr_common_styles', '~> 1.9.0'
 end
