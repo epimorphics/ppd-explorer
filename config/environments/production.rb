@@ -61,6 +61,17 @@ PpdExplorer::Application.configure do
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 
+  # * Set cache control headers for HMLR apps to be public and cacheable
+  # * Price Paid Data uses a time limit of 5 minutes (300 seconds)
+  # This will affect assets served from /app/assets
+  config.static_cache_control = "public, max-age=#{5.minutes.to_i}"
+
+  # This will affect assets in /public, e.g. webpacker assets.
+  config.public_file_server.headers = {
+    'Cache-Control' => "public, max-age=#{5.minutes.to_i}",
+    'Expires' => 5.minutes.from_now.to_formatted_s(:rfc822)
+  }
+
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = "http://assets.example.com"
 
