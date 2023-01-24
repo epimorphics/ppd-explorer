@@ -3,6 +3,18 @@
 This app allows the user to explore HMLR price-paid open
 linked data.
 
+## 1.7.1 - 2023-01
+
+- (Jon) Refactors the elapsed time calculated for API requests to be resolved
+  as microseconds rather than milliseconds. This is to improve the reporting of
+  the elapsed time in the system tooling logs.
+- (Jon) Minor text changes to the `Gemfile` to include instructions for running
+  Epimorphics specific gems locally during the development of those gems.
+- (Jon) Updated the production `data_services_api` gem version to be at least
+  the current version`~>1.3.2` (this is to cover out of sync release versions)
+- (Jon) Updated the production `lr_common_styles` gem version to be at least the
+  current version `~>1.9.0` (this is to cover out of sync release versions)
+
 ## 1.7.0 - 2022-04-07
 
 - (Ian) Adopt all of the current Epimorphics best-practice deployment patterns,
