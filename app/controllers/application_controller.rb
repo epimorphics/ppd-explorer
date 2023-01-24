@@ -15,9 +15,9 @@ class ApplicationController < ActionController::Base
 
   around_action :log_request_result
   def log_request_result
-    start = Time.now
+    start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
     yield
-    duration = Time.now - start
+    duration = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start
     detailed_request_log(duration)
   end
 
@@ -68,11 +68,11 @@ class ApplicationController < ActionController::Base
     self.response_body = nil
   end
 
-  def detailed_request_log(duration) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  def detailed_request_log(duration) # rubocop:disable Metrics/MethodLength
     env = request.env
 
     log_fields = {
-      timeTakenMS: duration * 1_000,
+      duration: duration,
       requestPath: env['REQUEST_PATH'],
       queryString: env['QUERY_STRING'],
       httpUserAgent: env['HTTP_USER_AGENT'],
