@@ -25,7 +25,7 @@ PpdExplorer::Application.configure do
 
   # Disable Rails's static asset server (Apache or nginx will already do this).
   # config.serve_static_assets = false
-  config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'] || true
+  config.serve_static_files = ENV.fetch('RAILS_SERVE_STATIC_FILES', true)
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
@@ -96,13 +96,13 @@ PpdExplorer::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   # config.log_formatter = ::Logger::Formatter.new
 
-  # Specify that we're not at the root
-  config.relative_url_root = ENV['RAILS_RELATIVE_URL_ROOT'] || '/'
+  # In Production no default values are passed on the basis that missing
+  # configuration options represent a category of bug, and in that case the
+  # deployment should fail fast and noisily.
+  config.relative_url_root = ENV.fetch('RAILS_RELATIVE_URL_ROOT')
+  config.api_service_url = ENV.fetch('API_SERVICE_URL')
 
-  # API location can be specified in the environment
-  # But defaults to the dev service
-  config.api_service_url = ENV['API_SERVICE_URL'] || 'http://localhost:8080'
-
+  # Use default paths for documentation.
   config.accessibility_document_path = '/accessibility'
   config.privacy_document_path = '/privacy'
 
