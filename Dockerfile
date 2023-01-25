@@ -20,8 +20,13 @@ RUN apk add --update build-base
 WORKDIR /usr/src/app
 
 COPY config.ru Dockerfile entrypoint.sh Gemfile Gemfile.lock Rakefile ./
-COPY app app
+
 COPY bin bin
+COPY .bundle/config /root/.bundle/config
+
+RUN ./bin/bundle config set --local without 'development test' && ./bin/bundle install
+
+COPY app app
 COPY config config
 COPY lib lib
 COPY public public
@@ -32,12 +37,8 @@ RUN mkdir log
 # **Important** the destination for this copy **must not** be in WORKDIR,
 # or there is a risk that the GitHub PAT could be part of the final image
 # in a potentially leaky way
-COPY .bundle/config /root/.bundle/config
 
-RUN ./bin/bundle config set --local without 'development test'
-
-RUN ./bin/bundle install \
-  && RAILS_ENV=production bundle exec rake assets:precompile \
+RUN RAILS_ENV=production bundle exec rake assets:precompile \
   && mkdir -m 777 /usr/src/app/coverage
 
 # Start a new build stage to minimise the final image size
