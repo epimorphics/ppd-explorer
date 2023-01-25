@@ -51,8 +51,8 @@ class SearchController < ApplicationController
     Rails.logger.error "#{err.class.name} error #{uuid} ::: #{message} ::: #{err.class}"
 
     @error_message =
-      ["<span class='error bg-warning'>#{message}.</span>",
-       "The log file reference for this error is: #{uuid}."].join('<br />').html_safe
+      ["<p class='error bg-warning'>#{message}.</p>",
+       "<p>The log file reference for this error is<span class='sr-only'> Code</span>: <code>#{uuid}</code></p>"].join().html_safe
     render(template: template, status: status)
   end
 end
