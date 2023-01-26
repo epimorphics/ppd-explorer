@@ -8,7 +8,8 @@ class SearchController < ApplicationController
     create
   end
 
-  def create # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/MethodLength, Metrics/PerceivedComplexity
+  def create
     @preferences = UserPreferences.new(params)
 
     if @preferences.empty?
@@ -29,11 +30,12 @@ class SearchController < ApplicationController
              when MalformedSearchError, ArgumentError
                400
              else
-               500
+               e.status || 500
              end
 
     render_error_page(e, e.message, status)
   end
+  # rubocop:enable Metrics/MethodLength, Metrics/PerceivedComplexity
 
   def use_compact_json?
     !non_compact_formats.include?(request.format)
