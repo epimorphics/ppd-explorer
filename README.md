@@ -102,7 +102,7 @@ writing, the following deployment patterns are defined:
 This script is used as the main entry point for starting the app from the `Dockerfile`.
 
 The Rails Framework requires certain values to be set as a Global environment variable
-when starting. To ensure the `RAILS_RELATIVE_URL_ROOT` is only set in one place per
+when starting. To ensure the `APPLICATION_PATH` is only set in one place per
 application we have added this to the `entrypoint.sh` file along with the `SCRIPT_NAME`.
 The Rails secret is also created here.
 
@@ -178,6 +178,6 @@ of the application:
 
 | name                       | description                                                          | typical value              |
 | -------------------------- | -------------------------------------------------------------------- | -------------------------- |
-| `RAILS_RELATIVE_URL_ROOT`  | The path from the server root to the application                     | `/app/ppd`                 |
+| `APPLICATION_PATH`         | The path from the server root to the application                     | `/app/ppd`                 |
 | `API_SERVICE_URL`          | The base URL from which data is accessed, including the HTTP scheme  | `http://localhost:8080`    |
 | `SENTRY_API_KEY`           | The DSN for sending reports to the PPD Sentry account                |                            |
