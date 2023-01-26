@@ -47,6 +47,7 @@ class SearchController < ApplicationController
 
   private
 
+  # rubocop:disable Layout/LineLength
   def render_error_page(err, message, status, template = 'ppd/error')
     uuid = SecureRandom.uuid
 
@@ -54,7 +55,9 @@ class SearchController < ApplicationController
 
     @error_message =
       ["<p class='error bg-warning'>#{message}.</p>",
-       "<p>The log file reference for this error is<span class='sr-only'> Code</span>: <code>#{uuid}</code></p>"].join().html_safe
+       "<p>The log file reference for this error is<span class='sr-only'> Code</span>: <code>#{uuid}</code></p>",
+       '<p>You can quote this reference to support staff so that they can investigate this specific incident.</p>'].join.html_safe
     render(template: template, status: status)
   end
+  # rubocop:enable Layout/LineLength
 end
