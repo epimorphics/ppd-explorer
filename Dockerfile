@@ -20,18 +20,18 @@ RUN apk add --update build-base
 WORKDIR /usr/src/app
 
 COPY config.ru Dockerfile entrypoint.sh Gemfile Gemfile.lock Rakefile ./
-
-COPY bin bin
 COPY .bundle/config /root/.bundle/config
+COPY bin bin
 
-RUN ./bin/bundle config set --local without 'development test' && ./bin/bundle install
+RUN ./bin/bundle config set --local without 'development test' && \
+    ./bin/bundle install && \
+    mkdir log
 
 COPY app app
 COPY config config
 COPY lib lib
 COPY public public
 COPY vendor vendor
-RUN mkdir log
 
 # Copy the bundle config
 # **Important** the destination for this copy **must not** be in WORKDIR,
@@ -43,6 +43,18 @@ RUN RAILS_ENV=production bundle exec rake assets:precompile \
 
 # Start a new build stage to minimise the final image size
 FROM base
+
+ARG image_name
+ARG git_branch
+ARG git_commit_hash
+ARG github_run_number
+ARG VERSION
+
+LABEL com.epimorphics.name=$image_name \
+      com.epimorphics.branch=$git_branch \
+      com.epimorphics.build=$github_run_number \
+      com.epimorphics.commit=$git_commit_hash \
+      com.epimorphics.version=$VERSION
 
 RUN addgroup -S app && adduser -S -G app app
 EXPOSE 3000
