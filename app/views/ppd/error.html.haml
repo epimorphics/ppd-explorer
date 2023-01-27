@@ -11,7 +11,7 @@
     %strong
       Things you can try:
 
-  %ul
+  %ul.error--checklist
     %li
       Make the query more selective. For example, add values for some of the other search
       fields, such as county, postcode or street. In particular, if you don't enter values for
@@ -35,6 +35,4 @@
     %a{ href: "/index.html#contact-us"}
       contact us.
 
-  %p
-    = @error_message
-    You can quote this number to support staff so that they can investigate this specific incident.
+  = @error_message
