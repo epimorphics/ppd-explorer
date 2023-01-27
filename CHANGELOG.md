@@ -22,6 +22,8 @@ This app allows the user to explore HMLR price-paid open linked data.
   variable instead of being possibly displayed outside of the intended context.
 - (Jon) Refactored the version cadence creation to include a SUFFIX value if
   provided; otherwise no SUFFIX is included in the version number.
+- (Jon) Adjusted the processing of error status to use the application template;
+  also includes adjustments to not double render the error response.
 
 ## 1.7.0 - 2022-04-07
 
