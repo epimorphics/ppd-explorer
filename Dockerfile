@@ -19,7 +19,7 @@ RUN apk add --update build-base
 
 WORKDIR /usr/src/app
 
-COPY config.ru Dockerfile entrypoint.sh Gemfile Gemfile.lock Rakefile ./
+COPY config.ru Gemfile Gemfile.lock Rakefile ./
 COPY .bundle/config /root/.bundle/config
 COPY bin bin
 
