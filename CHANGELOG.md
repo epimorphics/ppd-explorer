@@ -20,6 +20,8 @@ This app allows the user to explore HMLR price-paid open linked data.
 - (Jon) Refactored the error messages displayed to be semantically formatted as
   well as incorporated ALL lines for the returned message to be held in the
   variable instead of being possibly displayed outside of the intended context.
+- (Jon) Refactored the version cadence creation to include a SUFFIX value if
+  provided; otherwise no SUFFIX is included in the version number.
 
 ## 1.7.0 - 2022-04-07
 
