@@ -18,7 +18,7 @@ gem 'uglifier', '>= 1.3.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
-gem 'libv8-node',  '>= 16.10.0.0'
+gem 'libv8-node', '>= 16.10.0.0'
 
 gem 'jbuilder'
 gem 'jquery-rails'
@@ -69,14 +69,16 @@ gem 'prometheus-client', '~> 4.0'
 gem 'sentry-rails', '~> 5.2'
 gem 'yajl-ruby', require: 'yajl'
 
+# rubocop:disable Layout/LineLength
 # TODO: For running the app locally for testing you can set this to your local path
-# gem 'data_services_api', '~> 1.3.2', path: '~/Epimorphics/shared/data_services_api/'
-# gem 'json_rails_logger', '~> 0.3.4', path: '~/Epimorphics/shared/json-rails-logger/'
-# gem 'lr_common_styles', '~> 1.9.0', path: '~/Epimorphics/clients/land-registry/projects/lr-common-styles/'
+# gem 'data_services_api', '~> 1.3.3', path: '~/Epimorphics/shared/data_services_api/'
+# gem 'json_rails_logger', '~> 0.3.5', path: '~/Epimorphics/shared/json-rails-logger/'
+# gem 'lr_common_styles', '~> 1.9.1', path: '~/Epimorphics/clients/land-registry/projects/lr_common_styles/'
+# rubocop:enable Layout/LineLength
 
 # TODO: In production you want to set this to the gem from the epimorphics package repo
 source 'https://rubygems.pkg.github.com/epimorphics' do
-  gem 'data_services_api', '~> 1.3.2'
-  gem 'json_rails_logger', '~> 0.3.4'
-  gem 'lr_common_styles', '~> 1.9.0'
+  gem 'data_services_api', '~> 1.3.3'
+  gem 'json_rails_logger', '~> 0.3.5'
+  gem 'lr_common_styles', '~> 1.9.1'
 end
