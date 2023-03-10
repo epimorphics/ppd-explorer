@@ -4,6 +4,9 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## 1.7.1 - 2023-03-10
 
+- (Jon) Added the updated configuration for the AWS credential improvements as
+  per other readme's; included further info to run the application locally;
+  resolved a markdown linting issue with using HTML in markdown.
 - (Jon) Refactors the elapsed time calculated for API requests to be resolved as
   microseconds rather than milliseconds. This is to improve the reporting of the
   elapsed time in the system tooling logs.
