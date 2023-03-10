@@ -33,7 +33,29 @@ directly from the AWS Docker registry. To do this, you will need:
 
 - AWS IAM credentials to connect to the HMLR AWS account (see Dave or Andy)
 - the ECR credentials helper installed locally (see [here](https://github.com/awslabs/amazon-ecr-credential-helper))
-- this line: `"credsStore": "ecr-login"` in `~/.docker/config.json`
+- Set the contents of your `~/.docker/config.json` file to be:
+
+```sh
+{
+ "credsStore": "ecr-login"
+}
+```
+
+This configures the Docker daemon to use the credential helper for all Amazon
+ECR registries.
+
+To use a credential helper for a specific ECR registry[^1], create a
+`credHelpers` section with the URI of your ECR registry:
+
+```sh
+{
+  [...]
+  "credHelpers": {
+    "public.ecr.aws": "ecr-login",
+    "018852084843.dkr.ecr.eu-west-1.amazonaws.com": "ecr-login"
+  }
+}
+```
 
 With this set up, you should be able to run the container, mapped to
 `localhost:8080` using:
@@ -73,6 +95,40 @@ ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084
 console or look at the hash to the relevant commit in
 [lr-data-api](https://github.com/epimorphics/lr-data-api).
 
+### Running the app locally in dev mode
+
+Assuming the API is running on port 8080 (the default), to start the app locally:
+
+```sh
+API_SERVICE_URL=http://localhost:8080 rails server
+```
+
+And then visit [`localhost:3000`](http://localhost:3000/).
+
+### Running the app locally as a Docker image
+
+It can be useful to run the compiled Docker image, that will be run by the
+production installation, locally yourself. Assuming you have the dev API
+running on `localhost:8080` (the default), then you can run the Docker image
+for the app itself as follows:
+
+```sh
+API_SERVICE_URL=http://host.docker.internal:8080 make run
+```
+
+Note that `host.docker.internal` is a special alias for `localhost`, which is
+[supported by
+Docker](https://medium.com/@TimvanBaarsen/how-to-connect-to-the-docker-host-from-inside-a-docker-container-112b4c71bc66).
+
+Assuming the Docker container starts up OK, you will need a proxy to simulate
+the effect of accessing the application via its ingress path
+(`/app/ppd`). There is a [simple web
+proxy](https://github.com/epimorphics/simple-web-proxy) that you can use.
+
+With the simple web proxy, and the two Docker containers running, access the
+application as
+[`localhost:3001/app/ukhpi/`](http://localhost:3001/app/ukhpi/).
+
 ### Coding standards
 
 Rubocop should always return no errors or warnings.
@@ -92,9 +148,9 @@ creating a Docker image. To preview the Docker container you can run `make run`
 The automated deployment is managed by `deployment.yaml`. At the time of
 writing, the following deployment patterns are defined:
 
-- git tag matching `vNNN`, e.g. `v1.2.3`<br />
+- git tag matching `vNNN`, e.g. `v1.2.3` \
   Automatically deployed to the production environment
-- git branch `dev-infrastructure`<br />
+- git branch `dev-infrastructure` \
   Automatically deployed to the dev environment.
 
 ### entrypoint.sh
@@ -181,3 +237,6 @@ of the application:
 | `APPLICATION_PATH`         | The path from the server root to the application                     | `/app/ppd`                 |
 | `API_SERVICE_URL`          | The base URL from which data is accessed, including the HTTP scheme  | `http://localhost:8080`    |
 | `SENTRY_API_KEY`           | The DSN for sending reports to the PPD Sentry account                |                            |
+
+[^1]: With Docker 1.13.0 or greater, you can configure Docker to use different
+credential helpers for different registries.
