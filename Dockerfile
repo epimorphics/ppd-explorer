@@ -39,7 +39,7 @@ COPY vendor vendor
 RUN RAILS_ENV=production bundle exec rake assets:precompile \
   && mkdir -m 777 /usr/src/app/coverage
 
-# Start a new build stage to minimise the final image size
+# Start a new stage to minimise the final image size
 FROM base
 
 ARG image_name
