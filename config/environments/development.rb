@@ -33,9 +33,9 @@ PpdExplorer::Application.configure do
   $stdout.sync = true
   config.logger = JsonRailsLogger::Logger.new($stdout)
 
-  # Application Path can be specified in the entrypoint.sh script
+  # The application path can be specified in the entrypoint.sh script
   # but falls back to a standard root value in development
-  config.relative_url_root = ENV.fetch('APPLICATION_PATH', '/')
+  config.relative_url_root = ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/')
 
   # API location can be specified in the entrypoint.sh script
   # but falls back to the local dev service
