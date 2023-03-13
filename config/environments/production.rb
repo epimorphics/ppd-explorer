@@ -96,11 +96,11 @@ PpdExplorer::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   # config.log_formatter = ::Logger::Formatter.new
 
-  # Application Path should be specified in the entrypoint.sh file and therefore
+  # The application root should be specified in the entrypoint.sh file and therefore
   # in Production no fall back values are passed on the basis that missing
   # configuration options represent a category of bug, and in that case the
   # deployment should fail fast and noisily.
-  config.relative_url_root = ENV['APPLICATION_PATH']
+  config.relative_url_root = ENV['RAILS_RELATIVE_URL_ROOT']
   # API location should also be specified in the entrypoint.sh file
   config.api_service_url = ENV['API_SERVICE_URL']
 
