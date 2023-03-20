@@ -7,6 +7,7 @@ BUNDLER_VERSION?=$(shell tail -1 Gemfile.lock | tr -d ' ')
 ECR?=${ACCOUNT}.dkr.ecr.eu-west-1.amazonaws.com
 GPR_OWNER?=epimorphics
 NAME?=$(shell awk -F: '$$1=="name" {print $$2}' deployment.yaml | sed -e 's/[[:blank:]]//g')
+SHORTNAME?=$(shell echo ${NAME} | cut -f2 -d/)
 PAT?=$(shell read -p 'Github access token:' TOKEN; echo $$TOKEN)
 RUBY_VERSION?=$(shell cat .ruby-version)
 STAGE?=dev
@@ -15,7 +16,7 @@ API_SERVICE_URL?= http://localhost:8080
 BRANCH:=$(shell git rev-parse --abbrev-ref HEAD)
 COMMIT=$(shell git rev-parse --short HEAD)
 VERSION?=$(shell /usr/bin/env ruby -e 'require "./app/lib/version" ; puts Version::VERSION')
-TAG?=$(shell printf '%s-%s-%08d' ${VERSION} ${COMMIT} ${GITHUB_RUN_NUMBER})
+TAG?=$(shell printf '%s_%s_%08d' ${VERSION} ${COMMIT} ${GITHUB_RUN_NUMBER})
 
 ${TAG}:
 	@echo ${TAG}
@@ -24,7 +25,7 @@ IMAGE?=${NAME}/${STAGE}
 REPO?=${ECR}/${IMAGE}
 
 GITHUB_TOKEN=.github-token
-BUNDLE_CFG=.bundle/config
+BUNDLE_CFG=${HOME}/.bundle/config
 
 all: image
 
@@ -39,23 +40,23 @@ assets:
 	@./bin/bundle install
 	@./bin/rails assets:clean assets:precompile
 
-auth: ${BUNDLE_CFG}
+auth: ${GITHUB_TOKEN} ${BUNDLE_CFG}
 
 clean:
 	@[ -d public/assets ] && ./bin/rails assets:clobber || :
 
-image: auth lint test
+image: auth
 	@echo Building ${REPO}:${TAG} ...
-	docker build \
+	@docker build \
 		--build-arg ALPINE_VERSION=${ALPINE_VERSION} \
 		--build-arg RUBY_VERSION=${RUBY_VERSION} \
 		--build-arg BUNDLER_VERSION=${BUNDLER_VERSION} \
-    --build-arg VERSION=${VERSION} \
-    --build-arg git_branch=${BRANCH} \
-    --build-arg git_commit_hash=${COMMIT} \
+		--build-arg VERSION=${VERSION} \
+		--build-arg git_branch=${BRANCH} \
+		--build-arg git_commit_hash=${COMMIT} \
 		--build-arg github_run_number=${GITHUB_RUN_NUMBER} \
-    --build-arg image_name=${NAME} \
-	  --tag ${REPO}:${TAG} \
+		--build-arg image_name=${NAME} \
+		--tag ${REPO}:${TAG} \
 		.
 	@echo Done.
 
@@ -71,10 +72,10 @@ realclean: clean
 	@rm -f ${GITHUB_TOKEN} ${BUNDLE_CFG}
 
 run:
-	@echo "Stopping ppd_explorer ..."
-	@-docker stop ppd_explorer && sleep 10
-	@echo "Starting ppd_explorer ..."
-	@docker run -dp 3000:3000 --rm --name ppd_explorer ${REPO}:${TAG}
+	@echo "Stopping ${SHORTNAME} ..."
+	@-docker stop ${SHORTNAME} && sleep 10
+	@echo "Starting ${SHORTNAME} ..."
+	@docker run -e API_SERVICE_URL=${API_SERVICE_URL} --add-host host.docker.internal:host-gateway -p 3000:3000 --rm --name ${SHORTNAME} ${REPO}:${TAG}
 
 tag:
 	@echo ${TAG}
@@ -91,6 +92,7 @@ vars:
 	@echo "ECR = ${ECR}"
 	@echo "GPR_OWNER = ${GPR_OWNER}"
 	@echo "NAME = ${NAME}"
+	@echo "SHORTNAME = ${SHORTNAME}"
 	@echo "RUBY_VERSION = ${RUBY_VERSION}"
 	@echo "STAGE = ${STAGE}"
 	@echo "COMMIT = ${COMMIT}"

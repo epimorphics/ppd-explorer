@@ -6,9 +6,11 @@ FROM ruby:${RUBY_VERSION}-alpine${ALPINE_VERSION} as base
 ARG BUNDLER_VERSION
 
 RUN apk add --update \
-    tzdata \
+    bash \
+    coreutils \
     git \
     nodejs \
+    tzdata \
     && rm -rf /var/cache/apk/* \
     && gem install bundler:$BUNDLER_VERSION \
     && bundle config --global frozen 1
@@ -19,27 +21,23 @@ RUN apk add --update build-base
 
 WORKDIR /usr/src/app
 
-COPY config.ru entrypoint.sh Gemfile Gemfile.lock Rakefile ./
+COPY config.ru Gemfile Gemfile.lock Rakefile ./
+COPY .bundle/config /root/.bundle/config
 COPY bin bin
 
-COPY .bundle/config /root/.bundle/config
-
-RUN ./bin/bundle install && mkdir log
+RUN ./bin/bundle config set --local without 'development test' && ./bin/bundle install && mkdir log
 
 COPY app app
 COPY config config
 COPY lib lib
 COPY public public
-COPY vendor vendor
 
-# Copy the bundle config
-# **Important** the destination for this copy **must not** be in WORKDIR,
-# or there is a risk that the GitHub PAT could be part of the final image
-# in a potentially leaky way
+# Compile
+
 RUN RAILS_ENV=production bundle exec rake assets:precompile \
   && mkdir -m 777 /usr/src/app/coverage
 
-# Start a new stage to minimise the final image size
+# Start a new build stage to minimise the final image size
 FROM base
 
 ARG image_name
@@ -60,7 +58,7 @@ EXPOSE 3000
 WORKDIR /usr/src/app
 
 COPY --from=builder --chown=app /usr/local/bundle /usr/local/bundle
-COPY --from=builder --chown=app /usr/src/app     .
+COPY --from=builder --chown=app /usr/src/app .
 
 USER app
 
