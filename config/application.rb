@@ -25,8 +25,8 @@ module Rails
       url = "on #{options[:SSLEnable] ? 'https' : 'http'}://#{options[:Host]}:#{options[:Port]}"
 
       msg = {
+        ts: DateTime.now.utc.strftime('%FT%T.%3NZ'),
         level: 'INFO',
-        ts: DateTime.now.rfc3339(3),
         message: "Starting #{server} Rails #{Rails.version} in #{Rails.env} #{url}"
       }
       puts msg.to_json
