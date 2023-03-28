@@ -54,13 +54,12 @@ together see [simple-web-proxy](https://github.com/epimorphics/simple-web-proxy/
 We use a number of environment variables to determine the runtime behaviour
 of the application:
 
-| name                       | description                                                          | default value              |
-| -------------------------- | -------------------------------------------------------------------- | -------------------------- |
-| `API_SERVICE_URL`          | The base URL from which data is accessed, including the HTTP scheme  | None                       |
-|                            | eg.                                                                  |                            |
-|                            | http://localhost:8080 if running a data-api service locally          |                            |
-|                            | http://data-api:8888  if running a data-api docker image locally     |                            |
-| `SENTRY_API_KEY`           | The DSN for sending reports to the PPD Sentry account                | None                       |
+| name                       | description                                                             | default value              |
+| -------------------------- | ----------------------------------------------------------------------- | -------------------------- |
+| `API_SERVICE_URL`          | The base URL from which data is accessed, including the HTTP scheme eg. | None                       |
+|                            | http://localhost:8080 if running a `data-api service` locally           |                            |
+|                            | http://data-api:8888  if running a `data-api docker` image locally      |                            |
+| `SENTRY_API_KEY`           | The DSN for sending reports to the PPD Sentry account                   | None                       |
 
 ### Accessing the API during development
 
@@ -91,11 +90,9 @@ docker network create dnet
 To run the Data API as a docker container:
 
 ```sh
-$ AWS_PROFILE=hmlr \
-docker run --network dnet \
--e SERVER_DATASOURCE_ENDPOINT=https://landregistry.data.gov.uk/landregistry/query \
--p 8888:8080 --rm --name data-api \
-018852084843.dkr.ecr.eu-west-1.amazonaws.com/epimorphics/lr-data-api/dev:1.0-SNAPSHOT_a5590d2
+docker run --network dnet -p 8888:8080 --rm --name data-api \
+    -e SERVER_DATASOURCE_ENDPOINT=https://landregistry.data.gov.uk/landregistry/query \
+    018852084843.dkr.ecr.eu-west-1.amazonaws.com/epimorphics/lr-data-api/dev:1.0-SNAPSHOT_a5590d2
 ```
 the latest image can be found here [dev](https://github.com/epimorphics/hmlr-ansible-deployment/blob/master/ansible/group_vars/dev/tags.yml) 
 and [production](https://github.com/epimorphics/hmlr-ansible-deployment/blob/master/ansible/group_vars/prod/tags.yml).
@@ -107,7 +104,7 @@ Note: port 8080 should be avoided to allow for a reverse proxy to run on this po
 With this set up, the api service is available on `http://localhost:8888` from the host or `http://data-api:8080`
 from inside other docker containers.
 
-To build and a run a new docker image check ou the [lr-data-api repository](https://github.com/epimorphics/lr-data-api).
+To build and a run a new docker image check out the [lr-data-api repository](https://github.com/epimorphics/lr-data-api).
 and run
 ```sh
 make image run
