@@ -49,7 +49,7 @@ To test the running application visit `localhost:<port>/{application path}`.
 For information on how to running a proxy to mimic production and run multple services
 together see [simple-web-proxy](https://github.com/epimorphics/simple-web-proxy/edit/main/README.md)
 
-## Configuration environment variables
+## Runtime Configuration environment variables
 
 We use a number of environment variables to determine the runtime behaviour
 of the application:
@@ -57,22 +57,36 @@ of the application:
 | name                       | description                                                             | default value              |
 | -------------------------- | ----------------------------------------------------------------------- | -------------------------- |
 | `API_SERVICE_URL`          | The base URL from which data is accessed, including the HTTP scheme eg. | None                       |
-|                            | http://localhost:8080 if running a `data-api service` locally           |                            |
-|                            | http://data-api:8888  if running a `data-api docker` image locally      |                            |
+|                            | http://localhost:8888 if running a `data-api service` locally           |                            |
+|                            | http://data-api:8080  if running a `data-api docker` image locally      |                            |
 | `SENTRY_API_KEY`           | The DSN for sending reports to the PPD Sentry account                   | None                       |
 
-### Accessing the API during development
 
-#### Pre-requisites
+### Running the Data API during locally
 
-Developers can run the Docker container that defines the SapiNT API
-directly from the AWS Docker registry. To do this, you will need:
+The application connects to the triple store via a `data-api` service.
 
-- AWS IAM credentials to connect to the HMLR AWS account (see Dave or Andy)
+The easiest way to do this is as a local docker container. The image can be built from [lr-data-api repository](https://github.com/epimorphics/lr-data-api).
+or pulled from Amazon Elastic Container Registry [ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084843/epimorphics/lr-data-api/dev?region=eu-west-1)
+
+#### Building and running from [lr-data-api repository](https://github.com/epimorphics/lr-data-api)
+
+To build and a run a new docker image check out the [lr-data-api repository](https://github.com/epimorphics/lr-data-api) and run
+```sh
+make image run
+```
+
+#### Running an existing [ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084843/epimorphics/lr-data-api/dev?region=eu-west-1) image
+
+Obtaining an ECR image requires:
+
+- AWS IAM credentials to connect to the HMLR AWS account
 - the ECR credentials helper installed locally (see [here](https://github.com/awslabs/amazon-ecr-credential-helper))
 - this line: `"credsStore": "ecr-login"` in `~/.docker/config.json`
 
-It is advisable to run a local docker bridge network to mirror production and development environments.
+Once you have a local copy of you required image, it is advisable to run a local docker bridge network to mirror 
+production and development environments.
+
 Running a client application as a docker image from their respective `Makefile`s will set this up 
 automatically, but to confirn run
 
@@ -85,8 +99,6 @@ To create the docker network run
 docker network create dnet
 ```
 
-#### Running the Data API
-
 To run the Data API as a docker container:
 
 ```sh
@@ -96,6 +108,7 @@ docker run --network dnet -p 8888:8080 --rm --name data-api \
 ```
 the latest image can be found here [dev](https://github.com/epimorphics/hmlr-ansible-deployment/blob/master/ansible/group_vars/dev/tags.yml) 
 and [production](https://github.com/epimorphics/hmlr-ansible-deployment/blob/master/ansible/group_vars/prod/tags.yml).
+
 The full list of versions can be found at [AWS
 ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084843/epimorphics/lr-data-api/dev?region=eu-west-1)
 
@@ -104,11 +117,6 @@ Note: port 8080 should be avoided to allow for a reverse proxy to run on this po
 With this set up, the api service is available on `http://localhost:8888` from the host or `http://data-api:8080`
 from inside other docker containers.
 
-To build and a run a new docker image check out the [lr-data-api repository](https://github.com/epimorphics/lr-data-api).
-and run
-```sh
-make image run
-```
 
 ## Developer notes
 
