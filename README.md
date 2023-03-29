@@ -44,12 +44,12 @@ For rails applications you can start the server locally using the following comm
 rails server -e production -p <port> -b 0.0.0.0
 ```
 
-To test the running application visit `localhost:<port>/{application path}`.
+To test the running application visit `localhost:<port>/<application path>`.
 
 For information on how to running a proxy to mimic production and run multple services
 together see [simple-web-proxy](https://github.com/epimorphics/simple-web-proxy/edit/main/README.md)
 
-## Configuration environment variables
+## Runtime Configuration environment variables
 
 We use a number of environment variables to determine the runtime behaviour
 of the application:
