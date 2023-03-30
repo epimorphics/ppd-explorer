@@ -79,13 +79,12 @@ of the application:
 | name                       | description                                                             | default value              |
 | -------------------------- | ----------------------------------------------------------------------- | -------------------------- |
 | `API_SERVICE_URL`          | The base URL from which data is accessed, including the HTTP scheme eg. | None                       |
-|                            | http://localhost:8888 if running a `data-api service` locally           |                            |
-|                            | http://data-api:8080  if running a `data-api docker` image locally      |                            |
+|                            | http://localhost:8888 if running a `data-api` service locally           |                            |
+|                            | http://data-api:8080  if running a `data-api` docker image locally      |                            |
 | `SECRET_KEY_BASE`          | See [description](https://api.rubyonrails.org/classes/Rails/Application.html#method-i-secret_key_base).
 For `development` mode a acceptable value is already configured, in production mode this should be set to the output of `rails secret`.
 This is handled automatically when starting a docker container, or the `server` `make` target | |
 | `SENTRY_API_KEY`           | The DSN for sending reports to the PPD Sentry account                   | None                       |
-
 
 
 ### Running the Data API during locally
@@ -106,6 +105,7 @@ make image run
 
 See [here](https://github.com/epimorphics/lr-data-api#Running-an-existing-image) on how to run an
 existing image from [ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084843/epimorphics/lr-data-api/dev?region=eu-west-1)
+
 
 
 ## Developer notes
