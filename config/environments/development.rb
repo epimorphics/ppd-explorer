@@ -34,6 +34,7 @@ PpdExplorer::Application.configure do
   config.logger = JsonRailsLogger::Logger.new($stdout)
 
   config.api_service_url = ENV['API_SERVICE_URL'] || 'http://localhost:8080'
+  config.relative_url_root = ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/')
 
   config.accessibility_document_path = '/doc/accessibility'
   config.privacy_document_path = '/doc/privacy'
