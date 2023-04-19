@@ -80,12 +80,12 @@ PpdExplorer::Application.configure do
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
 
-  # The RAILS_RELATIVE_URL_ROOT env var should NOT be used in Production
-  # The default value is passed in as the compiled assets have no knowledge of
-  # the base path and utilise the config.relative_url_root value to prefix the
+  # The RAILS_RELATIVE_URL_ROOT env var should ONLY be used in a local environment.
+  # Here, the default value is passed in as the compiled assets have no knowledge
+  # of the base path and utilise the config.relative_url_root value to prefix the
   # compiled asset paths
   config.relative_url_root = ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/app/ppd')
-  
+
   # API_SERVICE_URL should also be specified in the entrypoint.sh file and
   # set in the Makefile as an env variable for the docker container when run as an image.
   # API_SERVICE_URL is required by both Docker image and Rails
