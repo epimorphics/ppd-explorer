@@ -6,6 +6,6 @@
 .vscode
 CHANGELOG.md
 README.md
-deployment.yaml
 log/
-test
+
+public/assets/

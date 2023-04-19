@@ -5,31 +5,25 @@ This is the repo for the HM Land Registry
 which allows users to explore the Price Paid linked-data
 for England and Wales.
 
-## Developer notes
+## Running this service
 
-### Code overview
+This application can be run stand-alone as a rails server in `development` mode. 
+However, when deployed, applications will run behind a reverse proxy.
 
-PPD is a fairly standard Rails app, albeit that the data
-comes from a linked-data triple store via an API. ActiveRecord
-is not used for this application.
+This enables request to be routed to the appropriate application base on the request path.
+In order to simplifiy the proxy configuration we retain the original path where possible.
 
-The app does not interact directly with the triple store.
-Instead, we use a simple DSL to send queries to the
-[DS API](http://github.com/epimorphics/data-API). DS API uses
-the structure of the hypercube, represented as a _data structure
-definition_ (DSD), to convert the DSL queries to SPARQL.
+For information on how to running a proxy to mimic production and run multple services
+together see [simple-web-proxy](https://github.com/epimorphics/simple-web-proxy/edit/main/README.md)
 
-### Accessing the API during development
+If running more than one application locally ensure that each is listerning on a
+separate port and separate path. In the case of running local docker images, the required
+configuration is captured in the `Makefile` and an image can be run by using
 
-The back-end data API for PPD is a SapiNT instance, running in its own
-Kubernetes pod. For operations reasons, it is not possible to access that pod
-from outside the cluster, which means there is no easy way to use the cluster
-to provide a dev API to use with a locally running instance of the application
-during development. Previously, we have used ssh tunnels to proxy the remote
-API onto `localhost`, but this is not a secure or recommended practice.
+### Development and Production mode
 
-Instead, developers can run the Docker container that defines the SapiNT API
-directly from the AWS Docker registry. To do this, you will need:
+Applications running in `development` mode default to not use a sub-directory to aid 
+stand-alone development.
 
 - AWS IAM credentials to connect to the HMLR AWS account (see Dave or Andy)
 - the ECR credentials helper installed locally (see [here](https://github.com/awslabs/amazon-ecr-credential-helper))
@@ -60,40 +54,37 @@ To use a credential helper for a specific ECR registry[^1], create a
 With this set up, you should be able to run the container, mapped to
 `localhost:8080` using:
 
+If need be, `config.relative_url_root` may by overridden by means of the
+`RAILS_RELATIVE_URL_ROOT` environment variable, althought this could also
+require rebuilding the assets or docker image.
+
+### Building and Running the docker container
+
 ```sh
-$ AWS_PROFILE=hmlr \
-docker run \
--e SERVER_DATASOURCE_ENDPOINT=http://hmlr-dev-pres.epimorphics.net/landregistry/query \
--p 8080:8080 \
-018852084843.dkr.ecr.eu-west-1.amazonaws.com/epimorphics/lr-data-api/dev:1.0-SNAPSHOT_a5590d2
+make image run
 ```
 
-Which should produce something like:
+or, if the image is already built, simply
 
-```text
+```sh
+make run
+```
+Docker images run in `production` mode.
 
-  .   ____          _            __ _ _
- /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
- \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-  '  |____| .__|_| |_|_| |_\__, | / / / /
- =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v2.2.0.RELEASE)
+### Running Rails as a server
 
-{"ts":"2022-03-21T16:12:26.585Z","version":"1","logger_name":"com.epimorphics.SapiNtApplicationKt",
-"thread_name":"main","level":"INFO","level_value":20000,
-"message":"No active profile set, falling back to default profiles: default"}
+For rails applications you can start the server locally using the following command:
+
+```sh
+rails server -e production -p <port>
 ```
 
-Note that the identity of the Docker image will change periodically. The
-currently deployed dev api image version is given by the `api` tag in the ansible
-[dev configuration](https://github.com/epimorphics/hmlr-ansible-deployment/blob/master/ansible/group_vars/dev/tags.yml).
+#### Running Rails as a server with a sub-directory
 
-If you need to run a different API version then the easiest route to
-discovering the most recent is to use the [AWS
-ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084843/epimorphics/lr-data-api/dev?region=eu-west-1)
-console or look at the hash to the relevant commit in
-[lr-data-api](https://github.com/epimorphics/lr-data-api).
+```sh
+API_SERVICE_URL=<data-api url> RAILS_ENV=<mode> RAILS_RELATIVE_URL_ROOT=/<path> make server
+```
+The default for `RAILS_ENV` here is `development`.
 
 ### Running the app locally in dev mode
 
@@ -131,6 +122,67 @@ application as
 
 ### Coding standards
 
+
+To test the running application visit `localhost:<port>/{application path}`.
+
+## Runtime Configuration environment variables
+
+We use a number of environment variables to determine the runtime behaviour
+of the application:
+
+| name                       | description                                                             | default value              |
+| -------------------------- | ----------------------------------------------------------------------- | -------------------------- |
+| `API_SERVICE_URL`          | The base URL from which data is accessed, including the HTTP scheme eg. | None                       |
+|                            | http://localhost:8888 if running a `data-api` service locally           |                            |
+|                            | http://data-api:8080  if running a `data-api` docker image locally      |                            |
+| `SECRET_KEY_BASE`          | See [description](https://api.rubyonrails.org/classes/Rails/Application.html#method-i-secret_key_base).
+For `development` mode a acceptable value is already configured, in production mode this should be set to the output of `rails secret`.
+This is handled automatically when starting a docker container, or the `server` `make` target | |
+| `SENTRY_API_KEY`           | The DSN for sending reports to the PPD Sentry account                   | None                       |
+
+
+### Running the Data API during locally
+
+The application connects to the triple store via a `data-api` service.
+
+The easiest way to do this is as a local docker container. The image can be built from [lr-data-api repository](https://github.com/epimorphics/lr-data-api).
+or pulled from Amazon Elastic Container Registry [ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084843/epimorphics/lr-data-api/dev?region=eu-west-1)
+
+#### Building and running from [lr-data-api repository](https://github.com/epimorphics/lr-data-api)
+
+To build and a run a new docker image check out the [lr-data-api repository](https://github.com/epimorphics/lr-data-api) and run
+```sh
+make image run
+```
+
+#### Running an existing image from
+
+See [here](https://github.com/epimorphics/lr-data-api#Running-an-existing-image) on how to run an
+existing image from [ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084843/epimorphics/lr-data-api/dev?region=eu-west-1)
+
+
+- git tag matching `vNNN`, e.g. `v1.2.3` \
+  Automatically deployed to the production environment
+- git branch `dev-infrastructure` \
+  Automatically deployed to the dev environment.
+
+## Developer notes
+
+### Code overview
+
+The Rails Framework requires certain values to be set as a Global environment variable
+when starting. To ensure the `APPLICATION_ROOT` is only set in one place per
+application we have added this to the `entrypoint.sh` file along with the `SCRIPT_NAME`.
+The Rails secret is also created here.
+
+The app does not interact directly with the triple store.
+Instead, we use a simple DSL to send queries to the
+[DS API](http://github.com/epimorphics/data-API). DS API uses
+the structure of the hypercube, represented as a _data structure
+definition_ (DSD), to convert the DSL queries to SPARQL.
+
+### Coding standards
+
 Rubocop should always return no errors or warnings.
 
 ### Running the tests
@@ -138,35 +190,6 @@ Rubocop should always return no errors or warnings.
 ```sh
 rails test
 ```
-
-## Deployment
-
-To mimic running the application in a deployed state you can run `make image`
-and this will run through the assets precompilation, linting and testing before
-creating a Docker image. To preview the Docker container you can run `make run`
-
-The automated deployment is managed by `deployment.yaml`. At the time of
-writing, the following deployment patterns are defined:
-
-- git tag matching `vNNN`, e.g. `v1.2.3` \
-  Automatically deployed to the production environment
-- git branch `dev-infrastructure` \
-  Automatically deployed to the dev environment.
-
-### entrypoint.sh
-
-This script is used as the main entry point for starting the app from the `Dockerfile`.
-
-The Rails Framework requires certain values to be set as a Global environment variable
-when starting. To ensure the `APPLICATION_ROOT` is only set in one place per
-application we have added this to the `entrypoint.sh` file along with the `SCRIPT_NAME`.
-The Rails secret is also created here.
-
-There is a workaround to removing the PID lock of the Rails process in the event of
-the application crashing and not releasing the process.
-
-We have to pass the `API_SERVICE_URL` so that it is available in the `entrypoint.sh`
-or the application will throw an error and exit before starting
 
 ### Prometheus monitoring
 
@@ -227,7 +250,6 @@ Prometheus into `~/apps`, a starting command line would be something like:
 
 Something roughly equivalent should be possible on Windows and Mac as well.
 
-## Configuration environment variables
 
 We use a number of environment variables to determine the runtime behaviour
 of the application:

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-# Remove a potentially pre-existing server.pid for Rails.
+# Remove any pre-existing server.pid for Rails.
 rm -f ./tmp/pids/server.pid
 mkdir -pm 1777 ./tmp
 
@@ -9,10 +9,7 @@ mkdir -pm 1777 ./tmp
 PUBLIC_NAME="PPD Explorer"
 
 # Set the environment
-if [ -z "$RAILS_ENV" ]
-then
-  export RAILS_ENV=production
-fi
+[ -z "$RAILS_ENV" ] && RAILS_ENV=production
 
 
 echo "{\"ts\": $(date -u +%FT%T.%3NZ), \"level\": \"INFO\", \"message\": \"Initiating ${PUBLIC_NAME} application using APPLICATION_ROOT=${APPLICATION_ROOT}, API_SERVICE_URL=${API_SERVICE_URL}}"
@@ -21,6 +18,8 @@ if [ -z "$API_SERVICE_URL" ]
 then
   echo "{\"ts\": $(date -u +%FT%T.%3NZ), \"level\": \"ERROR\", \"message\": \"You have not specified the env var API_SERVICE_URL\"}" >&2
   exit 1
+else
+  echo "{\"ts\":\"$(date -u +%FT%T.%3NZ)\",\"level\":\"INFO\",\"message\":\"API_SERVICE_URL=${API_SERVICE_URL}\"}"
 fi
 
 

@@ -84,7 +84,7 @@ PpdExplorer::Application.configure do
   # The default value is passed in as the compiled assets have no knowledge of
   # the base path and utilise the config.relative_url_root value to prefix the
   # compiled asset paths
-  config.relative_url_root = '/app/ppd'
+  config.relative_url_root = ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/app/ppd')
   
   # API_SERVICE_URL should also be specified in the entrypoint.sh file and
   # set in the Makefile as an env variable for the docker container when run as an image.
