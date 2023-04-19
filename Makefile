@@ -38,7 +38,7 @@ ${GITHUB_TOKEN}:
 	@echo ${PAT} > ${GITHUB_TOKEN}
 
 assets:
-	@./bin/bundle config set --local without 'development'
+	@./bin/bundle config set --local without 'development test'
 	@./bin/bundle install
 	@./bin/rails assets:clean assets:precompile
 
