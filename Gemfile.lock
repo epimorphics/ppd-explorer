@@ -340,11 +340,11 @@ GEM
       faraday_middleware (~> 1.2.0)
       json (~> 2.6.1)
       yajl-ruby (~> 1.4.1)
-    json_rails_logger (0.3.5.3)
+    json_rails_logger (0.3.5.4)
       json
       lograge
       railties
-    lr_common_styles (1.9.1.1)
+    lr_common_styles (1.9.1.2)
       bootstrap-sass (~> 3.4.0)
       font-awesome-rails (~> 4.7.0.1)
       govuk_elements_rails (~> 2.0.0)
@@ -410,4 +410,4 @@ DEPENDENCIES
   yajl-ruby
 
 BUNDLED WITH
-   2.4.4
+   2.4.8
