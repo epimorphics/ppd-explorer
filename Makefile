@@ -27,7 +27,7 @@ IMAGE?=${NAME}/${STAGE}
 REPO?=${ECR}/${IMAGE}
 
 GITHUB_TOKEN=.github-token
-BUNDLE_CFG=${HOME}/.bundle/config
+BUNDLE_CFG=.bundle/config
 
 all: image
 
