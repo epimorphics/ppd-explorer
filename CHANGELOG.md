@@ -18,8 +18,6 @@ This app allows the user to explore HMLR price-paid open linked data.
   current version `~>1.3.5` (this is to cover out of sync release versions)
 - (Jon) Updated the production `lr_common_styles` gem version to be at least the
   current version `~>1.9.1` (this is to cover out of sync release versions)
-- (Jon) Renamed the global env variable `RAILS_RELATIVE_URL_ROOT` to
-  `APPLICATION_ROOT` to be more clear on it's use in the `entrypoint.sh` code.
 - (Jon) Refactored better guards in `entrypoint.sh` to ensure the required env
   vars are set accordingly or deployment will fail noisily.
 - (Jon) Refactored the error messages displayed to be semantically formatted as
