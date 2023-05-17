@@ -18,7 +18,7 @@ API_SERVICE_URL?=http://data-api:8080
 BRANCH:=$(shell git rev-parse --abbrev-ref HEAD)
 COMMIT=$(shell git rev-parse --short HEAD)
 VERSION?=$(shell /usr/bin/env ruby -e 'require "./app/lib/version" ; puts Version::VERSION')
-TAG?=$(shell printf '%s_%s_%08d' ${VERSION} ${COMMIT} ${GITHUB_RUN_NUMBER})
+TAG?=$(shell printf '%s-%s-%08d' ${VERSION} ${COMMIT} ${GITHUB_RUN_NUMBER})
 
 ${TAG}:
 	@echo ${TAG}
