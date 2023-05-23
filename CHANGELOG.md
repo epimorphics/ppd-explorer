@@ -1,7 +1,32 @@
 # HMLR PPD explorer
 
-This app allows the user to explore HMLR price-paid open
-linked data.
+This app allows the user to explore HMLR price-paid open linked data.
+
+## 1.7.1 - 2023-03-10
+
+- (Jon) Added the updated configuration for the AWS credential improvements as
+  per other readme's; included further info to run the application locally;
+  resolved a markdown linting issue with using HTML in markdown.
+- (Jon) Refactors the elapsed time calculated for API requests to be resolved as
+  microseconds rather than milliseconds. This is to improve the reporting of the
+  elapsed time in the system tooling logs.
+- (Jon) Minor text changes to the `Gemfile` to include instructions for running
+  Epimorphics specific gems locally during the development of those gems.
+- (Jon) Updated the production `data_services_api` gem version to be at least
+  the current version`~>1.3.3` (this is to cover out of sync release versions)
+- (Jon) Updated the production `json_rails_logger` gem version to be at least the
+  current version `~>1.3.5` (this is to cover out of sync release versions)
+- (Jon) Updated the production `lr_common_styles` gem version to be at least the
+  current version `~>1.9.1` (this is to cover out of sync release versions)
+- (Jon) Refactored better guards in `entrypoint.sh` to ensure the required env
+  vars are set accordingly or deployment will fail noisily.
+- (Jon) Refactored the error messages displayed to be semantically formatted as
+  well as incorporated ALL lines for the returned message to be held in the
+  variable instead of being possibly displayed outside of the intended context.
+- (Jon) Refactored the version cadence creation to include a SUFFIX value if
+  provided; otherwise no SUFFIX is included in the version number.
+- (Jon) Adjusted the processing of error status to use the application template;
+  also includes adjustments to not double render the error response.
 
 ## 1.7.0 - 2022-04-07
 
@@ -49,8 +74,7 @@ linked data.
 
 ## 1.4.0 - 2020-09-22 (Ian)
 
-- switched from JQuery datePicker component to use browser date
-  input controls
+- switched from JQuery datePicker component to use browser date input controls
 
 ## 1.3.1 - 2020-09-22 (Ian)
 
@@ -58,8 +82,8 @@ linked data.
 
 ## 1.3.0 - 2020-09-20 (Ian)
 
-- A collection of WCAG fixes under GH-117. Pending manual testing,
-  this should bring the app into WCAG compliance
+- A collection of WCAG fixes under GH-117. Pending manual testing, this should
+  bring the app into WCAG compliance
 
 ## 1.2.2 - 2020-07-06
 
@@ -67,30 +91,28 @@ linked data.
 
 ## 1.2.1 - 2020-03-19
 
-- Update some dependent gems to resolve CVE warnings, but keep
-  Rails at version 5.
+- Update some dependent gems to resolve CVE warnings, but keep Rails at version
+  5.
 
 ## 1.2.0 - 2019-12-17
 
-- Changed minor version number as we've switched to using a
-  separate Sentry project for this app.
+- Changed minor version number as we've switched to using a separate Sentry
+  project for this app.
 
 ## 1.1.3 - 2019-12-09
 
-- Add `ActionController::BadRequest` to the list of ignored
-  exceptions for Sentry
-- Fix method name clash with `ApplicationController.render_error`
-  and `SearchController.render_error` leading to Sentry warning
+- Add `ActionController::BadRequest` to the list of ignored exceptions for
+  Sentry
+- Fix method name clash with `ApplicationController.render_error` and
+  `SearchController.render_error` leading to Sentry warning
 
 ## 2019-11-15
 
 - Updated README
-- skipped some tests that are blocking due to chromedriver
-  (see GH-101)
+- skipped some tests that are blocking due to chromedriver (see GH-101)
 - fix rubocop warnings
-- update the log files to write more structured information
-  that will help with diagnosing intrusively slow queries
-  (GH-97)
+- update the log files to write more structured information that will help with
+  diagnosing intrusively slow queries (GH-97)
 
 ## 2019-07-17
 

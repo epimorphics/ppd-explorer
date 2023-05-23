@@ -8,7 +8,8 @@ class SearchController < ApplicationController
     create
   end
 
-  def create # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/MethodLength, Metrics/PerceivedComplexity
+  def create
     @preferences = UserPreferences.new(params)
 
     if @preferences.empty?
@@ -29,11 +30,12 @@ class SearchController < ApplicationController
              when MalformedSearchError, ArgumentError
                400
              else
-               500
+               e.status || 500
              end
 
     render_error_page(e, e.message, status)
   end
+  # rubocop:enable Metrics/MethodLength, Metrics/PerceivedComplexity
 
   def use_compact_json?
     !non_compact_formats.include?(request.format)
@@ -45,14 +47,17 @@ class SearchController < ApplicationController
 
   private
 
+  # rubocop:disable Layout/LineLength
   def render_error_page(err, message, status, template = 'ppd/error')
     uuid = SecureRandom.uuid
 
     Rails.logger.error "#{err.class.name} error #{uuid} ::: #{message} ::: #{err.class}"
 
     @error_message =
-      ["<span class='error bg-warning'>#{message}.</span>",
-       "The log file reference for this error is: #{uuid}."].join('<br />').html_safe
+      ["<p class='error bg-warning'>#{message}.</p>",
+       "<p>The log file reference for this error is<span class='sr-only'> Code</span>: <code>#{uuid}</code></p>",
+       '<p>You can quote this reference to support staff so that they can investigate this specific incident.</p>'].join.html_safe
     render(template: template, status: status)
   end
+  # rubocop:enable Layout/LineLength
 end

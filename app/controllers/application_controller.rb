@@ -15,16 +15,16 @@ class ApplicationController < ActionController::Base
 
   around_action :log_request_result
   def log_request_result
-    start = Time.now
+    start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
     yield
-    duration = Time.now - start
+    duration = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start
     detailed_request_log(duration)
   end
 
   unless Rails.application.config.consider_all_requests_local
+    rescue_from Exception, with: :render_exception
     rescue_from ActionController::RoutingError, with: :render404
     rescue_from ActionController::InvalidCrossOriginRequest, with: :render403
-    rescue_from Exception, with: :render_exception
   end
 
   def render_exception(exception)
@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_html_error_page(status)
-    render(layout: false,
+    render(layout: true,
            file: Rails.root.join('public', 'landing', status.to_s),
            status: status)
   end
@@ -68,11 +68,11 @@ class ApplicationController < ActionController::Base
     self.response_body = nil
   end
 
-  def detailed_request_log(duration) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  def detailed_request_log(duration) # rubocop:disable Metrics/MethodLength
     env = request.env
 
     log_fields = {
-      timeTakenMS: duration * 1_000,
+      duration: duration,
       requestPath: env['REQUEST_PATH'],
       queryString: env['QUERY_STRING'],
       httpUserAgent: env['HTTP_USER_AGENT'],
