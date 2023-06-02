@@ -340,7 +340,7 @@ GEM
       faraday_middleware (~> 1.2.0)
       json (~> 2.6.1)
       yajl-ruby (~> 1.4.1)
-    json_rails_logger (0.3.5.4)
+    json_rails_logger (1.0.0)
       json
       lograge
       railties
@@ -383,7 +383,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   json_expressions
-  json_rails_logger (~> 0.3.5)!
+  json_rails_logger (~> 1.0.0)!
   libv8-node (>= 16.10.0.0)
   lr_common_styles (~> 1.9.1)!
   memory_profiler
