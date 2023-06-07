@@ -2,6 +2,10 @@
 
 This app allows the user to explore HMLR price-paid open linked data.
 
+## 1.7.3 - 2023-06-07
+
+- (Jon) Updated the `json_rails_logger` gem to the latest 1.0.1 release.
+
 ## 1.7.2 - 2023-06-03
 
 - (Jon) Updated the `json_rails_logger` gem to the latest 1.0.0 release.
