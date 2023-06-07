@@ -4,7 +4,9 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## 1.7.3 - 2023-06-07
 
-- (Jon) Updated the `json_rails_logger` gem to the latest 1.0.1 release.
+- (Jon) Updated the `json_rails_logger` gem to the latest 1.0.1 patchrelease.
+  - Also includes minor patch updates for gems, please see the `Gemfile.lock`
+  for details.
 - (Jon) Commented out the printing instructions on the help modal dialog
   [GH-191](https://github.com/epimorphics/ppd-explorer/issues/191)
 
