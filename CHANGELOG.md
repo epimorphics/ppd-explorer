@@ -9,6 +9,7 @@ This app allows the user to explore HMLR price-paid open linked data.
   for details.
 - (Jon) Commented out the printing instructions on the help modal dialog
   [GH-191](https://github.com/epimorphics/ppd-explorer/issues/191)
+- (Jon) Resolves un-decoded html entities in search term labels
 
 ## 1.7.2 - 2023-06-03
 
