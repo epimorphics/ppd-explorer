@@ -98,3 +98,9 @@ PpdExplorer::Application.configure do
   # Set the contact email address to Land Registry supplied address
   config.contact_email_address = 'data.services@mail.landregistry.gov.uk'
 end
+
+# Set the default url options for the relative url root
+# This is required for the correct path to be set when running the app in a
+# subdirectory for the application
+Rails.application.routes.default_url_options[:relative_url_root] =
+  ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/app/ppd')
