@@ -28,9 +28,9 @@ class SearchController < ApplicationController
     e = e.cause || e
     status = case e
              when MalformedSearchError, ArgumentError
-               400
+               :bad_request
              else
-               e.status || 500
+               e.status || :internal_server_error
              end
 
     render_error_page(e, e.message, status)
