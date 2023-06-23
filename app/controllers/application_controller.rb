@@ -82,7 +82,7 @@ class ApplicationController < ActionController::Base
       responseStatus: response.status
     }
 
-    Rails.logger.debug(JSON.generate(log_fields))
+    Rails.logger.info(JSON.generate(log_fields))
   end
 
   def instrument_internal_error(exception)
