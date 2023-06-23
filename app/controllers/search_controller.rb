@@ -49,7 +49,8 @@ class SearchController < ApplicationController
 
   # rubocop:disable Layout/LineLength
   def render_error_page(err, message, status, template = 'ppd/error')
-    uuid = SecureRandom.uuid
+    # link the error to the actual request id otherwise generate one for this error
+    uuid = Thread.current[:request_id] || SecureRandom.uuid
 
     Rails.logger.error "#{err.class.name} error #{uuid} ::: #{message} ::: #{err.class}"
 
