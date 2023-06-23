@@ -38,7 +38,7 @@ class SearchController < ApplicationController
   # rubocop:enable Metrics/MethodLength, Metrics/PerceivedComplexity
 
   def use_compact_json?
-    !non_compact_formats.include?(request.format)
+    non_compact_formats.exclude?(request.format)
   end
 
   def non_compact_formats
