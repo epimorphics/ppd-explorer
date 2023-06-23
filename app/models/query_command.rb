@@ -136,7 +136,7 @@ class QueryCommand < DataService # rubocop:disable Metrics/ClassLength
   end
 
   def save_results(ppd, query, options)
-    Rails.logger.debug { "About to ask DsAPI query: #{query.to_json}" }
+    Rails.logger.debug { "Current DsAPI query: #{query.to_json}" } if Rails.env.test?
     @all_results = ppd.query(query)
     @search_results = SearchResults.new(@all_results, options[:max])
   end
