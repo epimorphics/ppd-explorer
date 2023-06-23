@@ -88,4 +88,10 @@ class ApplicationController < ActionController::Base
   def instrument_internal_error(exception)
     ActiveSupport::Notifications.instrument('internal_error.application', exception: exception)
   end
+
+  # Set the default `Cache-Control` header for all requests,
+  # unless overridden in the action
+  def change_default_caching_policy
+    expires_in 5.minutes, public: true, must_revalidate: true if Rails.env.production?
+  end
 end
