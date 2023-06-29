@@ -81,8 +81,9 @@ class ApplicationController < ActionController::Base
       user_agent: env['HTTP_USER_AGENT'],
       accept: env['HTTP_ACCEPT'],
       body: request.body.gets&.gsub("\n", '\n'),
+      method: request.method,
       status: response.status,
-      method: request.method
+      message: Rack::Utils::HTTP_STATUS_CODES[response.status]
     }
 
     case response.status
@@ -101,9 +102,11 @@ class ApplicationController < ActionController::Base
     ActiveSupport::Notifications.instrument('internal_error.application', exception: exception)
   end
 
-  # Set the default `Cache-Control` header for all requests,
+  # * Set cache control headers for HMLR apps to be public and cacheable
+  # * Price Paid Data uses a time limit of 5 minutes (300 seconds)
+  # Sets the default `Cache-Control` header for all requests,
   # unless overridden in the action
   def change_default_caching_policy
-    expires_in 5.minutes, public: true, must_revalidate: true # if Rails.env.production?
+    expires_in 5.minutes, public: true, must_revalidate: true if Rails.env.production?
   end
 end
