@@ -47,18 +47,26 @@ class SearchController < ApplicationController
 
   private
 
-  # rubocop:disable Layout/LineLength
+  # rubocop:disable Layout/LineLength, Metrics/MethodLength
   def render_error_page(err, message, status, template = 'ppd/error')
     # link the error to the actual request id otherwise generate one for this error
     uuid = Thread.current[:request_id] || SecureRandom.uuid
 
-    Rails.logger.error "#{err.class.name} error #{uuid} ::: #{message} ::: #{err.class}"
+    @message = message
+
+    # log the error with as much detail as possible in development to aid in resolving the issue
+    message = "#{err.class.name} error #{uuid} ::: #{message} ::: #{err.class}" if Rails.env.development?
+
+    # Keep it simple silly in production!
+    Rails.logger.error message
 
     @error_message =
-      ["<p class='error bg-warning'>#{message}.</p>",
-       "<p>The log file reference for this error is<span class='sr-only'> Code</span>: <code>#{uuid}</code></p>",
-       '<p>You can quote this reference to support staff so that they can investigate this specific incident.</p>'].join.html_safe
+      [
+        '<p>Include the following information to support staff so that they can investigate this specific incident.</p>',
+        "<p class='error bg-warning'>#{@message}.</p>",
+        "<p>The trace reference for this error is<span class='sr-only px-1'> Code</span>: <code>#{uuid}</code></p>"
+      ].join.html_safe
     render(template: template, status: status)
   end
-  # rubocop:enable Layout/LineLength
+  # rubocop:enable Layout/LineLength, Metrics/MethodLength
 end
