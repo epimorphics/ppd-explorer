@@ -68,22 +68,34 @@ class ApplicationController < ActionController::Base
     self.response_body = nil
   end
 
-  def detailed_request_log(duration) # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  def detailed_request_log(duration)
     env = request.env
 
     log_fields = {
       duration: duration,
-      requestPath: env['REQUEST_PATH'],
-      queryString: env['QUERY_STRING'],
-      httpUserAgent: env['HTTP_USER_AGENT'],
-      xRequestID: env['X_REQUEST_ID'],
-      xForwardedFor: env['X_FORWARDED_FOR'],
+      request_id: env['X_REQUEST_ID'],
+      forwarded_for: env['X_FORWARDED_FOR'],
+      path: env['REQUEST_PATH'],
+      query_string: env['QUERY_STRING'],
+      user_agent: env['HTTP_USER_AGENT'],
+      accept: env['HTTP_ACCEPT'],
       body: request.body.gets&.gsub("\n", '\n'),
-      responseStatus: response.status
+      status: response.status,
+      method: request.method
     }
 
-    Rails.logger.info(JSON.generate(log_fields))
+    case response.status
+    when 500..599
+      log_fields[:message] = env['action_dispatch.exception']
+      Rails.logger.error(JSON.generate(log_fields))
+    when 400..499
+      Rails.logger.warn(JSON.generate(log_fields))
+    else
+      Rails.logger.info(JSON.generate(log_fields))
+    end
   end
+  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
   def instrument_internal_error(exception)
     ActiveSupport::Notifications.instrument('internal_error.application', exception: exception)
@@ -92,6 +104,6 @@ class ApplicationController < ActionController::Base
   # Set the default `Cache-Control` header for all requests,
   # unless overridden in the action
   def change_default_caching_policy
-    expires_in 5.minutes, public: true, must_revalidate: true if Rails.env.production?
+    expires_in 5.minutes, public: true, must_revalidate: true # if Rails.env.production?
   end
 end
