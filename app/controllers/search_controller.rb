@@ -47,7 +47,7 @@ class SearchController < ApplicationController
 
   private
 
-  # rubocop:disable Layout/LineLength, Rails/OutputSafety
+  # rubocop:disable Layout/LineLength
   def render_error_page(err, message, status, template = 'ppd/error')
     # link the error to the actual request id otherwise generate one for this error
     uuid = Thread.current[:request_id] || SecureRandom.uuid
@@ -60,5 +60,5 @@ class SearchController < ApplicationController
        '<p>You can quote this reference to support staff so that they can investigate this specific incident.</p>'].join.html_safe
     render(template: template, status: status)
   end
-  # rubocop:enable Layout/LineLength, Rails/OutputSafety
+  # rubocop:enable Layout/LineLength
 end
