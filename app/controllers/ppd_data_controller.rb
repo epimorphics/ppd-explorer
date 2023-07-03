@@ -21,7 +21,8 @@ class PpdDataController < ApplicationController
   end
 
   def render_malformed_search_error(exception = nil)
-    uuid = SecureRandom.uuid
+    # link the error to the actual request id otherwise generate one for this error
+    uuid = Thread.current[:request_id] || SecureRandom.uuid
 
     Rails.logger.error "Malformed search error #{uuid} :: #{exception&.message || 'no message'}"
 
