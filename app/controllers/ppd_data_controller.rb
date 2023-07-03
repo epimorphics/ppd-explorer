@@ -25,7 +25,7 @@ class PpdDataController < ApplicationController
 
     Rails.logger.error "Malformed search error #{uuid} :: #{exception&.message || 'no message'}"
 
-    render nothing: true, status: 400
+    render nothing: true, status: :bad_request
   end
 
   private

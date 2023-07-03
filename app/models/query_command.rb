@@ -18,7 +18,7 @@ class QueryCommand < DataService # rubocop:disable Metrics/ClassLength
                            'ppd:propertyAddress',
                            key_property: 'lrcommon:paon',
                            aspect_key_property: 'ppd:propertyAddressPaon',
-                           presentation_label: 'building name or&nbsp;number'),
+                           presentation_label: 'building name or&nbsp;number'.html_safe),
     street: SearchAspect.new(:street,
                              'ppd:propertyAddress',
                              key_property: 'lrcommon:street',
@@ -136,7 +136,7 @@ class QueryCommand < DataService # rubocop:disable Metrics/ClassLength
   end
 
   def save_results(ppd, query, options)
-    Rails.logger.debug { "About to ask DsAPI query: #{query.to_json}" }
+    Rails.logger.debug { "Current DsAPI query: #{query.to_json}" } if Rails.env.development?
     @all_results = ppd.query(query)
     @search_results = SearchResults.new(@all_results, options[:max])
   end

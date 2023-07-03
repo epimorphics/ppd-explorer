@@ -28,9 +28,9 @@ class SearchController < ApplicationController
     e = e.cause || e
     status = case e
              when MalformedSearchError, ArgumentError
-               400
+               :bad_request
              else
-               e.status || 500
+               e.status || :internal_server_error
              end
 
     render_error_page(e, e.message, status)
@@ -38,7 +38,7 @@ class SearchController < ApplicationController
   # rubocop:enable Metrics/MethodLength, Metrics/PerceivedComplexity
 
   def use_compact_json?
-    !non_compact_formats.include?(request.format)
+    non_compact_formats.exclude?(request.format)
   end
 
   def non_compact_formats
@@ -47,17 +47,26 @@ class SearchController < ApplicationController
 
   private
 
-  # rubocop:disable Layout/LineLength
+  # rubocop:disable Layout/LineLength, Metrics/MethodLength
   def render_error_page(err, message, status, template = 'ppd/error')
-    uuid = SecureRandom.uuid
+    # link the error to the actual request id otherwise generate one for this error
+    uuid = Thread.current[:request_id] || SecureRandom.uuid
 
-    Rails.logger.error "#{err.class.name} error #{uuid} ::: #{message} ::: #{err.class}"
+    @message = message
+
+    # log the error with as much detail as possible in development to aid in resolving the issue
+    message = "#{err.class.name} error #{uuid} ::: #{message} ::: #{err.class}" if Rails.env.development?
+
+    # Keep it simple silly in production!
+    Rails.logger.error message
 
     @error_message =
-      ["<p class='error bg-warning'>#{message}.</p>",
-       "<p>The log file reference for this error is<span class='sr-only'> Code</span>: <code>#{uuid}</code></p>",
-       '<p>You can quote this reference to support staff so that they can investigate this specific incident.</p>'].join.html_safe
+      [
+        '<p>Include the following information to support staff so that they can investigate this specific incident.</p>',
+        "<p class='error bg-warning'>#{@message}.</p>",
+        "<p>The trace reference for this error is<span class='sr-only px-1'> Code</span>: <code>#{uuid}</code></p>"
+      ].join.html_safe
     render(template: template, status: status)
   end
-  # rubocop:enable Layout/LineLength
+  # rubocop:enable Layout/LineLength, Metrics/MethodLength
 end
