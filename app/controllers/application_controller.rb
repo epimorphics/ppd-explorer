@@ -8,7 +8,8 @@ class ApplicationController < ActionController::Base
   # temporarily disable csrf for load testing. Was: protect_from_forgery with: :exception
   protect_from_forgery with: :null_session
 
-  before_action :set_phase
+  before_action :set_phase, :change_default_caching_policy
+
   def set_phase
     @phase = :released
   end
