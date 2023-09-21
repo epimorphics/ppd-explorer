@@ -13,9 +13,9 @@
     - @preferences.each_search_term do |search_term|
       %li
         %label
-          = search_term.label
+          = raw(search_term.label)
           - st_path = @preferences.as_path( :search, {}, {search_term.name => search_term.value } )
-          %a.search-term{ href: st_path, 'aria-label' => "Remove search term #{search_term.label}" }
+          %a.search-term{ href: st_path, 'aria-label' => "Remove search term #{raw(search_term.label)}" }
             %i.fa.fa-times-circle.fa-lg
 
   %p.search-selection

@@ -1,0 +1,11 @@
+.dockerignore
+.git/
+.github/
+.gitignore
+.vs
+.vscode
+CHANGELOG.md
+README.md
+log/
+
+public/assets/

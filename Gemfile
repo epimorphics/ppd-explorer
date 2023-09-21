@@ -2,6 +2,8 @@
 
 source 'https://rubygems.org'
 
+gem 'execjs', '< 2.8.0'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '< 6.0.0'
 
@@ -15,7 +17,8 @@ gem 'sass-rails'
 gem 'uglifier', '>= 1.3.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-gem 'therubyracer', platforms: :ruby
+# gem 'therubyracer', platforms: :ruby
+gem 'libv8-node', '>= 16.10.0.0'
 
 gem 'jbuilder'
 gem 'jquery-rails'
@@ -23,33 +26,14 @@ gem 'jquery-rails'
 gem 'bootstrap-sass'
 gem 'haml-rails'
 
+gem 'rubocop'
+gem 'rubocop-rails'
+
 group :doc do
   gem 'sdoc', require: false
 end
 
 gem 'byebug', group: %i[development test]
-
-group :development do
-  gem 'rb-readline'
-
-  gem 'flamegraph'
-  gem 'memory_profiler'
-  gem 'rubocop'
-  gem 'rubocop-rails'
-  gem 'stackprof' # ruby 2.1+ only
-end
-
-gem 'data_services_api', git: 'https://github.com/epimorphics/ds-api-ruby.git'
-# gem 'data_services_api', path: '/home/ian/workspace/epimorphics/ds-api-ruby'
-gem 'faraday'
-gem 'faraday_middleware'
-gem 'font-awesome-rails'
-gem 'jquery-ui-rails'
-gem 'sentry-raven'
-gem 'yajl-ruby', require: 'yajl'
-
-gem 'lr_common_styles', git: 'https://github.com/epimorphics/lr_common_styles.git'
-# gem 'lr_common_styles', path: '/home/ian/projects/hmlr/lr_common_styles'
 
 group :test do
   gem 'capybara'
@@ -65,4 +49,37 @@ group :test do
   gem 'vcr'
   gem 'webdrivers'
   gem 'webmock'
+end
+
+group :development do
+  gem 'rb-readline'
+
+  gem 'flamegraph'
+  gem 'memory_profiler'
+
+  gem 'stackprof' # ruby 2.1+ only
+end
+
+gem 'faraday'
+gem 'faraday_middleware'
+gem 'font-awesome-rails'
+gem 'get_process_mem'
+gem 'jquery-ui-rails'
+gem 'prometheus-client', '~> 4.0'
+gem 'sentry-rails', '~> 5.2'
+gem 'yajl-ruby', require: 'yajl'
+
+# rubocop:disable Layout/LineLength
+# TODO: While running the rails app locally for testing you can set gems to your local path
+# ! These "local" paths do not work with a docker image - use the repo instead
+# gem 'data_services_api', '~> 1.3.3', path: '~/Epimorphics/shared/data_services_api/'
+# gem 'json_rails_logger', '~>1.0.0', path: '~/Epimorphics/shared/json-rails-logger/'
+# gem 'lr_common_styles', '~> 1.9.1', path: '~/Epimorphics/clients/land-registry/projects/lr_common_styles/'
+# rubocop:enable Layout/LineLength
+
+# TODO: In production you want to set this to the gem from the epimorphics package repo
+source 'https://rubygems.pkg.github.com/epimorphics' do
+  gem 'data_services_api', '~> 1.3.3'
+  gem 'json_rails_logger', '~>1.0.0'
+  gem 'lr_common_styles', '~> 1.9.1'
 end

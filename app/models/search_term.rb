@@ -2,7 +2,7 @@
 
 # Value object encapsulating a user search term
 class SearchTerm
-  MAX_LABEL_TERM_LENGTH = 15
+  MAX_LABEL_TERM_LENGTH = 45
 
   attr_reader :name, :value, :values
 

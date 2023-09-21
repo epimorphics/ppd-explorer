@@ -136,7 +136,7 @@ class QueryCommand < DataService # rubocop:disable Metrics/ClassLength
   end
 
   def save_results(ppd, query, options)
-    Rails.logger.debug "About to ask DsAPI query: #{query.to_json}"
+    Rails.logger.debug { "Current DsAPI query: #{query.to_json}" } if Rails.env.development?
     @all_results = ppd.query(query)
     @search_results = SearchResults.new(@all_results, options[:max])
   end
@@ -147,7 +147,7 @@ class QueryCommand < DataService # rubocop:disable Metrics/ClassLength
 
   def add_count_information(ppd, count_query)
     count_result = ppd.query(count_query)
-    count = count_result.first['@count']
+    count = count_result.first['ppd:count']
     @search_results.query_count("#{count}#{count == COUNT_LIMIT ? ' or more' : ''}")
   end
 

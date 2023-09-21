@@ -21,11 +21,12 @@ class PpdDataController < ApplicationController
   end
 
   def render_malformed_search_error(exception = nil)
-    uuid = SecureRandom.uuid
+    # link the error to the actual request id otherwise generate one for this error
+    uuid = Thread.current[:request_id] || SecureRandom.uuid
 
     Rails.logger.error "Malformed search error #{uuid} :: #{exception&.message || 'no message'}"
 
-    render nothing: true, status: 400
+    render nothing: true, status: :bad_request
   end
 
   private
@@ -54,7 +55,7 @@ class PpdDataController < ApplicationController
 
   def show_sparql_explanation(preferences)
     explanation = ExplainCommand.new(preferences).load_explanation
-    redirect_to "/app/hpi/qonsole?q=#{URI.encode_www_form_component(explanation[:sparql])}"
+    redirect_to "/app/qonsole?q=#{URI.encode_www_form_component(explanation[:sparql])}"
   end
 
   def download_data(preferences)

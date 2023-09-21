@@ -28,6 +28,27 @@ module PpdExplorer
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+    config.assets.paths << Rails.root.join('app/assets/fonts')
+  end
+end
+
+# Monkey-patch the bit of Rails that emits the start-up log message, so that it
+# is written out in JSON format that our combined logging service can handle
+# This version is Rails 5.x specific. A different pattern is needed for Rails 6
+# applications.
+module Rails
+  # :nodoc:
+  class Server
+    # :nodoc:
+    def print_boot_information
+      url = "on #{options[:SSLEnable] ? 'https' : 'http'}://#{options[:Host]}:#{options[:Port]}"
+
+      msg = {
+        ts: DateTime.now.utc.strftime('%FT%T.%3NZ'),
+        level: 'INFO',
+        message: "Starting #{server} Rails #{Rails.version} in #{Rails.env} #{url}"
+      }
+      puts msg.to_json
+    end
   end
 end
