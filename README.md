@@ -4,7 +4,9 @@ This is the repo for the HM Land Registry [PPD
 explorer](http://landregistry.data.gov.uk/app/ppd), which allows users to
 explore the Price Paid linked-data for England and Wales.
 
-## Running this service
+Please see the other repositories in the [HM Land Registry Open
+Data](https://github.com/epimorphics/hmlr-linked-data/) project for more
+details.
 
 This application can be run stand-alone as a rails server in `development` mode.
 However, when deployed, applications will run behind a reverse proxy.
