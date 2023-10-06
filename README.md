@@ -112,7 +112,90 @@ port.
 With this set up, the api service is available on `http://localhost:8888` from
 the host or `http://data-api:8080` from inside other docker containers.
 
-## Developer notes
+## Running the app
+
+This application can be run stand-alone as a rails server in `development` mode.
+However, when deployed, applications will run behind a reverse proxy.
+
+This enables requests to be routed to the appropriate application base on the
+request path. In order to simplifiy the proxy configuration we retain the
+original path where possible.
+
+For information on how to running a proxy to mimic production and run multple
+services together read through the information in our
+[simple-web-proxy](https://github.com/epimorphics/simple-web-proxy/edit/main/README.md)
+repository.
+
+If running more than one application locally ensure that each is listerning on a
+separate port and separate path. In the case of running local docker images, the
+required configuration is captured in the `Makefile`.
+
+### Locally
+
+For developing rails applications you can start the server locally using the
+following command:
+
+```sh
+rails server
+```
+
+and visit <localhost:3000> in your browser.
+
+To change to using `production` mode use the `-e` option; or to change to a
+different port use the `-p` option.
+
+Note: In `production` mode, `SECRET_KEY_BASE` is also required. It is
+insufficient to just set this as the value must be exported. e.g.
+
+```sh
+export SECRET_KEY_BASE=$(./bin/rails secret)
+```
+
+#### Running Rails as a server with a sub-directory via Makefile
+
+```sh
+API_SERVICE_URL=<data-api url> RAILS_ENV=<mode> RAILS_RELATIVE_URL_ROOT=/<path> make server
+```
+
+The default for `RAILS_ENV` here is `development`.
+
+### As a docker container
+
+It can be useful to run the compiled Docker image, that will mirror the
+production installation, locally yourself. Assuming you have the [Data API
+running](#running-the-data-api-locally), then you can run the Docker
+image for the app itself as follows:
+
+```sh
+make image run
+```
+
+or, if the image is already built, simply
+
+```sh
+make run
+```
+
+Docker images run in `production` mode.
+
+To test the running application visit `localhost:<port>/<application path>`.
+
+### Development and Production mode
+
+Applications running in `development` mode default to *not* use a sub-directory
+to aid with stand-alone development.
+
+Applications running in `production` mode *do* use a sub-directory i.e.
+`/app/ppd`.
+
+In each case this has been achieved by setting `config.relative_url_root`
+property to this sub-directory within the file
+`config/environments/(development|production).rb`.
+
+If need be, `config.relative_url_root` may by overridden by means of the
+`RAILS_RELATIVE_URL_ROOT` environment variable, althought this could also
+require rebuilding the assets or docker image.
+
 
 ### Coding standards
 
