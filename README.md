@@ -196,6 +196,7 @@ If need be, `config.relative_url_root` may by overridden by means of the
 `RAILS_RELATIVE_URL_ROOT` environment variable, althought this could also
 require rebuilding the assets or docker image.
 
+## Additional Information
 
 ### Coding standards
 
