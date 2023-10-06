@@ -208,6 +208,54 @@ Rubocop should always return no errors or warnings.
 rails test
 ```
 
+### Runtime Configuration environment variables
+
+We use a number of environment variables to determine the runtime behaviour of
+the application:
+
+| name                       | description                                                             | default value              |
+| -------------------------- | ----------------------------------------------------------------------- | -------------------------- |
+| `API_SERVICE_URL`          | The base URL from which data is accessed, including the HTTP scheme eg. | None                       |
+|                            | <http://localhost:8888> if running a `data-api service` locally         |                            |
+|                            | <http://data-api:8080>  if running a `data-api docker` image locally    |                            |
+| `SECRET_KEY_BASE`          | See [description](https://api.rubyonrails.org/classes/Rails/Application.html#method-i-secret_key_base). | |
+|                            | For `development` mode a acceptable value is already configured, in production mode this should be set to the output of `rails secret`. | |
+|                            | This is handled automatically when starting a docker container, or the `server` `make` target | |
+| `SENTRY_API_KEY`           | The DSN for sending reports to the PPD Sentry account                   | None                       |
+
+### Deployment
+
+The detailed deployment mapping is described in `deployment.yml`. At the time of
+writing, using the new infrastructure, the deployment process is as follows:
+
+- commits to the `dev-infrastructure` branch will deploy the dev server
+- commits to the `preprod` branch will deploy the pre-production server
+- any commit on the `prod` branch will deploy the production server as a new
+  release
+
+If the commit is a "new" release, the deployment should be tagged with the same
+semantic version number matching the  `BREAKING.FEATURE.PATCH` format, e.g.
+`v1.2.3`, the same as should be set in the `/app/lib/version.rb`; also, a short
+annotation summarising the updates should be included in the tag as well.
+
+Once the production deployment has been completed and verified, please create a
+release on the repository using the same semantic version number. Utilise the
+`Generate release notes from commit log` option to create specific notes on the
+contained changes as well as the ability to diff agains the previous version.
+
+#### `entrypoint.sh` features
+
+- Workaround to removing the PID lock of the Rails process in the event of the
+  application crashing and not releasing the process.
+- Guards to ensure the required environment variables are set accordingly and
+  trigger the build to fail noisily and log to the system.
+- Rails secret creation for `SECRET_KEY_BASE` assignment; see [Runtime
+  Configuration environment
+  variables](#runtime-configuration-environment-variables).
+
+[^1]: With Docker 1.13.0 or greater, you can configure Docker to use different
+credential helpers for different registries.
+
 ### Prometheus monitoring
 
 [Prometheus](https://prometheus.io) is set up to provide metrics on the
@@ -268,38 +316,3 @@ Something roughly equivalent should be possible on Windows and Mac as well.
 
 Please add issues to the [shared issues
 list](https://github.com/epimorphics/hmlr-linked-data/issues)
-
-## Additional Information
-
-### Deployment
-
-The detailed deployment mapping is described in `deployment.yml`. At the time of
-writing, using the new infrastructure, the deployment process is as follows:
-
-- commits to the `dev-infrastructure` branch will deploy the dev server
-- commits to the `preprod` branch will deploy the pre-production server
-- any commit on the `prod` branch will deploy the production server as a new
-  release
-
-If the commit is a "new" release, the deployment should be tagged with the same
-semantic version number matching the  `BREAKING.FEATURE.PATCH` format, e.g.
-`v1.2.3`, the same as should be set in the `/app/lib/version.rb`; also, a short
-annotation summarising the updates should be included in the tag as well.
-
-Once the production deployment has been completed and verified, please create a
-release on the repository using the same semantic version number. Utilise the
-`Generate release notes from commit log` option to create specific notes on the
-contained changes as well as the ability to diff agains the previous version.
-
-#### `entrypoint.sh` features
-
-- Workaround to removing the PID lock of the Rails process in the event of the
-  application crashing and not releasing the process.
-- Guards to ensure the required environment variables are set accordingly and
-  trigger the build to fail noisily and log to the system.
-- Rails secret creation for `SECRET_KEY_BASE` assignment; see [Runtime
-  Configuration environment
-  variables](#runtime-configuration-environment-variables).
-
-[^1]: With Docker 1.13.0 or greater, you can configure Docker to use different
-credential helpers for different registries.
