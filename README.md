@@ -312,7 +312,7 @@ Using this approach, and assuming you install your local copy of Prometheus into
 
 Something roughly equivalent should be possible on Windows and Mac as well.
 
-## Issues
+### Issues
 
 Please add issues to the [shared issues
 list](https://github.com/epimorphics/hmlr-linked-data/issues)
