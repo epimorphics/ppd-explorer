@@ -2,6 +2,12 @@
 
 This app allows the user to explore HMLR price-paid open linked data.
 
+## 1.7.4 - 2023-11-23
+
+- (Jon) Updated the `lr_common_styles` gem to the latest 1.9.2 patch release.
+  - Also includes minor patch updates for gems, please see the `Gemfile.lock`
+  for details.
+
 ## 1.7.3.1 - 2023-07-11
 
 - (Jon) Updated the `app/controllers/application_controller.rb` to include the

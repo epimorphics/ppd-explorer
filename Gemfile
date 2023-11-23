@@ -74,12 +74,12 @@ gem 'yajl-ruby', require: 'yajl'
 # ! These "local" paths do not work with a docker image - use the repo instead
 # gem 'data_services_api', '~> 1.3.3', path: '~/Epimorphics/shared/data_services_api/'
 # gem 'json_rails_logger', '~>1.0.0', path: '~/Epimorphics/shared/json-rails-logger/'
-# gem 'lr_common_styles', '~> 1.9.1', path: '~/Epimorphics/clients/land-registry/projects/lr_common_styles/'
+# gem 'lr_common_styles', '~> 1.9.2', path: '~/Epimorphics/clients/land-registry/projects/lr_common_styles/'
 # rubocop:enable Layout/LineLength
 
 # TODO: In production you want to set this to the gem from the epimorphics package repo
 source 'https://rubygems.pkg.github.com/epimorphics' do
   gem 'data_services_api', '~> 1.3.3'
   gem 'json_rails_logger', '~>1.0.0'
-  gem 'lr_common_styles', '~> 1.9.1'
+  gem 'lr_common_styles', '~> 1.9.2'
 end
