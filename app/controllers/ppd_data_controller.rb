@@ -77,7 +77,7 @@ class PpdDataController < ApplicationController
   end
 
   def prepare_data_download(preferences, template, headers)
-    query_command = QueryCommand.new(preferences)
+    query_command = QueryCommand.new(preferences, true)
     query_command.load_query_results(limit: :all, download: true, max: MAX_DOWNLOAD_RESULTS)
 
     if large_csv_resultset?(query_command)
