@@ -20,6 +20,9 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'therubyracer', platforms: :ruby
 gem 'libv8-node', '>= 16.10.0.0'
 
+# lock down the version of rubygems-update to avoid issues with rubygems
+gem 'rubygems-update', '~> 3.4', '>= 3.4.22'
+
 gem 'jbuilder'
 gem 'jquery-rails'
 

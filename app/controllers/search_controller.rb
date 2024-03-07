@@ -26,11 +26,12 @@ class SearchController < ApplicationController
     end
   rescue StandardError => e
     e = e.cause || e
+
     status = case e
              when MalformedSearchError, ArgumentError
                :bad_request
              else
-               e.status || :internal_server_error
+               :internal_server_error
              end
 
     render_error_page(e, e.message, status)
