@@ -23,11 +23,10 @@ class ApplicationController < ActionController::Base
   end
 
   unless Rails.application.config.consider_all_requests_local
-    rescue_from Exception, with: :render_exception
-    rescue_from ActiveRecord::RecordNotFound, with: :render404
-    rescue_from ActionController::BadRequest, with: :render400
-    rescue_from ActionController::RoutingError, with: :render404
     rescue_from ActionController::InvalidCrossOriginRequest, with: :render403
+    rescue_from ActionController::RoutingError, with: :render404
+    rescue_from ActionController::BadRequest, with: :render400
+    rescue_from Exception, with: :render_exception
   end
 
   def render_exception(exception)
