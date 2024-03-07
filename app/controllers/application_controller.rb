@@ -24,6 +24,8 @@ class ApplicationController < ActionController::Base
 
   unless Rails.application.config.consider_all_requests_local
     rescue_from Exception, with: :render_exception
+    rescue_from ActiveRecord::RecordNotFound, with: :render404
+    rescue_from ActionController::BadRequest, with: :render400
     rescue_from ActionController::RoutingError, with: :render404
     rescue_from ActionController::InvalidCrossOriginRequest, with: :render403
   end
@@ -38,6 +40,10 @@ class ApplicationController < ActionController::Base
       instrument_internal_error(exception)
       render_error(500)
     end
+  end
+
+  def render_400(_exception = nil) # rubocop:disable Naming/VariableNumber
+    render_error(400)
   end
 
   def render_404(_exception = nil) # rubocop:disable Naming/VariableNumber
