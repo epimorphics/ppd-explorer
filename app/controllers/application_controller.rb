@@ -9,12 +9,20 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
 
   before_action :set_phase, :change_default_caching_policy
+  around_action :log_request_result
 
   def set_phase
     @phase = :released
   end
 
-  around_action :log_request_result
+  # * Set cache control headers for HMLR apps to be public and cacheable
+  # * Price Paid Data uses a time limit of 5 minutes (300 seconds)
+  # Sets the default `Cache-Control` header for all requests,
+  # unless overridden in the action
+  def change_default_caching_policy
+    expires_in 5.minutes, public: true, must_revalidate: true if Rails.env.production?
+  end
+
   def log_request_result
     start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
     yield
@@ -22,10 +30,14 @@ class ApplicationController < ActionController::Base
     detailed_request_log(duration)
   end
 
+  # Handle specific types of exceptions and render the appropriate error page
+  # or attempt to render a generic error page if no specific error page exists
   unless Rails.application.config.consider_all_requests_local
-    rescue_from Exception, with: :render_exception
-    rescue_from ActionController::RoutingError, with: :render404
     rescue_from ActionController::InvalidCrossOriginRequest, with: :render403
+    rescue_from ActionController::RoutingError, with: :render404
+    rescue_from ActionController::BadRequest, with: :render400
+    rescue_from ActionView::MissingTemplate, with: :render404
+    rescue_from Exception, with: :render_exception
   end
 
   def render_exception(exception)
@@ -38,6 +50,10 @@ class ApplicationController < ActionController::Base
       instrument_internal_error(exception)
       render_error(500)
     end
+  end
+
+  def render_400(_exception = nil) # rubocop:disable Naming/VariableNumber
+    render_error(400)
   end
 
   def render_404(_exception = nil) # rubocop:disable Naming/VariableNumber
@@ -53,9 +69,8 @@ class ApplicationController < ActionController::Base
 
     respond_to do |format|
       format.html { render_html_error_page(status) }
-      format.all do
-        render nothing: true, status: status
-      end
+      # Anything else returns the status as human readable plain string
+      format.all { render plain: Rack::Utils::HTTP_STATUS_CODES[status].to_s, status: status }
     end
   end
 
@@ -101,13 +116,5 @@ class ApplicationController < ActionController::Base
 
   def instrument_internal_error(exception)
     ActiveSupport::Notifications.instrument('internal_error.application', exception: exception)
-  end
-
-  # * Set cache control headers for HMLR apps to be public and cacheable
-  # * Price Paid Data uses a time limit of 5 minutes (300 seconds)
-  # Sets the default `Cache-Control` header for all requests,
-  # unless overridden in the action
-  def change_default_caching_policy
-    expires_in 5.minutes, public: true, must_revalidate: true if Rails.env.production?
   end
 end
