@@ -8,7 +8,7 @@ class SearchController < ApplicationController
     create
   end
 
-  # rubocop:disable Metrics/MethodLength, Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/MethodLength
   def create
     @preferences = UserPreferences.new(params)
 
