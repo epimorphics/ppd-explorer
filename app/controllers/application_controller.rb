@@ -69,9 +69,8 @@ class ApplicationController < ActionController::Base
 
     respond_to do |format|
       format.html { render_html_error_page(status) }
-      format.all do
-        render nothing: true, status: status
-      end
+      # Anything else returns the status as human readable plain string
+      format.all { render plain: Rack::Utils::HTTP_STATUS_CODES[status].to_s, status: status }
     end
   end
 
