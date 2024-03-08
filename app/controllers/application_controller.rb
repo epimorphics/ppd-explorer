@@ -22,10 +22,13 @@ class ApplicationController < ActionController::Base
     detailed_request_log(duration)
   end
 
+  # Handle specific types of exceptions and render the appropriate error page
+  # or attempt to render a generic error page if no specific error page exists
   unless Rails.application.config.consider_all_requests_local
     rescue_from ActionController::InvalidCrossOriginRequest, with: :render403
     rescue_from ActionController::RoutingError, with: :render404
     rescue_from ActionController::BadRequest, with: :render400
+    rescue_from ActionView::MissingTemplate, with: :render404
     rescue_from Exception, with: :render_exception
   end
 
