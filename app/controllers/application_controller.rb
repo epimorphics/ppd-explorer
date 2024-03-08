@@ -9,12 +9,20 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
 
   before_action :set_phase, :change_default_caching_policy
+  around_action :log_request_result
 
   def set_phase
     @phase = :released
   end
 
-  around_action :log_request_result
+  # * Set cache control headers for HMLR apps to be public and cacheable
+  # * Price Paid Data uses a time limit of 5 minutes (300 seconds)
+  # Sets the default `Cache-Control` header for all requests,
+  # unless overridden in the action
+  def change_default_caching_policy
+    expires_in 5.minutes, public: true, must_revalidate: true if Rails.env.production?
+  end
+
   def log_request_result
     start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
     yield
@@ -109,13 +117,5 @@ class ApplicationController < ActionController::Base
 
   def instrument_internal_error(exception)
     ActiveSupport::Notifications.instrument('internal_error.application', exception: exception)
-  end
-
-  # * Set cache control headers for HMLR apps to be public and cacheable
-  # * Price Paid Data uses a time limit of 5 minutes (300 seconds)
-  # Sets the default `Cache-Control` header for all requests,
-  # unless overridden in the action
-  def change_default_caching_policy
-    expires_in 5.minutes, public: true, must_revalidate: true if Rails.env.production?
   end
 end
