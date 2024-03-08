@@ -2,6 +2,13 @@
 
 This app allows the user to explore HMLR price-paid open linked data.
 
+## 1.7.6 - 2024-03-08
+
+- (Jon) Updated the application_controller to include an
+  `ActionView::MissingTemplate` rescue to ensure the correct 404 template is
+  displayed when a template is not found
+  [GH-138](https://github.com/epimorphics/hmlr-linked-data/issues/138)
+
 ## 1.7.5 - 2023-11-27
 
 - (Jon) Updated the `lr_common_styles` gem to the latest 1.9.3 patch release.

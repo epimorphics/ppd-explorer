@@ -12,14 +12,13 @@
 /db/*.sqlite3
 /db/*.sqlite3-journal
 /log/*.log
+/tmp
 /public/packs
 /public/packs-test
-/tmp
+/public/assets/
 coverage/
 fc.json
 fc_simple.json
 index-names.txt
 index.json
-public/
-public/assets/
 tags
