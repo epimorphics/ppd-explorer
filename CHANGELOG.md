@@ -2,6 +2,10 @@
 
 This app allows the user to explore HMLR price-paid open linked data.
 
+## 1.7.7 - 2024-08
+
+- (Dan) updates the form to meet various accessibility requirments [GH-217](https://github.com/epimorphics/ppd-explorer/issues/217)
+
 ## 1.7.6 - 2024-03-08
 
 - (Jon) Updated the application_controller to include an
