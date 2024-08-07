@@ -45,8 +45,8 @@
         .col-sm-8
           %input#postcode.form-control{ type: "text", name: "postcode", value: @preferences.param( :postcode ), placeholder: "Use a full postcode, or just the first group e.g. PL6 5WS or PL6." }
 
-      .form-group
-        %label.col-sm-4.control-label{ for: "ptype" } Property type
+      %fieldset.form-group
+        %legend.control-legend.col-sm-4.control-label{ for: "ptype" } Property type
         .col-sm-8
           %ul.list-inline
             %li
@@ -75,8 +75,8 @@
                   %input{ type: "checkbox", name: "ptype[]", value: "lrcommon:otherPropertyType", checked: @preferences.display_checked?( :ptype, "lrcommon:otherPropertyType") }
                   other
 
-      .form-group
-        %label.col-sm-4.control-label{ for: "nb" } New build?
+      %fieldset.form-group
+        %legend.control-legend.col-sm-4.control-label{ for: "nb" } New build?
         .col-sm-8
           %ul.list-inline
             %li
@@ -90,8 +90,8 @@
                   %input{ type: "checkbox", name: "nb[]", value: "false", checked: @preferences.display_checked?( :nb, "false" ) }
                   not new-build
 
-      .form-group
-        %label.col-sm-4.control-label{ for: "et" } Estate type
+      %fieldset.form-group
+        %legend.control-legend.col-sm-4.control-label{ for: "et" } Estate type
         .col-sm-8
           %ul.list-inline
             %li
@@ -105,8 +105,8 @@
                   %input{ type: "checkbox", name: "et[]", value: "lrcommon:leasehold", checked: @preferences.display_checked?( :et, "lrcommon:leasehold" ) }
                   leasehold
 
-      .form-group
-        %label.col-sm-4.control-label{ for: "tc" } Transaction category
+      %fieldset.form-group
+        %legend.control-legend.col-sm-4.control-label{ for: "tc" } Transaction category
         .col-sm-8
           %ul.list-inline
             %li
@@ -160,8 +160,8 @@
                   latest:
                   %input{ type: 'date', name: :max_date, value: @preferences.param( :max_date ), min: "1995-01-01", max: Date.today.iso8601 }
 
-      .form-group
-        %label.col-sm-4.control-label{ for: "limit" } How many results?
+      %fieldset.form-group
+        %legend.control-legend.col-sm-4.control-label{ for: "limit" } How many results?
         .col-sm-8
           %ul.list-inline
             %li

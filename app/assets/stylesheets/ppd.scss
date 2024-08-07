@@ -5,6 +5,18 @@
   }
 }
 
+.form-control {
+  border: 1px solid #646464;
+}
+
+.control-legend {
+  border: none;
+  font-size: 16px;
+  line-height: 1.31578947;
+  font-family: "nta", Arial, sans-serif;
+  font-weight: bold;
+}
+
 .lr {
   .container {
     max-width: 960px;
