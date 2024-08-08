@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded",  function () {
-  const focusableElements = 'input, .btn, .close'
-  const modal = document.querySelector('#bookmark-dialog');
-  const firstFocusableElement = modal.querySelectorAll(focusableElements)[0];
-  const focusableContent = modal.querySelectorAll(focusableElements);
-  const lastFocusableElement = focusableContent[focusableContent.length - 1];
-  const shareViewButton = document.querySelector(".action-bookmark")
+  var focusableElements = 'input, .btn, .close'
+  var modal = document.querySelector('#bookmark-dialog');
+  var firstFocusableElement = modal.querySelectorAll(focusableElements)[0];
+  var focusableContent = modal.querySelectorAll(focusableElements);
+  var lastFocusableElement = focusableContent[focusableContent.length - 1];
+  var shareViewButton = document.querySelector(".action-bookmark")
 
   function onModalOpen() {
     document.addEventListener('keydown', function(e) {
