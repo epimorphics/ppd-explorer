@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded",  function () {
 
   function onModalOpen() {
     document.addEventListener('keydown', function(e) {
-        var isTabPressed = e.key === 'Tab' || e.keyCode === 9;
+        var isTabPressed = e.key === 'Tab';
       
         if (!isTabPressed) {
           return;
