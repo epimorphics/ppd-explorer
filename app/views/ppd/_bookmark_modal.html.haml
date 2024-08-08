@@ -1,11 +1,12 @@
 -# frozen_string_literal: true
 
 #bookmark-modal.modal
-  .modal-dialog
+  #bookmark-dialog.modal-dialog{role: "dialog", "aria-labelledby": "bookmark-link", "aria-modal": "true"}
     .modal-content
       .modal-header
         %button.close{ type: "button", data: {dismiss: "modal"}, aria: {hidden: "true"}}
           &times;
+        #bookmark-link 
         %h2.modal-title
           Link to the current search
       .modal-body
