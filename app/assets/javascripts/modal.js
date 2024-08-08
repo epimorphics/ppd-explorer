@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       }
   
-      openButtons.forEach(button => {
+      openButtons.forEach(function(button) {
         button.addEventListener("click", function (event) {
           event.preventDefault();
           onModalOpen();
