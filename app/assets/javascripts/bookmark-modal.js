@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded",  function () {
   var firstFocusableElement = modal.querySelectorAll(focusableElements)[0];
   var focusableContent = modal.querySelectorAll(focusableElements);
   var lastFocusableElement = focusableContent[focusableContent.length - 1];
-  var shareViewButton = document.querySelector(".action-bookmark")
+  var shareViewButton = document.querySelectorAll(".action-bookmark")
 
   function onModalOpen() {
     document.addEventListener('keydown', function(e) {
@@ -30,8 +30,10 @@ document.addEventListener("DOMContentLoaded",  function () {
       firstFocusableElement.focus();
   }
 
-  shareViewButton.addEventListener("click", function (event) {
-    event.preventDefault()
-    onModalOpen()
-  })
+  shareViewButton.forEach(button => {
+    button.addEventListener("click", function (event) {
+      event.preventDefault();
+      onModalOpen();
+    });
+  });
 })
