@@ -4,9 +4,10 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## 1.7.7 - 2024-08
 
+- (Dan) Increases target size of clickable elements to meet accessibility requirments [GH](https://github.com/epimorphics/ppd-explorer/issues/225)
 - (Dan) updates the search results modal focus flow to meet accessibility requirments [GH-216](https://github.com/epimorphics/ppd-explorer/issues/216)
 - (Dan) updates the form to meet various accessibility requirments [GH-217](https://github.com/epimorphics/ppd-explorer/issues/217)
-- (Dan) updates the search results modal focus flow to meet accessibility requirments [GH-218](https://github.com/epimorphics/ppd-explorer/issues/218)
+- (Dan) updates the help modal focus flow to meet accessibility requirments [GH-218](https://github.com/epimorphics/ppd-explorer/issues/218)
 
 ## 1.7.6 - 2024-03-08
 
