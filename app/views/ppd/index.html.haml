@@ -1,6 +1,16 @@
 -# frozen_string_literal: true
 
-= render partial: "search_action_buttons"
+.row 
+  .col-sm-12
+    .pull-right.search-form-actions
+      .search-form-action
+        %a.js.hidden.button.button--secondary.action-help{ href: "#", alt:  "Help and tips", title: "Help and tips" }
+          %i.fa.fa-question-circle
+          help
+      .search-form-action
+        = link_to( {controller: :ppd, action: :index}, {class: "button  button--secondary"} ) do
+          %i.fa.fa-refresh
+          reset the form
 
 .row
   %h1.col-md-12
@@ -181,7 +191,20 @@
                 %label
                   %input{ type: "radio", name: :limit, value: "all", checked: @preferences.selected_limit == "all" }
                   all
-= render partial: "search_action_buttons"
+      .col-sm-12
+        .pull-right.search-form-actions
+          .search-form-action
+            %a.js.hidden.button.button--secondary.action-help{ href: "#", alt: "Help and tips", title: "Help and tips" }
+              %i.fa.fa-question-circle
+              help
+          .search-form-action
+            = link_to( {controller: :ppd, action: :index}, {class: "button button--secondary"} ) do
+              %i.fa.fa-refresh
+              reset the form
+          .search-form-action
+            %button.button{ type: 'submit' }
+              %i.fa.fa-search
+              show results
 
 = render partial: "bookmark_modal"
 = render partial: "help_modal"
