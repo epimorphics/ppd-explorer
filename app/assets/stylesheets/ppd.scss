@@ -69,6 +69,10 @@
       border: 1px solid #d8d8d8;
       border-radius: 4px;
     }
+
+    i {
+      padding: 4px;
+    }
   }
 
   .search-selection > span {
@@ -89,7 +93,7 @@
     }
 
     .search-zoom-button {
-      margin: 1px 3px;
+      padding: 4px 4.75px;
     }
   }
 
@@ -156,6 +160,10 @@
     padding: 8px;
     border: 1px solid #888;
     border-radius: 5px;
+  }
+
+  .transaction-url a i {
+    padding: 4px;
   }
 
   .transaction-category {
