@@ -1,5 +1,17 @@
 -# frozen_string_literal: true
 
+.row 
+  .col-sm-12
+    .pull-right.search-form-actions
+      .search-form-action
+        %a.js.hidden.button.button--secondary.action-help{ href: "#", alt:  "Help and tips", title: "Help and tips" }
+          %i.fa.fa-question-circle
+          help
+      .search-form-action
+        = link_to( {controller: :ppd, action: :index}, {class: "button  button--secondary"} ) do
+          %i.fa.fa-refresh
+          reset the form
+
 .row
   %h1.col-md-12
     Search the price paid dataset:
