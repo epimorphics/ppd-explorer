@@ -4,6 +4,7 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## 1.7.7 - 2024-08
 
+- (Dan) Updates gemfile to use v1.9.5 lr_common_styles
 - (Dan) Adds more descriptive page titles [220](https://github.com/epimorphics/ppd-explorer/issues/220)
 - (Dan) Adds search actions buttons to the top of the page [226](https://github.com/epimorphics/ppd-explorer/issues/226)
 - (Dan) Increases target size of clickable elements to meet accessibility requirments [GH-225](https://github.com/epimorphics/ppd-explorer/issues/225)
