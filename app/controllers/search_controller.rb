@@ -8,7 +8,6 @@ class SearchController < ApplicationController
     create
   end
 
-  # rubocop:disable Metrics/MethodLength
   def create
     @preferences = UserPreferences.new(params)
 
@@ -36,7 +35,6 @@ class SearchController < ApplicationController
 
     render_error_page(e, e.message, status)
   end
-  # rubocop:enable Metrics/MethodLength, Metrics/PerceivedComplexity
 
   def use_compact_json?
     non_compact_formats.exclude?(request.format)
@@ -48,7 +46,7 @@ class SearchController < ApplicationController
 
   private
 
-  # rubocop:disable Layout/LineLength, Metrics/MethodLength
+  # rubocop:disable Layout/LineLength
   def render_error_page(err, message, status, template = 'ppd/error')
     # link the error to the actual request id otherwise generate one for this error
     uuid = Thread.current[:request_id] || SecureRandom.uuid
@@ -69,5 +67,5 @@ class SearchController < ApplicationController
       ].join.html_safe
     render(template: template, status: status)
   end
-  # rubocop:enable Layout/LineLength, Metrics/MethodLength
+  # rubocop:enable Layout/LineLength
 end

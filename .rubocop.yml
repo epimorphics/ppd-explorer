@@ -14,6 +14,7 @@ Layout/LineLength:
     - test/**/*
 
 Metrics/ClassLength:
+  CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
   Exclude:
     - test/**/*
 
@@ -24,7 +25,9 @@ Metrics/BlockLength:
     - lib/tasks/**/*
 
 Metrics/MethodLength:
+  CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
   Exclude:
+    - test/**/*
     - lib/tasks/location.rake
 
 Style/FormatStringToken:

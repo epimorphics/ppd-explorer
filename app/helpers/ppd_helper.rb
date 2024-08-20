@@ -10,7 +10,7 @@ module PpdHelper
     end
   end
 
-  def address_detail_filter(aspect, result, preferences) # rubocop:disable Metrics/MethodLength
+  def address_detail_filter(aspect, result, preferences)
     vp = result.presentation_value_of_property(aspect.aspect_key_property)
     val = result.value_of_property(aspect.aspect_key_property)
 
@@ -31,7 +31,7 @@ module PpdHelper
     end
   end
 
-  def results_selection(limit, preferences) # rubocop:disable Metrics/MethodLength
+  def results_selection(limit, preferences)
     if preferences.selected_limit == limit
       content_tag('strong') do
         results_selection_summary(limit)
