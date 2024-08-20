@@ -35,6 +35,16 @@ prometheus.gauge(
   docstring: 'Process memory usage in mb'
 )
 
+prometheus.gauge(
+  :thread_count,
+  docstring: 'The number of threads currently alive'
+)
+
+prometheus.gauge(
+  :process_threads,
+  docstring: 'The number of currently running threads'
+)
+
 # Prometheus histograms
 prometheus.histogram(
   :api_response_times,
