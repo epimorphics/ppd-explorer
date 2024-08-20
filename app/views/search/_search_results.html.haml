@@ -1,8 +1,6 @@
 -# frozen_string_literal: true
 = content_for(:title, "Search results")
 
-= content_for(:title, 'Search results')
-
 - sr = @query_command.search_results
 = render partial: "ppd/workflow_action_buttons", locals: {no_results: true, no_print: true}
 
