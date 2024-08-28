@@ -84,7 +84,7 @@ class ApplicationController < ActionController::Base
     self.response_body = nil
   end
 
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def detailed_request_log(duration)
     env = request.env
 
@@ -112,7 +112,7 @@ class ApplicationController < ActionController::Base
       Rails.logger.info(JSON.generate(log_fields))
     end
   end
-  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   def instrument_internal_error(exception)
     ActiveSupport::Notifications.instrument('internal_error.application', exception: exception)
