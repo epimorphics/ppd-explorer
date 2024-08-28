@@ -34,7 +34,6 @@ module DsapiTurtleFormatter
     ttl_value
   end
 
-  # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
   def format_ttl_value(value)
     f =
@@ -60,6 +59,5 @@ module DsapiTurtleFormatter
 
     f.html_safe
   end
-  # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 end
