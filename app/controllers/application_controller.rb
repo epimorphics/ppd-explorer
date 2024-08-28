@@ -5,10 +5,12 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
 
-  # temporarily disable csrf for load testing. Was: protect_from_forgery with: :exception
+  # Temporarily disable csrf for load testing.
+  # Was: protect_from_forgery with: :exception
   protect_from_forgery with: :null_session
 
-  before_action :set_phase, :change_default_caching_policy
+  before_action :set_phase
+  before_action :change_default_caching_policy
   around_action :log_request_result
 
   def set_phase
@@ -114,6 +116,11 @@ class ApplicationController < ActionController::Base
   end
   # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
+  # Notify subscriber(s) of an internal error event with the payload of the
+  # exception once done
+  # @param [Exception] exp the exception that caused the error
+  # @return [ActiveSupport::Notifications::Event] provides an object-oriented
+  # interface to the event
   def instrument_internal_error(exception)
     ActiveSupport::Notifications.instrument('internal_error.application', exception: exception)
   end
