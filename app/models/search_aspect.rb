@@ -34,8 +34,8 @@ class SearchAspect < Aspect
   end
 
   # Sanitise input and convert to Lucene expression
-  def text_index_term(preferences) # rubocop:disable Metrics/MethodLength
-    terms = sanitise_punctuation(preference_value(preferences))
+  def text_index_term(preferences)
+    terms = sanitise_punctuation(sanitised(preference_value(preferences)))
             .split
             .reject { |token| LUCENE_KEYWORDS.include?(token.downcase) }
             .reject(&:empty?)
@@ -45,9 +45,15 @@ class SearchAspect < Aspect
             "Sorry, '#{preference_value(preferences)}' is not a permissible search term"
     end
 
-    terms
-      .join(' AND ')
-      .gsub(/\A(.*)\Z/, '( \1 )')
+    terms.join(' AND ').gsub(/\A(.*)\Z/, '( \1 )')
+  end
+
+  # Sanitises a string for HTML output (using Rails' built-in sanitizer)
+  def sanitised(val)
+    Rails.logger.debug { "sanitising #{val}!" } if Rails.env.development?
+    cleaned = ActionController::Base.helpers.sanitize(val)
+    Rails.logger.debug { "cleaned to #{cleaned}!" } if Rails.env.development?
+    cleaned
   end
 
   private
