@@ -29,8 +29,10 @@ class SearchAspect < Aspect
   end
 
   def search_term(_value, preferences)
-    val = preference_value(preferences)
-    SearchTerm.new(key, "#{key_as_label} matches '#{val}'", val)
+    val = sanitised(preference_value(preferences))
+    label = "#{key_as_label} matches '#{val}'"
+
+    SearchTerm.new(key, label, val)
   end
 
   # Sanitise input and convert to Lucene expression
@@ -50,10 +52,7 @@ class SearchAspect < Aspect
 
   # Sanitises a string for HTML output (using Rails' built-in sanitizer)
   def sanitised(val)
-    Rails.logger.debug { "sanitising #{val}!" } if Rails.env.development?
-    cleaned = ActionController::Base.helpers.sanitize(val)
-    Rails.logger.debug { "cleaned to #{cleaned}!" } if Rails.env.development?
-    cleaned
+    Rails::Html::FullSanitizer.new.sanitize(val)
   end
 
   private

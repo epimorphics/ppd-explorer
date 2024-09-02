@@ -23,7 +23,8 @@ class SearchTerm
 
   def form_value
     # @values ? @values.join(",") : @value
-    @value
+    # remove any HTML tags from the value
+    Rails::Html::FullSanitizer.new.sanitize(@value)
   end
 
   def label
@@ -44,7 +45,9 @@ class SearchTerm
   end
 
   def clean_label_term
+    # remove any HTML tags from the label term
+    term = Rails::Html::FullSanitizer.new.sanitize(@label_term)
     # previously we added a profanity filter here, but it was decided not to keep that feature
-    @label_term
+    term
   end
 end
