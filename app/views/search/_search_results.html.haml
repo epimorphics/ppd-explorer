@@ -12,7 +12,7 @@
   %ul.search-terms.list.list-bullet
     - @preferences.each_search_term do |search_term|
       - clean_label = sanitize(search_term.label)
-      - clean_value = sanitize(search_term.value)
+      - clean_value = search_term.value.is_a?(Date) ?  search_term.value : sanitize(search_term.value)
       %li
         %label
           = raw(clean_label)
