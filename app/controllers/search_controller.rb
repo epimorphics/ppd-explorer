@@ -36,7 +36,7 @@ class SearchController < ApplicationController
 
     render_error_page(e, e.message, status)
   end
-  # rubocop:enable Metrics/MethodLength, Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/MethodLength
 
   def use_compact_json?
     non_compact_formats.exclude?(request.format)
@@ -56,7 +56,7 @@ class SearchController < ApplicationController
     @message = message
 
     # log the error with as much detail as possible in development to aid in resolving the issue
-    message = "#{err.class.name} error #{uuid} ::: #{message} ::: #{err.class}" if Rails.env.development?
+    @message = "#{err.class.name} error: #{message}" if Rails.env.development?
 
     # Keep it simple silly in production!
     Rails.logger.error message
