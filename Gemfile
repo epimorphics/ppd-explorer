@@ -87,5 +87,5 @@ gem 'puma-metrics'
 source 'https://rubygems.pkg.github.com/epimorphics' do
   gem 'data_services_api', '~> 1.3.3'
   gem 'json_rails_logger', '~>1.0.0'
-  gem 'lr_common_styles', '~> 1.9', '>=1.9.6'
+  gem 'lr_common_styles', '~> 1.9', '>= 1.9.6'
 end
