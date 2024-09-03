@@ -162,6 +162,19 @@ GEM
     loofah (2.21.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
+    lr_common_styles (1.9.6)
+      bootstrap-sass (~> 3.4.0)
+      font-awesome-rails (~> 4.7.0.1)
+      govuk_elements_rails (~> 2.0.0)
+      govuk_frontend_toolkit (~> 4.18.1)
+      govuk_template (~> 0.18.1)
+      haml-rails (~> 2.0.0)
+      jquery-rails (~> 4.3.5)
+      lodash-rails (~> 4.17.14)
+      modernizr-rails (~> 2.7.1)
+      modulejs-rails (~> 2.2.0.0)
+      rails (~> 5.2.4)
+      sass-rails (~> 5.0.4)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
     marcel (1.0.2)
@@ -210,6 +223,9 @@ GEM
     public_suffix (5.0.0)
     puma (5.6.7)
       nio4r (~> 2.0)
+    puma-metrics (1.2.5)
+      prometheus-client (>= 0.10)
+      puma (>= 5.0)
     racc (1.6.2)
     rack (2.2.8)
     rack-test (1.1.0)
@@ -345,19 +361,6 @@ GEM
       json
       lograge
       railties
-    lr_common_styles (1.9.5)
-      bootstrap-sass (~> 3.4.0)
-      font-awesome-rails (~> 4.7.0.1)
-      govuk_elements_rails (~> 2.0.0)
-      govuk_frontend_toolkit (~> 4.18.1)
-      govuk_template (~> 0.18.1)
-      haml-rails (~> 2.0.0)
-      jquery-rails (~> 4.3.5)
-      lodash-rails (~> 4.17.14)
-      modernizr-rails (~> 2.7.1)
-      modulejs-rails (~> 2.2.0.0)
-      rails (~> 5.2.4)
-      sass-rails (~> 5.0.4)
 
 PLATFORMS
   -darwin-20
@@ -386,7 +389,7 @@ DEPENDENCIES
   json_expressions
   json_rails_logger (~> 1.0.0)!
   libv8-node (>= 16.10.0.0)
-  lr_common_styles (~> 1.9, >= 1.9.5)!
+  lr_common_styles (~> 1.9, >= 1.9.6)!
   memory_profiler
   minitest-rails
   minitest-reporters
@@ -395,6 +398,7 @@ DEPENDENCIES
   mocha
   prometheus-client (~> 4.0)
   puma
+  puma-metrics
   rails (< 6.0.0)
   rb-readline
   rubocop

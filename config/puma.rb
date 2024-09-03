@@ -36,6 +36,9 @@ pidfile ENV.fetch('PIDFILE', 'tmp/pids/server.pid')
 #
 # preload_app!
 
+# Additional metrics from the Puma server to be exposed in the /metrics endpoint
+plugin 'metrics'
+
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
 
