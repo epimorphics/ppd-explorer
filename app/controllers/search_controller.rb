@@ -54,7 +54,7 @@ class SearchController < ApplicationController
     @message = message
 
     # log the error with as much detail as possible in development to aid in resolving the issue
-    message = "#{err.class.name} error #{uuid} ::: #{message} ::: #{err.class}" if Rails.env.development?
+    @message = "#{err.class.name} error: #{message}" if Rails.env.development?
 
     # Keep it simple silly in production!
     Rails.logger.error message

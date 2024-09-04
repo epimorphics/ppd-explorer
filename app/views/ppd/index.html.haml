@@ -27,37 +27,37 @@
       .form-group
         %label.col-sm-4.control-label{ for: "paon" } Building name or number
         .col-sm-8
-          %input#paon.form-control{ type: "text", autocomplete: "on", name: "paon", value: @preferences.param( :paon ), placeholder: "For example: Rose Cottage or 17" }
+          %input#paon.form-control{ type: "text", autocomplete: "on", name: "paon", value: sanitize(@preferences.param( :paon )), placeholder: "For example: Rose Cottage or 17" }
 
       .form-group
         %label.col-sm-4.control-label{ for: "street" } Street
         .col-sm-8
-          %input#street.form-control{ type: "text", autocomplete: "street-address", name: "street", value: @preferences.param( :street ), placeholder: "Use the full name, or just part of it e.g: Harbour Road or Colston" }
+          %input#street.form-control{ type: "text", autocomplete: "street-address", name: "street", value: sanitize(@preferences.param( :street )), placeholder: "Use the full name, or just part of it e.g: Harbour Road or Colston" }
 
       .form-group
         %label.col-sm-4.control-label{ for: "town" } Town or city
         .col-sm-8
-          %input#town.form-control{ type: "text", autocomplete: "address-level2", name: "town", value: @preferences.param( :town ), placeholder: "For example: Plymouth" }
+          %input#town.form-control{ type: "text", autocomplete: "address-level2", name: "town", value: sanitize(@preferences.param( :town )), placeholder: "For example: Plymouth" }
 
       .form-group
         %label.col-sm-4.control-label{ for: "district" } District
         .col-sm-8
-          %input#district.form-control{ type: "text", autocomplete: "address-level3", name: "district", value: @preferences.param( :district ), placeholder: "For example: City of Westminster" }
+          %input#district.form-control{ type: "text", autocomplete: "address-level3", name: "district", value: sanitize(@preferences.param( :district )), placeholder: "For example: City of Westminster" }
 
       .form-group
         %label.col-sm-4.control-label{ for: "county" } County
         .col-sm-8
-          %input#county.form-control{ type: "text", autocomplete: "county", name: "county", value: @preferences.param( :county ), placeholder: "For example: Devon" }
+          %input#county.form-control{ type: "text", autocomplete: "county", name: "county", value: sanitize(@preferences.param( :county )), placeholder: "For example: Devon" }
 
       .form-group
         %label.col-sm-4.control-label{ for: "locality" } Locality
         .col-sm-8
-          %input#locality.form-control{ type: "text", autocomplete: "on", name: "locality", value: @preferences.param( :locality ), placeholder: "For example: Thurloxton" }
+          %input#locality.form-control{ type: "text", autocomplete: "on", name: "locality", value: sanitize(@preferences.param( :locality )), placeholder: "For example: Thurloxton" }
 
       .form-group
         %label.col-sm-4.control-label{ for: "postcode" } Postcode
         .col-sm-8
-          %input#postcode.form-control{ type: "text", autocomplete: "postal-code", name: "postcode", value: @preferences.param( :postcode ), placeholder: "Use a full postcode, or just the first group e.g. PL6 5WS or PL6." }
+          %input#postcode.form-control{ type: "text", autocomplete: "postal-code", name: "postcode", value: sanitize(@preferences.param( :postcode )), placeholder: "Use a full postcode, or just the first group e.g. PL6 5WS or PL6." }
 
       %fieldset.form-group
         %legend.control-legend.col-sm-4.control-label{ for: "ptype" } Property type
@@ -142,7 +142,7 @@
               .input-group
                 %span.input-group-addon
                   &pound;
-                %input#min_price.form-control{ type: "text", name: :min_price, value: @preferences.param( :min_price ) }
+                %input#min_price.form-control{ type: "text", name: :min_price, value: sanitize(@preferences.param( :min_price )) }
             .col-sm-8.hidden.validation-warning
               %p.bg-warning
                 Please enter a valid numerical value, or leave blank
@@ -154,7 +154,7 @@
               .input-group
                 %span.input-group-addon
                   &pound;
-                %input#max_price.form-control{ type: "text", name: :max_price, value: @preferences.param( :max_price ) }
+                %input#max_price.form-control{ type: "text", name: :max_price, value: sanitize(@preferences.param( :max_price )) }
             .col-sm-8.hidden.validation-warning
               %p.bg-warning
                 Please enter a valid numerical value, or leave blank

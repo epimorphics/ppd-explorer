@@ -12,11 +12,13 @@
     #{sr.summarise} by searching for:
   %ul.search-terms.list.list-bullet
     - @preferences.each_search_term do |search_term|
+      - clean_label = sanitize(search_term.label)
+      - clean_value = search_term.value.is_a?(Date) ?  search_term.value : sanitize(search_term.value)
       %li
         %label
-          = raw(search_term.label)
-          - st_path = @preferences.as_path( :search, {}, {search_term.name => search_term.value } )
-          %a.search-term{ href: st_path, 'aria-label' => "Remove search term #{raw(search_term.label)}" }
+          = raw(clean_label)
+          - st_path = @preferences.as_path( :search, {}, {search_term.name => clean_value } )
+          %a.search-term{ href: st_path, 'aria-label' => "Remove search term #{raw(clean_label)}" }
             %i.fa.fa-times-circle.fa-lg
 
   %p.search-selection

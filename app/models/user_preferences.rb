@@ -83,9 +83,14 @@ class UserPreferences
   private
 
   # Remove any non-allowlisted parameters, or params with empty values
+  # (e.g. empty strings, empty arrays)
   def sanitise!
     @params.keep_if do |_k, v|
-      !v.to_s.strip.empty?
+      if v.is_a?(Array)
+        v.any? { |x| !x.to_s.strip.empty? }
+      else
+        !v.to_s.strip.empty?
+      end
     end
   end
 
