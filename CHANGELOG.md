@@ -4,11 +4,6 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## Changelog
 
-## 1.7.7 - 2024-09
-
-- (Jon) Updated search query processing and rendering to santise supplied input
-  for HTML output and resolve discovered XSS vulnerability in displayed results
-  [GH-236](https://github.com/epimorphics/hmlr-linked-data/issues/236)
 ## 1.7.8 - 2024-08
 
 - (Jon) Implemented improved boilerplate metrics integration to offer analysis
@@ -25,8 +20,11 @@ This app allows the user to explore HMLR price-paid open linked data.
   inline
 - (Jon) Updated the `lr_common_styles` gem to the latest 1.9.6 patch release.
 
-## 1.7.7 - 2024-08
+## 1.7.7 - 2024-09
 
+- (Jon) Updated search query processing and rendering to santise supplied input
+  for HTML output and resolve discovered XSS vulnerability in displayed results
+  [GH-236](https://github.com/epimorphics/hmlr-linked-data/issues/236)
 - (Dan) Fixes the bug search results not displaying
   [232](https://github.com/epimorphics/ppd-explorer/issues/232)
 - (Dan) Adds page titles to donwload page and error page. Improves code dryness
