@@ -1,11 +1,12 @@
 -# frozen_string_literal: true
 
 #bookmark-modal.modal
-  .modal-dialog
+  #bookmark-dialog.modal-dialog{role: "dialog", "aria-labelledby": "bookmark-link", "aria-modal": "true"}
     .modal-content
       .modal-header
         %button.close{ type: "button", data: {dismiss: "modal"}, aria: {hidden: "true"}}
           &times;
+        #bookmark-link 
         %h2.modal-title
           Link to the current search
       .modal-body
@@ -17,15 +18,12 @@
           %code cmd-C
           on a Mac) to copy a link to this page.
         %p
-          = text_field_tag 'bookmark', "", class: "form-control bookmark-url"
+          = label_tag 'bookmark', 'URL bookmark'
+          = text_field_tag 'bookmark', "", class: "form-control bookmark-url", autocomplete: "off", type: "url", name: "bookmark"
         .social-media.text-center
           .twitter
             %a.twitter-share-button{ href: "https://twitter.com/share", data: {url: "", text: "Open data from Land Registry", hashtags: "opendata"}}
               Tweet
-          .gplus
-            #plus-one
-          .facebook
-            .fb-share-button{ data: {href: "", type: "button_count"}}
 
       .modal-footer
         .row

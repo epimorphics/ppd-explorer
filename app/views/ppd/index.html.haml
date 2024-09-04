@@ -1,8 +1,22 @@
 -# frozen_string_literal: true
 
+= content_for(:title, "Search the price paid dataset")
+
+.row 
+  .col-sm-12
+    .pull-right.search-form-actions
+      .search-form-action
+        %a.js.hidden.button.button--secondary.action-help{ href: "#", alt:  "Help and tips", title: "Help and tips" }
+          %i.fa.fa-question-circle
+          help
+      .search-form-action
+        = link_to( {controller: :ppd, action: :index}, {class: "button  button--secondary"} ) do
+          %i.fa.fa-refresh
+          reset the form
+
 .row
   %h1.col-md-12
-    Search the price paid dataset:
+    = "#{yield(:title)}:"
   %p.col-md-12
     Enter one or more search terms to locate the property transactions
     you are interested in.
@@ -45,8 +59,8 @@
         .col-sm-8
           %input#postcode.form-control{ type: "text", autocomplete: "postal-code", name: "postcode", value: sanitize(@preferences.param( :postcode )), placeholder: "Use a full postcode, or just the first group e.g. PL6 5WS or PL6." }
 
-      .form-group
-        %label.col-sm-4.control-label{ for: "ptype" } Property type
+      %fieldset.form-group
+        %legend.control-legend.col-sm-4.control-label{ for: "ptype" } Property type
         .col-sm-8
           %ul.list-inline
             %li
@@ -75,8 +89,8 @@
                   %input{ type: "checkbox", name: "ptype[]", value: "lrcommon:otherPropertyType", checked: @preferences.display_checked?( :ptype, "lrcommon:otherPropertyType") }
                   other
 
-      .form-group
-        %label.col-sm-4.control-label{ for: "nb" } New build?
+      %fieldset.form-group
+        %legend.control-legend.col-sm-4.control-label{ for: "nb" } New build?
         .col-sm-8
           %ul.list-inline
             %li
@@ -90,8 +104,8 @@
                   %input{ type: "checkbox", name: "nb[]", value: "false", checked: @preferences.display_checked?( :nb, "false" ) }
                   not new-build
 
-      .form-group
-        %label.col-sm-4.control-label{ for: "et" } Estate type
+      %fieldset.form-group
+        %legend.control-legend.col-sm-4.control-label{ for: "et" } Estate type
         .col-sm-8
           %ul.list-inline
             %li
@@ -105,8 +119,8 @@
                   %input{ type: "checkbox", name: "et[]", value: "lrcommon:leasehold", checked: @preferences.display_checked?( :et, "lrcommon:leasehold" ) }
                   leasehold
 
-      .form-group
-        %label.col-sm-4.control-label{ for: "tc" } Transaction category
+      %fieldset.form-group
+        %legend.control-legend.col-sm-4.control-label{ for: "tc" } Transaction category
         .col-sm-8
           %ul.list-inline
             %li
@@ -146,7 +160,7 @@
                 Please enter a valid numerical value, or leave blank
 
       .form-group
-        %label.col-sm-4.control-label.control-label-adjust{ for: 'date' } Date
+        %label.col-sm-4.control-label.control-label-adjust Date
         .col-sm-8
           %ul.list-inline
             %li
@@ -160,8 +174,8 @@
                   latest:
                   %input{ type: 'date', name: :max_date, value: @preferences.param( :max_date ), min: "1995-01-01", max: Date.today.iso8601 }
 
-      .form-group
-        %label.col-sm-4.control-label{ for: "limit" } How many results?
+      %fieldset.form-group
+        %legend.control-legend.col-sm-4.control-label{ for: "limit" } How many results?
         .col-sm-8
           %ul.list-inline
             %li

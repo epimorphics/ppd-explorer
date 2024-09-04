@@ -1,18 +1,19 @@
 -# frozen_string_literal: true
 
 #help-modal.modal
-  .modal-dialog
+  #help-dialog.modal-dialog{role: "dialog", "aria-labelledby": "help-title", "aria-modal": "true"}
     .modal-content
       .modal-header
         %button.close{ type: "button", data: {dismiss: "modal"}, aria: {hidden: "true"}}
           &times;
+          #help-title
         %h2.modal-title
           Help and suggestions
       .modal-body
         %h3 Troubleshooting guide
         %p
           See the
-          %a{href: "https://www.gov.uk/about-the-price-paid-data#price-paid-data-report-builder"} troubleshooting guide
+          %a.trouble-shooting{href: "https://www.gov.uk/about-the-price-paid-data#price-paid-data-report-builder"} troubleshooting guide
           for answers to commonly encountered difficulties in using this
           dataset.
         %h3 Tips
@@ -39,7 +40,7 @@
         %p
           If you have additional questions, or you have feedback on this beta service,
           please email
-          = mail_to(Rails.application.config.contact_email_address)
+          .email-address= mail_to(Rails.application.config.contact_email_address)
 
       .modal-footer
         .row

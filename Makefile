@@ -7,7 +7,6 @@ BUNDLER_VERSION?=$(shell tail -1 Gemfile.lock | tr -d ' ')
 ECR?=${ACCOUNT}.dkr.ecr.eu-west-1.amazonaws.com
 GPR_OWNER?=epimorphics
 NAME?=$(shell awk -F: '$$1=="name" {print $$2}' deployment.yaml | sed -e 's/[[:blank:]]//g')
-SHORTNAME?=$(shell echo ${NAME} | cut -f2 -d/)
 PAT?=$(shell read -p 'Github access token:' TOKEN; echo $$TOKEN)
 PORT?=3001
 RUBY_VERSION?=$(shell cat .ruby-version)
@@ -29,13 +28,13 @@ REPO?=${ECR}/${IMAGE}
 GITHUB_TOKEN=.github-token
 BUNDLE_CFG=.bundle/config
 
-all: image
-
 ${BUNDLE_CFG}: ${GITHUB_TOKEN}
 	@./bin/bundle config set --local rubygems.pkg.github.com ${GPR_OWNER}:`cat ${GITHUB_TOKEN}`
 
 ${GITHUB_TOKEN}:
 	@echo ${PAT} > ${GITHUB_TOKEN}
+
+all: image
 
 assets: auth
 	@./bin/bundle config set --local without 'development test'
@@ -49,6 +48,7 @@ check: lint test
 
 clean:
 	@[ -d public/assets ] && ./bin/rails assets:clobber || :
+	@@ rm -rf bundle coverage log node_modules
 
 image: auth
 	@echo Building ${REPO}:${TAG} ...
@@ -112,7 +112,6 @@ vars:
 	@echo "ECR = ${ECR}"
 	@echo "GPR_OWNER = ${GPR_OWNER}"
 	@echo "NAME = ${NAME}"
-	@echo "SHORTNAME = ${SHORTNAME}"
 	@echo "RUBY_VERSION = ${RUBY_VERSION}"
 	@echo "SHORTNAME = ${SHORTNAME}"
 	@echo "STAGE = ${STAGE}"

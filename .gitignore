@@ -4,21 +4,51 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
-!/log/.keep
-.byebug_history
-.github-token
-.tags
+# Ignore vscode config
+.vscode
+
+## Ignore bundler configuration:
 /.bundle
-/db/*.sqlite3
-/db/*.sqlite3-journal
-/log/*.log
-/tmp
+/vendor/bundle
+/lib/bundler/man/
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Ignore Byebug command history file.
+.byebug_history
+
+# Ignore node_modules
+node_modules/
+
+# Ignore precompiled javascript packs
 /public/packs
 /public/packs-test
-/public/assets/
-coverage/
+/public/assets
+
+# Ignore uploaded files in development
+/storage/*
+!/storage/.keep
+/public/uploads
+
+### Rails specific ###
+.byebug_history
+/public/system
+/coverage/
+tmp
+
+# Ignore files specific to the development environment
 fc.json
 fc_simple.json
 index-names.txt
 index.json
 tags
+
+# Ignore dot files used by environment or IDE tools
+.tags
+.tool-versions
+.github-token
+.npmrc

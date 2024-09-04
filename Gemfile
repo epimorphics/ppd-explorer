@@ -72,17 +72,20 @@ gem 'prometheus-client', '~> 4.0'
 gem 'sentry-rails', '~> 5.2'
 gem 'yajl-ruby', require: 'yajl'
 
+gem 'puma-metrics'
+
+
 # rubocop:disable Layout/LineLength
 # TODO: While running the rails app locally for testing you can set gems to your local path
 # ! These "local" paths do not work with a docker image - use the repo instead
 # gem 'data_services_api', '~> 1.3.3', path: '~/Epimorphics/shared/data_services_api/'
 # gem 'json_rails_logger', '~>1.0.0', path: '~/Epimorphics/shared/json-rails-logger/'
-# gem 'lr_common_styles', '~> 1.9.3', path: '~/Epimorphics/clients/land-registry/projects/lr_common_styles/'
+# gem 'lr_common_styles', '~> 1.9', '>= 1.9.6', path: '~/Epimorphics/clients/land-registry/projects/lr_common_styles/'
 # rubocop:enable Layout/LineLength
 
 # TODO: In production you want to set this to the gem from the epimorphics package repo
 source 'https://rubygems.pkg.github.com/epimorphics' do
   gem 'data_services_api', '~> 1.3.3'
   gem 'json_rails_logger', '~>1.0.0'
-  gem 'lr_common_styles', '~> 1.9.3'
+  gem 'lr_common_styles', '~> 1.9.6' # set as this version as bundler breaks otherwise
 end

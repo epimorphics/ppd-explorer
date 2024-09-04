@@ -13,9 +13,18 @@ Layout/LineLength:
     - config/**/*
     - test/**/*
 
-Metrics/ClassLength:
+Lint/ConstantDefinitionInBlock:
   Exclude:
     - test/**/*
+
+Lint/DuplicateBranch:
+  Enabled: false
+
+Metrics/AbcSize:
+  Max: 30
+  Exclude:
+    - test/**/*
+    - lib/tasks/**/*
 
 Metrics/BlockLength:
   Max: 30
@@ -23,23 +32,23 @@ Metrics/BlockLength:
     - test/**/*
     - lib/tasks/**/*
 
-Metrics/MethodLength:
+Metrics/ClassLength:
+  CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
   Exclude:
-    - lib/tasks/location.rake
+    - test/**/*
 
-Style/FormatStringToken:
-  Enabled: false
+Metrics/MethodLength:
+  CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
+  Exclude:
+    - test/**/*
+    - lib/tasks/location.rake
 
 Style/Documentation:
   Exclude:
     - test/**/*
 
-Style/OptionalBooleanParameter:
+Style/FormatStringToken:
   Enabled: false
 
-Lint/ConstantDefinitionInBlock:
-  Exclude:
-    - test/**/*
-
-Lint/DuplicateBranch:
+Style/OptionalBooleanParameter:
   Enabled: false
