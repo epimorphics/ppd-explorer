@@ -4,8 +4,11 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## Changelog
 
-## 1.7.8 - 2024-08
+## 1.7.8 - 2024-09
 
+- (Jon) Moved all mirrored configuration settings from individual environments
+  into the application configuration to reduce the need to manage multiple
+  sources of truth
 - (Jon) Implemented improved boilerplate metrics integration to offer analysis
   of current application usage stats
 - (Jon) Additional metrics from the Puma server to be exposed in the /metrics
