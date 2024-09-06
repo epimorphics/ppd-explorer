@@ -4,6 +4,42 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## Changelog
 
+## 1.7.8 - 2024-09
+
+- (Jon) Moved all mirrored configuration settings from individual environments
+  into the application configuration to reduce the need to manage multiple
+  sources of truth
+- (Jon) Implemented improved boilerplate metrics integration to offer analysis
+  of current application usage stats
+- (Jon) Additional metrics from the Puma server to be exposed in the /metrics
+  endpoint via the puma-metrics gem
+- (Jon) Tweaked the application controller to improve error handling and
+  ensuring additional filtering for specific errors completes when able
+- (Jon) Reorganised makefile targets alphabetically as well as mirrored other
+  improvements from the other applications in the suite
+- (Jon) Updated .gitignore file to mirror the current approach in the other HMLR
+  apps
+- (Jon) Updated .rubocop.yml file with rules to reduce the need to set overrides
+  inline
+- (Jon) Updated the `lr_common_styles` gem to the latest 1.9.6 patch release.
+- (Dan) Fixes the bug search results not displaying
+  [232](https://github.com/epimorphics/ppd-explorer/issues/232)
+- (Dan) Adds page titles to download page and error page. Improves code dryness
+  [220](https://github.com/epimorphics/ppd-explorer/issues/220)
+- (Dan) Updates gemfile to use v1.9.5 lr_common_styles
+- (Dan) Adds more descriptive page titles
+  [220](https://github.com/epimorphics/ppd-explorer/issues/220)
+- (Dan) Adds search actions buttons to the top of the page
+  [226](https://github.com/epimorphics/ppd-explorer/issues/226)
+- (Dan) Increases target size of clickable elements to meet accessibility
+  requirments [GH-225](https://github.com/epimorphics/ppd-explorer/issues/225)
+- (Dan) updates the search results modal focus flow to meet accessibility
+  requirments [GH-216](https://github.com/epimorphics/ppd-explorer/issues/216)
+- (Dan) updates the form to meet various accessibility requirments
+  [GH-217](https://github.com/epimorphics/ppd-explorer/issues/217)
+- (Dan) updates the help modal focus flow to meet accessibility requirments
+  [GH-218](https://github.com/epimorphics/ppd-explorer/issues/218)
+
 ## 1.7.7 - 2024-09
 
 - (Jon) Updated search query processing and rendering to santise supplied input
@@ -31,7 +67,8 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 - (Jon) Updated the `app/controllers/application_controller.rb` to include the
   `before_action` for the `change_default_caching_policy` method to ensure the
-  default `Cache-Control` header for all requests is set to 5 minutes (300 seconds).
+  default `Cache-Control` header for all requests is set to 5 minutes (300
+  seconds).
 
 ## 1.7.3 - 2023-06-07
 
@@ -58,8 +95,8 @@ This app allows the user to explore HMLR price-paid open linked data.
   Epimorphics specific gems locally during the development of those gems.
 - (Jon) Updated the production `data_services_api` gem version to be at least
   the current version`~>1.3.3` (this is to cover out of sync release versions)
-- (Jon) Updated the production `json_rails_logger` gem version to be at least the
-  current version `~>1.3.5` (this is to cover out of sync release versions)
+- (Jon) Updated the production `json_rails_logger` gem version to be at least
+  the current version `~>1.3.5` (this is to cover out of sync release versions)
 - (Jon) Updated the production `lr_common_styles` gem version to be at least the
   current version `~>1.9.1` (this is to cover out of sync release versions)
 - (Jon) Refactored better guards in `entrypoint.sh` to ensure the required env

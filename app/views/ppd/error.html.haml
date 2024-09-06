@@ -1,7 +1,10 @@
 -# frozen_string_literal: true
 
+= content_for(:title, "We're sorry, that didn't work")
+
 .row
-  %h2 We're sorry, that didn't work
+  %h2
+    = yield(:title)
   %p
     We're very sorry, but the query you have just run did not complete. Reasons for
     this are commonly due to large queries exceeding the time limit,

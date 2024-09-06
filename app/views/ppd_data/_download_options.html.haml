@@ -1,5 +1,7 @@
 -# frozen_string_literal: true
 
+= content_for(:title, 'Download price paid data')
+
 - if params[:format]
   A format has been specified, but the default view has been selected. This suggests
   a bug, or that the format requested is not one that is currently supported.
@@ -9,7 +11,7 @@
       .col-md-12
         = render partial: "ppd/workflow_action_buttons", locals: {no_download: true, no_print: true, no_help: true, no_bookmark: true}
         %h1
-          Download price paid data
+          = yield(:title)
 
     .row.spacer
 

@@ -5,10 +5,12 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
 
-  # temporarily disable csrf for load testing. Was: protect_from_forgery with: :exception
+  # Temporarily disable csrf for load testing.
+  # Was: protect_from_forgery with: :exception
   protect_from_forgery with: :null_session
 
-  before_action :set_phase, :change_default_caching_policy
+  before_action :set_phase
+  before_action :change_default_caching_policy
   around_action :log_request_result
 
   def set_phase
@@ -33,21 +35,26 @@ class ApplicationController < ActionController::Base
   # Handle specific types of exceptions and render the appropriate error page
   # or attempt to render a generic error page if no specific error page exists
   unless Rails.application.config.consider_all_requests_local
-    rescue_from ActionController::InvalidCrossOriginRequest, with: :render403
-    rescue_from ActionController::RoutingError, with: :render404
-    rescue_from ActionController::BadRequest, with: :render400
-    rescue_from ActionView::MissingTemplate, with: :render404
-    rescue_from Exception, with: :render_exception
+    rescue_from StandardError do |e|
+      case e.class
+      when ActiveRecord::RecordNotFound, ActionController::RoutingError, ActionView::MissingTemplate
+        :render404
+      when ActionController::InvalidCrossOriginRequest
+        :render403
+      when ActiveRecord::RecordInvalid, ActionController::ParameterMissing
+        :render400
+      else
+        :handle_internal_error
+      end
+    end
   end
 
-  def render_exception(exception)
+  def handle_internal_error(exception)
+    instrument_internal_error(exception) unless exception.status == 404
     if exception.instance_of? ArgumentError
       render_error(400)
-    elsif exception.instance_of? ActionController::InvalidCrossOriginRequest
-      render_error(403)
     else
       Rails.logger.warn "No explicit error page for exception #{exception} - #{exception.class}"
-      instrument_internal_error(exception)
       render_error(500)
     end
   end
@@ -56,12 +63,16 @@ class ApplicationController < ActionController::Base
     render_error(400)
   end
 
+  def render_403(_exception = nil) # rubocop:disable Naming/VariableNumber
+    render_error(403)
+  end
+
   def render_404(_exception = nil) # rubocop:disable Naming/VariableNumber
     render_error(404)
   end
 
-  def render_403(_exception = nil) # rubocop:disable Naming/VariableNumber
-    render_error(403)
+  def render_500(_exception = nil) # rubocop:disable Naming/VariableNumber
+    render_error(500)
   end
 
   def render_error(status)
@@ -84,7 +95,7 @@ class ApplicationController < ActionController::Base
     self.response_body = nil
   end
 
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def detailed_request_log(duration)
     env = request.env
 
@@ -112,8 +123,13 @@ class ApplicationController < ActionController::Base
       Rails.logger.info(JSON.generate(log_fields))
     end
   end
-  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
+  # Notify subscriber(s) of an internal error event with the payload of the
+  # exception once done
+  # @param [Exception] exp the exception that caused the error
+  # @return [ActiveSupport::Notifications::Event] provides an object-oriented
+  # interface to the event
   def instrument_internal_error(exception)
     ActiveSupport::Notifications.instrument('internal_error.application', exception: exception)
   end

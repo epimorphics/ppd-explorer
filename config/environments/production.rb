@@ -89,14 +89,7 @@ PpdExplorer::Application.configure do
   # API_SERVICE_URL should also be specified in the entrypoint.sh file and
   # set in the Makefile as an env variable for the docker container when run as an image.
   # API_SERVICE_URL is required by both Docker image and Rails
-  config.api_service_url = ENV['API_SERVICE_URL']
-
-  # Use default paths for documentation.
-  config.accessibility_document_path = '/accessibility'
-  config.privacy_document_path = '/privacy'
-
-  # Set the contact email address to Land Registry supplied address
-  config.contact_email_address = 'data.services@mail.landregistry.gov.uk'
+  config.api_service_url = ENV.fetch('API_SERVICE_URL', nil)
 end
 
 # Set the default url options for the relative url root

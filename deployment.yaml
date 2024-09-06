@@ -3,12 +3,12 @@ name:  epimorphics/ppd-explorer
 key: ppd
 deployments:
   - branch: "prod"
-  #  deploy: "prod"
+    deploy: "prod"
     publish: "prod"
   - branch: "preprod"
     deploy: "preprod"
     publish: "preprod"
-  - branch: "dev-infrastructure"
+  - branch: "dev"
     deploy: "dev"
     publish: "dev"
   - branch: "[A-z0-9/-_]+"

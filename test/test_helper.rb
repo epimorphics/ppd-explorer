@@ -82,7 +82,7 @@ Capybara.register_driver :rack_test do |app|
 end
 
 # To see the Chrome window while tests are running, set this var to true
-see_visible_window_while_test_run = ENV['TEST_BROWSER_VISIBLE']
+see_visible_window_while_test_run = ENV.fetch('TEST_BROWSER_VISIBLE', nil)
 
 # Set Capybara to use Chrome via Selenium
 driver = see_visible_window_while_test_run ? :chrome : :headless_chrome

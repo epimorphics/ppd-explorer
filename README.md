@@ -132,6 +132,36 @@ required configuration is captured in the `Makefile`.
 
 ### Locally
 
+Create a .bundle directory in the root of the application
+
+```sh
+mkdir .bundle
+
+cd bundle
+```
+
+Add a config file to the .bundle directory
+
+```sh
+touch config
+```
+
+Then edit the config file
+
+```sh
+nano config
+```
+
+In the config file add the following details
+
+BUNDLE_RUBYGEMS__PKG__GITHUB__COM: "epimorphics:< your git hub personal access token >"
+
+Then run
+
+```sh
+bundle install
+```
+
 For developing rails applications you can start the server locally using the
 following command:
 
