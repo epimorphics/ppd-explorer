@@ -24,7 +24,7 @@ This app allows the user to explore HMLR price-paid open linked data.
 - (Jon) Updated the `lr_common_styles` gem to the latest 1.9.6 patch release.
 - (Dan) Fixes the bug search results not displaying
   [232](https://github.com/epimorphics/ppd-explorer/issues/232)
-- (Dan) Adds page titles to donwload page and error page. Improves code dryness
+- (Dan) Adds page titles to download page and error page. Improves code dryness
   [220](https://github.com/epimorphics/ppd-explorer/issues/220)
 - (Dan) Updates gemfile to use v1.9.5 lr_common_styles
 - (Dan) Adds more descriptive page titles
