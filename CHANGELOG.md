@@ -4,6 +4,12 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## Changelog
 
+## 1.7.9 - 2024-09
+
+- (Jon) Updated the type check for the current search terms to only sanitise
+  strings and pass other types, i.e. Date, Integer, as is.
+  [GH-245](https://github.com/epimorphics/ppd-explorer/issues/245)
+
 ## 1.7.8 - 2024-09
 
 - (Jon) Moved all mirrored configuration settings from individual environments

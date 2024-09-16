@@ -8,7 +8,7 @@ class SearchController < ApplicationController
     create
   end
 
-  def create
+  def create # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity
     @preferences = UserPreferences.new(params)
 
     if @preferences.empty?
@@ -33,7 +33,7 @@ class SearchController < ApplicationController
                :internal_server_error
              end
 
-    render_error_page(e, e.message, status)
+    render_error_page(e, e.message, status) if !Rails.env.development?
   end
 
   def use_compact_json?
