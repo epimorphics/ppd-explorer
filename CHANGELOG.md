@@ -52,6 +52,20 @@ This app allows the user to explore HMLR price-paid open linked data.
   for HTML output and resolve discovered XSS vulnerability in displayed results
   [GH-236](https://github.com/epimorphics/hmlr-linked-data/issues/236)
 
+## Changelog
+
+## 1.7.8 - 2024-09
+
+- (Jon) Updated the type check for the current search terms to only sanitise
+  strings and pass other types, i.e. Date, Integer, as is.
+  [GH-245](https://github.com/epimorphics/ppd-explorer/issues/245)
+
+## 1.7.7 - 2024-09
+
+- (Jon) Updated search query processing and rendering to santise supplied input
+  for HTML output and resolve discovered XSS vulnerability in displayed results
+  [GH-236](https://github.com/epimorphics/hmlr-linked-data/issues/236)
+
 ## 1.7.6 - 2024-03-08
 
 - (Jon) Updated the application_controller to include an
