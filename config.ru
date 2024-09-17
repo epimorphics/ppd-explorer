@@ -4,7 +4,7 @@
 
 require_relative 'config/environment'
 
-unless Ruby.env.test?
+unless Rails.env.test?
   require 'prometheus/middleware/collector'
   require 'prometheus/middleware/exporter'
 
