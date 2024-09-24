@@ -6,12 +6,18 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## 1.7.9 - 2024-09
 
-- (Jon) Updated the type check for the current search terms to only sanitise
-  strings and pass other types, i.e. Date, Integer, as is.
-  [GH-245](https://github.com/epimorphics/ppd-explorer/issues/245)
-
-## 1.7.8 - 2024-09
-
+- (Jon) Updated the application exceptions controller to instrument the
+  `ActiveSupport::Notifications` for internal errors
+  [GH-244](https://github.com/epimorphics/ppd-explorer/issues/244)
+- (Jon) Updated `config/initializers/prometheus.rb` to include the `Middleware
+  instrumentation` fix for the 0 memory bug by notifying Action Dispatch
+  subscribers on Prometheus initialise
+  [GH-244](https://github.com/epimorphics/ppd-explorer/issues/244)
+- (Jon) Updated `config/puma.rb` to include metrics plugin and port information
+  for the metrics endpoint as environment variable, with default, to enable
+  running multiple sibling HMLR apps locally if needed without port conflicts
+  [GH-244](https://github.com/epimorphics/ppd-explorer/issues/244)
+- (Jon) Updated the `lr_common_styles` gem to the latest 1.9.9 patch release.
 - (Jon) Moved all mirrored configuration settings from individual environments
   into the application configuration to reduce the need to manage multiple
   sources of truth
@@ -45,6 +51,12 @@ This app allows the user to explore HMLR price-paid open linked data.
   [GH-217](https://github.com/epimorphics/ppd-explorer/issues/217)
 - (Dan) updates the help modal focus flow to meet accessibility requirments
   [GH-218](https://github.com/epimorphics/ppd-explorer/issues/218)
+
+## 1.7.8 - 2024-09
+
+- (Jon) Updated the type check for the current search terms to only sanitise
+  strings and pass other types, i.e. Date, Integer, as is.
+  [GH-245](https://github.com/epimorphics/ppd-explorer/issues/245)
 
 ## 1.7.7 - 2024-09
 

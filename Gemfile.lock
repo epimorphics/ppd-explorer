@@ -348,7 +348,7 @@ GEM
       json
       lograge
       railties
-    lr_common_styles (1.9.8)
+    lr_common_styles (1.9.9)
       bootstrap-sass (~> 3.4.0)
       font-awesome-rails (~> 4.7.0.1)
       govuk_elements_rails (~> 2.0.0)
