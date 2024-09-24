@@ -4,7 +4,7 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## Changelog
 
-## Unreleased
+## 1.7.9 - 2024-09
 
 - (Jon) Updated the application exceptions controller to instrument the
   `ActiveSupport::Notifications` for internal errors
