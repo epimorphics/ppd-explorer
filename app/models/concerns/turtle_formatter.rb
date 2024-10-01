@@ -7,7 +7,7 @@ module TurtleFormatter
     props.reject { |pv| ignore_pattern && pv[:p] =~ ignore_pattern }.each(&block)
   end
 
-  def result_to_ttl(result) # rubocop:disable Metrics/MethodLength
+  def result_to_ttl(result)
     ttl_value = { properties: [] }
 
     result.map do |property, value|
@@ -24,7 +24,7 @@ module TurtleFormatter
     ttl_value
   end
 
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
   def format_ttl_value(value)
     f =
@@ -54,6 +54,6 @@ module TurtleFormatter
 
     f.html_safe
   end
-  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+  # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 end

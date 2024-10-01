@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # An individual result returned from the search service
-class SearchResult # rubocop:disable Metrics/ClassLength
+class SearchResult
   attr_reader :result
 
   PPD = 'http://landregistry.data.gov.uk/def/ppi/'

@@ -17,7 +17,7 @@ module DsapiTurtleFormatter
     results.map { |r| result_to_ttl(r) }
   end
 
-  def result_to_ttl(result) # rubocop:disable Metrics/MethodLength
+  def result_to_ttl(result)
     ttl_value = { properties: [] }
 
     result.map do |property, value|
@@ -34,7 +34,6 @@ module DsapiTurtleFormatter
     ttl_value
   end
 
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
   def format_ttl_value(value)
     f =
@@ -60,6 +59,5 @@ module DsapiTurtleFormatter
 
     f.html_safe
   end
-  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
   # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 end

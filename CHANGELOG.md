@@ -4,6 +4,54 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## Changelog
 
+## 1.7.9 - 2024-09
+
+- (Jon) Updated the application exceptions controller to instrument the
+  `ActiveSupport::Notifications` for internal errors
+  [GH-244](https://github.com/epimorphics/ppd-explorer/issues/244)
+- (Jon) Updated `config/initializers/prometheus.rb` to include the `Middleware
+  instrumentation` fix for the 0 memory bug by notifying Action Dispatch
+  subscribers on Prometheus initialise
+  [GH-244](https://github.com/epimorphics/ppd-explorer/issues/244)
+- (Jon) Updated `config/puma.rb` to include metrics plugin and port information
+  for the metrics endpoint as environment variable, with default, to enable
+  running multiple sibling HMLR apps locally if needed without port conflicts
+  [GH-244](https://github.com/epimorphics/ppd-explorer/issues/244)
+- (Jon) Updated the `lr_common_styles` gem to the latest 1.9.9 patch release.
+- (Jon) Moved all mirrored configuration settings from individual environments
+  into the application configuration to reduce the need to manage multiple
+  sources of truth
+- (Jon) Implemented improved boilerplate metrics integration to offer analysis
+  of current application usage stats
+- (Jon) Additional metrics from the Puma server to be exposed in the /metrics
+  endpoint via the puma-metrics gem
+- (Jon) Tweaked the application controller to improve error handling and
+  ensuring additional filtering for specific errors completes when able
+- (Jon) Reorganised makefile targets alphabetically as well as mirrored other
+  improvements from the other applications in the suite
+- (Jon) Updated .gitignore file to mirror the current approach in the other HMLR
+  apps
+- (Jon) Updated .rubocop.yml file with rules to reduce the need to set overrides
+  inline
+- (Jon) Updated the `lr_common_styles` gem to the latest 1.9.6 patch release.
+- (Dan) Fixes the bug search results not displaying
+  [232](https://github.com/epimorphics/ppd-explorer/issues/232)
+- (Dan) Adds page titles to download page and error page. Improves code dryness
+  [220](https://github.com/epimorphics/ppd-explorer/issues/220)
+- (Dan) Updates gemfile to use v1.9.5 lr_common_styles
+- (Dan) Adds more descriptive page titles
+  [220](https://github.com/epimorphics/ppd-explorer/issues/220)
+- (Dan) Adds search actions buttons to the top of the page
+  [226](https://github.com/epimorphics/ppd-explorer/issues/226)
+- (Dan) Increases target size of clickable elements to meet accessibility
+  requirments [GH-225](https://github.com/epimorphics/ppd-explorer/issues/225)
+- (Dan) updates the search results modal focus flow to meet accessibility
+  requirments [GH-216](https://github.com/epimorphics/ppd-explorer/issues/216)
+- (Dan) updates the form to meet various accessibility requirments
+  [GH-217](https://github.com/epimorphics/ppd-explorer/issues/217)
+- (Dan) updates the help modal focus flow to meet accessibility requirments
+  [GH-218](https://github.com/epimorphics/ppd-explorer/issues/218)
+
 ## 1.7.8 - 2024-09
 
 - (Jon) Updated the type check for the current search terms to only sanitise
@@ -37,7 +85,8 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 - (Jon) Updated the `app/controllers/application_controller.rb` to include the
   `before_action` for the `change_default_caching_policy` method to ensure the
-  default `Cache-Control` header for all requests is set to 5 minutes (300 seconds).
+  default `Cache-Control` header for all requests is set to 5 minutes (300
+  seconds).
 
 ## 1.7.3 - 2023-06-07
 
@@ -64,8 +113,8 @@ This app allows the user to explore HMLR price-paid open linked data.
   Epimorphics specific gems locally during the development of those gems.
 - (Jon) Updated the production `data_services_api` gem version to be at least
   the current version`~>1.3.3` (this is to cover out of sync release versions)
-- (Jon) Updated the production `json_rails_logger` gem version to be at least the
-  current version `~>1.3.5` (this is to cover out of sync release versions)
+- (Jon) Updated the production `json_rails_logger` gem version to be at least
+  the current version `~>1.3.5` (this is to cover out of sync release versions)
 - (Jon) Updated the production `lr_common_styles` gem version to be at least the
   current version `~>1.9.1` (this is to cover out of sync release versions)
 - (Jon) Refactored better guards in `entrypoint.sh` to ensure the required env

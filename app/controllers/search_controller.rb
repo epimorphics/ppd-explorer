@@ -8,8 +8,7 @@ class SearchController < ApplicationController
     create
   end
 
-  # rubocop:disable Metrics/MethodLength
-  def create
+  def create # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity
     @preferences = UserPreferences.new(params)
 
     if @preferences.empty?
@@ -34,9 +33,8 @@ class SearchController < ApplicationController
                :internal_server_error
              end
 
-    render_error_page(e, e.message, status)
+    render_error_page(e, e.message, status) if !Rails.env.development?
   end
-  # rubocop:enable Metrics/MethodLength
 
   def use_compact_json?
     non_compact_formats.exclude?(request.format)
@@ -66,7 +64,7 @@ class SearchController < ApplicationController
         '<p>Include the following information to support staff so that they can investigate this specific incident.</p>',
         "<p class='error bg-warning'>#{@message}.</p>",
         "<p>The trace reference for this error is<span class='sr-only px-1'> Code</span>: <code>#{uuid}</code></p>"
-      ].join.html_safe
+      ].join.html_safe # rubocop:disable Rails/OutputSafety
     render(template: template, status: status)
   end
   # rubocop:enable Layout/LineLength, Metrics/MethodLength
