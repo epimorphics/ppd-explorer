@@ -21,7 +21,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'libv8-node', '>= 16.10.0.0'
 
 # lock down the version of rubygems-update to avoid issues with rubygems
-gem 'rubygems-update', '~> 3.4', '>= 3.4.22'
+gem 'rubygems-update', '~> 3.5.21'
 
 gem 'jbuilder'
 gem 'jquery-rails'
@@ -84,5 +84,5 @@ gem 'yajl-ruby', require: 'yajl'
 source 'https://rubygems.pkg.github.com/epimorphics' do
   gem 'data_services_api', '~> 1.3.3'
   gem 'json_rails_logger', '~>1.0.0'
-  gem 'lr_common_styles', '~> 1.9', '>= 1.9.5'
+  gem 'lr_common_styles', '~>2.0.0'
 end
