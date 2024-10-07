@@ -1,7 +1,7 @@
 .PHONY:	assets auth check clean image lint local publish realclean run tag test vars
 
 ACCOUNT?=$(shell aws sts get-caller-identity | jq -r .Account)
-ALPINE_VERSION?=3.13
+ALPINE_VERSION?=3.16
 AWS_REGION?=eu-west-1
 BUNDLER_VERSION?=$(shell tail -1 Gemfile.lock | tr -d ' ')
 ECR?=${ACCOUNT}.dkr.ecr.eu-west-1.amazonaws.com
@@ -99,7 +99,7 @@ tag:
 
 test: assets
 	@echo "Running unit tests ..."
-	@./bin/rails test:unit
+	@./bin/rails test
 	@echo "Running system tests ..."
 	@./bin/rails test:system
 
