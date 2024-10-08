@@ -8,7 +8,7 @@ class SearchController < ApplicationController
     create
   end
 
-  def create # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity
+  def create # rubocop:disable Metrics/MethodLength
     @preferences = UserPreferences.new(params)
 
     if @preferences.empty?
@@ -27,13 +27,16 @@ class SearchController < ApplicationController
     e = e.cause || e
 
     status = case e
+             when RoutingError, MissingTemplate
+               :not_found
              when MalformedSearchError, ArgumentError
                :bad_request
              else
                :internal_server_error
              end
 
-    render_error_page(e, e.message, status) if !Rails.env.development?
+    # To test the error page in development, set the RAILS_ENV to production or test
+    render_error_page(e, e.message, status) unless Rails.env.development?
   end
 
   def use_compact_json?
