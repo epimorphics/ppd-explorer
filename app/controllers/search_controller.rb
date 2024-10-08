@@ -57,10 +57,10 @@ class SearchController < ApplicationController
     @message = message
 
     # log the error with as much detail as possible in development to aid in resolving the issue
-    @message = "#{err.class.name} error: #{message}" if Rails.env.development?
+    @message = "#{Rack::Utils::SYMBOL_TO_STATUS_CODE[status]} ~ #{err.class.name} error: #{message}" if Rails.env.development?
 
     # Keep it simple silly in production!
-    Rails.logger.error message
+    log_error(Rack::Utils::SYMBOL_TO_STATUS_CODE[status], message)
 
     @error_message =
       [
@@ -71,4 +71,17 @@ class SearchController < ApplicationController
     render(template: template, status: status)
   end
   # rubocop:enable Layout/LineLength, Metrics/MethodLength
+
+  # Log the error with the appropriate log level based on the status code
+  def log_error(status, message)
+    case Rack::Utils::SYMBOL_TO_STATUS_CODE[status]
+    when 500..599
+      Rails.logger.error(message)
+    when 400..499
+      Rails.logger.warn(message)
+    else
+      Rails.logger.info(message)
+    end
+  end
+
 end
