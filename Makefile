@@ -69,10 +69,8 @@ lint: assets
 	@./bin/bundle exec rubocop
 
 local:
-	@echo "Installing all packages ..."
-	@./bin/bundle install
 	@echo "Starting local server ..."
-	@./bin/rails server -p ${PORT}
+	@API_SERVICE_URL=${API_SERVICE_URL} ./bin/rails server -p ${PORT}
 
 publish: image
 	@echo Publishing image: ${REPO}:${TAG} ...
@@ -98,8 +96,8 @@ tag:
 	@echo ${TAG}
 
 test: assets
-	@echo "Running unit tests ..."
-	@./bin/rails test:unit
+	@echo "Running tests ..."
+	@./bin/rails test
 	@echo "Running system tests ..."
 	@./bin/rails test:system
 
