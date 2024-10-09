@@ -8,6 +8,12 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 - (Dan) Updates ruby version to 2.7.8 and alpine version to 3.16 [GH-253](https://github.com/epimorphics/ppd-explorer/issues/253)
 
+## 1.7.11 - 2024-10
+
+- (JOn) Cleans up erroneous make commands
+- (Jon) Resolves failing tests for summary comparison due to updated copy
+- (Jon) Resolves `uninitialized constant SearchController::RoutingError` error
+
 ## 1.7.10 - 2024-10
 
 - (Jon) Updated the message reported to the error page while in development mode
