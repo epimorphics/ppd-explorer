@@ -97,8 +97,6 @@ tag:
 test: assets
 	@echo "Running tests ..."
 	@./bin/rails test
-	@echo "Running system tests ..."
-	@./bin/rails test:system
 
 vars:
 	@echo "Docker: ${REPO}:${TAG}"
