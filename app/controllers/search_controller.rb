@@ -25,8 +25,12 @@ class SearchController < ApplicationController
     end
   rescue StandardError => e
     e = e.cause || e
+    rescue_standard_error(e)
+  end
 
-    status = case e
+  # Determine status symbol to pass to the error page
+  def rescue_standard_error(err)
+    status = case err
              when RoutingError, MissingTemplate
                :not_found
              when MalformedSearchError, ArgumentError
@@ -34,9 +38,9 @@ class SearchController < ApplicationController
              else
                :internal_server_error
              end
-
-    # To test the error page in development, set the RAILS_ENV to production or test
-    render_error_page(e, e.message, status) unless Rails.env.development?
+    # Display the actual rails error stack trace while in development
+    render_error_page(err, err.message, status) unless Rails.env.development?
+    # To check the error page in development, set the RAILS_ENV to production or test
   end
 
   def use_compact_json?
