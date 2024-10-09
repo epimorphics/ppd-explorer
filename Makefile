@@ -37,7 +37,6 @@ ${GITHUB_TOKEN}:
 all: image
 
 assets: auth
-	@./bin/bundle config set --local without 'development test'
 	@./bin/bundle install
 	@./bin/rails assets:clean assets:precompile
 
