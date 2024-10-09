@@ -37,7 +37,6 @@ ${GITHUB_TOKEN}:
 all: image
 
 assets: auth
-	@./bin/bundle config set --local without 'development test'
 	@./bin/bundle install
 	@./bin/rails assets:clean assets:precompile
 
@@ -98,8 +97,6 @@ tag:
 test: assets
 	@echo "Running tests ..."
 	@./bin/rails test
-	@echo "Running system tests ..."
-	@./bin/rails test:system
 
 vars:
 	@echo "Docker: ${REPO}:${TAG}"

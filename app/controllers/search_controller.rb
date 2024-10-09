@@ -31,8 +31,6 @@ class SearchController < ApplicationController
   # Determine status symbol to pass to the error page
   def rescue_standard_error(err)
     status = case err
-             when RoutingError, MissingTemplate
-               :not_found
              when MalformedSearchError, ArgumentError
                :bad_request
              else

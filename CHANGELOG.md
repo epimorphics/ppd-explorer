@@ -4,6 +4,12 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## Changelog
 
+## 1.7.11 - 2024-10
+
+- (JOn) Cleans up erroneous make commands
+- (Jon) Resolves failing tests for summary comparison due to updated copy
+- (Jon) Resolves `uninitialized constant SearchController::RoutingError` error
+
 ## 1.7.10 - 2024-10
 
 - (Jon) Updated the message reported to the error page while in development mode
