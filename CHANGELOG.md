@@ -4,6 +4,21 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## Changelog
 
+## 1.7.10 - 2024-10
+
+- (Jon) Updated the message reported to the error page while in development mode
+  to include the error message and the status code; also configured the helper
+  to display the actual rails stack trace in development mode
+- (Jon) Added the `log_error` helper to the `render_error_page` helper method in
+  the `search_controller` to apply the appropriate log level based on the status
+  code
+- (Jon) Added `RoutingError` and `MissingTemplate` to the list of exceptions to
+  be caught by the `render_error_page` helper method in the `search_controller`
+- (Jon) Wrapped the Internal Error Instrumentation in an `unless` block to
+  ensure the application does not report internal errors to the Prometheus
+  metrics when the error is a 404 or 422 thereby reducing the noise in the Slack
+  alerts channel
+
 ## 1.7.9 - 2024-09
 
 - (Jon) Updated the application exceptions controller to instrument the

@@ -8,7 +8,7 @@ class SearchController < ApplicationController
     create
   end
 
-  def create # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity
+  def create # rubocop:disable Metrics/MethodLength
     @preferences = UserPreferences.new(params)
 
     if @preferences.empty?
@@ -25,15 +25,22 @@ class SearchController < ApplicationController
     end
   rescue StandardError => e
     e = e.cause || e
+    rescue_standard_error(e)
+  end
 
-    status = case e
+  # Determine status symbol to pass to the error page
+  def rescue_standard_error(err)
+    status = case err
+             when RoutingError, MissingTemplate
+               :not_found
              when MalformedSearchError, ArgumentError
                :bad_request
              else
                :internal_server_error
              end
-
-    render_error_page(e, e.message, status) if !Rails.env.development?
+    # Display the actual rails error stack trace while in development
+    render_error_page(err, err.message, status) unless Rails.env.development?
+    # To check the error page in development, set the RAILS_ENV to production or test
   end
 
   def use_compact_json?
@@ -54,10 +61,10 @@ class SearchController < ApplicationController
     @message = message
 
     # log the error with as much detail as possible in development to aid in resolving the issue
-    @message = "#{err.class.name} error: #{message}" if Rails.env.development?
+    @message = "#{Rack::Utils::SYMBOL_TO_STATUS_CODE[status]} ~ #{err.class.name} error: #{message}" if Rails.env.development?
 
     # Keep it simple silly in production!
-    Rails.logger.error message
+    log_error(Rack::Utils::SYMBOL_TO_STATUS_CODE[status], message)
 
     @error_message =
       [
@@ -68,4 +75,17 @@ class SearchController < ApplicationController
     render(template: template, status: status)
   end
   # rubocop:enable Layout/LineLength, Metrics/MethodLength
+
+  # Log the error with the appropriate log level based on the status code
+  def log_error(status, message)
+    case status
+    when 500..599
+      Rails.logger.error(message)
+    when 400..499
+      Rails.logger.warn(message)
+    else
+      Rails.logger.info(message)
+    end
+  end
+
 end
