@@ -74,7 +74,7 @@ class SearchController < ApplicationController
 
   # Log the error with the appropriate log level based on the status code
   def log_error(status, message)
-    case Rack::Utils::SYMBOL_TO_STATUS_CODE[status]
+    case status
     when 500..599
       Rails.logger.error(message)
     when 400..499
