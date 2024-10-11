@@ -37,7 +37,6 @@ ${GITHUB_TOKEN}:
 all: image
 
 assets: auth
-	@./bin/bundle config set --local without 'development test'
 	@./bin/bundle install
 	@./bin/rails assets:clean assets:precompile
 
@@ -69,10 +68,8 @@ lint: assets
 	@./bin/bundle exec rubocop
 
 local:
-	@echo "Installing all packages ..."
-	@./bin/bundle install
 	@echo "Starting local server ..."
-	@./bin/rails server -p ${PORT}
+	@API_SERVICE_URL=${API_SERVICE_URL} ./bin/rails server -p ${PORT}
 
 publish: image
 	@echo Publishing image: ${REPO}:${TAG} ...
@@ -98,10 +95,8 @@ tag:
 	@echo ${TAG}
 
 test: assets
-	@echo "Running unit tests ..."
+	@echo "Running tests ..."
 	@./bin/rails test
-	@echo "Running system tests ..."
-	@./bin/rails test:system
 
 vars:
 	@echo "Docker: ${REPO}:${TAG}"
