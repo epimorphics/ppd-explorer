@@ -20,7 +20,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
           match = query_command
                   .search_results
                   .summarise
-                  .match(/Showing (\d+) transactions \(from (\d*) matching transactions\) for (\d+) properties/)
+                  .match(/Showing (\d+) transactions \(from (\d*) or more matching transactions\) for (\d+) properties/)
 
           _(query_command.size).must_equal 10
 

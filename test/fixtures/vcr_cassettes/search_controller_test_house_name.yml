@@ -128,4 +128,89 @@ http_interactions:
       encoding: UTF-8
       string: '{"meta":{"@id":"http://localhost//landregistry/id/ppd?_count=%40id&_limit=10000&search-paon=rose+cottage&searchPath=propertyAddress","publisher":"","license":"","licenseName":"","comment":"","version":"0.1","hasFormat":["http://localhost//landregistry/id/ppd.ttl?_count=%40id&_limit=10000&search-paon=rose+cottage&searchPath=propertyAddress","http://localhost//landregistry/id/ppd.html?_count=%40id&_limit=10000&search-paon=rose+cottage&searchPath=propertyAddress","http://localhost//landregistry/id/ppd.json?_count=%40id&_limit=10000&search-paon=rose+cottage&searchPath=propertyAddress","http://localhost//landregistry/id/ppd.csv?_count=%40id&_limit=10000&search-paon=rose+cottage&searchPath=propertyAddress","http://localhost//landregistry/id/ppd.rdf?_count=%40id&_limit=10000&search-paon=rose+cottage&searchPath=propertyAddress","http://localhost//landregistry/id/ppd.geojson?_count=%40id&_limit=10000&search-paon=rose+cottage&searchPath=propertyAddress"],"limit":10000},"items":[{"count":9933}]}'
   recorded_at: Mon, 10 Jan 2022 16:16:13 GMT
-recorded_with: VCR 6.0.0
+- request:
+    method: get
+    uri: http://localhost:8888/landregistry/id/ppd?_limit=10&search-paon=rose+cottage&searchPath=propertyAddress
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.10.0
+      Accept:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      sleuth-trace-id:
+      - 956b60bbe6f40710
+      sleuth-span-id:
+      - 956b60bbe6f40710
+      vary:
+      - Accept
+      cache-control:
+      - max-age=0
+      content-type:
+      - application/json
+      transfer-encoding:
+      - chunked
+      date:
+      - Wed, 09 Oct 2024 15:03:24 GMT
+    body:
+      encoding: UTF-8
+      string: '{"meta":{"@id":"http://localhost//landregistry/id/ppd?_limit=10&search-paon=rose+cottage&searchPath=propertyAddress","publisher":"","license":"","licenseName":"","comment":"","version":"0.1","hasFormat":["http://localhost//landregistry/id/ppd.geojson?_limit=10&search-paon=rose+cottage&searchPath=propertyAddress","http://localhost//landregistry/id/ppd.json?_limit=10&search-paon=rose+cottage&searchPath=propertyAddress","http://localhost//landregistry/id/ppd.rdf?_limit=10&search-paon=rose+cottage&searchPath=propertyAddress","http://localhost//landregistry/id/ppd.csv?_limit=10&search-paon=rose+cottage&searchPath=propertyAddress","http://localhost//landregistry/id/ppd.ttl?_limit=10&search-paon=rose+cottage&searchPath=propertyAddress","http://localhost//landregistry/id/ppd.html?_limit=10&search-paon=rose+cottage&searchPath=propertyAddress"],"limit":10},"items":[{"@id":"http://landregistry.data.gov.uk/data/ppi/transaction/7816AE23-25C1-4FAB-BF67-746FF943DFB1/current","propertyAddress":{"@id":"http://landregistry.data.gov.uk/data/ppi/address/0c4999925a9ef91a5ba138472b385b68264bac19","county":"LEICESTERSHIRE","district":"HARBOROUGH","locality":"KEYTHORPE","paon":"ROSE
+        COTTAGE FARM","postcode":"LE7 9XG","street":"CRACKBOTTLE ROAD","town":"LEICESTER"},"newBuild":false,"estateType":{"@id":"http://landregistry.data.gov.uk/def/common/freehold"},"transactionCategory":{"@id":"http://landregistry.data.gov.uk/def/ppi/standardPricePaidTransaction"},"pricePaid":374500,"transactionDate":"1999-03-25","propertyType":{"@id":"http://landregistry.data.gov.uk/def/common/detached"},"hasTransaction":{"@id":"http://landregistry.data.gov.uk/data/ppi/transaction/7816AE23-25C1-4FAB-BF67-746FF943DFB1"},"transactionId":"7816AE23-25C1-4FAB-BF67-746FF943DFB1","recordStatus":{"@id":"http://landregistry.data.gov.uk/def/ppi/add"}},{"@id":"http://landregistry.data.gov.uk/data/ppi/transaction/907A0E7C-0995-4675-8935-B4016429858B/current","propertyAddress":{"@id":"http://landregistry.data.gov.uk/data/ppi/address/952859e822d567dd5b524c1d23c27a49a63264aa","county":"NORFOLK","district":"BRECKLAND","locality":"WATTON","paon":"ROSE
+        COTTAGE, 31","postcode":"IP25 6RB","street":"WATTON GREEN","town":"THETFORD"},"newBuild":false,"estateType":{"@id":"http://landregistry.data.gov.uk/def/common/freehold"},"transactionCategory":{"@id":"http://landregistry.data.gov.uk/def/ppi/standardPricePaidTransaction"},"pricePaid":114000,"transactionDate":"2013-01-14","propertyType":{"@id":"http://landregistry.data.gov.uk/def/common/terraced"},"hasTransaction":{"@id":"http://landregistry.data.gov.uk/data/ppi/transaction/907A0E7C-0995-4675-8935-B4016429858B"},"transactionId":"907A0E7C-0995-4675-8935-B4016429858B","recordStatus":{"@id":"http://landregistry.data.gov.uk/def/ppi/add"}},{"@id":"http://landregistry.data.gov.uk/data/ppi/transaction/892105F2-2D12-4D80-A63F-E691DE709D02/current","propertyAddress":{"@id":"http://landregistry.data.gov.uk/data/ppi/address/90128d946b370ad87e6d4dfc72fd9e5c66b7fa1d","county":"NORTH
+        YORKSHIRE","district":"HAMBLETON","locality":"WEST ROUNTON","paon":"ROSE COTTAGE","postcode":"DL6
+        2LW","town":"NORTHALLERTON"},"newBuild":false,"estateType":{"@id":"http://landregistry.data.gov.uk/def/common/freehold"},"transactionCategory":{"@id":"http://landregistry.data.gov.uk/def/ppi/standardPricePaidTransaction"},"pricePaid":84000,"transactionDate":"2000-12-07","propertyType":{"@id":"http://landregistry.data.gov.uk/def/common/semi-detached"},"hasTransaction":{"@id":"http://landregistry.data.gov.uk/data/ppi/transaction/892105F2-2D12-4D80-A63F-E691DE709D02"},"transactionId":"892105F2-2D12-4D80-A63F-E691DE709D02","recordStatus":{"@id":"http://landregistry.data.gov.uk/def/ppi/add"}},{"@id":"http://landregistry.data.gov.uk/data/ppi/transaction/9EB8C736-0B14-4348-972C-E6058F1C80AC/current","propertyAddress":{"@id":"http://landregistry.data.gov.uk/data/ppi/address/90128d946b370ad87e6d4dfc72fd9e5c66b7fa1d","county":"NORTH
+        YORKSHIRE","district":"HAMBLETON","locality":"WEST ROUNTON","paon":"ROSE COTTAGE","postcode":"DL6
+        2LW","town":"NORTHALLERTON"},"newBuild":false,"estateType":{"@id":"http://landregistry.data.gov.uk/def/common/freehold"},"transactionCategory":{"@id":"http://landregistry.data.gov.uk/def/ppi/standardPricePaidTransaction"},"pricePaid":155000,"transactionDate":"2013-01-16","propertyType":{"@id":"http://landregistry.data.gov.uk/def/common/semi-detached"},"hasTransaction":{"@id":"http://landregistry.data.gov.uk/data/ppi/transaction/9EB8C736-0B14-4348-972C-E6058F1C80AC"},"transactionId":"9EB8C736-0B14-4348-972C-E6058F1C80AC","recordStatus":{"@id":"http://landregistry.data.gov.uk/def/ppi/add"}},{"@id":"http://landregistry.data.gov.uk/data/ppi/transaction/42A5A709-9658-56E8-E050-A8C06205331E/current","propertyAddress":{"@id":"http://landregistry.data.gov.uk/data/ppi/address/90128d946b370ad87e6d4dfc72fd9e5c66b7fa1d","county":"NORTH
+        YORKSHIRE","district":"HAMBLETON","locality":"WEST ROUNTON","paon":"ROSE COTTAGE","postcode":"DL6
+        2LW","town":"NORTHALLERTON"},"newBuild":false,"estateType":{"@id":"http://landregistry.data.gov.uk/def/common/freehold"},"transactionCategory":{"@id":"http://landregistry.data.gov.uk/def/ppi/standardPricePaidTransaction"},"pricePaid":195000,"transactionDate":"2016-07-21","propertyType":{"@id":"http://landregistry.data.gov.uk/def/common/terraced"},"hasTransaction":{"@id":"http://landregistry.data.gov.uk/data/ppi/transaction/42A5A709-9658-56E8-E050-A8C06205331E"},"transactionId":"42A5A709-9658-56E8-E050-A8C06205331E","recordStatus":{"@id":"http://landregistry.data.gov.uk/def/ppi/add"}},{"@id":"http://landregistry.data.gov.uk/data/ppi/transaction/BC8936BB-DA14-0E2C-E053-6C04A8C0DBF4/current","propertyAddress":{"@id":"http://landregistry.data.gov.uk/data/ppi/address/90128d946b370ad87e6d4dfc72fd9e5c66b7fa1d","county":"NORTH
+        YORKSHIRE","district":"HAMBLETON","locality":"WEST ROUNTON","paon":"ROSE COTTAGE","postcode":"DL6
+        2LW","town":"NORTHALLERTON"},"newBuild":false,"estateType":{"@id":"http://landregistry.data.gov.uk/def/common/freehold"},"transactionCategory":{"@id":"http://landregistry.data.gov.uk/def/ppi/standardPricePaidTransaction"},"pricePaid":190000,"transactionDate":"2020-06-08","propertyType":{"@id":"http://landregistry.data.gov.uk/def/common/terraced"},"hasTransaction":{"@id":"http://landregistry.data.gov.uk/data/ppi/transaction/BC8936BB-DA14-0E2C-E053-6C04A8C0DBF4"},"transactionId":"BC8936BB-DA14-0E2C-E053-6C04A8C0DBF4","recordStatus":{"@id":"http://landregistry.data.gov.uk/def/ppi/add"}},{"@id":"http://landregistry.data.gov.uk/data/ppi/transaction/6827D2ED-475D-4BC4-A0FD-E25D865EC013/current","propertyAddress":{"@id":"http://landregistry.data.gov.uk/data/ppi/address/90128d946b370ad87e6d4dfc72fd9e5c66b7fa1d","county":"NORTH
+        YORKSHIRE","district":"HAMBLETON","locality":"WEST ROUNTON","paon":"ROSE COTTAGE","postcode":"DL6
+        2LW","town":"NORTHALLERTON"},"newBuild":false,"estateType":{"@id":"http://landregistry.data.gov.uk/def/common/freehold"},"transactionCategory":{"@id":"http://landregistry.data.gov.uk/def/ppi/standardPricePaidTransaction"},"pricePaid":63000,"transactionDate":"1995-11-29","propertyType":{"@id":"http://landregistry.data.gov.uk/def/common/semi-detached"},"hasTransaction":{"@id":"http://landregistry.data.gov.uk/data/ppi/transaction/6827D2ED-475D-4BC4-A0FD-E25D865EC013"},"transactionId":"6827D2ED-475D-4BC4-A0FD-E25D865EC013","recordStatus":{"@id":"http://landregistry.data.gov.uk/def/ppi/add"}},{"@id":"http://landregistry.data.gov.uk/data/ppi/transaction/F92888B0-E3A1-499F-82CC-1E99349CCDC1/current","propertyAddress":{"@id":"http://landregistry.data.gov.uk/data/ppi/address/99baaa005a2b4366117a1f71c3ccd6abf1bb03a6","county":"ISLE
+        OF WIGHT","district":"ISLE OF WIGHT","locality":"NITON","paon":"ROSE COTTAGE","postcode":"PO38
+        2DN","street":"LACEYS LANE","town":"VENTNOR"},"newBuild":false,"estateType":{"@id":"http://landregistry.data.gov.uk/def/common/freehold"},"transactionCategory":{"@id":"http://landregistry.data.gov.uk/def/ppi/standardPricePaidTransaction"},"pricePaid":135000,"transactionDate":"2006-04-25","propertyType":{"@id":"http://landregistry.data.gov.uk/def/common/semi-detached"},"hasTransaction":{"@id":"http://landregistry.data.gov.uk/data/ppi/transaction/F92888B0-E3A1-499F-82CC-1E99349CCDC1"},"transactionId":"F92888B0-E3A1-499F-82CC-1E99349CCDC1","recordStatus":{"@id":"http://landregistry.data.gov.uk/def/ppi/add"}},{"@id":"http://landregistry.data.gov.uk/data/ppi/transaction/D707E535-6342-0AD9-E053-6B04A8C067CC/current","propertyAddress":{"@id":"http://landregistry.data.gov.uk/data/ppi/address/99baaa005a2b4366117a1f71c3ccd6abf1bb03a6","county":"ISLE
+        OF WIGHT","district":"ISLE OF WIGHT","locality":"NITON","paon":"ROSE COTTAGE","postcode":"PO38
+        2DN","street":"LACEYS LANE","town":"VENTNOR"},"newBuild":false,"estateType":{"@id":"http://landregistry.data.gov.uk/def/common/freehold"},"transactionCategory":{"@id":"http://landregistry.data.gov.uk/def/ppi/standardPricePaidTransaction"},"pricePaid":380000,"transactionDate":"2021-12-16","propertyType":{"@id":"http://landregistry.data.gov.uk/def/common/semi-detached"},"hasTransaction":{"@id":"http://landregistry.data.gov.uk/data/ppi/transaction/D707E535-6342-0AD9-E053-6B04A8C067CC"},"transactionId":"D707E535-6342-0AD9-E053-6B04A8C067CC","recordStatus":{"@id":"http://landregistry.data.gov.uk/def/ppi/add"}},{"@id":"http://landregistry.data.gov.uk/data/ppi/transaction/868F05C3-3AB2-4131-86F4-882E4ADECD03/current","propertyAddress":{"@id":"http://landregistry.data.gov.uk/data/ppi/address/7267ea8bb76da37df5772738e3e34dc872d9edde","county":"NORFOLK","district":"BRECKLAND","locality":"LITTLE
+        ELLINGHAM","paon":"ROSE COTTAGE","postcode":"NR17 1JX","street":"ANCHOR CORNER","town":"ATTLEBOROUGH"},"newBuild":false,"estateType":{"@id":"http://landregistry.data.gov.uk/def/common/freehold"},"transactionCategory":{"@id":"http://landregistry.data.gov.uk/def/ppi/standardPricePaidTransaction"},"pricePaid":153000,"transactionDate":"2005-08-31","propertyType":{"@id":"http://landregistry.data.gov.uk/def/common/semi-detached"},"hasTransaction":{"@id":"http://landregistry.data.gov.uk/data/ppi/transaction/868F05C3-3AB2-4131-86F4-882E4ADECD03"},"transactionId":"868F05C3-3AB2-4131-86F4-882E4ADECD03","recordStatus":{"@id":"http://landregistry.data.gov.uk/def/ppi/add"}}]}'
+  recorded_at: Wed, 09 Oct 2024 15:03:24 GMT
+- request:
+    method: get
+    uri: http://localhost:8888/landregistry/id/ppd?_count=%40id&_limit=10000&search-paon=rose+cottage&searchPath=propertyAddress
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.10.0
+      Accept:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      sleuth-trace-id:
+      - b4d6a88920907638
+      sleuth-span-id:
+      - b4d6a88920907638
+      vary:
+      - Accept
+      cache-control:
+      - max-age=0
+      content-type:
+      - application/json
+      content-length:
+      - '1000'
+      date:
+      - Wed, 09 Oct 2024 15:03:24 GMT
+    body:
+      encoding: UTF-8
+      string: '{"meta":{"@id":"http://localhost//landregistry/id/ppd?_count=%40id&_limit=10000&search-paon=rose+cottage&searchPath=propertyAddress","publisher":"","license":"","licenseName":"","comment":"","version":"0.1","hasFormat":["http://localhost//landregistry/id/ppd.ttl?_count=%40id&_limit=10000&search-paon=rose+cottage&searchPath=propertyAddress","http://localhost//landregistry/id/ppd.html?_count=%40id&_limit=10000&search-paon=rose+cottage&searchPath=propertyAddress","http://localhost//landregistry/id/ppd.json?_count=%40id&_limit=10000&search-paon=rose+cottage&searchPath=propertyAddress","http://localhost//landregistry/id/ppd.csv?_count=%40id&_limit=10000&search-paon=rose+cottage&searchPath=propertyAddress","http://localhost//landregistry/id/ppd.rdf?_count=%40id&_limit=10000&search-paon=rose+cottage&searchPath=propertyAddress","http://localhost//landregistry/id/ppd.geojson?_count=%40id&_limit=10000&search-paon=rose+cottage&searchPath=propertyAddress"],"limit":10000},"items":[{"count":10000}]}'
+  recorded_at: Wed, 09 Oct 2024 15:03:25 GMT
+recorded_with: VCR 6.1.0
