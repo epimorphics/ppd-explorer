@@ -4,6 +4,10 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## Changelog
 
+## 1.8.1 - 2024-11
+
+- (Dan) Updates bundler version to 2.5.20 [GH-259](https://github.com/epimorphics/ppd-explorer/issues/259)
+
 ## 1.8.0 - 2024-10
 
 - (Dan) Updates ruby version to 2.7.8 and alpine version to 3.16 [GH-253](https://github.com/epimorphics/ppd-explorer/issues/253)
