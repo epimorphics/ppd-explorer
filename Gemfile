@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-gem 'execjs', '< 2.8.0'
+gem 'execjs'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
@@ -14,14 +14,13 @@ gem 'puma'
 gem 'sass-rails'
 
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+gem 'uglifier'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
-gem 'libv8-node', '>= 16.10.0.0'
+gem 'libv8-node'
 
-# lock down the version of rubygems-update to avoid issues with rubygems
-gem 'rubygems-update', '~> 3.4', '>= 3.4.22'
+gem 'rubygems-update'
 
 gem 'jbuilder'
 gem 'jquery-rails'
@@ -68,24 +67,23 @@ gem 'faraday_middleware'
 gem 'font-awesome-rails'
 gem 'get_process_mem'
 gem 'jquery-ui-rails'
-gem 'prometheus-client', '~> 4.0'
-gem 'sentry-rails', '~> 5.2'
+gem 'prometheus-client'
+gem 'sentry-rails'
 gem 'yajl-ruby', require: 'yajl'
 
 gem 'puma-metrics'
 
+# TODO: In production you want to set this to the gem from the epimorphics package repo
+source 'https://rubygems.pkg.github.com/epimorphics' do
+  gem 'data_services_api'
+  gem 'json_rails_logger', '~>1.0.0'
+  gem 'lr_common_styles'
+end
 
 # rubocop:disable Layout/LineLength
 # TODO: While running the rails app locally for testing you can set gems to your local path
 # ! These "local" paths do not work with a docker image - use the repo instead
-# gem 'data_services_api', '~> 1.3.3', path: '~/Epimorphics/shared/data_services_api/'
-# gem 'json_rails_logger', '~>1.0.0', path: '~/Epimorphics/shared/json-rails-logger/'
-# gem 'lr_common_styles', '~> 1.9.0', path: '~/Epimorphics/clients/land-registry/projects/lr_common_styles/'
+# gem 'data_services_api', path: '~/Epimorphics/shared/data_services_api'
+# gem 'json_rails_logger', path: '~/Epimorphics/shared/json-rails-logger'
+# gem 'lr_common_styles', path: '~/Epimorphics/clients/land-registry/projects/lr_common_styles'
 # rubocop:enable Layout/LineLength
-
-# TODO: In production you want to set this to the gem from the epimorphics package repo
-source 'https://rubygems.pkg.github.com/epimorphics' do
-  gem 'data_services_api', '~> 1.3.3'
-  gem 'json_rails_logger', '~>1.0.0'
-  gem 'lr_common_styles', '~> 2.0' # set as this version as bundler breaks otherwise
-end
