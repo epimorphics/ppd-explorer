@@ -76,7 +76,7 @@ gem 'puma-metrics'
 # TODO: In production you want to set this to the gem from the epimorphics package repo
 source 'https://rubygems.pkg.github.com/epimorphics' do
   gem 'data_services_api'
-  gem 'json_rails_logger', '~>1.0.0'
+  gem 'json_rails_logger'
   gem 'lr_common_styles'
 end
 
