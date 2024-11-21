@@ -1,4 +1,6 @@
-# frozen-string-literal: true
+# frozen_string_literal: true
+
+require 'version'
 
 if ENV['SENTRY_API_KEY']
   Sentry.init do |config|
