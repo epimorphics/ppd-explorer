@@ -15,3 +15,11 @@
 //= require bootstrap
 //= require lr_common_styles/application
 //= require_tree .
+
+//= link favicon/apple-touch-icon.png
+//= link favicon/favicon-32x32.png
+//= link favicon/favicon-16x16.png
+//= link favicon/manifest.json
+//= link favicon/safari-pinned-tab.svg
+//= link favicon/favicon.ico
+//= link favicon/browserconfig.xml
