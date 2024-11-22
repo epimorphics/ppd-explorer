@@ -4,6 +4,13 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## Changelog
 
+## 2.0.0 - 2024-11
+
+- (Bogdan) Updated all gems by regenerating `Gemfile.lock`
+- (Bogdan) Upgraded alpine to `3.20`
+- (Bogdan) Upgraded rails to `7.2.2`
+- (Bogdan) Upgraded ruby to `3.3.5`
+
 ## 1.8.0 - 2024-10
 
 - (Dan) Updates ruby version to 2.7.8 and alpine version to 3.16 [GH-253](https://github.com/epimorphics/ppd-explorer/issues/253)
