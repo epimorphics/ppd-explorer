@@ -20,8 +20,6 @@ gem 'uglifier'
 # gem 'therubyracer', platforms: :ruby
 gem 'libv8-node'
 
-gem 'rubygems-update'
-
 gem 'jbuilder'
 gem 'jquery-rails'
 
