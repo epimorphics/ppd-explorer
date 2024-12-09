@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # :nodoc:
-class ApplicationController < ActionController::Base
+class ApplicationController < ActionController::Base # rubocop:disable Metrics/ClassLength
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
 
@@ -38,7 +38,11 @@ class ApplicationController < ActionController::Base
     rescue_from StandardError do |e|
       # Instrument ActiveSupport::Notifications for internal errors but only for non-404 errors:
       unless e.is_a?(ActionController::RoutingError) || e.is_a?(ActionView::MissingTemplate)
-        ActiveSupport::Notifications.instrument('internal_error.application', exception: e)
+        instrument_internal_error({
+                                    message: e,
+                                    status: e.status || Rack::Utils::SYMBOL_TO_STATUS_CODE[e],
+                                    type: e.class.name
+                                  })
       end
 
       # Trigger the appropriate error handling method based on the exception
@@ -128,5 +132,10 @@ class ApplicationController < ActionController::Base
       Rails.logger.info(JSON.generate(log_fields))
     end
   end
+
+  def instrument_internal_error(exc)
+    ActiveSupport::Notifications.instrument('internal_error.application', exception: exc)
+  end
+
   # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 end

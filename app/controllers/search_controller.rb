@@ -56,13 +56,24 @@ class SearchController < ApplicationController
     # link the error to the actual request id otherwise generate one for this error
     uuid = Thread.current[:request_id] || SecureRandom.uuid
 
+    status_code = Rack::Utils::SYMBOL_TO_STATUS_CODE[status]
+
     @message = message
 
     # log the error with as much detail as possible in development to aid in resolving the issue
-    @message = "#{Rack::Utils::SYMBOL_TO_STATUS_CODE[status]} ~ #{err.class.name} error: #{message}" if Rails.env.development?
+    @message = "#{status_code} ~ #{err.class.name} error: #{message}" if Rails.env.development?
 
     # Keep it simple silly in production!
-    log_error(Rack::Utils::SYMBOL_TO_STATUS_CODE[status], message)
+    log_error(status_code, message)
+
+    # Trigger metric on internal errors
+    unless status_code == 404
+      instrument_internal_error({
+                                  message: message,
+                                  status: status_code,
+                                  type: err.class.name
+                                })
+    end
 
     @error_message =
       [
