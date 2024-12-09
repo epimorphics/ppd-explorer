@@ -4,6 +4,14 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## Changelog
 
+## Unreleased
+
+- (Jon) Added catch for missing `SENTRY_API_KEY` env var to entrypoint.sh for
+  docker build
+- (Jon) Added `message`, `status`, and `type` arguments to be logged by the
+  `json_rails_logger` gem for respective error responses
+- (Jon)
+
 ## 2.0.0 - 2024-11
 
 - (Bogdan) Updated all gems by regenerating `Gemfile.lock`
@@ -13,7 +21,8 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## 1.8.0 - 2024-10
 
-- (Dan) Updates ruby version to 2.7.8 and alpine version to 3.16 [GH-253](https://github.com/epimorphics/ppd-explorer/issues/253)
+- (Dan) Updates ruby version to 2.7.8 and alpine version to 3.16
+  [GH-253](https://github.com/epimorphics/ppd-explorer/issues/253)
 
 ## 1.7.11 - 2024-10
 
