@@ -36,15 +36,6 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   # or attempt to render a generic error page if no specific error page exists
   unless Rails.application.config.consider_all_requests_local
     rescue_from StandardError do |e|
-      # Instrument ActiveSupport::Notifications for internal errors but only for non-404 errors:
-      unless e.is_a?(ActionController::RoutingError) || e.is_a?(ActionView::MissingTemplate)
-        instrument_internal_error({
-                                    message: e,
-                                    status: e.status || Rack::Utils::SYMBOL_TO_STATUS_CODE[e],
-                                    type: e.class.name
-                                  })
-      end
-
       # Trigger the appropriate error handling method based on the exception
       case e.class
       when ActionController::RoutingError, ActionView::MissingTemplate
