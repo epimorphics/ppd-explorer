@@ -67,7 +67,7 @@ class SearchController < ApplicationController
     log_error(status_code, message)
 
     # Trigger metric on internal errors
-    unless status_code == 404
+    if status_code >= 500
       instrument_internal_error({
                                   message: message,
                                   status: status_code,
@@ -96,5 +96,4 @@ class SearchController < ApplicationController
       Rails.logger.info(message)
     end
   end
-
 end
