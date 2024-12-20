@@ -4,6 +4,22 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## Changelog
 
+## 2.0.1 - 2024-12
+
+- (Jon) Updated the error template path to use `Rails.public_path` as well as
+  contain the `html` extension to ensure the correct template is rendered
+- (Jon) Improves error metrics reporting to ensure that logging always happens
+  with the appropriate severity depending on the exception status while reducing
+  the types of errors that can trigger a an error metric and therefore a
+  notification in slack
+  [GH-149](https://github.com/epimorphics/hmlr-linked-data/issues/149)
+- (Jon) Added catch for missing `SENTRY_API_KEY` env var to `entrypoint.sh` for
+  docker build
+- (Jon) Updated target status level to trigger internal error metrics to 500
+  status codes only in the `search_controller`
+- (Jon) Added `message`, `status`, and `type` arguments to be logged by the
+  `json_rails_logger` gem for respective error responses in the `search_controller`
+
 ## 2.0.0 - 2024-11
 
 - (Bogdan) Updated all gems by regenerating `Gemfile.lock`
@@ -13,7 +29,8 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## 1.8.0 - 2024-10
 
-- (Dan) Updates ruby version to 2.7.8 and alpine version to 3.16 [GH-253](https://github.com/epimorphics/ppd-explorer/issues/253)
+- (Dan) Updates ruby version to 2.7.8 and alpine version to 3.16
+  [GH-253](https://github.com/epimorphics/ppd-explorer/issues/253)
 
 ## 1.7.11 - 2024-10
 
