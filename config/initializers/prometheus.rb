@@ -26,7 +26,7 @@ prometheus.counter(
 prometheus.counter(
   :internal_application_error,
   docstring: 'Unexpected events and internal error count, labelled by message',
-  labels: [:message]
+  labels: %i[message result status]
 )
 
 # Prometheus gauges
@@ -50,5 +50,5 @@ prometheus.histogram(
 )
 
 # Middleware instrumentation
-  # This fixes the 0 memory bug by notifying Action Dispatch subscribers on Prometheus initialise
-  ActiveSupport::Notifications.instrument('process_middleware.action_dispatch')
+# This fixes the 0 memory bug by notifying Action Dispatch subscribers on Prometheus initialise
+ActiveSupport::Notifications.instrument('process_middleware.action_dispatch')

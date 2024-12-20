@@ -8,6 +8,9 @@ mkdir -pm 1777 ./tmp
 # Set the environment
 [ -z "$RAILS_ENV" ] && RAILS_ENV=production
 
+# Check for SENTRY_API_KEY variable and report if missing
+[ -z "$SENTRY_API_KEY" ] && echo "{\"ts\":\"$(date -u +%FT%T.%3NZ)\",\"level\":\"ERROR\",\"message\":\"SENTRY_API_KEY is required\"}"
+
 # Check for API Service URL variable and log it
 [ -n "$API_SERVICE_URL" ] && echo "{\"ts\":\"$(date -u +%FT%T.%3NZ)\",\"level\":\"INFO\",\"message\":\"API_SERVICE_URL=${API_SERVICE_URL}\"}"
 
