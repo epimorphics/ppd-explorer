@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # :nodoc:
-class ApplicationController < ActionController::Base
+class ApplicationController < ActionController::Base # rubocop:disable Metrics/ClassLength
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
 
@@ -36,11 +36,6 @@ class ApplicationController < ActionController::Base
   # or attempt to render a generic error page if no specific error page exists
   unless Rails.application.config.consider_all_requests_local
     rescue_from StandardError do |e|
-      # Instrument ActiveSupport::Notifications for internal errors but only for non-404 errors:
-      unless e.is_a?(ActionController::RoutingError) || e.is_a?(ActionView::MissingTemplate)
-        ActiveSupport::Notifications.instrument('internal_error.application', exception: e)
-      end
-
       # Trigger the appropriate error handling method based on the exception
       case e.class
       when ActionController::RoutingError, ActionView::MissingTemplate
@@ -61,6 +56,8 @@ class ApplicationController < ActionController::Base
       render_error(400)
     else
       Rails.logger.warn "No explicit error page for exception #{exception} - #{exception.class}"
+      # Instrument ActiveSupport::Notifications for internal server errors only:
+      instrument_internal_error(exception)
       render_error(500)
     end
   end
@@ -93,7 +90,7 @@ class ApplicationController < ActionController::Base
 
   def render_html_error_page(status)
     render(layout: true,
-           file: Rails.root.join('public', 'landing', status.to_s),
+           file: Rails.public_path + "landing/#{status}.html",
            status: status)
   end
 
@@ -129,4 +126,26 @@ class ApplicationController < ActionController::Base
     end
   end
   # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+
+  # Notify subscriber(s) of an internal error event with the payload of the
+  # exception once done
+  # @param [exc] exp the exception that caused the error
+  # @return [ActiveSupport::Notifications::Event] provides an object-oriented
+  # interface to the event
+  def instrument_internal_error(exc) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    err = {
+      message: exc&.message || exc,
+      status: exc&.status || Rack::Utils::SYMBOL_TO_STATUS_CODE[exc]
+    }
+    err[:type] = exc.class&.name if exc&.class
+    err[:cause] = exc&.cause if exc&.cause
+    err[:backtrace] = exc&.backtrace if exc&.backtrace && Rails.env.development?
+    # Log the exception to the Rails logger with the appropriate severity
+    Rails.logger.send(err[:status] < 500 ? :warn : :error, JSON.generate(err))
+    # Return unless the status code is 500 or greater to ensure subscribers are NOT notified
+    return unless err[:status] >= 500
+
+    # Instrument the internal error event to notify subscribers of the error
+    ActiveSupport::Notifications.instrument('internal_error.application', exception: err)
+  end
 end
