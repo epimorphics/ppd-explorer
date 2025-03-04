@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
     yield
     duration = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start
-    detailed_request_log(duration)
+    detailed_log_result(duration)
   end
 
   # Handle specific types of exceptions and render the appropriate error page
@@ -98,34 +98,57 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     self.response_body = nil
   end
 
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-  def detailed_request_log(duration)
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Layout/LineLength
+  def detailed_log_result(duration)
     env = request.env
+
+    query = env['QUERY_STRING'] || URI.parse(env['REQUEST_URI']).query
     log_fields = {
-      duration: duration,
+      message: response.message || Rack::Utils::HTTP_STATUS_CODES[response.status],
+      path: env['REQUEST_PATH'] || URI.parse(env['REQUEST_URI']).path,
       request_id: env['X_REQUEST_ID'],
-      forwarded_for: env['X_FORWARDED_FOR'],
-      path: env['REQUEST_PATH'],
-      query_string: env['QUERY_STRING'],
-      user_agent: env['HTTP_USER_AGENT'],
-      accept: env['HTTP_ACCEPT'],
-      body: request.body.gets&.gsub("\n", '\n'),
+      request_time: (duration / 1000) || env['REQUEST_TIME'], # in milliseconds
       method: request.method,
-      status: response.status,
-      message: response.message || Rack::Utils::HTTP_STATUS_CODES[response.status]
+      status: response.status
     }
 
-    case response.status
+    log_fields[:path] = "#{log_fields[:path]}?#{query}" if query.present?
+
+    if log_fields[:message] == 'OK' && log_fields[:status] == 200
+      log_fields[:message] = "Completed request to #{log_fields[:path]}"
+      log_fields[:request_status] = 'completed'
+    end
+
+    log_fields[:query_string] = query if query.present?
+
+    if env['HTTP_USER_AGENT'] && Rails.env.production?
+      log_fields[:user_agent] = env['HTTP_USER_AGENT']
+    end
+
+    if (500..599).include?(Rack::Utils::SYMBOL_TO_STATUS_CODE[response.status])
+      log_fields[:message] = env['action_dispatch.exception'].to_s
+      log_fields[:backtrace] = env['action_dispatch.backtrace'].join("\n") unless Rails.env.production?
+    end
+
+    if log_fields[:request_time]
+      log_fields[:message] += format(', time taken: %.0f ms', log_fields[:request_time])
+    end
+
+    log_response(response.status, log_fields.sort.to_h)
+  end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Layout/LineLength
+
+  # Log the error with the appropriate log level based on the status code
+  def log_response(status, error_log)
+    case status
     when 500..599
-      log_fields[:message] = env['action_dispatch.exception']
-      Rails.logger.error(JSON.generate(log_fields))
+      Rails.logger.error(JSON.generate(error_log))
     when 400..499
-      Rails.logger.warn(JSON.generate(log_fields))
+      Rails.logger.warn(JSON.generate(error_log))
     else
-      Rails.logger.info(JSON.generate(log_fields))
+      Rails.logger.info(JSON.generate(error_log))
     end
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   # Notify subscriber(s) of an internal error event with the payload of the
   # exception once done
