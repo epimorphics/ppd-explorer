@@ -2,8 +2,6 @@
 
 source 'https://rubygems.org'
 
-gem 'execjs'
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
 
@@ -17,6 +15,7 @@ gem 'sass-rails'
 gem 'uglifier'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+gem 'execjs'
 # gem 'therubyracer', platforms: :ruby
 gem 'libv8-node'
 
@@ -28,6 +27,20 @@ gem 'haml-rails'
 
 gem 'rubocop'
 gem 'rubocop-rails'
+
+gem 'faraday'
+gem 'faraday_middleware'
+gem 'font-awesome-rails'
+gem 'get_process_mem'
+gem 'jquery-ui-rails'
+gem 'ostruct'
+gem 'prometheus-client'
+gem 'puma-metrics'
+gem 'yajl-ruby', require: 'yajl'
+
+# Sentry uses stackprof for performance profiling, has to be loaded before Sentry
+gem 'stackprof'
+gem 'sentry-rails' # rubocop:disable Bundler/OrderedGems
 
 group :doc do
   gem 'sdoc', require: false
@@ -52,24 +65,13 @@ group :test do
 end
 
 group :development do
+  gem 'meta_request' # Devtools panel for Rails development
+
   gem 'rb-readline'
 
   gem 'flamegraph'
   gem 'memory_profiler'
-
-  gem 'stackprof' # ruby 2.1+ only
 end
-
-gem 'faraday'
-gem 'faraday_middleware'
-gem 'font-awesome-rails'
-gem 'get_process_mem'
-gem 'jquery-ui-rails'
-gem 'prometheus-client'
-gem 'sentry-rails'
-gem 'yajl-ruby', require: 'yajl'
-
-gem 'puma-metrics'
 
 # TODO: In production you want to set this to the gem from the epimorphics package repo
 source 'https://rubygems.pkg.github.com/epimorphics' do
