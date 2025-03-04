@@ -94,7 +94,7 @@ class SearchResults
       end
     end
   rescue StandardError => e
-    Rails.logger.debug "Error in search_results: #{e.inspect}"
+    Rails.logger.error { "Error in search_results: #{e.inspect}" }
   end
 
   def traverse_in_date_order(search_results, &block)
