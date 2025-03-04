@@ -155,7 +155,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   # @param [exc] exp the exception that caused the error
   # @return [ActiveSupport::Notifications::Event] provides an object-oriented
   # interface to the event
-  def instrument_internal_error(exc) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def instrument_internal_error(exc) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     err = {
       message: exc&.message || exc,
       status: exc&.status || Rack::Utils::SYMBOL_TO_STATUS_CODE[exc]

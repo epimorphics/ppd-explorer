@@ -30,7 +30,7 @@ class SearchTerm
   def label
     if @label_term
       "#{@label_prompt} matches #{long_label_term? ? truncated_label_term : clean_label_term}"
-        .html_safe
+        .html_safe # rubocop:disable Rails/OutputSafety
     else
       @label_prompt
     end
@@ -41,13 +41,12 @@ class SearchTerm
   end
 
   def truncated_label_term
-    "#{clean_label_term.slice(0, MAX_LABEL_TERM_LENGTH)}&hellip;'".html_safe
+    "#{clean_label_term.slice(0, MAX_LABEL_TERM_LENGTH)}&hellip;'".html_safe # rubocop:disable Rails/OutputSafety
   end
 
   def clean_label_term
     # remove any HTML tags from the label term
-    term = Rails::Html::FullSanitizer.new.sanitize(@label_term)
+    Rails::Html::FullSanitizer.new.sanitize(@label_term)
     # previously we added a profanity filter here, but it was decided not to keep that feature
-    term
   end
 end

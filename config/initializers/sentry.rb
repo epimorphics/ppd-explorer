@@ -2,7 +2,7 @@
 
 require 'version'
 
-Rails.application.reloader.to_prepare do # rubocop:disable Metrics/BlockLength
+Rails.application.reloader.to_prepare do
   if ENV['SENTRY_API_KEY']
     Sentry.init do |config|
       # https://docs.sentry.io/platforms/ruby/configuration/options/#breadcrumbs-logger

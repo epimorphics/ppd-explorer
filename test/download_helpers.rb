@@ -1,4 +1,4 @@
-# frozen-string-literal: true
+# frozen_string_literal: true
 
 # Module to assist with testing file downloads. From
 # https://stackoverflow.com/questions/29309324/how-to-test-csv-file-download-in-capybara-and-rspec

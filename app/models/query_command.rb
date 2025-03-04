@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Command object providing a service for driving the DsAPI
-class QueryCommand < DataService # rubocop:disable Metrics/ClassLength
+class QueryCommand < DataService
   include TurtleFormatter
 
   attr_reader :all_results, :search_results, :error_message
@@ -102,7 +102,7 @@ class QueryCommand < DataService # rubocop:disable Metrics/ClassLength
   }.freeze
 
   def initialize(preferences, compact = false)
-    super(preferences, compact)
+    super
   end
 
   def assemble_query
@@ -111,7 +111,7 @@ class QueryCommand < DataService # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def load_query_results(options = {}) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def load_query_results(options = {}) # rubocop:disable Metrics/MethodLength
     ppd = dataset(:ppd)
     query = assemble_query
     limit = query_limit
@@ -142,7 +142,7 @@ class QueryCommand < DataService # rubocop:disable Metrics/ClassLength
     (l = preferences.selected_limit) =~ /\d/ && l.to_i
   end
 
-  def save_results(ppd, query, options) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metric/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def save_results(ppd, query, options) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     begin
       start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
       log_fields = {}
