@@ -135,10 +135,35 @@ class QueryCommand < DataService
     (l = preferences.selected_limit) =~ /\d/ && l.to_i
   end
 
-  def save_results(ppd, query, options)
-    Rails.logger.debug { "Current DsAPI query: #{query.to_json}" } if Rails.env.development?
-    @all_results = ppd.query(query)
-    @search_results = SearchResults.new(@all_results, options[:max])
+  def save_results(ppd, query, options) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metric/CyclomaticComplexity, Metrics/PerceivedComplexity
+    begin
+      start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
+      log_fields = {}
+      log_type = 'error'
+
+      @all_results = ppd.query(query)
+      @search_results = SearchResults.new(@all_results, options[:max])
+    rescue Faraday::ConnectionFailed => e
+      log_fields[:backtrace] = e&.backtrace&.join("\n") if Rails.logger.debug?
+      log_fields[:message] = e.message
+      log_fields[:request_status] = log_type
+      log_fields[:status] = 503 # Service Unavailable
+    rescue DataServicesApi::ServiceException => e
+      log_fields[:message] = e.service_message
+      log_fields[:request_status] = log_type
+      log_fields[:status] = 503 # Service Unavailable
+    rescue RuntimeError => e
+      log_fields[:backtrace] = e&.backtrace&.join("\n") if Rails.logger.debug?
+      log_fields[:message] = "Runtime error #{e.inspect}"
+      log_fields[:message] += "Caused by: #{e.cause}" if e.cause
+      log_fields[:message] += " in (#{e.class})" if Rails.logger.debug?
+      log_fields[:request_status] = log_type
+      log_fields[:status] = 500 # Internal Server Error
+    end
+    # Log the request status and response
+    LoggingHelper.log_request(log_fields, log_type) unless log_fields.empty?
+    # Always return the time taken to execute the query
+    (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start)
   end
 
   def reached_count_limit?(limit)
