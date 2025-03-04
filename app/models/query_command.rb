@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Command object providing a service for driving the DsAPI
-class QueryCommand < DataService
+class QueryCommand < DataService # rubocop:disable Metrics/ClassLength
   include TurtleFormatter
 
   attr_reader :all_results, :search_results, :error_message
@@ -111,7 +111,7 @@ class QueryCommand < DataService
     end
   end
 
-  def load_query_results(options = {})
+  def load_query_results(options = {}) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     ppd = dataset(:ppd)
     query = assemble_query
     limit = query_limit
@@ -122,9 +122,16 @@ class QueryCommand < DataService
       count_query = base_query.count_only.limit(COUNT_LIMIT)
     end
 
-    save_results(ppd, query, options)
+    time_taken = save_results(ppd, query, options) / 1000 # in milliseconds
 
     add_count_information(ppd, count_query) if reached_count_limit?(limit)
+
+    log_fields = { message: 'Processing Data Services API response' }
+    log_fields[:request_status] = 'processing'
+    log_fields[:request_time] = time_taken
+    log_fields[:status] = Rack::Utils::SYMBOL_TO_STATUS_CODE[:ok]
+    LoggingHelper.log_request(log_fields) unless log_fields.empty?
+    puts "\n" if Rails.env.development? && Rails.logger.debug? # rubocop:disable Rails/Output
   end
 
   def self.find_aspect(key)
