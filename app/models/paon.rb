@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 # LR PAONs, which are strings with a custom sort order
-class Paon < String
-  # rubocop:disable Metrics/AbcSize
+class Paon < String # rubocop:disable Metrics/ClassLength
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def <=>(other)
     pe0 = elements(self)
@@ -51,7 +51,7 @@ class Paon < String
       0
     end
   end
-  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
   # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def self.to_paon(value)

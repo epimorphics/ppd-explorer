@@ -43,6 +43,8 @@ PpdExplorer::Application.configure do
   $stdout.sync = true
   # Log the stdout output to the Epimorphics JSON logging gem
   config.logger = JsonRailsLogger::Logger.new($stdout)
+  # Set the log level to the value of the LOG_LEVEL environment variable, or 'debug' by default
+  config.log_level = ENV.fetch('LOG_LEVEL', 'debug').to_sym
 
   # API location can be specified in the environment
   # But defaults to the dev service
