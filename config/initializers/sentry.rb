@@ -40,6 +40,6 @@ Rails.application.reloader.to_prepare do
       'hostname' => ENV.fetch('SENTRY_HOSTNAME', nil)
     }.compact!
     # * Set the tags in the Sentry event with remaining values but only if there are any
-    sentry_tags.each { |k, v| Sentry.set_tags(k.to_s => v) } if sentry_tags.any?
+    sentry_tags&.each { |k, v| Sentry.set_tags(k.to_s => v) }
   end
 end
