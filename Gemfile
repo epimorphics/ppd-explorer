@@ -46,7 +46,8 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-gem 'byebug', group: %i[development test]
+gem 'byebug', groups: %i[development test]
+gem 'dotenv-rails', groups: %i[development test]
 
 group :test do
   gem 'capybara'
