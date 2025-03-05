@@ -47,7 +47,7 @@ group :doc do
 end
 
 gem 'byebug', groups: %i[development test]
-gem 'dotenv-rails', groups: %i[development test]
+gem 'dotenv', groups: %i[development test]
 
 group :test do
   gem 'capybara'

@@ -110,9 +110,6 @@ GEM
     date (3.4.1)
     docile (1.4.1)
     dotenv (3.1.7)
-    dotenv-rails (3.1.7)
-      dotenv (= 3.1.7)
-      railties (>= 6.1)
     drb (2.2.1)
     erubi (1.13.1)
     execjs (2.10.0)
@@ -489,7 +486,7 @@ DEPENDENCIES
   capybara-selenium
   capybara_minitest_spec
   data_services_api!
-  dotenv-rails
+  dotenv
   execjs
   faraday
   faraday_middleware
