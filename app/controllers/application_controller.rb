@@ -78,21 +78,22 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     render_error(500)
   end
 
-  def render_error(status)
+  def render_error(status, sentry_code = nil)
     reset_response
 
     status = Rack::Utils::SYMBOL_TO_STATUS_CODE[status] if status.is_a?(Symbol)
     respond_to do |format|
-      format.html { render_html_error_page(status) }
+      format.html { render_html_error_page(status, sentry_code) }
       # Anything else returns the status as human readable plain string
       format.all { render plain: Rack::Utils::HTTP_STATUS_CODES[status].to_s, status: status }
     end
   end
 
-  def render_html_error_page(status)
-    render(layout: true,
-           file: Rails.public_path + "landing/#{status}.html",
-           status: status)
+  def render_html_error_page(status, sentry_code)
+    render 'exceptions/error_page',
+           layout: true,
+           locals: { status: status, sentry_code: sentry_code },
+           status: status
   end
 
   def reset_response
@@ -157,7 +158,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   # @param [exc] exp the exception that caused the error
   # @return [ActiveSupport::Notifications::Event] provides an object-oriented
   # interface to the event
-  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize, Metrics/MethodLength
   def instrument_internal_error(exc, status = nil)
     err = {
       message: exc&.message || exc,
@@ -178,5 +179,5 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     # Return the event id for the internal error event
     sevent&.event_id
   end
-  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize, Metrics/MethodLength
 end
