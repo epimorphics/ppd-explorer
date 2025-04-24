@@ -50,15 +50,15 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     end
   end
 
+  # Render the appropriate error page based on the exception
   def handle_internal_error(exception)
-    # Render the appropriate error page based on the exception
     if exception.instance_of? ArgumentError
       render_error(400)
     else
       Rails.logger.warn "No explicit error page for exception #{exception} - #{exception.class}"
       # Instrument ActiveSupport::Notifications for internal server errors only:
-      instrument_internal_error(exception)
-      render_error(500)
+      sentry_code = instrument_internal_error(exception)
+      render_error(500, sentry_code)
     end
   end
 
@@ -81,6 +81,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   def render_error(status)
     reset_response
 
+    status = Rack::Utils::SYMBOL_TO_STATUS_CODE[status] if status.is_a?(Symbol)
     respond_to do |format|
       format.html { render_html_error_page(status) }
       # Anything else returns the status as human readable plain string
@@ -101,7 +102,6 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Layout/LineLength
   def detailed_log_result(duration)
     env = request.env
-
     query = env['QUERY_STRING'] || URI.parse(env['REQUEST_URI']).query
     log_fields = {
       message: response.message || Rack::Utils::HTTP_STATUS_CODES[response.status],
@@ -115,7 +115,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     log_fields[:path] = "#{log_fields[:path]}?#{query}" if query.present?
 
     if log_fields[:message] == 'OK' && log_fields[:status] == 200
-      log_fields[:message] = "Completed request to #{log_fields[:path]}"
+      log_fields[:message] = 'Completed request'
       log_fields[:request_status] = 'completed'
     end
 
@@ -132,6 +132,8 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
 
     if log_fields[:request_time]
       log_fields[:message] += format(', time taken: %.0f ms', log_fields[:request_time])
+      seconds, milliseconds = log_fields[:request_time].divmod(1000)
+      log_fields[:request_time] = format('%.0f.%03d', seconds, milliseconds) # rubocop:disable Style/FormatStringToken
     end
 
     log_response(response.status, log_fields.sort.to_h)
@@ -155,11 +157,13 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   # @param [exc] exp the exception that caused the error
   # @return [ActiveSupport::Notifications::Event] provides an object-oriented
   # interface to the event
-  def instrument_internal_error(exc) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
+  def instrument_internal_error(exc, status = nil)
     err = {
       message: exc&.message || exc,
       status: exc&.status || Rack::Utils::SYMBOL_TO_STATUS_CODE[exc]
     }
+    err[:status] = status if status
     err[:type] = exc.class&.name if exc&.class
     err[:cause] = exc&.cause if exc&.cause
     err[:backtrace] = exc&.backtrace if exc&.backtrace && Rails.env.development?
@@ -168,7 +172,11 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     # Return unless the status code is 500 or greater to ensure subscribers are NOT notified
     return unless err[:status] >= 500
 
+    sevent = Sentry.capture_exception(exc) unless Rails.env.development?
     # Instrument the internal error event to notify subscribers of the error
     ActiveSupport::Notifications.instrument('internal_error.application', exception: err)
+    # Return the event id for the internal error event
+    sevent&.event_id
   end
+  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
 end
