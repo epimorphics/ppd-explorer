@@ -3,7 +3,7 @@
 # :nodoc:
 class LoggingHelper
   def self.log_request(fields, type = 'info') # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-    puts "\n" if Rails.env.development? && Rails.logger.debug? # rubocop:disable Rails/Output
+    puts "\n" if Rails.env.development? && Rails.logger.debug?
     # Extract service and params from fields hash
     service = fields[:service] if fields[:service].respond_to?(:data_api)
     params = fields[:params] if fields[:params].presence
