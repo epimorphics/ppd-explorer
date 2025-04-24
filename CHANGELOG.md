@@ -4,6 +4,12 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## Changelog
 
+### Unreleased
+
+- Updates dependencies for enhanced performance and security.
+- Improved error handling with Sentry integration and clearer logging.
+- Enhanced semantic meaning in modal footer markup.
+
 ## 2.0.2 - 2025-03
 
 - Enhanced `Sentry` configuration setup
@@ -35,7 +41,8 @@ This app allows the user to explore HMLR price-paid open linked data.
 - (Jon) Updated target status level to trigger internal error metrics to 500
   status codes only in the `search_controller`
 - (Jon) Added `message`, `status`, and `type` arguments to be logged by the
-  `json_rails_logger` gem for respective error responses in the `search_controller`
+  `json_rails_logger` gem for respective error responses in the
+  `search_controller`
 
 ## 2.0.0 - 2024-11
 
