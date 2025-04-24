@@ -445,11 +445,11 @@ GEM
 GEM
   remote: https://rubygems.pkg.github.com/epimorphics/
   specs:
-    data_services_api (1.5.2)
+    data_services_api (1.5.3)
       faraday_middleware (~> 1.2.0)
       json (~> 2.6.1)
       yajl-ruby (~> 1.4.1)
-    json_rails_logger (2.0.3)
+    json_rails_logger (2.0.4)
       json
       lograge
       railties
@@ -528,4 +528,4 @@ DEPENDENCIES
   yajl-ruby
 
 BUNDLED WITH
-   2.6.5
+   2.6.8
