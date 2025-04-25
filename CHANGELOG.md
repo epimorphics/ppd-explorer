@@ -6,6 +6,8 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ### Unreleased
 
+## 2.0.3 - 2025-04
+
 - Updates dependencies for enhanced performance and security.
 - Improved error handling with Sentry integration and clearer logging.
 - Enhanced semantic meaning in modal footer markup.
