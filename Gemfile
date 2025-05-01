@@ -5,6 +5,8 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
 
+# Adding this here to allow the use of `dotenv` in the config.ru file
+gem 'dotenv', groups: %i[development test], require: false
 # Use Puma as the app server
 gem 'puma'
 
@@ -47,7 +49,6 @@ group :doc do
 end
 
 gem 'byebug', groups: %i[development test]
-gem 'dotenv', groups: %i[development test]
 
 group :test do
   gem 'capybara'
