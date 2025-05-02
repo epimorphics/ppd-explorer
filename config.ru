@@ -6,13 +6,17 @@ require 'dotenv'
 # set environment variables from that file (useful for dev environments)
 Dotenv.load
 
-if Rails.env.development? && Rails.debug?
-  puts 'Loading environment variables from .env file'
-  h = {}
-  ENV.each_pair { |name, value| h[name] = value }
-  h.each do |name, value|
-    puts "#{name}: #{value}\n" if name == 'API_SERVICE_URL'
-  end
+# Convert ENV to a hash for logging purposes
+h = {}
+ENV.each_pair { |name, value| h[name] = value }
+# Log the requested environment variable(s) to the console
+h.each do |name, value|
+  msg = {
+    ts: DateTime.now.utc.strftime('%FT%T.%3NZ'),
+    level: 'INFO',
+    message: "Loaded '#{value}' as '#{name}' environment variable"
+  }
+  puts msg.to_json if name.match(/API_SERVICE_URL/)
 end
 
 require_relative 'config/environment'
