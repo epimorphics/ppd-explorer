@@ -1,6 +1,23 @@
 # frozen_string_literal: true
 
 # This file is used by Rack-based servers to start the application.
+require 'dotenv'
+# Load environment variables using Dotenv. If a .env file exists, it will
+# set environment variables from that file (useful for dev environments)
+Dotenv.load
+
+# Convert ENV to a hash for logging purposes
+h = {}
+ENV.each_pair { |name, value| h[name] = value }
+# Log the requested environment variable(s) to the console
+h.each do |name, value|
+  msg = {
+    ts: DateTime.now.utc.strftime('%FT%T.%3NZ'),
+    level: 'INFO',
+    message: "Loaded '#{value}' as '#{name}' environment variable"
+  }
+  puts msg.to_json if name.match(/API_SERVICE_URL/)
+end
 
 require_relative 'config/environment'
 

@@ -6,8 +6,15 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ### Unreleased
 
-## 2.0.3 - 2025-04
+## 2.0.3 - 2025-05
 
+- Adds dotenv gem as a dependency and loads environment variables in config.ru.
+- Logs API_SERVICE_URL environment variable upon loading in config.ru.
+- Configures Sentry using environment variables for environment, project, and
+  debug settings. Also sets the release name to include the Sentry project.
+- Updates the API_SERVICE_URL in the Makefile to point to
+  <http://localhost:8888>.
+- Adds documentation to .env.development explaining environment variables.
 - Updates dependencies for enhanced performance and security.
 - Improved error handling with Sentry integration and clearer logging.
 - Enhanced semantic meaning in modal footer markup.
