@@ -12,7 +12,7 @@ PORT?=3001
 RUBY_VERSION?=$(shell cat .ruby-version)
 SHORTNAME?=$(shell echo ${NAME} | cut -f2 -d/)
 STAGE?=dev
-API_SERVICE_URL?=http://data-api:8080
+API_SERVICE_URL?=http://localhost:8888
 
 BRANCH:=$(shell git rev-parse --abbrev-ref HEAD)
 COMMIT=$(shell git rev-parse --short HEAD)
@@ -67,10 +67,6 @@ image: auth
 lint: assets
 	@./bin/bundle exec rubocop
 
-local:
-	@echo "Starting local server ..."
-	@API_SERVICE_URL=${API_SERVICE_URL} ./bin/rails server -p ${PORT}
-
 publish: image
 	@echo Publishing image: ${REPO}:${TAG} ...
 	@docker push ${REPO}:${TAG} 2>&1
@@ -84,7 +80,6 @@ run: start
 	@docker run -p ${PORT}:3000 -e API_SERVICE_URL=${API_SERVICE_URL} --network dnet --rm --name ${SHORTNAME} ${REPO}:${TAG}
 
 server: assets start
-	@export SECRET_KEY_BASE=$(./bin/rails secret)
 	@API_SERVICE_URL=${API_SERVICE_URL} ./bin/rails server -p ${PORT}
 
 start:
