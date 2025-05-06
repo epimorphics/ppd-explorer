@@ -5,9 +5,13 @@
 # aborted. The hook can be bypassed by using the --no-verify option
 # when running "git commit".
 
-# ! this does not work yet - needs refactoring
-if [[ $(ps -ocommand= -p $PPID) == *"git"*"commit"*"--no-verify"* ]]; then
-  printf '\n\033[0;33mSkipping tests... 🤨\033[0m\n'
+# ! This could ask for user input to sign the commit as it's now using
+# ! the `git commit` command instead of `git commit -m` which is
+# ! the default behavior of the `git commit` command. This could be
+# ! a problem if the user is not expecting it. This should be fixed
+# ! in the future.
+if [[ $(ps -ocommand= -p $PPID) == *"git"*"commit"*"--no-verify"* ]] || [[ $(ps -ocommand= -p $PPID) == *"git"*"commit"*"--amend"* ]]; then
+  printf '\n\033[0;33mSkipping post-commit hook... 🤨\033[0m\n'
   exit 0
 fi
 
