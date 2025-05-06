@@ -1,5 +1,6 @@
 #!/bin/bash
-PROFILE=${1:-HMLR}
+: "${CLIENT_PROFILE:=hmlr}"
+: "${API_SERVICE_URL:=http://data-api:8080}"
 
 list="issue spike task"
 
@@ -18,8 +19,8 @@ if ! git update-index -q --ignore-submodules --refresh; then
 	printf '\n\033[0;31mUp-to-date check failed😖\033[0m\n'
   DOCKER_BUILD_EXIT_CODE=1
 else
-  printf '\n\033[0;33mBuilding Docker image with "%s" profile... \033[0m\n' "$PROFILE"
-  AWS_PROFILE=$PROFILE make image
+  printf '\n\033[0;33mBuilding Docker image with "%s" profile... \033[0m\n' "$CLIENT_PROFILE"
+  AWS_PROFILE=$CLIENT_PROFILE make image
   DOCKER_BUILD_EXIT_CODE=$?
 fi
 
@@ -29,7 +30,7 @@ if [ $DOCKER_BUILD_EXIT_CODE -ne 0 ]; then
 else
   printf '\n\033[0;32mDocker image build succeeded. 🎉\033[0m\n'
   printf '\n\033[0;33mRunning Docker image... \033[0m\n'
-  make run
+  AWS_PROFILE=$CLIENT_PROFILE API_SERVICE_URL=$API_SERVICE_URL make run
   DOCKER_RUN_EXIT_CODE=$?
 fi
 
