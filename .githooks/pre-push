@@ -1,4 +1,5 @@
 #!/bin/bash
+PROFILE=${1:-HMLR}
 
 list="issue spike task"
 
@@ -12,13 +13,13 @@ if echo "$BRANCH_NAME" | grep -q '^(hotfix)|(rebase)|(production)*$'; then
  	printf '\n\033[0;32mNo checks necessary on "%s", skipping hooks... 🎉\033[0m\n' "$BRANCH_NAME"
 	exit 0
 fi
-
-
+# Check for existence of "new or modified" test files
 if ! git update-index -q --ignore-submodules --refresh; then
 	printf '\n\033[0;31mUp-to-date check failed😖\033[0m\n'
   DOCKER_BUILD_EXIT_CODE=1
 else
-  make image
+  printf '\n\033[0;33mBuilding Docker image with "%s" profile... \033[0m\n' "$PROFILE"
+  AWS_PROFILE=$PROFILE make image
   DOCKER_BUILD_EXIT_CODE=$?
 fi
 
