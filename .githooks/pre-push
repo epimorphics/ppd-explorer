@@ -14,7 +14,7 @@ if echo "$BRANCH_NAME" | grep -q '^(hotfix)|(rebase)|(production)*$'; then
  	printf '\n\033[0;32mNo checks necessary on "%s", skipping hooks... 🎉\033[0m\n' "$BRANCH_NAME"
 	exit 0
 fi
-# Check for existence of "new or modified" test files
+# Check for existence of "new or modified" files
 if ! git update-index -q --ignore-submodules --refresh; then
 	printf '\n\033[0;31mUp-to-date check failed😖\033[0m\n'
   DOCKER_BUILD_EXIT_CODE=1
@@ -30,13 +30,16 @@ if [ $DOCKER_BUILD_EXIT_CODE -ne 0 ]; then
 else
   printf '\n\033[0;32mDocker image build succeeded. 🎉\033[0m\n'
   printf '\n\033[0;33mRunning Docker image... \033[0m\n'
-  AWS_PROFILE=$CLIENT_PROFILE API_SERVICE_URL=$API_SERVICE_URL make run
+  CONTAINER_ID=$(AWS_PROFILE=$CLIENT_PROFILE API_SERVICE_URL=$API_SERVICE_URL make run)
+  sleep 10
+  docker inspect --format="{{.State.Running}}" "$CONTAINER_ID" | grep 'true'
   DOCKER_RUN_EXIT_CODE=$?
+  docker stop "$CONTAINER_ID" > /dev/null 2>&1
 fi
 
 if [ $DOCKER_RUN_EXIT_CODE -ne 0 ]; then
-    printf '\n\033[0;31mDocker image run failed. Please check your changes. 😖\033[0m\n'
-    exit 1
+  printf '\n\033[0;31mDocker image run failed. Please check your changes. 😖\033[0m\n'
+  exit 1
 else
   printf '\n\033[0;32mDocker image run succeeded. 🎉\033[0m\n'
   exit 0
