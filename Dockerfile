@@ -1,8 +1,8 @@
-ARG ALPINE_VERSION
-ARG RUBY_VERSION
+ARG ALPINE_VERSION=3.20
+ARG RUBY_VERSION=3.3.5
 
 # Defines base image which builder and final stage use
-FROM ruby:${RUBY_VERSION}-alpine${ALPINE_VERSION} as base
+FROM ruby:${RUBY_VERSION}-alpine${ALPINE_VERSION} AS base
 ARG BUNDLER_VERSION
 
 
@@ -17,7 +17,7 @@ RUN apk add --update \
     && gem install bundler:$BUNDLER_VERSION \
     && bundle config --global frozen 1
 
-FROM base as builder
+FROM base AS builder
 
 RUN apk add --update build-base
 

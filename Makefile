@@ -12,7 +12,7 @@ PORT?=3001
 RUBY_VERSION?=$(shell cat .ruby-version)
 SHORTNAME?=$(shell echo ${NAME} | cut -f2 -d/)
 STAGE?=dev
-API_SERVICE_URL?=http://data-api:8080
+API_SERVICE_URL?=http://localhost:8888
 
 BRANCH:=$(shell git rev-parse --abbrev-ref HEAD)
 COMMIT=$(shell git rev-parse --short HEAD)
@@ -81,10 +81,9 @@ realclean: clean
 
 run: start
 	@if docker network inspect dnet > /dev/null 2>&1; then echo "Using docker network dnet"; else echo "Create docker network dnet"; docker network create dnet; sleep 2; fi
-	@docker run -p ${PORT}:3000 -e API_SERVICE_URL=${API_SERVICE_URL} --network dnet --rm --name ${SHORTNAME} ${REPO}:${TAG}
+	@docker run -d -p ${PORT}:3000 -e API_SERVICE_URL=${API_SERVICE_URL} --network dnet --rm --name ${SHORTNAME} ${REPO}:${TAG}
 
 server: assets start
-	@export SECRET_KEY_BASE=$(./bin/rails secret)
 	@API_SERVICE_URL=${API_SERVICE_URL} ./bin/rails server -p ${PORT}
 
 start:
