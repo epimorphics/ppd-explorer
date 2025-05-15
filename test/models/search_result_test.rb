@@ -1,4 +1,4 @@
-# frozen-string-literal: true
+# frozen_string_literal: true
 
 require 'test_helper'
 
@@ -75,7 +75,7 @@ class SearchResultTest < ActiveSupport::TestCase
 
       key = search_result.key
       _(key).must_be_kind_of Array
-      refute(key.find { |k| !k.is_a?(String) })
+      assert_not(key.find { |k| !k.is_a?(String) })
     end
 
     it 'should generate a hashcode from the key' do

@@ -16,14 +16,14 @@ class SearchResults
 
   # Traverse the index values in sort order, and yield each transaction
   # in order
-  def each_transaction(&block)
-    traverse_in_sort_order(index, &block)
+  def each_transaction(&)
+    traverse_in_sort_order(index, &)
   end
 
   # Traverse the index values in sort order, and yield a list of transactions
   # for one address
-  def each_property_address(&block)
-    traverse_property_addresses(index, &block)
+  def each_property_address(&)
+    traverse_property_addresses(index, &)
   end
 
   def summarise
@@ -94,11 +94,11 @@ class SearchResults
       end
     end
   rescue StandardError => e
-    Rails.logger.debug "Error in search_results: #{e.inspect}"
+    Rails.logger.error { "Error in search_results: #{e.inspect}" }
   end
 
-  def traverse_in_date_order(search_results, &block)
+  def traverse_in_date_order(search_results, &)
     st = search_results.sort!
-    st.reverse.each(&block)
+    st.reverse.each(&)
   end
 end

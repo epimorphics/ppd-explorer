@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # An individual result returned from the search service
-class SearchResult
+class SearchResult # rubocop:disable Metrics/ClassLength
   attr_reader :result
 
   PPD = 'http://landregistry.data.gov.uk/def/ppi/'
@@ -65,7 +65,7 @@ class SearchResult
     if no_value?(v)
       nil
     elsif prop == 'ppd:propertyAddressPaon'
-      format_paon_elements(v).join(' ').html_safe
+      format_paon_elements(v).join(' ').html_safe # rubocop:disable Rails/OutputSafety
     elsif title_case_exception?(prop)
       v
     else
@@ -108,7 +108,7 @@ class SearchResult
     pt = id_of_property('ppd:propertyType')
     pt_label = without_leading_segment(pt).underscore.humanize.downcase
 
-    pt_label.gsub(/ property type/, '')
+    pt_label.gsub(' property type', '')
   end
 
   def estate_type
@@ -118,7 +118,7 @@ class SearchResult
 
   def new_build?
     nb = value_of_property('ppd:newBuild')
-    !%w[false no_value].include?(nb.to_s)
+    %w[false no_value].exclude?(nb.to_s)
   end
 
   def new_build
@@ -136,7 +136,7 @@ class SearchResult
     formatted_address_street_town(fields)
     formatted_address_postcode(fields)
 
-    fields.join(' ').html_safe
+    fields.join(' ').html_safe # rubocop:disable Rails/OutputSafety
   end
 
   def formatted_transaction_category

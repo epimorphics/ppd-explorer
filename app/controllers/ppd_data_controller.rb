@@ -13,6 +13,8 @@ class PpdDataController < ApplicationController
   def show
     preferences = UserPreferences.new(params)
 
+    LoggingHelper.log_request({ params: params, path: request.path }, 'info')
+
     if explanation?
       show_sparql_explanation(preferences)
     else
@@ -49,7 +51,7 @@ class PpdDataController < ApplicationController
 
   def download_header
     DownloadRecord::DOWNLOAD_COLUMNS
-      .map { |col| col[:header] }
+      .pluck(:header)
       .join(',')
   end
 

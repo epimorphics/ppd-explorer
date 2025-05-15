@@ -1,4 +1,4 @@
-# frozen-string-literal: true
+# frozen_string_literal: true
 
 # An extension of a standard hash that auto-adds keys that are requested
 # but are not present

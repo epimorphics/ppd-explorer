@@ -30,9 +30,9 @@ class PpdDataControllerTest < ActionDispatch::IntegrationTest
         visit(ppd_data_path(base_params))
         click_on 'get selected results as CSV'
         sleep 3.seconds
-        page.save_screenshot('debug-screenshot.png', full: true)
+        # page.save_screenshot('debug-screenshot.png', full: true)
 
-        Rails.logger.debug "download_file #{DownloadHelpers.download}"
+        Rails.logger.debug { "download_file #{DownloadHelpers.download}" }
         download_file = File.new(DownloadHelpers.download)
         assert File.exist?(download_file)
         csv = CSV.read(download_file)
