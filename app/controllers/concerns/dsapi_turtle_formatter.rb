@@ -34,7 +34,7 @@ module DsapiTurtleFormatter
     ttl_value
   end
 
-  # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
   def format_ttl_value(value)
     f =
       if value.is_a?(Array)
@@ -57,7 +57,7 @@ module DsapiTurtleFormatter
         "\"#{value}\"^^<#{value.class.name}> # warning: default formatting rule"
       end
 
-    f.html_safe
+    f.html_safe # rubocop:disable Rails/OutputSafety
   end
-  # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
 end

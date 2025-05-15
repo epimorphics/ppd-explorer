@@ -4,6 +4,31 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## Changelog
 
+### Unreleased
+
+## 2.0.3 - 2025-04
+
+- Updates dependencies for enhanced performance and security.
+- Improved error handling with Sentry integration and clearer logging.
+- Enhanced semantic meaning in modal footer markup.
+
+## 2.0.2 - 2025-03
+
+- Enhanced `Sentry` configuration setup
+- Enhanced `load_query_result` with logging
+- Enhanced error handling in `save_results` method
+- Added `rubocop-rails` plugin to `.rubocop.yml`
+- Improved logging level where applicable
+- Updated logging methods for better clarity
+- Added logging helper for API requests
+- Updated Gemfile dependencies
+- Updated timezone handling in config
+- Updated boot info logging for Rails compatibility
+- Added ability to set log level config from environment variable
+- Removed sunset google plusone reference
+- Updated GitHub workflow versions to v2
+- Added pre-commit and pre-push hooks
+
 ## 2.0.1 - 2024-12
 
 - (Jon) Updated the error template path to use `Rails.public_path` as well as
@@ -18,7 +43,8 @@ This app allows the user to explore HMLR price-paid open linked data.
 - (Jon) Updated target status level to trigger internal error metrics to 500
   status codes only in the `search_controller`
 - (Jon) Added `message`, `status`, and `type` arguments to be logged by the
-  `json_rails_logger` gem for respective error responses in the `search_controller`
+  `json_rails_logger` gem for respective error responses in the
+  `search_controller`
 
 ## 2.0.0 - 2024-11
 
