@@ -31,9 +31,7 @@ class DataService
   end
 
   # Delegate parameter checking to the user preferences object
-  def param(prop)
-    @preferences.param(prop)
-  end
+  delegate :param, to: :@preferences
 
   def api_service_url
     Rails.application.config.api_service_url

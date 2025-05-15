@@ -2,9 +2,9 @@
 
 # Module for formatting a record as Turtle
 module TurtleFormatter
-  def each_property(result, ignore_pattern = nil, &block)
+  def each_property(result, ignore_pattern = nil, &)
     props = result_to_ttl(result)[:properties]
-    props.reject { |pv| ignore_pattern && pv[:p] =~ ignore_pattern }.each(&block)
+    props.reject { |pv| ignore_pattern && pv[:p] =~ ignore_pattern }.each(&)
   end
 
   def result_to_ttl(result)
@@ -24,8 +24,7 @@ module TurtleFormatter
     ttl_value
   end
 
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
   def format_ttl_value(value)
     f =
       if value.nil?
@@ -52,8 +51,7 @@ module TurtleFormatter
         "\"#{value}\"^^<#{value.class.name}> # warning: default formatting rule (likely a bug)"
       end
 
-    f.html_safe
+    f.html_safe # rubocop:disable Rails/OutputSafety
   end
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
 end
