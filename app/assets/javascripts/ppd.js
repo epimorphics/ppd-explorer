@@ -99,8 +99,6 @@ var Ppd = function() {
     _.defer( function() {
       $(".fb-share-button").data( "href", baseURL );
       $(".twitter-share-button").data( "url", baseURL );
-      gapi.plusone.render("plus-one", {"data-href": baseURL} );
-
       $(".bookmark-url").val( baseURL ).select();
     } );
   };

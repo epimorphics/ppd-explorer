@@ -76,11 +76,11 @@ class DownloadRecord
   private
 
   def column_value(col, index)
-    quoted(comma_separator(index), coded_value_of(col)).html_safe
+    quoted(comma_separator(index), coded_value_of(col)).html_safe # rubocop:disable Rails/OutputSafety
   end
 
   def quoted(sep, value)
-    "#{sep}\"#{value.to_s.gsub(/"/, '\\"')}\""
+    "#{sep}\"#{value.to_s.gsub('"', '\\"')}\""
   end
 
   def coded_value_of(col)

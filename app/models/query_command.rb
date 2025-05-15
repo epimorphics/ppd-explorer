@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Command object providing a service for driving the DsAPI
-class QueryCommand < DataService
+class QueryCommand < DataService # rubocop:disable Metrics/ClassLength
   include TurtleFormatter
 
   attr_reader :all_results, :search_results, :error_message
@@ -102,7 +102,7 @@ class QueryCommand < DataService
   }.freeze
 
   def initialize(preferences, compact = false)
-    super(preferences, compact)
+    super
   end
 
   def assemble_query
@@ -111,7 +111,7 @@ class QueryCommand < DataService
     end
   end
 
-  def load_query_results(options = {})
+  def load_query_results(options = {}) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     ppd = dataset(:ppd)
     query = assemble_query
     limit = query_limit
@@ -122,9 +122,16 @@ class QueryCommand < DataService
       count_query = base_query.count_only.limit(COUNT_LIMIT)
     end
 
-    save_results(ppd, query, options)
+    time_taken = save_results(ppd, query, options) / 1000 # in milliseconds
 
     add_count_information(ppd, count_query) if reached_count_limit?(limit)
+
+    log_fields = { message: 'Processing Data Services API response' }
+    log_fields[:request_status] = 'processing'
+    log_fields[:request_time] = time_taken
+    log_fields[:status] = Rack::Utils::SYMBOL_TO_STATUS_CODE[:ok]
+    LoggingHelper.log_request(log_fields) unless log_fields.empty?
+    puts "\n" if Rails.env.development? && Rails.logger.debug? # rubocop:disable Rails/Output
   end
 
   def self.find_aspect(key)
@@ -135,10 +142,35 @@ class QueryCommand < DataService
     (l = preferences.selected_limit) =~ /\d/ && l.to_i
   end
 
-  def save_results(ppd, query, options)
-    Rails.logger.debug { "Current DsAPI query: #{query.to_json}" } if Rails.env.development?
-    @all_results = ppd.query(query)
-    @search_results = SearchResults.new(@all_results, options[:max])
+  def save_results(ppd, query, options) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    begin
+      start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
+      log_fields = {}
+      log_type = 'error'
+
+      @all_results = ppd.query(query)
+      @search_results = SearchResults.new(@all_results, options[:max])
+    rescue Faraday::ConnectionFailed => e
+      log_fields[:backtrace] = e&.backtrace&.join("\n") if Rails.logger.debug?
+      log_fields[:message] = e.message
+      log_fields[:request_status] = log_type
+      log_fields[:status] = 503 # Service Unavailable
+    rescue DataServicesApi::ServiceException => e
+      log_fields[:message] = e.service_message
+      log_fields[:request_status] = log_type
+      log_fields[:status] = 503 # Service Unavailable
+    rescue RuntimeError => e
+      log_fields[:backtrace] = e&.backtrace&.join("\n") if Rails.logger.debug?
+      log_fields[:message] = "Runtime error #{e.inspect}"
+      log_fields[:message] += "Caused by: #{e.cause}" if e.cause
+      log_fields[:message] += " in (#{e.class})" if Rails.logger.debug?
+      log_fields[:request_status] = log_type
+      log_fields[:status] = 500 # Internal Server Error
+    end
+    # Log the request status and response
+    LoggingHelper.log_request(log_fields, log_type) unless log_fields.empty?
+    # Always return the time taken to execute the query
+    (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start)
   end
 
   def reached_count_limit?(limit)

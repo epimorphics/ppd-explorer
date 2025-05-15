@@ -26,7 +26,7 @@ module PpdHelper
                       }, {}) do
             content_tag(:i, nil, class: 'fa fa-search-plus')
           end
-        ).html_safe
+        ).html_safe # rubocop:disable Rails/OutputSafety
       end
     end
   end

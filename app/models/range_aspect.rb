@@ -25,6 +25,6 @@ class RangeAspect < Aspect
 
   def prompt(val)
     prompt_string = option(:prompt) || '%s %s'
-    format(prompt_string, key_as_label, val).html_safe
+    format(prompt_string, key_as_label, val).html_safe # rubocop:disable Rails/OutputSafety
   end
 end

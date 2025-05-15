@@ -33,7 +33,7 @@ class UserPreferences
 
   # Yield a block to each search term with a non-empty value
   def each_search_term
-    QueryCommand::ASPECTS.each do |_key, aspect|
+    QueryCommand::ASPECTS.each_value do |aspect|
       (aspect.option(:values) || [nil]).each do |value|
         yield aspect.search_term(value, self) if aspect.present?(self, value)
       end
