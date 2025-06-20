@@ -20,7 +20,6 @@ require 'json_expressions/minitest'
 require 'download_helpers'
 
 require 'capybara/minitest'
-require 'capybara/minitest/spec'
 require 'capybara/rails'
 require 'selenium/webdriver'
 
