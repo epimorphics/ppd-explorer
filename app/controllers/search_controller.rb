@@ -53,6 +53,11 @@ class SearchController < ApplicationController
 
   private
 
+  def sanitise(val)
+    full_sanitizer = Rails::Html::FullSanitizer.new
+    full_sanitizer.sanitize(val)
+  end
+
   # rubocop:disable Layout/LineLength, Metrics/MethodLength
   def render_error_page(err, message, status, template = 'ppd/error')
     # link the error to the actual request id otherwise generate one for this error
