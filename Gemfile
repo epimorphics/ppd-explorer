@@ -36,13 +36,11 @@ gem 'yajl-ruby', require: 'yajl'
 gem 'stackprof'
 gem 'sentry-rails' # rubocop:disable Bundler/OrderedGems
 
-group :assets do
-  # Use SCSS for stylesheets
-  gem 'sass-rails'
+# Use SCSS for stylesheets
+gem 'sass-rails'
 
-  # Use Uglifier as compressor for JavaScript assets
-  gem 'uglifier', require: false
-end
+# Use Uglifier as compressor for JavaScript assets
+gem 'uglifier', require: false
 
 group :doc do
   gem 'sdoc', require: false
