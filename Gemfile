@@ -8,12 +8,6 @@ gem 'rails'
 # Use Puma as the app server
 gem 'puma'
 
-# Use SCSS for stylesheets
-gem 'sass-rails'
-
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier'
-
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'execjs'
 # gem 'therubyracer', platforms: :ruby
@@ -42,6 +36,14 @@ gem 'yajl-ruby', require: 'yajl'
 gem 'stackprof'
 gem 'sentry-rails' # rubocop:disable Bundler/OrderedGems
 
+group :assets do
+  # Use SCSS for stylesheets
+  gem 'sass-rails'
+
+  # Use Uglifier as compressor for JavaScript assets
+  gem 'uglifier', require: false
+end
+
 group :doc do
   gem 'sdoc', require: false
 end
@@ -66,7 +68,12 @@ group :test do
 end
 
 group :development do
-  gem 'meta_request' # Devtools panel for Rails development
+  gem 'htmlbeautifier'
+  gem 'ruby-lsp'
+  gem 'solargraph'
+  # Devtools panel for Rails development - loading from the GitHub repo
+  # (https://github.com/dejan/rails_panel/issues/209#issuecomment-2621877079_)
+  gem 'meta_request', github: 'dejan/rails_panel', ref: 'meta_request-v0.8.5'
 
   gem 'rb-readline'
 
