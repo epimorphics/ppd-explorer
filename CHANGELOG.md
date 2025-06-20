@@ -6,6 +6,16 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ### Unreleased
 
+## 2.0.4 - 2025-06 - HOTFIX
+
+- Introduced new method sanitise for HTML input sanitisation and replaced
+  occurrences of sanitize with strip_tags in views to prevent potential XSS
+  vulnerabilities.
+  [GH-280](https://github.com/epimorphics/ppd-explorer/issues/280)
+- Refactor error handling for consistent status processing
+- Update configuration to align comment patterns and quotes use
+- Add development gems for improved tooling, adjust gem strategy
+
 ## 2.0.3 - 2025-04
 
 - Updates dependencies for enhanced performance and security.
