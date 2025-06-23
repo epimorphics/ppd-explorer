@@ -18,7 +18,6 @@ class SearchController < ApplicationController
     else
       @query_command = QueryCommand.new(@preferences, use_compact_json?)
       @query_command.load_query_results
-
       if @query_command.success?
         render
       else
@@ -52,6 +51,11 @@ class SearchController < ApplicationController
   end
 
   private
+
+  def sanitise(val)
+    full_sanitizer = Rails::Html::FullSanitizer.new
+    full_sanitizer.sanitize(val)
+  end
 
   # rubocop:disable Layout/LineLength, Metrics/MethodLength
   def render_error_page(err, message, status, template = 'ppd/error')

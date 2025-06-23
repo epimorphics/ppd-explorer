@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+# ActiveSupport::TestCase < Minitest::Test
+# In your test_helper.rb you must have require "rails/test_help"
+require 'rails/test_help'
+
 require 'simplecov'
 SimpleCov.start do
   add_filter '/test/'
@@ -8,7 +12,6 @@ end
 
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
-require 'rails/test_help'
 
 require 'minitest/rails'
 
@@ -17,7 +20,6 @@ require 'json_expressions/minitest'
 require 'download_helpers'
 
 require 'capybara/minitest'
-require 'capybara/minitest/spec'
 require 'capybara/rails'
 require 'selenium/webdriver'
 
