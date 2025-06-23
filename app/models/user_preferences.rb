@@ -102,10 +102,9 @@ class UserPreferences
   # This method should be called after filtering out empty parameters.
   # It is important to call this method before using the parameters in any way
   # that could expose them to XSS vulnerabilities.
-  def sanitise! # rubocop:disable Metrics/MethodLength
+  def sanitise!
     full_sanitizer = Rails::Html::FullSanitizer.new
     @params.each do |key, value|
-      debug("Sanitising user preference for key: #{key}, value: #{value.inspect}")
       # If the value is a hash, sanitize each key-value pair
       if value.is_a?(Hash) # rubocop:disable Style/ConditionalAssignment
         @params[key] = value.each_pair { |v| full_sanitizer.sanitize(v) }
@@ -131,7 +130,4 @@ class UserPreferences
     end
   end
 
-  def debug(message)
-    Rails.logger.debug(message) if Rails.logger.debug?
-  end
 end
