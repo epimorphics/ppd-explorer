@@ -13,6 +13,7 @@ class UserPreferences
 
   def initialize(user_params)
     @params = user_params.permit(ALLOW_LIST).to_h
+    filter_out_empties!
     sanitise!
   end
 
@@ -84,13 +85,33 @@ class UserPreferences
 
   # Remove any non-allowlisted parameters, or params with empty values
   # (e.g. empty strings, empty arrays)
-  def sanitise!
+  def filter_out_empties!
     @params.keep_if do |_k, v|
       if v.is_a?(Array)
         v.any? { |x| !x.to_s.strip.empty? }
       else
         !v.to_s.strip.empty?
       end
+    end
+  end
+
+  # Sanitise all parameters to remove any HTML tags or unsafe content
+  # This is done to prevent XSS attacks and ensure that user input is safe
+  # for rendering in views or processing in the application.
+  # It uses Rails' built-in HTML sanitizer to clean the input.
+  # This method should be called after filtering out empty parameters.
+  # It is important to call this method before using the parameters in any way
+  # that could expose them to XSS vulnerabilities.
+  def sanitise!
+    full_sanitizer = Rails::Html::FullSanitizer.new
+    @params.each do |key, value|
+      # Skip sanitisation for empty values
+      # or if the value is nil (e.g. not set)
+      next if value.nil? || value == ''
+      # If the value is an array, sanitize each element
+      return @params[key] = value.map { |v| full_sanitizer.sanitize(v) } if value.is_a?(Array)
+      # Otherwise, sanitize the single value
+      return @params[key] = full_sanitizer.sanitize(value)
     end
   end
 
