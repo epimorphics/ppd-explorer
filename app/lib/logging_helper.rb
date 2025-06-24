@@ -30,9 +30,9 @@ class LoggingHelper
 
     if fields[:request_time] && fields[:message].present?
       fields[:message] += format(', time taken: %.0f ms', fields[:request_time])
-      seconds, milliseconds = Integer(fields[:request_time]).divmod(1000)
-      fields[:request_time] = format('%.0f.%03d', seconds, milliseconds)
     end
+
+    fields[:request_time] = format_request_time(fields[:request_time])
 
     fields[:status]
 
@@ -40,5 +40,13 @@ class LoggingHelper
 
     Rails.logger.send(type) { JSON.generate(fields.sort.to_h) } unless fields.empty?
     Rails.logger.flush if Rails.logger.respond_to?(:flush)
+  end
+
+  # Helper method to format request time in seconds and milliseconds
+  def self.format_request_time(request_time)
+    return if request_time.nil?
+
+    seconds, milliseconds = Integer(request_time).divmod(1000)
+    format('%.0f.%03d', seconds, milliseconds)
   end
 end
