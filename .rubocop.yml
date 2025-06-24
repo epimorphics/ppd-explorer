@@ -50,6 +50,9 @@ Style/Documentation:
   Exclude:
     - test/**/*
 
+Style/StringLiterals:
+  Enabled: false
+
 Style/FormatStringToken:
   Enabled: false
 

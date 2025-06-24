@@ -105,13 +105,16 @@ class UserPreferences
   def sanitise!
     full_sanitizer = Rails::Html::FullSanitizer.new
     @params.each do |key, value|
-      # Skip sanitisation for empty values
-      # or if the value is nil (e.g. not set)
-      next if value.nil? || value == ''
+      # If the value is a hash, sanitize each key-value pair
+      if value.is_a?(Hash) # rubocop:disable Style/ConditionalAssignment
+        @params[key] = value.each_pair { |v| full_sanitizer.sanitize(v) }
       # If the value is an array, sanitize each element
-      return @params[key] = value.map { |v| full_sanitizer.sanitize(v) } if value.is_a?(Array)
+      elsif value.is_a?(Array)
+        @params[key] = value.map { |v| full_sanitizer.sanitize(v) }
       # Otherwise, sanitize the single value
-      return @params[key] = full_sanitizer.sanitize(value)
+      else
+        @params[key] = full_sanitizer.sanitize(value)
+      end
     end
   end
 
@@ -126,4 +129,5 @@ class UserPreferences
       end
     end
   end
+
 end

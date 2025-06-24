@@ -18,7 +18,6 @@ class SearchController < ApplicationController
     else
       @query_command = QueryCommand.new(@preferences, use_compact_json?)
       @query_command.load_query_results
-
       if @query_command.success?
         render
       else
