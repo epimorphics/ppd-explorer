@@ -9,7 +9,7 @@
 
 .search-summary
   %p
-    #{sr.summarise} by searching for:
+    #{sr&.summarise} by searching for:
   %ul.search-terms.list.list-bullet
     - @preferences.each_search_term do |search_term|
       - clean_label = sanitize(search_term.label)
@@ -29,7 +29,7 @@
       %li
         = results_selection( limit, @preferences )
 
-- if sr.max_results_limit_hit
+- if sr&.max_results_limit_hit
   .search-limit-reached.bg-danger
     %i.fa.fa-exclamation-triangle
     We're sorry, but your search returned more results than is practical to display on this
@@ -43,7 +43,7 @@
 
 %ul.list-unstyled.ppd-results
   - result = nil
-  - sr.each_property_address do |results|
+  - sr&.each_property_address do |results|
     - previous_result = result
     - result = results.first
 
