@@ -107,7 +107,7 @@ class UserPreferences
     @params.each do |key, value|
       # If the value is a hash, sanitize each key-value pair
       if value.is_a?(Hash) # rubocop:disable Style/ConditionalAssignment
-        @params[key] = value.each_pair { |v| full_sanitizer.sanitize(v) }
+        @params[key] = value.transform_values { |v| full_sanitizer.sanitize(v) }
       # If the value is an array, sanitize each element
       elsif value.is_a?(Array)
         @params[key] = value.map { |v| full_sanitizer.sanitize(v) }
