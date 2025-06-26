@@ -1,45 +1,60 @@
-ARG ALPINE_VERSION=3.20
-ARG RUBY_VERSION=3.3.5
+ARG RUBY_VERSION=3.4.4
+ARG ALPINE_VERSION=3.22
+ARG BUNDLER_VERSION=2.6.9
 
 # Defines base image which builder and final stage use
-FROM ruby:${RUBY_VERSION}-alpine${ALPINE_VERSION} AS base
-ARG BUNDLER_VERSION
+FROM ruby:$RUBY_VERSION-alpine$ALPINE_VERSION AS base
 
+ENV DIR=/usr/src/app
 
-RUN apk add --update \
+RUN apk add --update --no-cache \
     bash \
     coreutils \
     git \
     nodejs \
     tzdata \
-    && rm -rf /var/cache/apk/* \
-    && gem update --system \
-    && gem install bundler:$BUNDLER_VERSION \
-    && bundle config --global frozen 1
+    && gem update --system
 
-FROM base AS builder
+# for Bundler
+ARG BUNDLER_VERSION
+RUN echo "Bundler version ${BUNDLER_VERSION}"
+RUN gem install bundler:$BUNDLER_VERSION
+# installs the required gems
+FROM base AS gems
+RUN apk add --update build-base yaml-dev && gem update --system
 
-RUN apk add --update build-base
-
-WORKDIR /usr/src/app
-
-COPY config.ru Gemfile Gemfile.lock Rakefile ./
-COPY .bundle/config /root/.bundle/config
 COPY bin bin
+COPY Gemfile Gemfile.lock ./
+# .bundle/config contains the information required to access rubygems.pkg.github.com/epimorphics/
+COPY .bundle/config /root/.bundle/config
+RUN bundle config set --local without 'development test' \
+    && bundle config set --local frozen 1 \
+    && bundle install
 
-RUN ./bin/bundle config set --local without 'development test' && ./bin/bundle install && mkdir log
+# runs build to compile assets
+FROM base AS builder
+RUN apk add --update build-base && gem update --system
 
+WORKDIR ${DIR}
+# Copy the builds from the previous stages
+COPY --from=gems --chown=app /usr/local/bundle /usr/local/bundle
+
+# Copy the rest of the application code
+COPY config.ru Gemfile Gemfile.lock Rakefile ./
 COPY app app
+COPY bin bin
 COPY config config
 COPY lib lib
 COPY public public
 
-# Compile
+ARG RAILS_RELATIVE_URL_ROOT
+RUN echo "RAILS_RELATIVE_URL_ROOT set to: ${RAILS_RELATIVE_URL_ROOT}"
 
+# Precompile assets
 RUN RAILS_ENV=production \
-# RAILS_RELATIVE_URL_ROOT=/ \
   bundle exec rake assets:precompile \
-  && mkdir -m 777 /usr/src/app/coverage
+  && mkdir -m 777 ${DIR}/coverage \
+  && mkdir -m 777 ${DIR}/log
 
 # Start a new build stage to minimise the final image size
 FROM base
@@ -59,10 +74,10 @@ LABEL com.epimorphics.name=$image_name \
 RUN addgroup -S app && adduser -S -G app app
 EXPOSE 3000
 
-WORKDIR /usr/src/app
+WORKDIR ${DIR}
 
 COPY --from=builder --chown=app /usr/local/bundle /usr/local/bundle
-COPY --from=builder --chown=app /usr/src/app .
+COPY --from=builder --chown=app ${DIR} .
 
 USER app
 
