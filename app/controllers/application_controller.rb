@@ -81,11 +81,11 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   def render_error(status, sentry_code = nil)
     reset_response
 
-    status = Rack::Utils::SYMBOL_TO_STATUS_CODE[status] if status.is_a?(Symbol)
+    error_status = Rack::Utils::SYMBOL_TO_STATUS_CODE[status] || status
     respond_to do |format|
-      format.html { render_html_error_page(status, sentry_code) }
+      format.html { render_html_error_page(error_status, sentry_code) }
       # Anything else returns the status as human readable plain string
-      format.all { render plain: Rack::Utils::HTTP_STATUS_CODES[status].to_s, status: status }
+      format.all { render plain: Rack::Utils::HTTP_STATUS_CODES[error_status].to_s, status: error_status }
     end
   end
 
@@ -133,8 +133,8 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
 
     if log_fields[:request_time]
       log_fields[:message] += format(', time taken: %.0f ms', log_fields[:request_time])
-      seconds, milliseconds = log_fields[:request_time].divmod(1000)
-      log_fields[:request_time] = format('%.0f.%03d', seconds, milliseconds) # rubocop:disable Style/FormatStringToken
+      seconds, milliseconds = Integer(log_fields[:request_time]).divmod(1000)
+      log_fields[:request_time] = format('%.0f.%03d', seconds, milliseconds)
     end
 
     log_response(response.status, log_fields.sort.to_h)
