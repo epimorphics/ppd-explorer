@@ -19,7 +19,7 @@ class SearchAspect < Aspect
     query.matches(aspect_key_property, preference_value_as_regex(preferences), flags: 'i')
   end
 
-  def has_search?(query) # rubocop:disable Naming/PredicateName
+  def has_search?(query) # rubocop:disable Naming/PredicatePrefix
     query.terms.key?(aspect_property) &&
       query.terms[aspect_property].key?('@search')
   end
@@ -52,7 +52,8 @@ class SearchAspect < Aspect
 
   # Sanitises a string for HTML output (using Rails' built-in sanitizer)
   def sanitised(val)
-    Rails::Html::FullSanitizer.new.sanitize(val)
+    full_sanitizer = Rails::Html::FullSanitizer.new
+    full_sanitizer.sanitize(val)
   end
 
   private
