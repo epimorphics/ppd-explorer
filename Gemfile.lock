@@ -460,8 +460,6 @@ GEM
     timeout (0.4.3)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    uglifier (4.2.1)
-      execjs (>= 0.3.0, < 3)
     unicode-display_width (3.1.4)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
@@ -501,7 +499,7 @@ GEM
       json
       lograge
       railties
-    lr_common_styles (2.1.4)
+    lr_common_styles (2.2.1)
       bootstrap-sass
       font-awesome-rails
       govuk_elements_rails (= 3.0.2)
@@ -512,7 +510,7 @@ GEM
       lodash-rails
       modernizr-rails
       modulejs-rails
-      rails
+      rails (~> 8.0.0)
       sass-rails
 
 PLATFORMS
@@ -572,7 +570,6 @@ DEPENDENCIES
   simplecov
   solargraph
   stackprof
-  uglifier
   vcr
   webdrivers
   webmock

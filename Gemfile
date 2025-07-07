@@ -40,8 +40,12 @@ gem 'sentry-rails' # rubocop:disable Bundler/OrderedGems
 # group :assets do
 # Use SCSS for stylesheets
 gem 'sass-rails'
+# ! Webpacker removes the need for Uglifier so we can safely remove it.
+# ! If you want to use Uglifier, uncomment the line below
+# ! and ensure you have the 'uglifier' gem in your Gemfile.
+# ! See https://www.mintbit.com/blog/rails-5-6-upgrade-es6-uglifier-bug/
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', require: false
+# gem 'uglifier', require: false
 # end
 
 group :doc do
