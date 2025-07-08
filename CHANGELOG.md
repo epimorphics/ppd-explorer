@@ -6,6 +6,17 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ### Unreleased
 
+## 2.1.0 - 2025-07
+
+- Updated the Ruby version from 3.3.5 to 3.4.4 and the Alpine version from 3.20
+  to 3.22.
+- Introduced EnvironmentHelper module to standardise environment-specific UI
+  display.
+- Enhanced Docker setup by incorporating a more organised building process and
+  additional dependencies.
+- Adjusted HTML structure for modal presentation and cleaned up modal-related
+  markup.
+
 ## 2.0.4 - 2025-06 - HOTFIX
 
 - Introduced new method sanitise for HTML input sanitisation and replaced
