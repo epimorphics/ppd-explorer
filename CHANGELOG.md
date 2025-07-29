@@ -6,6 +6,12 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ### Unreleased
 
+- Update several Ruby gems for better security and performance
+- Fix Rubocop plugin configuration to resolve misconfiguration
+- Enhance HTML with clickable footnotes and smooth scrolling
+- Refactor Docker run commands to use Makefile targets
+- Reorganise Makefile for clearer asset management
+
 ## 2.1.0 - 2025-07
 
 - Updated the Ruby version from 3.3.5 to 3.4.4 and the Alpine version from 3.20
