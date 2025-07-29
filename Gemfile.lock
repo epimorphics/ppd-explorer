@@ -482,10 +482,13 @@ GEM
 GEM
   remote: https://rubygems.pkg.github.com/epimorphics/
   specs:
-    data_services_api (1.5.4)
-      faraday_middleware (~> 1.2.0)
-      json (~> 2.6.1)
-      yajl-ruby (~> 1.4.1)
+    data_services_api (1.6.0)
+      faraday (~> 2.13)
+      faraday-encoding (~> 0.0.6)
+      faraday-follow_redirects (~> 0.3.0)
+      faraday-retry (~> 2.0)
+      json (~> 2.0)
+      yajl-ruby (~> 1.4)
     json_rails_logger (2.0.6)
       json
       lograge
