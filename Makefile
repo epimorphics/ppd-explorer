@@ -130,3 +130,6 @@ vars:
 	@echo "COMMIT = ${COMMIT}"
 	@echo "TAG = ${TAG}"
 	@echo "VERSION = ${VERSION}"
+
+version:
+	@echo ${VERSION}
