@@ -112,16 +112,12 @@
   :javascript
     document.addEventListener("DOMContentLoaded", function() {
       document.querySelectorAll("a[id^='note']").forEach(function(el) {
-        console.log({el})
         el.addEventListener("click", function(event) {
           event.preventDefault();
           var targetId = this.getAttribute("href").replace("#", "");
-          console.log({targetId});
           var targetRef = this.id;
-          console.log({targetRef});
           // Find the target element by ID
           var targetElement = document.getElementById(targetId);
-          console.log({targetElement});
           // If the target element exists, set the href and scroll into view
           if (targetElement) {
             targetElement.setAttribute("href", "#" + targetRef );
