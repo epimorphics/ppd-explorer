@@ -1,7 +1,7 @@
-plugins: rubocop-rails
+plugins:
+  - rubocop-rails
 
 AllCops:
-  TargetRubyVersion: 3.3
   Exclude:
     - "node_modules/**/*"
     - "Gemfile"

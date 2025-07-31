@@ -22,8 +22,11 @@ gem 'haml-rails'
 gem 'rubocop'
 gem 'rubocop-rails'
 
-gem 'faraday'
-gem 'faraday_middleware'
+gem 'faraday', '~> 2.13'
+gem 'faraday-encoding', '~> 0.0.6'
+gem 'faraday-follow_redirects', '~> 0.3.0'
+gem 'faraday-retry', '~> 2.0'
+
 gem 'font-awesome-rails'
 gem 'get_process_mem'
 gem 'jquery-ui-rails'

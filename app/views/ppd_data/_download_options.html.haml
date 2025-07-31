@@ -38,7 +38,7 @@
                   get <strong>selected</strong> results as CSV
             %tr
               %td.no-border
-                All matching results (see <strong>note&nbsp;1</strong>)
+                All matching results (see <a id="note1RefA" href='#note1'><strong>note&nbsp;1</strong></a>)
 
               %td.no-border
                 %a.button{ href: @preferences.as_path( :ppd_data, {format: :csv, limit: "all"} )}
@@ -47,7 +47,7 @@
 
             %tr
               %td.no-border
-                Only selected results, with column headers (see <strong>note&nbsp;2</strong>)
+                Only selected results, with column headers (see <a id="note2RefA" href='#note2'><strong>note&nbsp;2</strong></a>)
 
               %td.no-border
                 %a.button.button--secondary{ href: @preferences.as_path( :ppd_data, {format: :csv, header: true} )}
@@ -55,7 +55,7 @@
                   get <strong>selected</strong> results as CSV with headers
             %tr
               %td.no-border
-                All matching results, with column headers (see <strong>notes 1</strong> and <strong>2</strong>)
+                All matching results, with column headers (see <a id="note1RefB" href='#note1'><strong>notes 1</strong></a> and <a id="note2RefB" href='#note2'><strong>2</strong></a>)
 
               %td.no-border
                 %a.button.button--secondary{ href: @preferences.as_path( :ppd_data, {format: :csv, header: true, limit: "all"} )}
@@ -77,7 +77,7 @@
                   get <strong>selected</strong> results as Turtle
             %tr
               %td.no-border
-                All matching results (see <strong>note&nbsp;1</strong>)
+                All matching results (see <a id="note1RefC" href='#note1'><strong>note&nbsp;1</strong></a>)
 
               %td.no-border
                 %a.button.button--secondary{ href: @preferences.as_path( :ppd_data, {format: :ttl, limit: "all"} )}
@@ -97,12 +97,32 @@
 
     .row
       %p
-        %strong Note 1
+        %a#note1{href:"#note1Ref"}
+          %strong Note 1
         This will download all results that match your query, not just the
         selected results.
         Depending on your query and the speed of your Internet connection, this may
         take some time and download a significant quantity of data.
       %p
-        %strong Note 2
+        %a#note2{href:"#note2Ref"}
+          %strong Note 2
         For compatibility with previous releases of the data, column headers are not provided in the CSV file unless
         you select this option.
+
+  :javascript
+    document.addEventListener("DOMContentLoaded", function() {
+      document.querySelectorAll("a[id^='note']").forEach(function(el) {
+        el.addEventListener("click", function(event) {
+          event.preventDefault();
+          var targetId = this.getAttribute("href").replace("#", "");
+          var targetRef = this.id;
+          // Find the target element by ID
+          var targetElement = document.getElementById(targetId);
+          // If the target element exists, set the href and scroll into view
+          if (targetElement) {
+            targetElement.setAttribute("href", "#" + targetRef );
+            targetElement.scrollIntoView({ behavior: "smooth" });
+          }
+        });
+      });
+    });
