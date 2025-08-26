@@ -46,8 +46,8 @@ $lr-logo-grey: #a7a5a6;
     }
 
     ul {
-      margin-bottom: 0;
       -webkit-margin-after: 0;
+      margin-bottom: 0;
     }
   }
 
@@ -196,8 +196,8 @@ $lr-logo-grey: #a7a5a6;
       height: 20px;
       min-width: 30px;
     }
-    .twitter {
-    }
+    // .twitter {
+    // }
     .facebook {
       margin-right: 20px;
     }
@@ -214,13 +214,24 @@ $lr-logo-grey: #a7a5a6;
 
   input[type=checkbox],
   input[type=radio] {
-    transform: scale(1.1);
     -webkit-transform: scale(1.3);
+    transform: scale(1.1);
   }
 
 }
 
+.leaflet-tile-container {
+  img {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+}
 
-.leaflet-tile-container img {
-  -webkit-backface-visibility: hidden;
+.footnotes {
+  p {
+    margin-inline: 15px;
+    @media (min-width: 768px) {
+      margin-inline: 0;
+    }
+  }
 }
