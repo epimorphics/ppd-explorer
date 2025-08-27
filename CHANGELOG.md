@@ -6,6 +6,9 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## Unreleased
 
+- Adjusts dependencies to new versions including rails
+- Updates gems like rexml, jbuilder, and puma
+- Modifies lockfile to reflect dependency changes
 - Modify CSV handling to add newline after headers
 - Update styles for download option layout
 - Add documentation for Git hook automation tasks
