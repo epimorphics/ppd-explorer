@@ -4,7 +4,22 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## Changelog
 
-### Unreleased
+## Unreleased
+
+- Adjusts dependencies to new versions including rails
+- Updates gems like rexml, jbuilder, and puma
+- Modifies lockfile to reflect dependency changes
+- Modify CSV handling to add newline after headers
+- Update styles for download option layout
+- Add documentation for Git hook automation tasks
+
+### 2.2.0 - 2025-08
+
+- Update several Ruby gems for better security and performance
+- Fix Rubocop plugin configuration to resolve misconfiguration
+- Enhance HTML with clickable footnotes and smooth scrolling
+- Refactor Docker run commands to use Makefile targets
+- Reorganise Makefile for clearer asset management
 
 ## 2.1.0 - 2025-07
 
