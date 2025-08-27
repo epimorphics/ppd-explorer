@@ -4,7 +4,13 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## Changelog
 
-### Unreleased
+## Unreleased
+
+- Modify CSV handling to add newline after headers
+- Update styles for download option layout
+- Add documentation for Git hook automation tasks
+
+### 2.2.0 - 2025-08
 
 - Update several Ruby gems for better security and performance
 - Fix Rubocop plugin configuration to resolve misconfiguration

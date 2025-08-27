@@ -106,7 +106,7 @@ class PpdDataController < ApplicationController
     file = Tempfile.new(%w[ppd_data csv])
 
     File.open(file, 'w') do |f|
-      f << headers if headers
+      f << headers << "\n" if headers
       write_csv_rows(query_command, f)
     end
 
