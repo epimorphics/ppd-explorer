@@ -6,6 +6,8 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## Unreleased
 
+## 2.2.2 - 2025-08
+
 - Updated LR Common Styles gem to continue to address security issues
 
 ## 2.2.1 - 2025-08
