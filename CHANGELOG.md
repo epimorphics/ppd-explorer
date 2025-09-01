@@ -6,6 +6,10 @@ This app allows the user to explore HMLR price-paid open linked data.
 
 ## Unreleased
 
+- Updated LR Common Styles gem to continue to address security issues
+
+## 2.2.1 - 2025-08
+
 - Adjusts dependencies to new versions including rails
 - Updates gems like rexml, jbuilder, and puma
 - Modifies lockfile to reflect dependency changes
