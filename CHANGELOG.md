@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Adjusted test logging to respect log level and reduce logs displayed unless debugging
+
 ## [2.2.2] - 2025-08
 
 ### Changed
