@@ -1,99 +1,141 @@
-# HMLR PPD explorer
+# Changelog
 
-This app allows the user to explore HMLR price-paid open linked data.
+All notable changes to this project will be documented in this file.
 
-## Changelog
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [Unreleased]
 
-## 2.2.2 - 2025-08
+## [2.2.2] - 2025-08
+
+### Changed
 
 - Updated LR Common Styles gem to continue to address security issues
 
-## 2.2.1 - 2025-08
+## [2.2.1] - 2025-08
 
-- Adjusts dependencies to new versions including rails
-- Updates gems like rexml, jbuilder, and puma
-- Modifies lockfile to reflect dependency changes
-- Modify CSV handling to add newline after headers
-- Update styles for download option layout
-- Add documentation for Git hook automation tasks
+### Changed
 
-### 2.2.0 - 2025-08
+- Adjusted dependencies to new versions including rails
+- Updated gems like rexml, jbuilder, and puma
+- Modified lockfile to reflect dependency changes
+- Modified CSV handling to add newline after headers
+- Updated styles for download option layout
 
-- Update several Ruby gems for better security and performance
-- Fix Rubocop plugin configuration to resolve misconfiguration
-- Enhance HTML with clickable footnotes and smooth scrolling
-- Refactor Docker run commands to use Makefile targets
-- Reorganise Makefile for clearer asset management
+### Added
 
-## 2.1.0 - 2025-07
+- Added documentation for Git hook automation tasks
+
+## [2.2.0] - 2025-08
+
+### Changed
+
+- Updated several Ruby gems for better security and performance
+- Enhanced HTML with clickable footnotes and smooth scrolling
+- Refactored Docker run commands to use Makefile targets
+- Reorganised Makefile for clearer asset management
+
+### Fixed
+
+- Fixed Rubocop plugin configuration to resolve misconfiguration
+
+## [2.1.0] - 2025-07
+
+### Changed
 
 - Updated the Ruby version from 3.3.5 to 3.4.4 and the Alpine version from 3.20
-  to 3.22.
-- Introduced EnvironmentHelper module to standardise environment-specific UI
-  display.
+  to 3.22
 - Enhanced Docker setup by incorporating a more organised building process and
-  additional dependencies.
+  additional dependencies
 - Adjusted HTML structure for modal presentation and cleaned up modal-related
-  markup.
+  markup
 
-## 2.0.4 - 2025-06 - HOTFIX
+### Added
+
+- Introduced EnvironmentHelper module to standardise environment-specific UI
+  display
+
+## [2.0.4] - 2025-06
+
+### Security
 
 - Introduced new method sanitise for HTML input sanitisation and replaced
   occurrences of sanitize with strip_tags in views to prevent potential XSS
-  vulnerabilities.
+  vulnerabilities
   [GH-280](https://github.com/epimorphics/ppd-explorer/issues/280)
-- Refactor error handling for consistent status processing
-- Update configuration to align comment patterns and quotes use
-- Add development gems for improved tooling, adjust gem strategy
 
-## 2.0.3 - 2025-04
+### Changed
 
-- Updates dependencies for enhanced performance and security.
-- Improved error handling with Sentry integration and clearer logging.
-- Enhanced semantic meaning in modal footer markup.
+- Refactored error handling for consistent status processing
+- Updated configuration to align comment patterns and quotes use
+- Added development gems for improved tooling, adjusted gem strategy
 
-## 2.0.2 - 2025-03
+## [2.0.3] - 2025-04
+
+### Changed
+
+- Updated dependencies for enhanced performance and security
+- Improved error handling with Sentry integration and clearer logging
+- Enhanced semantic meaning in modal footer markup
+
+## [2.0.2] - 2025-03
+
+### Added
+
+- Added `rubocop-rails` plugin to `.rubocop.yml`
+- Added logging helper for API requests
+- Added ability to set log level config from environment variable
+- Added pre-commit and pre-push hooks
+
+### Changed
 
 - Enhanced `Sentry` configuration setup
 - Enhanced `load_query_result` with logging
 - Enhanced error handling in `save_results` method
-- Added `rubocop-rails` plugin to `.rubocop.yml`
 - Improved logging level where applicable
 - Updated logging methods for better clarity
-- Added logging helper for API requests
 - Updated Gemfile dependencies
 - Updated timezone handling in config
 - Updated boot info logging for Rails compatibility
-- Added ability to set log level config from environment variable
-- Removed sunset google plusone reference
 - Updated GitHub workflow versions to v2
-- Added pre-commit and pre-push hooks
 
-## 2.0.1 - 2024-12
+### Removed
 
-- (Jon) Updated the error template path to use `Rails.public_path` as well as
-  contain the `html` extension to ensure the correct template is rendered
-- (Jon) Improves error metrics reporting to ensure that logging always happens
-  with the appropriate severity depending on the exception status while reducing
-  the types of errors that can trigger a an error metric and therefore a
+- Removed sunset google plusone reference
+
+## [2.0.1] - 2024-12
+
+### Fixed
+
+- Updated the error template path to use `Rails.public_path` as well as contain
+  the `html` extension to ensure the correct template is rendered
+- Improved error metrics reporting to ensure that logging always happens with
+  the appropriate severity depending on the exception status while reducing the
+  types of errors that can trigger a an error metric and therefore a
   notification in slack
   [GH-149](https://github.com/epimorphics/hmlr-linked-data/issues/149)
-- (Jon) Added catch for missing `SENTRY_API_KEY` env var to `entrypoint.sh` for
-  docker build
-- (Jon) Updated target status level to trigger internal error metrics to 500
-  status codes only in the `search_controller`
-- (Jon) Added `message`, `status`, and `type` arguments to be logged by the
+- Updated target status level to trigger internal error metrics to 500 status
+  codes only in the `search_controller`
+
+### Added
+
+- Added catch for missing `SENTRY_API_KEY` env var to `entrypoint.sh` for docker
+  build
+- Added `message`, `status`, and `type` arguments to be logged by the
   `json_rails_logger` gem for respective error responses in the
   `search_controller`
 
-## 2.0.0 - 2024-11
+## [2.0.0] - 2024-11
 
-- (Bogdan) Updated all gems by regenerating `Gemfile.lock`
-- (Bogdan) Upgraded alpine to `3.20`
-- (Bogdan) Upgraded rails to `7.2.2`
-- (Bogdan) Upgraded ruby to `3.3.5`
+### Changed
+
+- Updated all gems by regenerating `Gemfile.lock`
+  - Upgraded alpine to `3.20`
+  - Upgraded rails to `7.2.2`
+  - Upgraded ruby to `3.3.5`
+
+---
 
 ## 1.8.0 - 2024-10
 
