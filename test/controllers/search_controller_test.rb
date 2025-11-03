@@ -22,12 +22,12 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
                   .summarise
                   .match(/Showing (\d+) transactions \(from (\d*) or more matching transactions\) for (\d+) properties/)
 
-          _(query_command.size).must_equal 10
+          assert_equal 10, query_command.size
 
           assert match
-          _(match[1].to_i).must_equal 10
-          _(match[2].to_i).must_be(:>, 0)
-          _(match[3].to_i).must_be(:>, 0)
+          assert_equal 10, match[1].to_i
+          assert_operator match[2].to_i, :>, 0
+          assert_operator match[3].to_i, :>, 0
         end
       end
     end

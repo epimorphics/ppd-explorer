@@ -7,7 +7,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Adjusted test logging to respect log level and reduce logs displayed unless debugging
+### Changed
+
+- Updated Ruby on Rails framework to latest version for improved security and
+  performance
+- Modernised test suite assertions from deprecated spec-style to standard
+  Minitest patterns
+- Upgraded Selenium WebDriver from 4.1.0 to 4.38.0 for better browser
+  compatibility
+- Updated multiple dependencies including Puma, Faraday, JSON, and Sentry for
+  security fixes
+- Improved test framework compatibility and removed legacy assertion helpers
+- Adjusted test logging to respect log level and reduce logs displayed unless
+  debugging
+
+### Removed
+
+- Removed unused gems: `capybara-selenium`, `webdrivers`, `minitest-vcr`, and
+  `minitest-capybara`
+- Cleaned up redundant test dependencies and VCR integration setup
+- Removed deprecated `to_time_preserves_timezone` configuration for Rails 8.1+
+  compatibility
+
+### Fixed
+
+- Resolved MiniTest compatibility issues with Capybara integration
+- Fixed deprecated assertion syntax throughout test suite (replaced `assert_not`
+  with `refute`)
+- Added explicit CSV gem dependency for Ruby 3.4.0 compatibility
+- Improved test helper setup and gem loading order
+
+### Security
+
+- Updated dependencies to address security vulnerabilities in linting and
+  testing frameworks
+- Upgraded core framework dependencies to resolve known security issues
 
 ## [2.2.2] - 2025-08
 

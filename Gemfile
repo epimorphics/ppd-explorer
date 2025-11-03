@@ -23,9 +23,9 @@ gem 'rubocop'
 gem 'rubocop-rails'
 
 gem 'faraday', '~> 2.13'
-gem 'faraday-encoding', '~> 0.0.6'
-gem 'faraday-follow_redirects', '~> 0.3.0'
-gem 'faraday-retry', '~> 2.0'
+gem 'faraday-encoding', '>= 0.0.6'
+gem 'faraday-follow_redirects', '>= 0.3.0'
+gem 'faraday-retry', '>= 2.0'
 
 gem 'font-awesome-rails'
 gem 'get_process_mem'
@@ -60,17 +60,15 @@ gem 'dotenv', groups: %i[development test]
 
 group :test do
   gem 'capybara'
-  gem 'capybara_minitest_spec'
-  gem 'capybara-selenium'
+  gem 'csv'
   gem 'json_expressions'
-  gem 'minitest-rails'
+  gem 'minitest-rails', require: false
   gem 'minitest-reporters'
-  gem 'minitest-spec-rails'
-  gem 'minitest-vcr'
+  gem 'minitest-spec-rails', require: false
   gem 'mocha'
+  gem 'selenium-webdriver'
   gem 'simplecov', require: false
   gem 'vcr'
-  gem 'webdrivers'
   gem 'webmock'
 end
 

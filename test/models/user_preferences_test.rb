@@ -17,19 +17,19 @@ describe 'UserPreferences' do
   it 'should report a parameter as present, or not' do
     prefs = UserPreferences.new(params_object('street' => 'bar'))
     assert prefs.present?(:street)
-    assert_not prefs.present?(:town)
+    refute prefs.present?(:town)
   end
 
   it 'should report a parameter as present with a given value, or not' do
     prefs = UserPreferences.new(params_object('street' => 'bar'))
     assert prefs.present?(:street, 'bar')
-    assert_not prefs.present?(:street, 'blam')
+    refute prefs.present?(:street, 'blam')
   end
 
   it 'should report a parameter as present, with a list of values, or not' do
     prefs = UserPreferences.new(params_object('nb' => %w[true false]))
     assert prefs.present?(:nb, 'true')
     assert prefs.present?(:nb, 'false')
-    assert_not prefs.present?(:nb, 'flimflam')
+    refute prefs.present?(:nb, 'flimflam')
   end
 end
