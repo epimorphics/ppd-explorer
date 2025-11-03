@@ -60,13 +60,13 @@ gem 'dotenv', groups: %i[development test]
 
 group :test do
   gem 'capybara'
-  gem 'capybara_minitest_spec'
   gem 'capybara-selenium'
+  gem 'csv'
   gem 'json_expressions'
   gem 'minitest-rails'
   gem 'minitest-reporters'
   gem 'minitest-spec-rails'
-  gem 'minitest-vcr'
+  gem 'minitest-vcr', require: false
   gem 'mocha'
   gem 'simplecov', require: false
   gem 'vcr'
