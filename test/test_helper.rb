@@ -15,6 +15,13 @@ require File.expand_path('../config/environment', __dir__)
 
 require 'minitest/rails'
 
+# Fix compatibility with gems that expect the old MiniTest constant
+# This needs to be set before requiring gems like minitest-vcr
+MiniTest = Minitest unless defined?(MiniTest)
+
+# Now manually require minitest-vcr after setting up compatibility
+require 'minitest-vcr'
+
 require 'mocha/minitest'
 require 'json_expressions/minitest'
 require 'download_helpers'
@@ -25,6 +32,18 @@ require 'selenium/webdriver'
 
 require 'minitest/reporters'
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+
+# Include Capybara DSL in test classes
+class ActionDispatch::IntegrationTest
+  include Capybara::DSL
+  include Capybara::Minitest::Assertions
+
+  def teardown
+    super
+    Capybara.reset_sessions!
+    Capybara.use_default_driver
+  end
+end
 
 def params_object(params)
   ActionController::Parameters.new(params)
