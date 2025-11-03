@@ -117,6 +117,7 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
+    csv (3.3.5)
     date (3.5.0)
     diff-lcs (1.6.2)
     docile (1.4.1)
@@ -528,6 +529,7 @@ DEPENDENCIES
   byebug
   capybara
   capybara-selenium
+  csv
   data_services_api!
   dotenv
   execjs
