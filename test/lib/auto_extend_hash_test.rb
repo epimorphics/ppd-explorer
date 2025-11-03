@@ -12,7 +12,7 @@ class AutoExtendHashTest < ActiveSupport::TestCase
       it 'should create a hash that auto-extends' do
         auto_hash = AutoExtendHash.new
 
-        assert_not auto_hash.key?(:foo)
+        refute auto_hash.key?(:foo)
         _(auto_hash[:foo]).wont_be_nil
         assert auto_hash.key?(:foo)
       end
@@ -22,7 +22,7 @@ class AutoExtendHashTest < ActiveSupport::TestCase
       it 'should allow assignment to a new key like a normal hash' do
         auto_hash = AutoExtendHash.new
 
-        assert_not auto_hash.key?(:foo)
+        refute auto_hash.key?(:foo)
         auto_hash[:foo] = :bar
         assert auto_hash.key?(:foo)
         _(auto_hash[:foo]).must_equal :bar
@@ -40,12 +40,12 @@ class AutoExtendHashTest < ActiveSupport::TestCase
       it 'should allow an existing hash to be converted to auto-extend behaviour' do
         orig = {}
 
-        assert_not orig.key?(:foo)
+        refute orig.key?(:foo)
         orig[:foo]
-        assert_not orig.key?(:foo)
+        refute orig.key?(:foo)
 
         AutoExtendHash.auto_extend(orig)
-        assert_not orig.key?(:foo)
+        refute orig.key?(:foo)
         orig[:foo]
         assert orig.key?(:foo)
       end
@@ -54,7 +54,7 @@ class AutoExtendHashTest < ActiveSupport::TestCase
         orig = {}
         AutoExtendHash.auto_extend(orig)
 
-        assert_not orig.key?(:foo)
+        refute orig.key?(:foo)
         orig[:foo][:bar] = 'wombles'
         _(orig[:foo][:bar]).must_equal 'wombles'
       end
@@ -63,7 +63,7 @@ class AutoExtendHashTest < ActiveSupport::TestCase
         orig = { foo: {} }
         AutoExtendHash.auto_extend(orig)
 
-        assert_not orig[:foo].key?(:bar)
+        refute orig[:foo].key?(:bar)
         orig[:foo][:bar][:fubar] = 'wombles'
         _(orig[:foo][:bar][:fubar]).must_equal 'wombles'
       end
@@ -72,7 +72,7 @@ class AutoExtendHashTest < ActiveSupport::TestCase
         orig = Hash.new { |hash, key| hash[key] = :chewbacca }
         AutoExtendHash.auto_extend(orig)
 
-        assert_not orig.key?(:foo)
+        refute orig.key?(:foo)
         _(orig[:foo]).must_equal :chewbacca
       end
     end
