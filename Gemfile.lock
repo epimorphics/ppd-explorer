@@ -162,7 +162,7 @@ GEM
       railties (>= 3.1.0)
     govuk_template (0.26.0)
       rails (>= 3.1)
-    haml (6.3.0)
+    haml (7.0.1)
       temple (>= 0.8.2)
       thor
       tilt
