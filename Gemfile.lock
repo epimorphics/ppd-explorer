@@ -192,7 +192,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (8.0.0)
       railties (>= 3.2.16)
-    json (2.13.2)
+    json (2.15.2)
     json_expressions (0.9.0)
     kramdown (2.5.1)
       rexml (>= 3.3.9)
@@ -250,7 +250,7 @@ GEM
     modernizr-rails (2.7.1)
     modulejs-rails (2.2.0.0)
       railties (>= 4.0)
-    net-http (0.6.0)
+    net-http (0.7.0)
       uri
     net-imap (0.5.12)
       date
