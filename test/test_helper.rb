@@ -18,17 +18,9 @@ MiniTest = Minitest unless defined?(MiniTest)
 
 # Require minitest gems carefully to avoid conflicts
 require 'minitest/rails'
-require 'minitest-vcr'
 
 # Load spec functionality without conflicting parallelize support
 require 'minitest/spec'
-
-# Fix compatibility with gems that expect the old MiniTest constant
-# This needs to be set before requiring gems like minitest-vcr
-MiniTest = Minitest unless defined?(MiniTest)
-
-# Now manually require minitest-vcr after setting up compatibility
-require 'minitest-vcr'
 
 require 'mocha/minitest'
 require 'json_expressions/minitest'
