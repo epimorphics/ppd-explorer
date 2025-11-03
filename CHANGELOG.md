@@ -26,6 +26,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed unused gems: `capybara-selenium`, `webdrivers`, `minitest-vcr`, and
   `minitest-capybara`
 - Cleaned up redundant test dependencies and VCR integration setup
+- Removed deprecated `to_time_preserves_timezone` configuration for Rails 8.1+
+  compatibility
 
 ### Fixed
 
@@ -34,8 +36,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   with `refute`)
 - Added explicit CSV gem dependency for Ruby 3.4.0 compatibility
 - Improved test helper setup and gem loading order
-- Removed deprecated `to_time_preserves_timezone` configuration for Rails 8.1+
-  compatibility
 
 ### Security
 
