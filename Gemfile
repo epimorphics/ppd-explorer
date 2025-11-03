@@ -63,9 +63,9 @@ group :test do
   gem 'capybara-selenium'
   gem 'csv'
   gem 'json_expressions'
-  gem 'minitest-rails'
+  gem 'minitest-rails', require: false
   gem 'minitest-reporters'
-  gem 'minitest-spec-rails'
+  gem 'minitest-spec-rails', require: false
   gem 'minitest-vcr', require: false
   gem 'mocha'
   gem 'simplecov', require: false

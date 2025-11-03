@@ -2,6 +2,8 @@
 
 # ActiveSupport::TestCase < Minitest::Test
 # In your test_helper.rb you must have require "rails/test_help"
+ENV['RAILS_ENV'] ||= 'test'
+require File.expand_path('../config/environment', __dir__)
 require 'rails/test_help'
 
 require 'simplecov'
@@ -10,10 +12,16 @@ SimpleCov.start do
   add_filter '/config/'
 end
 
-ENV['RAILS_ENV'] ||= 'test'
-require File.expand_path('../config/environment', __dir__)
+# Fix compatibility with gems that expect the old MiniTest constant
+# This needs to be set before requiring any minitest gems
+MiniTest = Minitest unless defined?(MiniTest)
 
+# Require minitest gems carefully to avoid conflicts
 require 'minitest/rails'
+require 'minitest-vcr'
+
+# Load spec functionality without conflicting parallelize support
+require 'minitest/spec'
 
 # Fix compatibility with gems that expect the old MiniTest constant
 # This needs to be set before requiring gems like minitest-vcr
