@@ -65,7 +65,6 @@ group :test do
   gem 'minitest-rails', require: false
   gem 'minitest-reporters'
   gem 'minitest-spec-rails', require: false
-  gem 'minitest-vcr', require: false
   gem 'mocha'
   gem 'selenium-webdriver'
   gem 'simplecov', require: false

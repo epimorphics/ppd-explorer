@@ -222,8 +222,6 @@ GEM
     matrix (0.4.3)
     memory_profiler (1.1.0)
     mini_mime (1.1.5)
-    minispec-metadata (2.0.0)
-      minitest
     minitest (5.26.0)
     minitest-rails (8.1.0)
       minitest (~> 5.20)
@@ -236,10 +234,6 @@ GEM
     minitest-spec-rails (7.4.1)
       minitest (>= 5.0)
       railties (>= 4.1)
-    minitest-vcr (1.4.0)
-      minispec-metadata (~> 2.0)
-      minitest (>= 4.7.5)
-      vcr (>= 2.9)
     mocha (2.7.1)
       ruby2_keywords (>= 0.0.5)
     modernizr-rails (2.7.1)
@@ -551,7 +545,6 @@ DEPENDENCIES
   minitest-rails
   minitest-reporters
   minitest-spec-rails
-  minitest-vcr
   mocha
   ostruct
   prometheus-client
