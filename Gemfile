@@ -60,7 +60,6 @@ gem 'dotenv', groups: %i[development test]
 
 group :test do
   gem 'capybara'
-  gem 'capybara-selenium'
   gem 'csv'
   gem 'json_expressions'
   gem 'minitest-rails', require: false
@@ -68,9 +67,9 @@ group :test do
   gem 'minitest-spec-rails', require: false
   gem 'minitest-vcr', require: false
   gem 'mocha'
+  gem 'selenium-webdriver'
   gem 'simplecov', require: false
   gem 'vcr'
-  gem 'webdrivers'
   gem 'webmock'
 end
 
