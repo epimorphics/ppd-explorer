@@ -13,7 +13,7 @@ class AutoExtendHashTest < ActiveSupport::TestCase
         auto_hash = AutoExtendHash.new
 
         refute auto_hash.key?(:foo)
-        _(auto_hash[:foo]).wont_be_nil
+        refute_nil auto_hash[:foo]
         assert auto_hash.key?(:foo)
       end
     end
@@ -25,14 +25,14 @@ class AutoExtendHashTest < ActiveSupport::TestCase
         refute auto_hash.key?(:foo)
         auto_hash[:foo] = :bar
         assert auto_hash.key?(:foo)
-        _(auto_hash[:foo]).must_equal :bar
+        assert_equal :bar, auto_hash[:foo]
       end
 
       it 'should support nested accesses' do
         auto_hash = AutoExtendHash.new
 
         auto_hash[:foo][:fubar][:rabuf] = :bar
-        _(auto_hash[:foo][:fubar][:rabuf]).must_equal :bar
+        assert_equal :bar, auto_hash[:foo][:fubar][:rabuf]
       end
     end
 
@@ -56,7 +56,7 @@ class AutoExtendHashTest < ActiveSupport::TestCase
 
         refute orig.key?(:foo)
         orig[:foo][:bar] = 'wombles'
-        _(orig[:foo][:bar]).must_equal 'wombles'
+        assert_equal 'wombles', orig[:foo][:bar]
       end
 
       it 'should convert nested hashes to auto-extend' do
@@ -65,7 +65,7 @@ class AutoExtendHashTest < ActiveSupport::TestCase
 
         refute orig[:foo].key?(:bar)
         orig[:foo][:bar][:fubar] = 'wombles'
-        _(orig[:foo][:bar][:fubar]).must_equal 'wombles'
+        assert_equal 'wombles', orig[:foo][:bar][:fubar]
       end
 
       it 'should not change existing default_proc behaviour' do
@@ -73,7 +73,7 @@ class AutoExtendHashTest < ActiveSupport::TestCase
         AutoExtendHash.auto_extend(orig)
 
         refute orig.key?(:foo)
-        _(orig[:foo]).must_equal :chewbacca
+        assert_equal :chewbacca, orig[:foo]
       end
     end
   end
