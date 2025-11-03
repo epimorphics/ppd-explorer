@@ -23,9 +23,9 @@ gem 'rubocop'
 gem 'rubocop-rails'
 
 gem 'faraday', '~> 2.13'
-gem 'faraday-encoding', '~> 0.0.6'
-gem 'faraday-follow_redirects', '~> 0.3.0'
-gem 'faraday-retry', '~> 2.0'
+gem 'faraday-encoding', '>= 0.0.6'
+gem 'faraday-follow_redirects', '>= 0.3.0'
+gem 'faraday-retry', '>= 2.0'
 
 gem 'font-awesome-rails'
 gem 'get_process_mem'
