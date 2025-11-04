@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved test framework compatibility and removed legacy assertion helpers
 - Adjusted test logging to respect log level and reduce logs displayed unless
   debugging
+- Simplified Sentry initialisation to always configure when DSN is available
 
 ### Removed
 
@@ -36,12 +37,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   with `refute`)
 - Added explicit CSV gem dependency for Ruby 3.4.0 compatibility
 - Improved test helper setup and gem loading order
+- Updated Sentry logger configuration from `config.logger.level` to `config.sdk_logger.level`
 
 ### Security
 
 - Updated dependencies to address security vulnerabilities in linting and
   testing frameworks
 - Upgraded core framework dependencies to resolve known security issues
+- Refactored Sentry error reporting configuration for SDK v6 compatibility
 
 ## [2.2.2] - 2025-08
 
