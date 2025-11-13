@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class PpdControllerTest < ActionController::IntegrationTest
+class PpdControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end

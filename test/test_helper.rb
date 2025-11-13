@@ -2,6 +2,8 @@
 
 # ActiveSupport::TestCase < Minitest::Test
 # In your test_helper.rb you must have require "rails/test_help"
+ENV['RAILS_ENV'] ||= 'test'
+require File.expand_path('../config/environment', __dir__)
 require 'rails/test_help'
 
 require 'simplecov'
@@ -10,10 +12,15 @@ SimpleCov.start do
   add_filter '/config/'
 end
 
-ENV['RAILS_ENV'] ||= 'test'
-require File.expand_path('../config/environment', __dir__)
+# Fix compatibility with gems that expect the old MiniTest constant
+# This needs to be set before requiring any minitest gems
+MiniTest = Minitest unless defined?(MiniTest)
 
+# Require minitest gems carefully to avoid conflicts
 require 'minitest/rails'
+
+# Load spec functionality without conflicting parallelize support
+require 'minitest/spec'
 
 require 'mocha/minitest'
 require 'json_expressions/minitest'
@@ -25,6 +32,18 @@ require 'selenium/webdriver'
 
 require 'minitest/reporters'
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+
+# Include Capybara DSL in test classes
+class ActionDispatch::IntegrationTest
+  include Capybara::DSL
+  include Capybara::Minitest::Assertions
+
+  def teardown
+    super
+    Capybara.reset_sessions!
+    Capybara.use_default_driver
+  end
+end
 
 def params_object(params)
   ActionController::Parameters.new(params)
