@@ -70,7 +70,6 @@ tags
 .tags
 .tool-versions
 
-# Ignore local configuration files
-.env
-.env*.local
+# Ignore local configuration files except for development
+.env*
 !.env.development
