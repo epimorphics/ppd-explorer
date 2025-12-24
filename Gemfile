@@ -22,10 +22,12 @@ gem 'haml-rails'
 gem 'rubocop'
 gem 'rubocop-rails'
 
-gem 'faraday', '~> 2.13'
-gem 'faraday-encoding', '>= 0.0.6'
-gem 'faraday-follow_redirects', '>= 0.3.0'
-gem 'faraday-retry', '>= 2.0'
+# Faraday v2 requires individual middlewares to be specified
+# Resolve open-ended gem versioning warnings by setting explicit version minimums
+gem 'faraday', '~> 2.13', '>= 2.13.0'
+gem 'faraday-encoding', '~> 0.0', '>= 0.0.6'
+gem 'faraday-follow_redirects', '~> 0.3', '>= 0.3.0'
+gem 'faraday-retry', '~> 2.0', '>= 2.0'
 
 gem 'font-awesome-rails'
 gem 'get_process_mem'
@@ -84,6 +86,12 @@ group :development do
 
   gem 'flamegraph'
   gem 'memory_profiler'
+
+  # TODO: While running the rails app locally for testing you can set gems to your local path
+  # ! These 'local' paths do not work with a docker image - use the repository version instead
+  # gem 'data_services_api', path: '~/Epimorphics/shared/data_services_api'
+  # gem 'json_rails_logger', path: '~/Epimorphics/shared/json-rails-logger'
+  # gem 'lr_common_styles', path: '~/Epimorphics/clients/land-registry/projects/lr_common_styles'
 end
 
 # TODO: In production you want to set this to the gem from the epimorphics package repo
@@ -92,9 +100,3 @@ source 'https://rubygems.pkg.github.com/epimorphics' do
   gem 'json_rails_logger'
   gem 'lr_common_styles'
 end
-
-# TODO: While running the rails app locally for testing you can set gems to your local path
-# ! These 'local' paths do not work with a docker image - use the repo instead
-# gem 'data_services_api', path: '~/Epimorphics/shared/data_services_api'
-# gem 'json_rails_logger', path: '~/Epimorphics/shared/json-rails-logger'
-# gem 'lr_common_styles', path: '~/Epimorphics/clients/land-registry/projects/lr_common_styles'
