@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Introduced feature tests for search, data retrieval and download aspects for
+  use in the Cucumber and Puppetteer Integration Tests (CuPIT).
+- Added scenarios for postcode searches, property type filtering, and text
+  indexing.
+
+### Changed
+
+- Updated .gitignore rules to include .DS_Store files and prevent unnecessary
+  tracking of Mac OS system files
+- Generalises .env exclusion to cover all variations, except the development one,
+  for better secrets management
+
 ## [2.2.3] - 2025-11
 
 ### Changed
