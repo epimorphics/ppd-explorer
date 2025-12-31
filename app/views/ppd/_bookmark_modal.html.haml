@@ -4,7 +4,7 @@
   #bookmark-dialog.modal-dialog{role: "dialog", "aria-labelledby": "bookmark-link", "aria-modal": "true"}
     .modal-content
       .modal-header
-        %button.close{ type: "button", data: {dismiss: "modal"}, aria: {hidden: "true"}}
+        %button.close{ type: "button", data: { "bs-dismiss": "modal"}, aria: {hidden: "true"}}
           &times;
         #bookmark-link
         %h2.modal-title
@@ -27,5 +27,5 @@
 
       .modal-footer
         .footer-row
-          %button.btn.btn-default{ type: "button", data: {dismiss: "modal"} }
+          %button.btn.btn-outline-secondary{ type: "button", data: { "bs-dismiss": "modal"} }
             OK
