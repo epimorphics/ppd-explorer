@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require popper
 //= require bootstrap
 //= require lr_common_styles/application
 //= require_tree .
