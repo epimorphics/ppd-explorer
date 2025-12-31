@@ -18,6 +18,7 @@ gem 'jquery-rails'
 
 gem 'autoprefixer-rails'
 gem 'bootstrap', '~> 5.3.2'
+gem 'dartsass-sprockets', '~> 3.2'
 
 gem 'haml-rails'
 
@@ -85,6 +86,12 @@ group :development do
 
   gem 'flamegraph'
   gem 'memory_profiler'
+
+  # TODO: While running the rails app locally for testing you can set gems to your local path
+  # ! These 'local' paths do not work with a docker image - use the repo instead
+  # gem 'data_services_api', path: '~/Epimorphics/shared/data_services_api'
+  # gem 'json_rails_logger', path: '~/Epimorphics/shared/json-rails-logger'
+  # gem 'lr_common_styles', path: '~/Epimorphics/clients/land-registry/projects/lr_common_styles'
 end
 
 # TODO: In production you want to set this to the gem from the epimorphics package repo
@@ -93,11 +100,3 @@ source 'https://rubygems.pkg.github.com/epimorphics' do
   gem 'json_rails_logger'
   gem 'lr_common_styles'
 end
-
-# TODO: While running the rails app locally for testing you can set gems to your local path
-# ! These 'local' paths do not work with a docker image - use the repo instead
-# gem 'data_services_api', path: '~/Epimorphics/shared/data_services_api'
-# gem 'json_rails_logger', path: '~/Epimorphics/shared/json-rails-logger'
-# gem 'lr_common_styles', path: '~/Epimorphics/clients/land-registry/projects/lr_common_styles'
-
-gem "dartsass-sprockets", "~> 3.2"
