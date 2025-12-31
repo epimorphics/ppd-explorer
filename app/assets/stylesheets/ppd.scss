@@ -2,8 +2,8 @@ $lr-logo-grey: #a7a5a6;
 
 @media (min-width: 641px) {
   .lr main {
-      font-size: 16px;
-      line-height: 1.31578947;
+    font-size: 16px;
+    line-height: 1.31578947;
   }
 }
 
@@ -14,10 +14,11 @@ $lr-logo-grey: #a7a5a6;
 
 .control-legend {
   border: none;
-  font-size: 16px;
+  font-size: 1.6rem;
   line-height: 1.31578947;
   font-family: "nta", Arial, sans-serif;
   font-weight: bold;
+
   @media (max-width: 768px) {
     margin-block-end: 0;
   }
@@ -32,7 +33,8 @@ $lr-logo-grey: #a7a5a6;
     margin-top: 10px;
   }
 
-  h2, h3 {
+  h2,
+  h3 {
     margin-top: 8px;
   }
 
@@ -81,20 +83,20 @@ $lr-logo-grey: #a7a5a6;
     }
   }
 
-  .search-selection > span {
+  .search-selection>span {
     margin-left: 10px;
   }
 
- .detailed-address {
+  .detailed-address {
     table {
       td {
         border: 0;
         padding: 2px;
       }
 
-    .property-details-field-title {
-      padding-right: 10px;
-    }
+      .property-details-field-title {
+        padding-right: 10px;
+      }
 
     }
 
@@ -114,7 +116,10 @@ $lr-logo-grey: #a7a5a6;
   }
 
   .ppd-results {
-    h2, h3, h4 {
+
+    h2,
+    h3,
+    h4 {
       font-family: Arial, sans-serif;
     }
 
@@ -173,7 +178,7 @@ $lr-logo-grey: #a7a5a6;
   }
 
   .transaction-category {
-    background-color: lighten( $lr-logo-grey, 20% );
+    background-color: lighten($lr-logo-grey, 20%);
     padding: 3px;
     border-radius: 3px;
   }
@@ -190,7 +195,7 @@ $lr-logo-grey: #a7a5a6;
   }
 
   .social-media {
-    > div {
+    >div {
       display: inline-block;
       vertical-align: top !important;
       height: 20px;
@@ -206,6 +211,7 @@ $lr-logo-grey: #a7a5a6;
     dt {
       width: 60px;
     }
+
     dd {
       margin-left: 80px;
     }
@@ -229,8 +235,10 @@ $lr-logo-grey: #a7a5a6;
 .footnotes {
   p {
     margin-inline: 15px;
+
     @media (min-width: 768px) {
       margin-inline: 0;
     }
   }
 }
+
