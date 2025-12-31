@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 $lr-logo-grey: #a7a5a6;
 
 @media (min-width: 641px) {
@@ -178,7 +180,7 @@ $lr-logo-grey: #a7a5a6;
   }
 
   .transaction-category {
-    background-color: lighten($lr-logo-grey, 20%);
+    background-color: color.adjust($lr-logo-grey, $lightness: 20%);
     padding: 3px;
     border-radius: 3px;
   }
@@ -244,49 +246,37 @@ $lr-logo-grey: #a7a5a6;
 
 
 // Style Updates 2026 Post-Sass Migration
-@media (min-width: 1200px) {
 
-  h1,
-  .h1 {
-    font-size: 3.6rem;
-  }
-
-  h2,
-  .h2 {
-    font-size: 3rem;
-  }
-
-  h3,
-  .h3 {
-    font-size: 2.4rem;
-  }
-
-  h4,
-  .h4 {
-    font-size: 2rem;
-  }
-
-  h5,
-  .h5 {
-    font-size: 1.6rem;
-  }
-
-  h6,
-  .h6 {
-    font-size: 1.4rem;
-  }
+h1,
+.h1 {
+  font-size: 3.6rem;
 }
 
-
-.form-group {
-  display: flex;
-  gap: 3rem;
-
-  .form-horizontal & {
-    margin-right: -15px;
-    margin-left: -15px;
-  }
+h2,
+.h2 {
+  font-size: 3rem;
 }
+
+h3,
+.h3 {
+  font-size: 2.4rem;
+}
+
+h4,
+.h4 {
+  font-size: 2rem;
+}
+
+h5,
+.h5 {
+  font-size: 1.6rem;
+}
+
+h6,
+.h6 {
+  font-size: 1.4rem;
+}
+
 
 label {
   display: inline-block;
@@ -301,17 +291,55 @@ label {
 
   &:has(input[type="date"]) {
     line-height: 2;
-    ;
+  }
+}
+
+@media (max-width: 768px) {
+  .control-legend {
+    margin-block-end: 0;
+    padding-block-end: 0.75rem;
   }
 }
 
 @media (min-width: 768px) {
-  .form-horizontal .control-label {
-    line-height: 2.2;
-    margin-bottom: 0;
-    text-align: right;
+
+  .form-horizontal {
+    .form-group {
+      display: flex;
+      gap: 3rem;
+      margin-right: -15px;
+      margin-left: -15px;
+    }
+
+    .control-label {
+      line-height: 2.2;
+      margin-bottom: 0;
+      text-align: right;
+    }
+
+    .radio,
+    .checkbox {
+      min-height: 27px;
+    }
+
+    .radio,
+    .checkbox,
+    .radio-inline,
+    .checkbox-inline {
+      padding-top: 7px;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
   }
 }
+
+.lr form.ppd ul.list-inline {
+  display: inline-flex;
+  gap: 0.25rem 1.5rem;
+  flex-wrap: wrap
+}
+
 
 .form-control {
   width: 100%;
@@ -328,33 +356,13 @@ label {
   color: #999;
 }
 
-
-.lr form.ppd ul.list-inline {
-  display: inline-flex;
-  gap: 1.5rem;
-}
-
-
 .input-group .input-group-addon {
-  @extend .input-group-text;
+  @extend .input-group-text !optional;
   font-size: 1.4rem;
   padding-inline: 1.2rem;
 }
 
-.form-horizontal .radio,
-.form-horizontal .checkbox {
-  min-height: 27px;
-}
-
-.form-horizontal .radio,
-.form-horizontal .checkbox,
-.form-horizontal .radio-inline,
-.form-horizontal .checkbox-inline {
-  padding-top: 7px;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
+// Modal styles
 @media (min-width: 768px) {
   .modal {
     --bs-modal-width: 600px;
@@ -405,10 +413,10 @@ button.close {
 }
 
 #help-modal .dl-horizontal {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 1.5rem;
-    margin-block-end: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin-block-end: 2rem;
 
   dt {
     flex: 0 0 10%;
@@ -422,4 +430,9 @@ button.close {
     max-width: 75%;
     margin-left: 0;
   }
+}
+
+// Lists
+.list-bullet {
+    list-style-position: outside;
 }
