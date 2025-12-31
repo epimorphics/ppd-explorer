@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Enabled Sass source maps to simplify front-end debugging in development
+  environment.
+- Included custom initialiser to allow for Autoprefixer complexities and nuances
+  while using latest bootstrap gem
+
+### Changed
+
+- Replaced `bootstrap-sass` with the `bootstrap` gem and remove `sass-rails`,
+  aligning with the new Dart Sass toolchain and reducing deprecated
+  dependencies.
+- Modernised application stylesheets and reformat PPD-specific styles after the
+  Sass migration for consistency.
+- Improved asset compression settings to produce smaller, faster-loading
+  bundles.
+- Updated modal dismissal behaviour and form grouping (including wrapping the
+  email address) following latest Bootstrap notation for cleaner markup and
+  better usability.
+
 ## [2.2.3] - 2025-11
 
 ### Changed
