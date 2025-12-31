@@ -42,7 +42,6 @@ gem 'sentry-rails' # rubocop:disable Bundler/OrderedGems
 # Assets group is temporarily disabled due to versioning issues with Rails
 # group :assets do
 # Use SCSS for stylesheets
-gem 'sass-rails'
 # ! Webpacker removes the need for Uglifier so we can safely remove it.
 # ! If you want to use Uglifier, uncomment the line below
 # ! and ensure you have the 'uglifier' gem in your Gemfile.
@@ -98,3 +97,5 @@ end
 # gem 'data_services_api', path: '~/Epimorphics/shared/data_services_api'
 # gem 'json_rails_logger', path: '~/Epimorphics/shared/json-rails-logger'
 # gem 'lr_common_styles', path: '~/Epimorphics/clients/land-registry/projects/lr_common_styles'
+
+gem "dartsass-sprockets", "~> 3.2"
