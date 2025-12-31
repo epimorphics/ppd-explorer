@@ -242,3 +242,184 @@ $lr-logo-grey: #a7a5a6;
   }
 }
 
+
+// Style Updates 2026 Post-Sass Migration
+@media (min-width: 1200px) {
+
+  h1,
+  .h1 {
+    font-size: 3.6rem;
+  }
+
+  h2,
+  .h2 {
+    font-size: 3rem;
+  }
+
+  h3,
+  .h3 {
+    font-size: 2.4rem;
+  }
+
+  h4,
+  .h4 {
+    font-size: 2rem;
+  }
+
+  h5,
+  .h5 {
+    font-size: 1.6rem;
+  }
+
+  h6,
+  .h6 {
+    font-size: 1.4rem;
+  }
+}
+
+
+.form-group {
+  display: flex;
+  gap: 3rem;
+
+  .form-horizontal & {
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+}
+
+label {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: 700;
+
+  &:has(input[type="checkbox"]),
+  &:has(input[type="radio"]) {
+    font-weight: 400;
+  }
+
+  &:has(input[type="date"]) {
+    line-height: 2;
+    ;
+  }
+}
+
+@media (min-width: 768px) {
+  .form-horizontal .control-label {
+    line-height: 2.2;
+    margin-bottom: 0;
+    text-align: right;
+  }
+}
+
+.form-control {
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 1.4rem;
+  line-height: 1.428571429;
+  color: #555555;
+  background-color: #fff;
+  background-image: none;
+}
+
+.form-control::-webkit-input-placeholder {
+  color: #999;
+}
+
+
+.lr form.ppd ul.list-inline {
+  display: inline-flex;
+  gap: 1.5rem;
+}
+
+
+.input-group .input-group-addon {
+  @extend .input-group-text;
+  font-size: 1.4rem;
+  padding-inline: 1.2rem;
+}
+
+.form-horizontal .radio,
+.form-horizontal .checkbox {
+  min-height: 27px;
+}
+
+.form-horizontal .radio,
+.form-horizontal .checkbox,
+.form-horizontal .radio-inline,
+.form-horizontal .checkbox-inline {
+  padding-top: 7px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .modal {
+    --bs-modal-width: 600px;
+    --bs-modal-padding: 1.75rem;
+
+    .btn {
+      font-size: 1.4rem;
+    }
+  }
+
+  .modal-dialog {
+    width: 600px;
+    margin: 30px auto;
+  }
+}
+
+.modal-header {
+  flex-direction: row-reverse;
+  justify-content: space-between;
+
+  button.close {
+    align-self: flex-start;
+  }
+}
+
+.modal-footer {
+  align-items: end;
+}
+
+button.close {
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.close {
+  float: right;
+  font-size: 21px;
+  font-weight: bold;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  filter: alpha(opacity=20);
+  opacity: 0.2;
+}
+
+#help-modal .dl-horizontal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    margin-block-end: 2rem;
+
+  dt {
+    flex: 0 0 10%;
+    max-width: 10%;
+    font-weight: 700;
+    text-align: end;
+  }
+
+  dd {
+    flex: 0 0 75%;
+    max-width: 75%;
+    margin-left: 0;
+  }
+}
