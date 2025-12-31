@@ -16,7 +16,9 @@ gem 'libv8-node'
 gem 'jbuilder'
 gem 'jquery-rails'
 
-gem 'bootstrap-sass'
+gem 'autoprefixer-rails'
+gem 'bootstrap', '~> 5.3.2'
+
 gem 'haml-rails'
 
 gem 'rubocop'
