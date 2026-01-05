@@ -3,7 +3,7 @@
 
 = content_for(:title, "Search the price paid dataset")
 
-.row
+.row.px-5
   .col-sm-12
     .pull-right.search-form-actions
       .search-form-action
@@ -15,54 +15,54 @@
           %i.fa.fa-refresh
           reset the form
 
-.row
+.row.px-5
   %h1.col-md-12
     = "#{yield(:title)}:"
   %p.col-md-12
     Enter one or more search terms to locate the property transactions
     you are interested in.
 
-.row
+.row.px-5
   .col-md-12
     =form_tag( {controller: :search, action: :create}, {role: "form", class: "ppd form form-horizontal"} ) do
-      .form-group
-        %label.col-sm-4.control-label{ for: "paon" } Building name or number
-        .col-sm-8
+      .form-group.gx-5
+        %label.col-md-4.control-label{ for: "paon" } Building name or number
+        .col-md-8
           %input#paon.form-control{ type: "text", autocomplete: "on", name: "paon", value: strip_tags(@preferences.param( :paon )), placeholder: "For example: Rose Cottage or 17" }
 
-      .form-group
-        %label.col-sm-4.control-label{ for: "street" } Street
-        .col-sm-8
+      .form-group.gx-5
+        %label.col-md-4.control-label{ for: "street" } Street
+        .col-md-8
           %input#street.form-control{ type: "text", autocomplete: "street-address", name: "street", value: strip_tags(@preferences.param( :street )), placeholder: "Use the full name, or just part of it e.g: Harbour Road or Colston" }
 
-      .form-group
-        %label.col-sm-4.control-label{ for: "town" } Town or city
-        .col-sm-8
+      .form-group.gx-5
+        %label.col-md-4.control-label{ for: "town" } Town or city
+        .col-md-8
           %input#town.form-control{ type: "text", autocomplete: "address-level2", name: "town", value: strip_tags(@preferences.param( :town )), placeholder: "For example: Plymouth" }
 
-      .form-group
-        %label.col-sm-4.control-label{ for: "district" } District
-        .col-sm-8
+      .form-group.gx-5
+        %label.col-md-4.control-label{ for: "district" } District
+        .col-md-8
           %input#district.form-control{ type: "text", autocomplete: "address-level3", name: "district", value: strip_tags(@preferences.param( :district )), placeholder: "For example: City of Westminster" }
 
-      .form-group
-        %label.col-sm-4.control-label{ for: "county" } County
-        .col-sm-8
+      .form-group.gx-5
+        %label.col-md-4.control-label{ for: "county" } County
+        .col-md-8
           %input#county.form-control{ type: "text", autocomplete: "county", name: "county", value: strip_tags(@preferences.param( :county )), placeholder: "For example: Devon" }
 
-      .form-group
-        %label.col-sm-4.control-label{ for: "locality" } Locality
-        .col-sm-8
+      .form-group.gx-5
+        %label.col-md-4.control-label{ for: "locality" } Locality
+        .col-md-8
           %input#locality.form-control{ type: "text", autocomplete: "on", name: "locality", value: strip_tags(@preferences.param( :locality )), placeholder: "For example: Thurloxton" }
 
-      .form-group
-        %label.col-sm-4.control-label{ for: "postcode" } Postcode
-        .col-sm-8
+      .form-group.gx-5
+        %label.col-md-4.control-label{ for: "postcode" } Postcode
+        .col-md-8
           %input#postcode.form-control{ type: "text", autocomplete: "postal-code", name: "postcode", value: strip_tags(@preferences.param( :postcode )), placeholder: "Use a full postcode, or just the first group e.g. PL6 5WS or PL6." }
 
-      %fieldset.form-group
-        %legend.control-legend.col-sm-4.control-label{ for: "ptype" } Property type
-        .col-sm-8
+      %fieldset.form-group.gx-5
+        %legend.control-legend.col-md-4.control-label{ for: "ptype" } Property type
+        .col-md-8
           %ul.list-inline
             %li
               .checkbox
@@ -90,9 +90,9 @@
                   %input{ type: "checkbox", name: "ptype[]", value: "lrcommon:otherPropertyType", checked: @preferences.display_checked?( :ptype, "lrcommon:otherPropertyType") }
                   other
 
-      %fieldset.form-group
-        %legend.control-legend.col-sm-4.control-label{ for: "nb" } New build?
-        .col-sm-8
+      %fieldset.form-group.gx-5
+        %legend.control-legend.col-md-4.control-label{ for: "nb" } New build?
+        .col-md-8
           %ul.list-inline
             %li
               .checkbox
@@ -105,9 +105,9 @@
                   %input{ type: "checkbox", name: "nb[]", value: "false", checked: @preferences.display_checked?( :nb, "false" ) }
                   not new-build
 
-      %fieldset.form-group
-        %legend.control-legend.col-sm-4.control-label{ for: "et" } Estate type
-        .col-sm-8
+      %fieldset.form-group.gx-5
+        %legend.control-legend.col-md-4.control-label{ for: "et" } Estate type
+        .col-md-8
           %ul.list-inline
             %li
               .checkbox
@@ -120,9 +120,9 @@
                   %input{ type: "checkbox", name: "et[]", value: "lrcommon:leasehold", checked: @preferences.display_checked?( :et, "lrcommon:leasehold" ) }
                   leasehold
 
-      %fieldset.form-group
-        %legend.control-legend.col-sm-4.control-label{ for: "tc" } Transaction category
-        .col-sm-8
+      %fieldset.form-group.gx-5
+        %legend.control-legend.col-md-4.control-label{ for: "tc" } Transaction category
+        .col-md-8
           %ul.list-inline
             %li
               .checkbox
@@ -135,11 +135,11 @@
                   %input{ type: "checkbox", name: "tc[]", value: "ppd:additionalPricePaidTransaction", checked: @preferences.display_checked?( :tc, "ppd:additionalPricePaidTransaction" ) }
                   additional
 
-      .form-group
-        %label.col-sm-4.control-label{ for: "min_price" } Minimum price
-        .col-sm-8
+      .form-group.gx-5
+        %label.col-md-4.control-label{ for: "min_price" } Minimum price
+        .col-md-8
           .row
-            .col-sm-4
+            .col-md-4
               .input-group
                 %span.input-group-addon
                   &pound;
@@ -149,14 +149,14 @@
                   value: strip_tags(@preferences.param( :min_price )),
                   spellcheck: false,
                 }
-            .col-sm-8.hidden.validation-warning
+            .col-md-8.hidden.validation-warning
               %p.bg-warning
                 Please enter a valid numerical value, or leave blank
-      .form-group
-        %label.col-sm-4.control-label{ for: "max_price" } Maximum price
-        .col-sm-8
+      .form-group.gx-5
+        %label.col-md-4.control-label{ for: "max_price" } Maximum price
+        .col-md-8
           .row
-            .col-sm-4
+            .col-md-4
               .input-group
                 %span.input-group-addon
                   &pound;
@@ -166,13 +166,13 @@
                   value: strip_tags(@preferences.param( :max_price )),
                   spellcheck: false,
                   }
-            .col-sm-8.hidden.validation-warning
+            .col-md-8.hidden.validation-warning
               %p.bg-warning
                 Please enter a valid numerical value, or leave blank
 
-      %fieldset.form-group
-        %legend.control-legend.col-sm-4.control-label{ for: "dates" }  Date
-        .col-sm-8
+      %fieldset.form-group.gx-5
+        %legend.control-legend.col-md-4.control-label{ for: "dates" }  Date
+        .col-md-8
           %ul.list-inline
             %li
               %div
@@ -185,9 +185,9 @@
                   latest:
                   %input{ type: 'date', name: :max_date, value: @preferences.param( :max_date ), min: "1995-01-01", max: Date.today.iso8601 }
 
-      %fieldset.form-group
-        %legend.control-legend.col-sm-4.control-label{ for: "limit" } How many results?
-        .col-sm-8
+      %fieldset.form-group.gx-5
+        %legend.control-legend.col-md-4.control-label{ for: "limit" } How many results?
+        .col-md-8
           %ul.list-inline
             %li
               .radio

@@ -7,7 +7,7 @@
   a bug, or that the format requested is not one that is currently supported.
 - else
   .download
-    .row
+    .row.px-5
       .col-md-12
         = render partial: "ppd/workflow_action_buttons", locals: {no_download: true, no_print: true, no_help: true, no_bookmark: true}
         %h1
@@ -15,7 +15,7 @@
 
     .row.spacer
 
-    .row
+    .row.px-5
       .col-md-12
         %table.table
           %thead
@@ -95,7 +95,7 @@
                   %i.fa.fa-eye
                   view SPARQL query
 
-    .row.footnotes
+    .row.footnotes.px-5
       %p
         %a#note1{href:"#note1Ref"}
           %strong Note 1

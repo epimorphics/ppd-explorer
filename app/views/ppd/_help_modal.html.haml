@@ -3,13 +3,13 @@
 #help-modal.modal
   #help-dialog.modal-dialog{role: "dialog", "aria-labelledby": "help-title", "aria-modal": "true"}
     .modal-content
-      .modal-header
+      .modal-header.ps-5
         %button.close{ type: "button", data: { "bs-dismiss": "modal"}, aria: {hidden: "true"}}
           &times;
           #help-title
         %h2.modal-title
           Help and suggestions
-      .modal-body
+      .modal-body.px-5
         %h3 Troubleshooting guide
         %p
           See the
@@ -42,7 +42,7 @@
           please email
           %span.email-address= mail_to(Rails.application.config.contact_email_address)
 
-      .modal-footer
+      .modal-footer.px-5
         .footer-row
           %button.btn.btn-outline-secondary{ type: "button", data: { "bs-dismiss": "modal"} }
             OK

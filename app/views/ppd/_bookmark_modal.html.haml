@@ -3,13 +3,13 @@
 #bookmark-modal.modal
   #bookmark-dialog.modal-dialog{role: "dialog", "aria-labelledby": "bookmark-link", "aria-modal": "true"}
     .modal-content
-      .modal-header
+      .modal-header.ps-5
         %button.close{ type: "button", data: { "bs-dismiss": "modal"}, aria: {hidden: "true"}}
           &times;
         #bookmark-link
         %h2.modal-title
           Link to the current search
-      .modal-body
+      .modal-body.px-5
         %p
           You can copy the current search settings to save them
           as a bookmark, or share with other people. Just-press
@@ -25,7 +25,7 @@
             %a.twitter-share-button{ href: "https://twitter.com/share", data: {url: "", text: "Open data from Land Registry", hashtags: "opendata"}}
               Tweet
 
-      .modal-footer
+      .modal-footer.px-5
         .footer-row
           %button.btn.btn-outline-secondary{ type: "button", data: { "bs-dismiss": "modal"} }
             OK
