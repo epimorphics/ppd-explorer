@@ -3,7 +3,6 @@
 require File.expand_path('boot', __dir__)
 
 # Pick the frameworks you want:
-# require "active_record/railtie"
 require 'action_controller/railtie'
 require 'action_mailer/railtie'
 require 'sprockets/railtie'
@@ -37,7 +36,10 @@ module PpdExplorer
 
     # Quiet SASS deprecation warnings coming from dependencies
     config.sass.quiet_deps = true
-
+    # Silence @import deprecation warnings during migration to @use/@forward
+    # See: https://sass-lang.com/d/import
+    config.sass.silence_deprecations = ['import']
+    # Add fonts path to asset pipeline
     config.assets.paths << Rails.root.join('app/assets/fonts')
   end
 end
