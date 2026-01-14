@@ -42,20 +42,23 @@ module PpdExplorer
   end
 end
 
-# Monkey-patch the bit of Rails that emits the start-up log message, so that it
-# is written out in JSON format that our combined logging service can handle
+# Monkey-patch the bit of Rails that emits the start-up log message, so
+# that it is written out in JSON format that our combined logging
+# service can handle
 module Rails
   # :nodoc:
   module Command
     # :nodoc:
     class ServerCommand
       def print_boot_information(server, url)
-        msg = {
+        msg = "Starting #{server} Rails #{Rails.version} in #{Rails.env}"
+        msg += " on #{url}" if url
+        info = {
           ts: DateTime.now.utc.strftime('%FT%T.%3NZ'),
           level: 'INFO',
-          message: "Starting #{server} Rails #{Rails.version} in #{Rails.env} #{url}"
+          message: msg
         }
-        say msg.to_json
+        say info.to_json
       end
     end
   end
