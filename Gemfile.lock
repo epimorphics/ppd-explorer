@@ -96,9 +96,6 @@ GEM
     bigdecimal (3.3.1)
     bootstrap (5.3.5)
       popper_js (>= 2.11.8, < 3)
-    bootstrap-sass (3.4.1)
-      autoprefixer-rails (>= 5.2.1)
-      sassc (>= 2.0.0)
     builder (3.3.0)
     byebug (12.0.0)
     capybara (3.40.0)
@@ -427,18 +424,8 @@ GEM
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
-    sass-rails (6.0.0)
-      sassc-rails (~> 2.1, >= 2.1.1)
-    sassc (2.4.0)
-      ffi (~> 1.9)
     sassc-embedded (1.80.8)
       sass-embedded (~> 1.80)
-    sassc-rails (2.1.2)
-      railties (>= 4.0.0)
-      sassc (>= 2.0)
-      sprockets (> 3.0)
-      sprockets-rails
-      tilt
     sdoc (2.6.5)
       rdoc (>= 5.0)
     securerandom (0.4.1)
@@ -538,8 +525,8 @@ GEM
       json
       lograge
       railties
-    lr_common_styles (2.3.1)
-      bootstrap-sass (~> 3.4.1)
+    lr_common_styles (3.0.0)
+      bootstrap (~> 5.3.2)
       font-awesome-rails (~> 4.7.0)
       govuk_elements_rails (= 3.0.2)
       govuk_frontend_toolkit (~> 9.0)
@@ -550,7 +537,6 @@ GEM
       modernizr-rails (~> 2.7)
       modulejs-rails (~> 2.2.0)
       rails (~> 8.0)
-      sass-rails (~> 6.0)
 
 PLATFORMS
   aarch64-linux
@@ -566,7 +552,6 @@ PLATFORMS
 
 DEPENDENCIES
   autoprefixer-rails
-  bootstrap (~> 5.3.2)
   byebug
   capybara
   csv

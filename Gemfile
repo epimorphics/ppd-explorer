@@ -8,16 +8,16 @@ gem 'rails'
 # Use Puma as the app server
 gem 'puma'
 
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+# See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'execjs'
 # gem 'therubyracer', platforms: :ruby
 gem 'libv8-node'
 
+# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'
 gem 'jquery-rails'
 
 gem 'autoprefixer-rails'
-gem 'bootstrap', '~> 5.3.2'
 gem 'dartsass-sprockets', '~> 3.2'
 
 gem 'haml-rails'
@@ -41,17 +41,6 @@ gem 'yajl-ruby', require: 'yajl'
 # Sentry uses stackprof for performance profiling, has to be loaded before Sentry
 gem 'stackprof'
 gem 'sentry-rails' # rubocop:disable Bundler/OrderedGems
-
-# Assets group is temporarily disabled due to versioning issues with Rails
-# group :assets do
-# Use SCSS for stylesheets
-# ! Webpacker removes the need for Uglifier so we can safely remove it.
-# ! If you want to use Uglifier, uncomment the line below
-# ! and ensure you have the 'uglifier' gem in your Gemfile.
-# ! See https://www.mintbit.com/blog/rails-5-6-upgrade-es6-uglifier-bug/
-# Use Uglifier as compressor for JavaScript assets
-# gem 'uglifier', require: false
-# end
 
 group :doc do
   gem 'sdoc', require: false
