@@ -2,15 +2,12 @@
  *= require jquery-ui
  */
 
-@import
-  "govuk-template",
-  "govuk-elements",
-  "bootstrap-sprockets",
-  "bootstrap",
-  "font-awesome",
-  "lr_common_styles/lr-common",
-  "gov-uk-tweaks",
-  "ppd",
-  'search-form',
-  'search-results',
-  'workflow-actions';
+@import "govuk-template";
+@import "govuk-elements";
+@import "bootstrap";
+@import "font-awesome";
+@import "lr_common_styles/lr-common";
+@import "gov-uk-tweaks";
+@import "ppd";
+@import 'search-results';
+@import 'workflow-actions';
