@@ -1,4 +1,4 @@
-.PHONY:	assets auth check clean image lint publish realclean run tag test vars
+.PHONY:	assets auth check clean image lint publish realclean run tag test update vars
 
 ACCOUNT?=$(shell aws sts get-caller-identity | jq -r .Account)
 ALPINE_VERSION?=3.22
@@ -113,6 +113,15 @@ tag:
 test: assets
 	@echo "Running tests ..."
 	@${RAILS} test
+
+update:
+	@echo "Checking for outdated dependencies..."
+	@if [ -f package.json ]; then \
+		echo "Running yarn upgrade-interactive..."; \
+		yarn upgrade-interactive; \
+	fi
+	@echo "Running bundle outdated to check Ruby gems..."
+	@bundle outdated --only-explicit
 
 vars:
 	@echo "Docker: ${REPO}:${TAG}"
