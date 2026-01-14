@@ -1,57 +1,65 @@
 - puts "Rendering error page with status: #{status.inspect}" if Rails.env.development?
 - content_for(:current_environment_title, EnvironmentHelper.environment_title)
 
-%article.u-clear
-  - if status == 400
-    %h1.o-heading--1 Request not understood
-    %p
-      We're sorry, but the request you made was not understood. If you are requesting
-      data via a script or program, please check the URL parameters. If you see this
-      message as a result of using the HPI or PPD applications, please let us
-      know so that we can correct the problem.
+.row.mx-3.my-5
+  .col-md-12
+    %article.u-clear
+      - if status == 400
+        %h1.o-heading--1 Request not understood
+        %p
+          We're sorry, but the request you made was not understood. If you are requesting
+          data via a script or program, please check the URL parameters. If you see this
+          message as a result of using the HPI or PPD applications, please let us
+          know so that we can correct the problem.
 
-  - elsif status == 403
-    %h1.o-heading--1 Forbidden
+      - elsif status == 403
+        %h1.o-heading--1 Request denied
 
-    %p
-      We're sorry, but it seems you don't have permission to access this resource.
-      Please check the spelling of the page address (URL). If you require further
-      assistance, please see the contact details below.
+        %p
+          We're sorry, but it seems you don't have permission to access this resource.
+          Please check the spelling of the page address (URL). If you require further
+          assistance, please see the contact details below.
 
-  - elsif status == 404
-    %h1.o-heading--1 Page not found
+      - elsif status == 404
+        %h1.o-heading--1 Page not found
 
-    %p
-      We're sorry, but the web page you requested is not present on our server.
-      Please check the spelling of the page address (URL). If you require further
-      assistance, please see the contact details below.
+        %p
+          We're sorry, but the web page you requested is not present on our server.
+          Please check the spelling of the page address (URL). If you require further
+          assistance, please see the contact details below.
 
-  - else
-    %h1.o-heading--1 Application error
+      - elsif status == 422
+        %h1.o-heading--1 The change you wanted was rejected.
+        %p
+          Maybe you tried to change something you didn't have access to? If you are
+          the application owner, check the logs for more information.
 
-    %p
-      We're very sorry, but the request you just made resulted in an internal error
-      in the application. If this problem persists, please use one of the contact
-      methods below to report the problem to us, so that we can resolve it and
-      help you get the data you require.
+      - else
+        %h1.o-heading--1 Application error
 
-  - if sentry_code
-    %h2.o-heading--3 Reference code
-    %p
-      If you need to contact support staff about this issue, please use the following
-      code to identify the problem:
-      %code
-        = sentry_code
+        %p
+          We're very sorry, but the request you just made resulted in an internal error
+          in the application. If this problem persists, please use one of the contact
+          methods below to report the problem to us, so that we can resolve it and
+          help you get the data you require.
 
-  %h2.o-heading--2 Who to contact
-  %ul.list.list-bullet
-    %li
-      If you are unable to access the data, please
-      %a{ href: '//site.landregistry.gov.uk/contact-us/form' }
-        fill in our contact form.
-    %li
-      For general transaction data enquiries, email
-      = mail_to('DRO@landregistry.gov.uk')
-    %li
-      For general price paid data enquiries, contact
-      = mail_to(Rails.application.config.contact_email_address)
+      - if sentry_code
+        %h2.o-heading--3 Reference code
+        %p
+          If you need to contact support staff about this issue, please use the following
+          code to identify the problem:
+          %code
+            = sentry_code
+
+      %h2.o-heading--2 Who to contact
+      %ul.list.list-bullet
+        %li
+          If you are unable to access the data, please
+          %a{ href: '//site.landregistry.gov.uk/contact-us/form' }
+            fill in our contact form.
+        %li
+          For general transaction data enquiries, email
+          = mail_to('DRO@landregistry.gov.uk')
+        %li
+          For general price paid data enquiries, contact
+          = mail_to(Rails.application.config.contact_email_address)
