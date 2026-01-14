@@ -7,25 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.0] - 2026-01
+
 ### Added
 
-- Enabled Sass source maps to simplify front-end debugging in development
-  environment.
-- Included custom initialiser to allow for Autoprefixer complexities and nuances
-  while using latest bootstrap gem
+- Enabled Sass source maps for front-end debugging in development
+- Added Autoprefixer initialiser for Bootstrap gem compatibility
+- Added Popper.js dependency for Bootstrap functionality
+- Added `update` Makefile target to check outdated dependencies
+- Added cookie banner styling using Bootstrap conventions
 
 ### Changed
 
-- Replaced `bootstrap-sass` with the `bootstrap` gem and remove `sass-rails`,
-  aligning with the new Dart Sass toolchain and reducing deprecated
-  dependencies.
-- Modernised application stylesheets and reformat PPD-specific styles after the
-  Sass migration for consistency.
-- Improved asset compression settings to produce smaller, faster-loading
-  bundles.
-- Updated modal dismissal behaviour and form grouping (including wrapping the
-  email address) following latest Bootstrap notation for cleaner markup and
-  better usability.
+- Replaced `bootstrap-sass` with `bootstrap` gem for Dart Sass compatibility
+  [#309](https://github.com/epimorphics/ppd-explorer/issues/309)
+- Modernised stylesheets after Sass migration
+- Improved asset compression for smaller bundles
+- Updated modals and forms to Bootstrap 5 notation
+- Enhanced error page layout and status messages
+- Converted form groups to semantic fieldsets for accessibility
+- Replaced deprecated `lighten` with `color.adjust` Sass module
+- Improved page layout padding and form spacing
+- Enhanced action buttons responsiveness
+- Streamlined Makefile with inline help
+- Cleaned up startup log output
+
+### Removed
+
+- Removed `sass-rails` gem and deprecated dependencies
+- Removed duplicated search form partial
 
 ## [2.2.3] - 2025-11
 
