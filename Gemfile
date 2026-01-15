@@ -8,15 +8,18 @@ gem 'rails'
 # Use Puma as the app server
 gem 'puma'
 
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+# See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'execjs'
 # gem 'therubyracer', platforms: :ruby
 gem 'libv8-node'
 
+# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'
 gem 'jquery-rails'
 
-gem 'bootstrap-sass'
+gem 'autoprefixer-rails'
+gem 'dartsass-sprockets', '~> 3.2'
+
 gem 'haml-rails'
 
 gem 'rubocop'
@@ -40,18 +43,6 @@ gem 'yajl-ruby', require: 'yajl'
 # Sentry uses stackprof for performance profiling, has to be loaded before Sentry
 gem 'stackprof'
 gem 'sentry-rails' # rubocop:disable Bundler/OrderedGems
-
-# Assets group is temporarily disabled due to versioning issues with Rails
-# group :assets do
-# Use SCSS for stylesheets
-gem 'sass-rails'
-# ! Webpacker removes the need for Uglifier so we can safely remove it.
-# ! If you want to use Uglifier, uncomment the line below
-# ! and ensure you have the 'uglifier' gem in your Gemfile.
-# ! See https://www.mintbit.com/blog/rails-5-6-upgrade-es6-uglifier-bug/
-# Use Uglifier as compressor for JavaScript assets
-# gem 'uglifier', require: false
-# end
 
 group :doc do
   gem 'sdoc', require: false
@@ -88,7 +79,7 @@ group :development do
   gem 'memory_profiler'
 
   # TODO: While running the rails app locally for testing you can set gems to your local path
-  # ! These 'local' paths do not work with a docker image - use the repository version instead
+  # ! These 'local' paths do not work with a docker image - use the repo instead
   # gem 'data_services_api', path: '~/Epimorphics/shared/data_services_api'
   # gem 'json_rails_logger', path: '~/Epimorphics/shared/json-rails-logger'
   # gem 'lr_common_styles', path: '~/Epimorphics/clients/land-registry/projects/lr_common_styles'

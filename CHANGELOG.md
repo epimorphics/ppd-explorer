@@ -7,11 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.0] - 2026-01
+
+### Added
+
+- Enabled Sass source maps for front-end debugging in development
+- Added Autoprefixer initialiser for Bootstrap gem compatibility
+- Added Popper.js dependency for Bootstrap functionality
+- Added `update` Makefile target to check outdated dependencies
+- Added cookie banner styling using Bootstrap conventions
+
 ### Changed
 
+- Replaced `bootstrap-sass` with `bootstrap` gem for Dart Sass compatibility
+  [#309](https://github.com/epimorphics/ppd-explorer/issues/309)
+- Modernised stylesheets after Sass migration
+- Improved asset compression for smaller bundles
+- Updated modals and forms to Bootstrap 5 notation
+- Enhanced error page layout and status messages
+- Converted form groups to semantic fieldsets for accessibility
+- Replaced deprecated `lighten` with `color.adjust` Sass module
+- Improved page layout padding and form spacing
+- Enhanced action buttons responsiveness
+- Streamlined Makefile with inline help
+- Cleaned up startup log output
 - Resolved open-ended gem versioning warnings by setting explicit minimum
   versions for Faraday and its middleware dependencies.
 - Updates Faraday follow_redirects to 0.4.0
+
+### Removed
+
+- Removed `sass-rails` gem and deprecated dependencies
+- Removed duplicated search form partial
 
 ## [2.2.3] - 2025-11
 

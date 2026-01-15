@@ -38,6 +38,9 @@ PpdExplorer::Application.configure do
   # Don't print a log message every time an asset file is loaded
   config.assets.quiet = true
 
+  # Enable SASS source maps in development for easier debugging
+  config.sass.inline_source_maps = true
+
   # Tag rails logs with useful information
   config.log_tags = %i[subdomain request_id request_method]
   # When sync mode is true, all output is immediately flushed to the underlying
