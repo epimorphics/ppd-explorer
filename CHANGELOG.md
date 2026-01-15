@@ -31,6 +31,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enhanced action buttons responsiveness
 - Streamlined Makefile with inline help
 - Cleaned up startup log output
+- Resolved open-ended gem versioning warnings by setting explicit minimum
+  versions for Faraday and its middleware dependencies.
+- Updates Faraday follow_redirects to 0.4.0
 
 ### Removed
 
