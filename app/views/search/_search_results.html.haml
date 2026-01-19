@@ -2,12 +2,17 @@
 = content_for(:title, "Search results")
 
 - sr = @query_command.search_results
-= render partial: "ppd/workflow_action_buttons", locals: {no_results: true, no_print: true}
 
-%h1
-  = yield(:title)
+.row.px-5
+  .col-md-12
+    = render partial: "ppd/workflow_action_buttons", locals: {no_results: true, no_print: true}
 
-.search-summary
+.row.px-5
+  .col-md-12
+  %h1.px-5
+    = yield(:title)
+
+.search-summary.mx-5
   %p
     #{sr&.summarise} by searching for:
   %ul.search-terms.list.list-bullet
@@ -41,7 +46,7 @@
         download the data
     onto your computer.
 
-%ul.list-unstyled.ppd-results
+%ul.list-unstyled.ppd-results.mx-5
   - result = nil
   - sr&.each_property_address do |results|
     - previous_result = result

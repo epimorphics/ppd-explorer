@@ -3,7 +3,6 @@
 require File.expand_path('boot', __dir__)
 
 # Pick the frameworks you want:
-# require "active_record/railtie"
 require 'action_controller/railtie'
 require 'action_mailer/railtie'
 require 'sprockets/railtie'
@@ -35,24 +34,33 @@ module PpdExplorer
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
+    # Quiet SASS deprecation warnings coming from dependencies
+    config.sass.quiet_deps = true
+    # Silence @import deprecation warnings during migration to @use/@forward
+    # See: https://sass-lang.com/d/import
+    config.sass.silence_deprecations = ['import']
+    # Add fonts path to asset pipeline
     config.assets.paths << Rails.root.join('app/assets/fonts')
   end
 end
 
-# Monkey-patch the bit of Rails that emits the start-up log message, so that it
-# is written out in JSON format that our combined logging service can handle
+# Monkey-patch the bit of Rails that emits the start-up log message, so
+# that it is written out in JSON format that our combined logging
+# service can handle
 module Rails
   # :nodoc:
   module Command
     # :nodoc:
     class ServerCommand
       def print_boot_information(server, url)
-        msg = {
+        msg = "Starting #{server} Rails #{Rails.version} in #{Rails.env}"
+        msg += " on #{url}" if url
+        info = {
           ts: DateTime.now.utc.strftime('%FT%T.%3NZ'),
           level: 'INFO',
-          message: "Starting #{server} Rails #{Rails.version} in #{Rails.env} #{url}"
+          message: msg
         }
-        say msg.to_json
+        say info.to_json
       end
     end
   end

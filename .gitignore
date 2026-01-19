@@ -74,3 +74,6 @@ tags
 .env
 .env*.local
 !.env.development
+
+# Ignore local TODO files
+TODO.md
