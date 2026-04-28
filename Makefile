@@ -38,7 +38,7 @@ ${GITHUB_TOKEN}:
 
 all: image ## Default target: build the Docker image
 
-assets: bundles compiled ## Compile assets for serving
+assets: bundles compiled ## Compile static assets for serving
 	@echo assets completed.
 
 auth: ${GITHUB_TOKEN} ${BUNDLE_CFG} ## Set up authentication for GitHub and Bundler
