@@ -66,6 +66,10 @@ compiled: ## Compile assets for production
 	@echo "Cleaning and precompiling static assets ..."
 	@${RAILS} assets:clobber assets:precompile
 
+coverage: ## Display test coverage report
+	@open coverage/index.html
+	@echo "Displaying test coverage report in browser..."
+
 forceclean: realclean ## Remove all bundled files
 	@${BUNDLE} clean --force || :
 
