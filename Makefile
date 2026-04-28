@@ -49,7 +49,6 @@ bundles: ## Install Ruby gems via Bundler
 	@${BUNDLE} install
 
 check: checks ## Alias for `checks` target
-	@echo "All checks passed."
 
 checks: lint test ## Run all checks: linting and tests
 	@echo "All checks passed."
