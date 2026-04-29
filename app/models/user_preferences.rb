@@ -3,7 +3,6 @@
 # Model to encapsulate user's search preferences
 class UserPreferences
   include Rails.application.routes.url_helpers
-  include PostcodeHelper
 
   ALLOW_LIST = QueryCommand::ASPECTS.map do |key, aspect|
     aspect.values ? { key => [] } : key
@@ -16,7 +15,6 @@ class UserPreferences
     @params = user_params.permit(ALLOW_LIST).to_h
     filter_out_empties!
     sanitise!
-    format_postcode_param!
   end
 
   def param(prop)
@@ -130,16 +128,6 @@ class UserPreferences
         pparams.delete(r)
       end
     end
-  end
-
-  # Format the postcode parameter to ensure correct spacing
-  # Only formats full postcodes (5-7 chars without space) to avoid
-  # ambiguity with partial postcodes like "L18" which could be
-  # outward code "L18" or sector "L1 8"
-  def format_postcode_param!
-    return unless @params[:postcode].present?
-
-    @params[:postcode] = format_postcode(@params[:postcode])
   end
 
 end

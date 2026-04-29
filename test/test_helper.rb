@@ -8,7 +8,6 @@ require 'rails/test_help'
 
 require 'simplecov'
 SimpleCov.start do
-  # Exclude test and config directories from coverage analysis
   add_filter '/test/'
   add_filter '/config/'
 end
