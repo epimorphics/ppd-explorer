@@ -22,6 +22,7 @@ require 'minitest/rails'
 
 # Load spec functionality without conflicting parallelize support
 require 'minitest/spec'
+Minitest::Spec.include ActiveSupport::Testing::Assertions
 
 require 'mocha/minitest'
 require 'json_expressions/minitest'
@@ -35,14 +36,16 @@ require 'minitest/reporters'
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
 # Include Capybara DSL in test classes
-class ActionDispatch::IntegrationTest
-  include Capybara::DSL
-  include Capybara::Minitest::Assertions
+module ActionDispatch
+  class IntegrationTest
+    include Capybara::DSL
+    include Capybara::Minitest::Assertions
 
-  def teardown
-    super
-    Capybara.reset_sessions!
-    Capybara.use_default_driver
+    def teardown
+      super
+      Capybara.reset_sessions!
+      Capybara.use_default_driver
+    end
   end
 end
 

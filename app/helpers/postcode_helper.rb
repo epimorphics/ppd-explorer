@@ -30,25 +30,22 @@ module PostcodeHelper
   #   format_postcode("L1 8JQ")  => "L1 8JQ" (already formatted)
   #   format_postcode("L18")     => "L18" (ambiguous, unchanged)
   def format_postcode(postcode)
-    # Preserve nil input, and normalise whitespace-only input to empty string
     return nil if postcode.nil?
 
-    cleaned = postcode.strip
+    cleaned = postcode.strip.upcase
     return '' if cleaned.empty?
+    return cleaned if cleaned.include?(' ')
 
-    # Already has a space - normalise and return
-    return cleaned.upcase if cleaned.include?(' ')
+    insert_space(cleaned)
+  end
 
-    # Clean and prepare for formatting
-    cleaned = cleaned.upcase
-    # Get length of cleaned postcode
-    length = cleaned.length
-    # Only format if it's within the valid full postcode range (5-7 chars)
-    if length >= MIN_FULL_POSTCODE_LENGTH && length <= MAX_FULL_POSTCODE_LENGTH
-      cleaned.insert(-INWARD_CODE_LENGTH - 1, ' ')
-    else
-      # Too short or too long - return as-is (could be partial or invalid)
-      cleaned
+  private
+
+  def insert_space(postcode)
+    unless postcode.length.between?(MIN_FULL_POSTCODE_LENGTH, MAX_FULL_POSTCODE_LENGTH)
+      return postcode
     end
+
+    postcode.dup.insert(-INWARD_CODE_LENGTH - 1, ' ')
   end
 end

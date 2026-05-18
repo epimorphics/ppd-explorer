@@ -3,6 +3,7 @@
 # Controller for downloading data
 class PpdDataController < ApplicationController
   include DsapiTurtleFormatter
+
   MAX_DOWNLOAD_RESULTS = 1_000_000
 
   # Above this number of results in a resultset, we write the CSV to a file first
