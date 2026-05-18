@@ -8,7 +8,7 @@ class PpdDataControllerTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
   include Capybara::Minitest::Assertions
 
-  describe 'PpdDataController' do # rubocop:disable Metrics/BlockLength
+  describe 'PpdDataController' do
     let(:base_params) do
       {
         et: ['lrcommon:freehold', 'lrcommon:leasehold'],

@@ -7,7 +7,7 @@ class FilterAspect < Aspect
   end
 
   def add_filter_clause(query, preferences)
-    if is_uri_value?
+    if uri_value?
       query.eq_any_uri(aspect_property, preference_value(preferences))
     else
       query.eq_any_value(aspect_property, preference_value(preferences), type: value_type)
@@ -18,7 +18,7 @@ class FilterAspect < Aspect
     option(:operator)
   end
 
-  def is_uri_value? # rubocop:disable Naming/PredicateName
+  def uri_value?
     option(:uri_value)
   end
 
@@ -45,7 +45,7 @@ class FilterAspect < Aspect
   end
 
   def generate_filter_value_label(value)
-    value_label = is_uri_value? ? uri_as_label(value) : value.to_s
+    value_label = uri_value? ? uri_as_label(value) : value.to_s
     "#{key_as_label} is #{value_label}"
   end
 

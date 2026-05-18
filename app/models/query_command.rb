@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Command object providing a service for driving the DsAPI
-class QueryCommand < DataService # rubocop:disable Metrics/ClassLength
+class QueryCommand < DataService
   include TurtleFormatter
 
   attr_reader :all_results, :search_results, :error_message
@@ -111,7 +111,7 @@ class QueryCommand < DataService # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def load_query_results(options = {}) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  def load_query_results(options = {}) # rubocop:disable Metrics/MethodLength
     ppd = dataset(:ppd)
     query = assemble_query
     limit = query_limit
@@ -180,7 +180,7 @@ class QueryCommand < DataService # rubocop:disable Metrics/ClassLength
   def add_count_information(ppd, count_query)
     count_result = ppd.query(count_query)
     count = count_result.first['ppd:count']
-    @search_results.query_count("#{count}#{count == COUNT_LIMIT ? ' or more' : ''}")
+    @search_results.query_count("#{count}#{' or more' if count == COUNT_LIMIT}")
   end
 
   def success?

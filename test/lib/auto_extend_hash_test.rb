@@ -12,8 +12,8 @@ class AutoExtendHashTest < ActiveSupport::TestCase
       it 'should create a hash that auto-extends' do
         auto_hash = AutoExtendHash.new
 
-        refute auto_hash.key?(:foo)
-        refute_nil auto_hash[:foo]
+        assert_not auto_hash.key?(:foo)
+        assert_not_nil auto_hash[:foo]
         assert auto_hash.key?(:foo)
       end
     end
@@ -22,7 +22,7 @@ class AutoExtendHashTest < ActiveSupport::TestCase
       it 'should allow assignment to a new key like a normal hash' do
         auto_hash = AutoExtendHash.new
 
-        refute auto_hash.key?(:foo)
+        assert_not auto_hash.key?(:foo)
         auto_hash[:foo] = :bar
         assert auto_hash.key?(:foo)
         assert_equal :bar, auto_hash[:foo]
@@ -40,12 +40,12 @@ class AutoExtendHashTest < ActiveSupport::TestCase
       it 'should allow an existing hash to be converted to auto-extend behaviour' do
         orig = {}
 
-        refute orig.key?(:foo)
+        assert_not orig.key?(:foo)
         orig[:foo]
-        refute orig.key?(:foo)
+        assert_not orig.key?(:foo)
 
         AutoExtendHash.auto_extend(orig)
-        refute orig.key?(:foo)
+        assert_not orig.key?(:foo)
         orig[:foo]
         assert orig.key?(:foo)
       end
@@ -54,7 +54,7 @@ class AutoExtendHashTest < ActiveSupport::TestCase
         orig = {}
         AutoExtendHash.auto_extend(orig)
 
-        refute orig.key?(:foo)
+        assert_not orig.key?(:foo)
         orig[:foo][:bar] = 'wombles'
         assert_equal 'wombles', orig[:foo][:bar]
       end
@@ -63,7 +63,7 @@ class AutoExtendHashTest < ActiveSupport::TestCase
         orig = { foo: {} }
         AutoExtendHash.auto_extend(orig)
 
-        refute orig[:foo].key?(:bar)
+        assert_not orig[:foo].key?(:bar)
         orig[:foo][:bar][:fubar] = 'wombles'
         assert_equal 'wombles', orig[:foo][:bar][:fubar]
       end
@@ -72,7 +72,7 @@ class AutoExtendHashTest < ActiveSupport::TestCase
         orig = Hash.new { |hash, key| hash[key] = :chewbacca }
         AutoExtendHash.auto_extend(orig)
 
-        refute orig.key?(:foo)
+        assert_not orig.key?(:foo)
         assert_equal :chewbacca, orig[:foo]
       end
     end

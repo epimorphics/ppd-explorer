@@ -137,9 +137,8 @@ class UserPreferences
   # ambiguity with partial postcodes like "L18" which could be
   # outward code "L18" or sector "L1 8"
   def format_postcode_param!
-    return unless @params[:postcode].present?
+    return if @params[:postcode].blank?
 
     @params[:postcode] = format_postcode(@params[:postcode])
   end
-
 end

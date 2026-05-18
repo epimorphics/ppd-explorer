@@ -20,12 +20,12 @@ describe 'Aspect' do
   it 'should check just the key for presence in the parameters' do
     aspect = Aspect.new(:street, 'foo:bar')
     assert aspect.present?(UserPreferences.new(params_object('street' => 'bar')))
-    refute aspect.present?(UserPreferences.new(params_object('town' => 'bar')))
+    assert_not aspect.present?(UserPreferences.new(params_object('town' => 'bar')))
   end
 
   it 'should not be present if all values are given' do
     aspect = Aspect.new(:street, 'foo:bar', values: %w[a b c])
-    refute aspect.present?(UserPreferences.new(params_object('street' => %w[a b c])))
+    assert_not aspect.present?(UserPreferences.new(params_object('street' => %w[a b c])))
   end
 
   it 'should return a preference value' do

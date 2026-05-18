@@ -18,7 +18,7 @@ class SearchTerm
   end
 
   def form_name
-    "#{name}#{@values ? [] : ''}"
+    "#{name}#{[] if @values}"
   end
 
   def form_value

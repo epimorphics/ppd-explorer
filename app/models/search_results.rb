@@ -3,6 +3,7 @@
 # Encapsulates a collection of results from a user query
 class SearchResults
   include ActionView::Helpers::TextHelper
+
   attr_reader :index, :transactions, :max_results_limit_hit
 
   DEFAULT_MAX_RESULTS = 5000
@@ -70,25 +71,25 @@ class SearchResults
   end
 
   # TODO: DRY
-  def traverse_in_sort_order(index, &block)
+  def traverse_in_sort_order(index, &)
     index.keys.sort.each do |key|
       v = index[key]
 
       if v.is_a?(Hash)
-        traverse_in_sort_order(v, &block)
+        traverse_in_sort_order(v, &)
       else
-        traverse_in_date_order(v, &block)
+        traverse_in_date_order(v, &)
       end
     end
   end
 
   # TODO: DRY
-  def traverse_property_addresses(index, &block)
+  def traverse_property_addresses(index, &)
     index.keys.sort.each do |key|
       v = index[key]
 
       if v.is_a?(Hash)
-        traverse_property_addresses(v, &block)
+        traverse_property_addresses(v, &)
       else
         yield v.sort!.reverse
       end

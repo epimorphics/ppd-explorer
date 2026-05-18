@@ -122,7 +122,7 @@ class SearchResult # rubocop:disable Metrics/ClassLength
   end
 
   def new_build
-    { label: "#{new_build? ? '' : 'not '}new-build" }
+    { label: "#{'not ' unless new_build?}new-build" }
   end
 
   def new_build_formatted
@@ -236,7 +236,7 @@ class SearchResult # rubocop:disable Metrics/ClassLength
 
     paon_tokens = format_paon_elements(paon)
     comma_not_needed = paon_tokens.last =~ /\d/
-    fields << "#{paon_tokens.join(' ')}#{comma_not_needed ? '' : ','}"
+    fields << "#{paon_tokens.join(' ')}#{',' unless comma_not_needed}"
   end
 
   def format_paon_elements(paon)
