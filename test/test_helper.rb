@@ -22,6 +22,7 @@ require 'minitest/rails'
 
 # Load spec functionality without conflicting parallelize support
 require 'minitest/spec'
+Minitest::Spec.include ActiveSupport::Testing::Assertions
 
 require 'mocha/minitest'
 require 'json_expressions/minitest'
