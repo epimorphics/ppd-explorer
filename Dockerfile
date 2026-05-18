@@ -24,7 +24,7 @@ FROM base AS gems
 RUN apk add --update build-base yaml-dev && gem update --system
 
 COPY bin bin
-COPY Gemfile Gemfile.lock ./
+COPY Gemfile Gemfile.lock .ruby-version ./
 # .bundle/config contains the information required to access rubygems.pkg.github.com/epimorphics/
 COPY .bundle/config /root/.bundle/config
 RUN bundle config set --local without 'development test' \
@@ -40,7 +40,7 @@ WORKDIR ${DIR}
 COPY --from=gems --chown=app /usr/local/bundle /usr/local/bundle
 
 # Copy the rest of the application code
-COPY config.ru Gemfile Gemfile.lock Rakefile ./
+COPY config.ru Gemfile Gemfile.lock Rakefile .ruby-version ./
 COPY app app
 COPY bin bin
 COPY config config
