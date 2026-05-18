@@ -4,6 +4,7 @@ plugins:
 AllCops:
   Exclude:
     - "node_modules/**/*"
+    - "vendor/**/*"
     - "Gemfile"
   NewCops: enable
 
