@@ -1,6 +1,6 @@
 .PHONY: all auth help image name publish tag vars version
 
-ALPINE_VERSION?=3.22
+ALPINE_VERSION?=3.23
 BUNDLER_VERSION?=$(shell tail -1 Gemfile.lock | tr -d ' ')
 RUBY_VERSION?=$(shell cat .ruby-version)
 
