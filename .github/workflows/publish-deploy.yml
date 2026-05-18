@@ -1,10 +1,63 @@
 name: "Build & Publish Docker Image"
 on:
   workflow_dispatch: {}
-  push: {}
+  pull_request:
+    branches:
+      - dev
+      - preprod
+      - prod
+    paths:
+      # Image definition and entrypoint
+      - 'Dockerfile'
+      - 'entrypoint.sh'
+      - 'Makefile'
+      # Ruby dependencies
+      - 'Gemfile'
+      - 'Gemfile.lock'
+      - '.ruby-version'
+      - '.bundle/**'
+      # Rails application
+      - 'config.ru'
+      - 'Rakefile'
+      - 'app/**'
+      - 'bin/**'
+      - 'config/**'
+      - 'lib/**'
+      - 'public/**'
+      # Workflow itself
+      - '.github/workflows/**'
+  push:
+    branches:
+      - dev
+      - preprod
+      - prod
+    paths:
+      # Image definition and entrypoint
+      - 'Dockerfile'
+      - 'entrypoint.sh'
+      - 'Makefile'
+      # Ruby dependencies
+      - 'Gemfile'
+      - 'Gemfile.lock'
+      - '.ruby-version'
+      - '.bundle/**'
+      # Rails application
+      - 'config.ru'
+      - 'Rakefile'
+      - 'app/**'
+      - 'bin/**'
+      - 'config/**'
+      - 'lib/**'
+      - 'public/**'
+      # Workflow itself
+      - '.github/workflows/**'
 
 jobs:
+  verify-code:
+    uses: ./.github/workflows/verify.yml
+    secrets: inherit
   publish:
+    needs: verify-code
     uses:  "epimorphics/github-workflows/.github/workflows/publish.yml@v2"
     secrets:
       # Repostory specific
