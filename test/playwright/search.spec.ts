@@ -185,6 +185,15 @@ test.describe('Large queries', () => {
   })
 })
 
+test.describe('Special character handling', () => {
+  test('searches containing & return results correctly', async ({ page }) => {
+    await page.getByLabel('Street').fill('adam and eve mews')
+    await submitSearch(page)
+    await expect(summary(page)).toContainText(/transaction/)
+    await expect(firstAddress(page)).toContainText('Mews')
+  })
+})
+
 test.describe('Help', () => {
   test('opens and closes the help modal', async ({ page }) => {
     await page.locator('.action-help').first().click()

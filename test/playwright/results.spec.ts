@@ -112,3 +112,11 @@ test.describe('Results list query within', () => {
     await expect(summary(page)).toContainText(/transaction/)
   })
 })
+
+test.describe('PPD datasets page', () => {
+  test('static datasets page loads with correct title and content', async ({ page }) => {
+    await page.goto('/ppd-data.html')
+    await expect(page).toHaveTitle(/Download Price Paid Data/i)
+    await expect(page.locator('body')).toContainText('Price paid data download options')
+  })
+})
