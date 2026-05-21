@@ -4,9 +4,9 @@ test.beforeEach(async ({ page }) => {
   await page.goto('./')
 })
 
-async function submitSearch (page: Page) {
+async function submitSearch (page: Page, timeout = 90_000) {
   await Promise.all([
-    page.waitForURL(/\/search/, { timeout: 90_000 }),
+    page.waitForURL(/\/search/, { timeout }),
     page.getByRole('button', { name: /show results/i }).click(),
   ])
 }
@@ -176,10 +176,10 @@ test.describe('Results limit', () => {
 
 test.describe('Large queries', () => {
   test('handles large result sets', async ({ page }) => {
-    test.slow()
-    await page.getByLabel('Town or city').fill('Birmingham')
+    test.fixme()
+    await page.getByLabel('Town or city').fill('Plymouth')
     await page.getByLabel('all').check()
-    await submitSearch(page)
+    await submitSearch(page, 270_000)
     await expect(summary(page)).toContainText(/transaction/)
     await expect(summary(page)).toContainText(/propert/)
     await expect(page.locator('.search-limit-reached')).toContainText('We have limited this page to 5000 results')

@@ -117,8 +117,13 @@ test.describe('Results list query within', () => {
 })
 
 test.describe('PPD datasets page', () => {
-  // This page only exists on the production HMLR Open Data website, not on dev/staging servers
-  test.skip('static datasets page loads with correct title and content', async ({ page }) => {
+  test('static datasets page loads with correct title and content', {
+    annotation: {
+      type: 'issue',
+      description: 'https://github.com/epimorphics/ppd-explorer/issues/335',
+    },
+  }, async ({ page }) => {
+    test.fixme()
     const origin = new URL(page.url()).origin
     await page.goto(`${origin}/ppd-data.html`)
     await expect(page).toHaveTitle(/Download Price Paid Data/i)
