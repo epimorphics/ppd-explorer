@@ -80,12 +80,16 @@ test.describe('Results summary number displayed', () => {
     await submitSearch(page)
     await expect(summary(page)).toContainText(/transaction/)
 
-    await page.getByRole('link', { name: /show a sample of at most 1000 results/i }).click()
-    await expect(page.locator('.search-summary')).toBeVisible()
+    await Promise.all([
+      page.waitForURL(/\/search/, { timeout: 90_000 }),
+      page.getByRole('link', { name: /show a sample of at most 1000 results/i }).click(),
+    ])
     await expect(summary(page)).toContainText(/transaction/)
 
-    await page.getByRole('link', { name: /show all results/i }).click()
-    await expect(page.locator('.search-summary')).toBeVisible()
+    await Promise.all([
+      page.waitForURL(/\/search/, { timeout: 90_000 }),
+      page.getByRole('link', { name: /show all results/i }).click(),
+    ])
     await expect(page.locator('.search-selection')).toContainText(/show all results/i)
   })
 })

@@ -86,10 +86,11 @@ test.describe('Postcode search', () => {
 
 test.describe('Property type filter', () => {
   test('filters by property type', async ({ page }) => {
+    test.slow()
     await page.getByLabel('Building name or number').fill('Rose Cottage')
     await page.getByLabel('detached', { exact: true }).uncheck()
     await page.getByLabel('semi-detached', { exact: true }).uncheck()
-    await submitSearch(page)
+    await submitSearch(page, 270_000)
     await expect(summary(page)).toContainText(/transaction/)
     await expect(firstAddress(page)).toContainText('Rose Cottage')
   })
@@ -175,8 +176,11 @@ test.describe('Results limit', () => {
 })
 
 test.describe('Large queries', () => {
-  test('handles large result sets', async ({ page }) => {
-    test.fixme()
+  test('handles large result sets', async ({ page, baseURL }) => {
+    // Skip this test in `hmlr-dev-pres` because of underpowered data api
+    // eslint-disable-next-line playwright/no-skipped-test
+    test.skip(typeof baseURL === 'string' && baseURL?.includes('hmlr-dev-pres'))
+
     await page.getByLabel('Town or city').fill('Plymouth')
     await page.getByLabel('all').check()
     await submitSearch(page, 270_000)
