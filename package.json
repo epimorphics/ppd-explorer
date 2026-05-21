@@ -9,7 +9,8 @@
     "test:e2e:report": "playwright show-report tmp/playwright-report"
   },
   "devDependencies": {
-    "@playwright/test": "^1.60.0"
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^24.12.4"
   },
   "packageManager": "yarn@4.15.0"
 }
