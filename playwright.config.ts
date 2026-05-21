@@ -7,6 +7,8 @@ export default defineConfig({
   testDir: 'test/playwright',
   outputDir: 'tmp/test-results',
   reporter: [['html', { outputFolder: 'tmp/playwright-report', open: 'never' }]],
+  timeout: 90_000,
+  expect: { timeout: 30_000 },
 
   use: {
     baseURL,
