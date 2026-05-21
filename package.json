@@ -1,0 +1,15 @@
+{
+  "name": "ppd-explorer",
+  "private": true,
+  "author": "Epimorphics Ltd",
+  "license": "ISC",
+  "scripts": {
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:report": "playwright show-report tmp/playwright-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0"
+  },
+  "packageManager": "yarn@4.15.0"
+}

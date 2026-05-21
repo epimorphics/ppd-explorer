@@ -40,6 +40,10 @@
 # Ignore node_modules
 node_modules/
 
+# Track the Yarn release binary but ignore other Yarn cache/state
+.yarn/*
+!.yarn/releases
+
 # Ignore precompiled javascript packs
 /public/packs
 /public/packs-test
