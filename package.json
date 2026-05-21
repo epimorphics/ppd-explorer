@@ -1,0 +1,26 @@
+{
+  "name": "ppd-explorer",
+  "private": true,
+  "author": "Epimorphics Ltd",
+  "license": "ISC",
+  "scripts": {
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:report": "playwright show-report tmp/playwright-report",
+    "lint": "eslint playwright.config.ts 'test/playwright/**/*.ts'",
+    "lint:fix": "eslint --fix playwright.config.ts 'test/playwright/**/*.ts'"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.60.0",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "@types/node": "^24.12.4",
+    "eslint": "^10.4.0",
+    "eslint-plugin-playwright": "^2.10.4",
+    "globals": "^17.6.0",
+    "jiti": "^2.7.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.4"
+  },
+  "packageManager": "yarn@4.15.0"
+}
