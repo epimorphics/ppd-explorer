@@ -8,6 +8,19 @@ on:
   workflow_call: {}
 
 jobs:
+  lint-js:
+    name: ESLint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup Node Environment
+        uses: ./.github/actions/setup-node
+
+      - name: Run ESLint
+        run: yarn lint
+
   lint-ruby:
     name: RuboCop Lint
     env:
@@ -32,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Ruby Environment
         uses: ./.github/actions/setup-ruby
