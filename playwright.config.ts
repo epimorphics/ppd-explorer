@@ -1,6 +1,7 @@
 import { defineConfig, devices } from '@playwright/test'
 
-const baseURL = process.env['E2E_BASE_URL'] ?? 'http://localhost:3001/'
+const rawBaseURL = process.env['E2E_BASE_URL'] ?? 'http://localhost:3001/'
+const baseURL = rawBaseURL.endsWith('/') ? rawBaseURL : `${rawBaseURL}/`
 
 export default defineConfig({
   testDir: 'test/playwright',
@@ -12,11 +13,11 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     ...(process.env['E2E_USERNAME']
       ? {
-          httpCredentials: {
-            username: process.env['E2E_USERNAME'],
-            password: process.env['E2E_PASSWORD'] ?? '',
-          },
-        }
+        httpCredentials: {
+          username: process.env['E2E_USERNAME'],
+          password: process.env['E2E_PASSWORD'] ?? '',
+        },
+      }
       : {}),
   },
 
@@ -30,9 +31,9 @@ export default defineConfig({
   webServer: process.env['E2E_BASE_URL']
     ? undefined
     : {
-        command: 'bin/rails server -p 3001',
-        url: 'http://localhost:3001',
-        reuseExistingServer: true,
-        timeout: 60_000,
-      },
+      command: 'bin/rails server -p 3001',
+      url: 'http://localhost:3001',
+      reuseExistingServer: true,
+      timeout: 60_000,
+    },
 })

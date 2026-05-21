@@ -4,7 +4,7 @@ test.beforeEach(async ({ page }) => {
   await page.goto('./')
 })
 
-async function submitSearch(page: Page) {
+async function submitSearch (page: Page) {
   await page.getByRole('button', { name: /show results/i }).click()
   await expect(page.locator('.search-summary')).toBeVisible()
 }
@@ -200,7 +200,7 @@ test.describe('Help', () => {
     await expect(page.locator('#help-modal')).toBeVisible()
     await expect(page.locator('#help-modal .trouble-shooting')).toBeVisible()
     await page.locator('#help-modal button.close').click()
-    await expect(page.locator('#help-modal')).not.toBeVisible()
+    await expect(page.locator('#help-modal')).toBeHidden()
   })
 })
 

@@ -4,7 +4,7 @@ test.beforeEach(async ({ page }) => {
   await page.goto('./')
 })
 
-async function submitSearch(page: Page) {
+async function submitSearch (page: Page) {
   await page.getByRole('button', { name: /show results/i }).click()
   await expect(page.locator('.search-summary')).toBeVisible()
 }
@@ -67,7 +67,7 @@ test.describe('Share', () => {
     await page.locator('.action-bookmark').first().click()
     await expect(page.locator('#bookmark-modal')).toBeVisible()
     await page.locator('#bookmark-modal button.close').click()
-    await expect(page.locator('#bookmark-modal')).not.toBeVisible()
+    await expect(page.locator('#bookmark-modal')).toBeHidden()
   })
 })
 
