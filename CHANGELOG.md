@@ -5,6 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+## [2.3.2] - 2026-05
+
+### Added
+
+- Added Playwright E2E test infrastructure with search and results specs
+- Added ESLint setup with TypeScript configuration
+- Added CI workflow for E2E tests and gated publish on passing checks
+- Added UK postcode formatting helper and applied it to user preferences
+- Added issue templates
+- Added test coverage Makefile target
+- Added `verify` CI workflow
+
+### Changed
+
+- Expanded README with developer setup instructions
+- Updated TypeScript `tsconfig` `moduleResolution` field
+- Updated dependencies (minor and patch versions)
+- Pinned gem versions and removed unused dependencies
+
+### Fixed
+
+- Fixed Dockerfile to copy `.ruby-version` so gems install correctly
+- Fixed `assert_not` availability in minitest spec-style tests
+- Excluded vendor code from RuboCop checks
+- Resolved RuboCop violations across the codebase
+
+### Removed
+
+- Removed githooks
+
 ## [2.3.1] - 2026-04
 
 - Upgraded ruby to version `3.4.9`

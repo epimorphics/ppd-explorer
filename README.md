@@ -10,6 +10,19 @@ Data](https://github.com/epimorphics/hmlr-linked-data/) project for more details
 For more information about this project visit [the
 wiki](https://github.com/epimorphics/ppd-explorer/wiki).
 
+## Contents
+
+- [Tech stack](#tech-stack)
+- [Developer setup](#developer-setup)
+- [Data API](#data-api)
+- [Running locally](#running-locally)
+- [Testing](#testing)
+- [E2E testing](#e2e-testing)
+- [Linting](#linting)
+- [Building and publishing](#building-and-publishing)
+- [Releasing](#releasing)
+- [Dependency maintenance](#dependency-maintenance)
+
 ## Tech stack
 
 | Layer | Technology |
@@ -176,7 +189,14 @@ target URL.
 ./bin/bundle exec rubocop -a    # Ruby — auto-corrects safe offences
 ```
 
-There is no JavaScript linting (no JS build tooling) and no HAML linting.
+**JavaScript (Playwright tests):**
+
+```bash
+yarn lint          # ESLint — check Playwright config and test files
+yarn lint:fix      # ESLint — auto-fix safe offences
+```
+
+There is no HAML linting.
 
 ## Building and publishing
 
