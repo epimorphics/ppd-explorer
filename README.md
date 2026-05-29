@@ -20,7 +20,7 @@ wiki](https://github.com/epimorphics/ppd-explorer/wiki).
 - [E2E testing](#e2e-testing)
 - [Linting](#linting)
 - [Building and publishing](#building-and-publishing)
-- [Releasing](#releasing)
+- [Releases](#releases)
 - [Dependency maintenance](#dependency-maintenance)
 
 ## Tech stack
@@ -219,110 +219,19 @@ STAGE=preprod make publish
 Branch-to-environment mapping is defined in `deployment.yaml`. CI runs `publish` and
 `deploy` automatically on push via `.github/workflows/publish-deploy.yml`.
 
-## Releasing
+## Releases
 
-This repository uses long-lived environment branches (`preprod`, `prod`) that are kept
-as strict fast-forward pointers to tagged commits on `dev`. CI deploys automatically
-on push, so promoting an environment is a case of fast-forwarding its branch and
-pushing.
+Releases follow the [Frontend Release Process](https://github.com/epimorphics/internal/wiki/Release-Process-Frontend).
 
-**Key invariant:** environment branches always point to a tagged commit on `dev`'s
-linear history. Direct pushes to environment branches are not permitted.
+| Branch | Environment | URL |
+|--------|-------------|-----|
+| `dev` | Dev | https://hmlr-dev-pres.epimorphics.net/app/ppd/ |
+| `preprod` | Pre-production | https://hmlr-preprod-pres.epimorphics.net/app/ppd/ |
+| `prod` | Production | https://landregistry.data.gov.uk/app/ppd/ |
 
-### Standard release
+The canonical version file is `app/lib/version.rb`. The changelog is maintained in `CHANGELOG.md`.
 
-**1. Finish work on `dev`**
-
-Merge all feature branches into `dev` and ensure CI passes.
-
-**2. Bump the version and update the changelog**
-
-Edit `app/lib/version.rb` and `CHANGELOG.md`, then commit and push to `dev`:
-
-```bash
-git add app/lib/version.rb CHANGELOG.md
-git commit -m "chore: release vx.y.z"
-git push origin dev
-```
-
-**3. Tag the release commit**
-
-```bash
-git tag vx.y.z
-git push origin vx.y.z
-```
-
-**4. Promote each environment branch in turn**
-
-Fast-forward `preprod` first, verify the deployment, then repeat for `prod`:
-
-```bash
-git checkout preprod
-git merge --ff-only vx.y.z
-git push origin preprod
-```
-
-CI triggers automatically on push. Verify before promoting the next environment. If
-`--ff-only` is refused, the branch has diverged — investigate before proceeding.
-
-```bash
-git checkout prod
-git merge --ff-only vx.y.z
-git push origin prod
-```
-
-**5. Optionally create a GitHub release**
-
-Go to **Releases** on the repository page, draft a new release from the tag, and
-publish.
-
----
-
-### Hotfix release
-
-**1. Branch off the current production tag**
-
-```bash
-git checkout -b hotfix/vx.y.z vx.y.(z-1)
-```
-
-**2. Make the fix, tag it, and push**
-
-```bash
-git add <files>
-git commit -m "fix: <description>"
-git tag vx.y.z
-git push origin hotfix/vx.y.z vx.y.z
-```
-
-**3. Bring the fix into `dev`**
-
-Preferred — rebase:
-
-```bash
-git rebase hotfix/vx.y.z dev
-git push --force-with-lease origin dev
-```
-
-Safe fallback — cherry-pick:
-
-```bash
-git checkout dev
-git cherry-pick vx.y.z
-git push origin dev
-```
-
-**4. Promote environment branches to the hotfix tag**
-
-Same as a standard release — fast-forward `preprod` then `prod`, verifying each
-before moving to the next.
-
-**5. Clean up the hotfix branch**
-
-```bash
-git branch -d hotfix/vx.y.z
-git push origin --delete hotfix/vx.y.z
-```
+Environment branches are kept as strict fast-forward pointers to tagged commits on `dev`. Branch-to-environment mapping is also declared in `deployment.yaml`.
 
 ## Dependency maintenance
 
