@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Subscribe to :data_api events
+# Subscribe to :api events
 class ApiPrometheusSubscriber < ActiveSupport::Subscriber
   attach_to :api
 
@@ -16,23 +16,39 @@ class ApiPrometheusSubscriber < ActiveSupport::Subscriber
                       .increment(labels: { result: 'success' })
     Prometheus::Client.registry
                       .get(:api_response_times)
-                      .observe(duration)
+                      .observe(duration.to_i)
   end
 
   def connection_failure(event)
-    message = event.payload[:exception]
+    exception = event.payload[:exception]
     Prometheus::Client.registry
                       .get(:api_requests)
                       .increment(labels: { result: 'failure' })
     Prometheus::Client.registry
                       .get(:api_connection_failure)
-                      .increment(labels: { message: message.to_s })
+                      .increment(labels: { message: exception.to_s })
+
+    Rails.logger.error(
+      "API connection failure: #{exception.message} - #{exception.class.name}",
+      {
+        request_status: 'error',
+        status: 503
+      }
+    )
   end
 
   def service_exception(event)
-    message = event.payload[:exception]
+    exception = event.payload[:exception]
     Prometheus::Client.registry
                       .get(:api_service_exception)
-                      .increment(labels: { message: message.to_s })
+                      .increment(labels: { message: exception.to_s })
+
+    Rails.logger.error(
+      "API service exception: #{exception.message} - #{exception.class.name}",
+      {
+        request_status: 'error',
+        status: exception.respond_to?(:status) ? exception.status : 502
+      }
+    )
   end
 end
