@@ -8,7 +8,7 @@ ruby file: '.ruby-version'
 gem 'rails', '~> 8.1'
 
 # Use Puma as the app server
-gem 'puma', '~> 7.0'
+gem 'puma', '~> 7.2'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'
