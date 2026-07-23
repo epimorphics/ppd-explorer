@@ -38,17 +38,17 @@
       .form-group.gx-5
         %label.col-md-4.control-label{ for: "town" } Town or city
         .col-md-8
-          %input#town.form-control{ type: "text", autocomplete: "address-level2", name: "town", value: strip_tags(@preferences.param( :town )), placeholder: "For example: Plymouth" }
+          %input#town.form-control{ type: "text", autocomplete: "address-level3", name: "town", value: strip_tags(@preferences.param( :town )), placeholder: "For example: Plymouth" }
 
       .form-group.gx-5
         %label.col-md-4.control-label{ for: "district" } District
         .col-md-8
-          %input#district.form-control{ type: "text", autocomplete: "address-level3", name: "district", value: strip_tags(@preferences.param( :district )), placeholder: "For example: City of Westminster" }
+          %input#district.form-control{ type: "text", autocomplete: "address-level2", name: "district", value: strip_tags(@preferences.param( :district )), placeholder: "For example: City of Westminster" }
 
       .form-group.gx-5
         %label.col-md-4.control-label{ for: "county" } County
         .col-md-8
-          %input#county.form-control{ type: "text", autocomplete: "county", name: "county", value: strip_tags(@preferences.param( :county )), placeholder: "For example: Devon" }
+          %input#county.form-control{ type: "text", autocomplete: "address-level1", name: "county", value: strip_tags(@preferences.param( :county )), placeholder: "For example: Devon" }
 
       .form-group.gx-5
         %label.col-md-4.control-label{ for: "locality" } Locality
