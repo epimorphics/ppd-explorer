@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Corrected invalid/inconsistent `autocomplete` tokens on the County, District, and Town search fields to use valid, semantically ordered `address-level` values [#341](https://github.com/epimorphics/ppd-explorer/issues/341).
+
 ## [2.3.3] - 2026-07-14
 
 ### Added
