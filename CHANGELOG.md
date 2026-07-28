@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fixed `ApiPrometheusSubscriber#connection_failure`/`#service_exception`, which called `Rails.logger.error(message, hash)` with two positional arguments; `Logger#error` only accepts 0-1, so this raised `ArgumentError` on every connection failure or service exception, masking the real underlying error and silently skipping the intended log entry. Both now pass a single structured Hash, which `JsonRailsLogger::JsonFormatter` already supports natively [#348](https://github.com/epimorphics/ppd-explorer/issues/348).
+- Rewrote `ApiPrometheusSubscriberTest` to exercise the real `JsonRailsLogger::Logger` instead of a permissive Mocha stub that didn't validate real method behaviour and had locked in the broken call shape as passing [#348](https://github.com/epimorphics/ppd-explorer/issues/348).
 - Corrected invalid/inconsistent `autocomplete` tokens on the County, District, and Town search fields to use valid, semantically ordered `address-level` values [#341](https://github.com/epimorphics/ppd-explorer/issues/341).
 
 ## [2.3.3] - 2026-07-14
