@@ -29,11 +29,9 @@ class ApiPrometheusSubscriber < ActiveSupport::Subscriber
                       .increment(labels: { message: exception.to_s })
 
     Rails.logger.error(
-      "API connection failure: #{exception.message} - #{exception.class.name}",
-      {
-        request_status: 'error',
-        status: 503
-      }
+      message: "API connection failure: #{exception.message} - #{exception.class.name}",
+      request_status: 'error',
+      status: 503
     )
   end
 
@@ -44,11 +42,9 @@ class ApiPrometheusSubscriber < ActiveSupport::Subscriber
                       .increment(labels: { message: exception.to_s })
 
     Rails.logger.error(
-      "API service exception: #{exception.message} - #{exception.class.name}",
-      {
-        request_status: 'error',
-        status: exception.respond_to?(:status) ? exception.status : 502
-      }
+      message: "API service exception: #{exception.message} - #{exception.class.name}",
+      request_status: 'error',
+      status: exception.respond_to?(:status) ? exception.status : 502
     )
   end
 end
