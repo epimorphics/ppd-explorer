@@ -21,6 +21,8 @@ wiki](https://github.com/epimorphics/ppd-explorer/wiki).
 - [Linting](#linting)
 - [Building and publishing](#building-and-publishing)
 - [Releases](#releases)
+- [Environments](#environments)
+- [Observability](#observability)
 - [Dependency maintenance](#dependency-maintenance)
 
 ## Tech stack
@@ -129,8 +131,8 @@ open coverage/index.html
 
 ## E2E testing
 
-Playwright is used for end-to-end browser automation. Node is required only for this
-— it is not used in the application build.
+Playwright is used for end-to-end browser automation. Node is required only for this:
+it is not used in the application build.
 
 **Prerequisites:** Node 24 via [nvm](https://github.com/nvm-sh/nvm):
 
@@ -152,21 +154,6 @@ yarn install
 yarn test:e2e
 ```
 
-**Run against a remote environment:**
-
-```bash
-E2E_BASE_URL=https://staging.example.com yarn test:e2e
-```
-
-Optional HTTP basic auth for protected environments:
-
-```bash
-E2E_BASE_URL=https://staging.example.com \
-E2E_USERNAME=user \
-E2E_PASSWORD=secret \
-yarn test:e2e
-```
-
 **Interactive UI mode:**
 
 ```bash
@@ -179,9 +166,24 @@ yarn test:e2e:ui
 yarn test:e2e:report
 ```
 
-The CI workflow (`.github/workflows/e2e.yml`) is `workflow_dispatch` only — it does
-not run automatically on push. Trigger it manually from the Actions tab, supplying the
-target URL.
+### Running against a deployed environment
+
+Set `E2E_BASE_URL` to any URL from [Environments](#environments). For
+pre-production, also pass the Basic Auth [credentials](#credentials):
+
+```bash
+E2E_BASE_URL=https://hmlr-preprod-pres.epimorphics.net/app/ppd/ \
+E2E_USERNAME=user \
+E2E_PASSWORD=secret \
+yarn test:e2e
+```
+
+### In CI
+
+The **E2E Tests** workflow (`.github/workflows/e2e.yml`) is manual only: run it
+from **Actions > E2E Tests > Run workflow**. It always targets pre-production.
+The dev hosts are too small to complete some of the large queries the suite
+makes, so runs against dev fail for reasons unrelated to the code.
 
 ## Linting
 
@@ -200,6 +202,13 @@ There is no HAML linting.
 
 ## Building and publishing
 
+> [!WARNING]
+> Do not trigger deployments concurrently. ukhpi, ppd-explorer,
+> standard-reports-ui and lr-landing all deploy to the same hosts with the
+> same Ansible playbook, and nothing stops two deploys from overlapping. Before
+> pushing to `dev`, `preprod` or `prod`, check the Actions tab of all four
+> repositories and wait for any deploy in progress to finish.
+
 The `Makefile` is scoped to the Docker image build and publish pipeline.
 
 ```bash
@@ -216,22 +225,41 @@ Variables can be overridden on the command line, e.g.:
 STAGE=preprod make publish
 ```
 
-Branch-to-environment mapping is defined in `deployment.yaml`. CI runs `publish` and
-`deploy` automatically on push via `.github/workflows/publish-deploy.yml`.
+Branch-to-environment mapping is defined in `deployment.yaml`. CI runs
+`publish` and `deploy` automatically on push via
+`.github/workflows/publish-deploy.yml`.
 
 ## Releases
 
 Releases follow the [Frontend Release Process](https://github.com/epimorphics/internal/wiki/Release-Process-Frontend).
 
-| Branch | Environment | URL |
-|--------|-------------|-----|
-| `dev` | Dev | https://hmlr-dev-pres.epimorphics.net/app/ppd/ |
-| `preprod` | Pre-production | https://hmlr-preprod-pres.epimorphics.net/app/ppd/ |
-| `prod` | Production | https://landregistry.data.gov.uk/app/ppd/ |
-
 The canonical version file is `app/lib/version.rb`. The changelog is maintained in `CHANGELOG.md`.
 
-Environment branches are kept as strict fast-forward pointers to tagged commits on `dev`. Branch-to-environment mapping is also declared in `deployment.yaml`.
+Environment branches are kept as strict fast-forward pointers to tagged commits on `dev`. URLs for each environment are listed under [Environments](#environments).
+
+## Environments
+
+| Branch | Environment | URL | Basic Auth |
+|--------|-------------|-----|------------|
+| `dev` | Dev | https://hmlr-dev-pres.epimorphics.net/app/ppd/ | No |
+| `preprod` | Pre-production | https://hmlr-preprod-pres.epimorphics.net/app/ppd/ | Yes |
+| `prod` | Production | https://landregistry.data.gov.uk/app/ppd/ | No |
+
+Pushing to an environment branch builds, publishes and deploys to that
+environment (see [Building and publishing](#building-and-publishing)).
+
+### Credentials
+
+Pre-production is protected by HTTP Basic Auth. The credentials are not stored
+in this repository: ask Ops for them. The E2E workflow reads the same
+credentials from the `E2E_USERNAME` and `E2E_PASSWORD` repository secrets.
+
+## Observability
+
+Metrics for the presentation hosts of all HMLR apps are in
+[Grafana](https://grafana-hmlr.epimorphics.net/). Use it to see how each
+environment has behaved over time and to line up a problem with when it
+started. Ask Ops for access.
 
 ## Dependency maintenance
 
