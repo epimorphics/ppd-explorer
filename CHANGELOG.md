@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Restricted the E2E workflow to pre-production, updated GitHub Actions versions,
+  added a warning against concurrent deploys, and consolidated the README environment, credentials and
+  observability documentation
+  [frontend-backlog#114](https://github.com/epimorphics/frontend-backlog/issues/114).
+
 ## [2.3.5] - 2026-10-27
 
 ### Changed
