@@ -23,6 +23,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   observability documentation
   [frontend-backlog#114](https://github.com/epimorphics/frontend-backlog/issues/114).
 
+### Fixed
+
+- Made the test suite report errors honestly: the test environment set
+  `show_exceptions = false`, which Rails 8 silently treats as `:all`, so exceptions
+  were rendered instead of raised. It is now `:none`. Added integration tests for the
+  error paths (unmatched path, invalid search term, invalid date, upstream API failure,
+  unhandled exception) that assert status as well as body; those that confirm an
+  existing defect are skipped with a reference to the issue that fixes it. Also fixed
+  an undefined variable in the VCR configuration
+  [#357](https://github.com/epimorphics/ppd-explorer/issues/357).
+
 ## [2.3.4] - 2026-07-30
 
 ### Fixed
