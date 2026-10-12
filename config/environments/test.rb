@@ -23,7 +23,9 @@ PpdExplorer::Application.configure do
   config.action_controller.perform_caching = false
 
   # Raise exceptions instead of rendering exception templates.
-  config.action_dispatch.show_exceptions = false
+  # The boolean form was removed in Rails 8.0: `false` is not rejected, it is
+  # silently treated as `:all`, so exceptions were rendered rather than raised.
+  config.action_dispatch.show_exceptions = :none
 
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
