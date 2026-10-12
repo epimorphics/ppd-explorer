@@ -278,6 +278,39 @@ entry, so pre-encoded text ends up as JSON inside the `message` string.
 
 In the test environment logs go to `log/test.log`, not stdout.
 
+### Error handling
+
+Controllers do not rescue errors or render error pages. An exception propagates
+to Rails, which maps it to a status and renders the page through
+`ErrorsController` (`config.exceptions_app` in `config/application.rb`):
+
+- An unmatched path is a 404.
+- A `MalformedSearchError` (a search term, date or price that cannot be used) is a
+  400, and its message is shown on the page. To make another error a deliberate
+  status, give it its own exception class and register it in
+  `config.action_dispatch.rescue_responses`.
+- Anything else is a 500. It is reported to Sentry and increments the
+  `internal_application_error` metric.
+
+HTML requests get the error page; CSV and Turtle requests get the status text as
+plain text. In development Rails shows its debug page instead.
+
+Tests run with `show_exceptions = :none`, so an unexpected exception fails the test
+with a backtrace. Tests of the error pages themselves call `render_error_pages`
+(see `test/integration/error_handling_test.rb`) and must assert on the status as
+well as the body.
+
+### Metrics
+
+`/metrics` is served by the Prometheus middleware. Alert rules are kept by Ops, not
+in this repository, so a change to a metric's name or labels must be agreed with
+them for the same deploy.
+
+`internal_application_error` has one label, `message`, of the form
+`Unhandled <exception class> in <controller>#<action>`, for example
+`Unhandled NoMethodError in search#index`. It never contains the exception's own
+message, which can carry user input and would create a new time series per value.
+
 ## Dependency maintenance
 
 ```bash
