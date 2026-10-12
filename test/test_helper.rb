@@ -121,5 +121,5 @@ VCR.configure do |config|
   # config.ignore_localhost = true
 
   # re-record every 7 days, but only if we're running in development not CI
-  c.default_cassette_options = { re_record_interval: 7.days } if Rails.env.development?
+  config.default_cassette_options = { re_record_interval: 7.days } if Rails.env.development?
 end
