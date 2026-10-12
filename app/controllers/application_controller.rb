@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # :nodoc:
-class ApplicationController < ActionController::Base # rubocop:disable Metrics/ClassLength
+class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
 
@@ -11,7 +11,6 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
 
   before_action :set_phase
   before_action :change_default_caching_policy
-  around_action :log_request_result
 
   def set_phase
     @phase = :released
@@ -23,13 +22,6 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   # unless overridden in the action
   def change_default_caching_policy
     expires_in 5.minutes, public: true, must_revalidate: true if Rails.env.production?
-  end
-
-  def log_request_result
-    start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
-    yield
-    duration = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start
-    detailed_log_result(duration)
   end
 
   # Handle specific types of exceptions and render the appropriate error page
@@ -100,65 +92,12 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     self.response_body = nil
   end
 
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Layout/LineLength
-  def detailed_log_result(duration)
-    env = request.env
-    query = env['QUERY_STRING'] || URI.parse(env['REQUEST_URI']).query
-    log_fields = {
-      message: response.message || Rack::Utils::HTTP_STATUS_CODES[response.status],
-      path: env['REQUEST_PATH'] || URI.parse(env['REQUEST_URI']).path,
-      request_id: env['X_REQUEST_ID'],
-      request_time: (duration / 1000) || env['REQUEST_TIME'], # in milliseconds
-      method: request.method,
-      status: response.status
-    }
-
-    log_fields[:path] = "#{log_fields[:path]}?#{query}" if query.present?
-
-    if log_fields[:message] == 'OK' && log_fields[:status] == 200
-      log_fields[:message] = 'Completed request'
-      log_fields[:request_status] = 'completed'
-    end
-
-    log_fields[:query_string] = query if query.present?
-
-    if env['HTTP_USER_AGENT'] && Rails.env.production?
-      log_fields[:user_agent] = env['HTTP_USER_AGENT']
-    end
-
-    if (500..599).include?(Rack::Utils::SYMBOL_TO_STATUS_CODE[response.status])
-      log_fields[:message] = env['action_dispatch.exception'].to_s
-      log_fields[:backtrace] = env['action_dispatch.backtrace'].join("\n") unless Rails.env.production?
-    end
-
-    if log_fields[:request_time]
-      log_fields[:message] += format(', time taken: %.0f ms', log_fields[:request_time])
-      seconds, milliseconds = Integer(log_fields[:request_time]).divmod(1000)
-      log_fields[:request_time] = format('%.0f.%03d', seconds, milliseconds)
-    end
-
-    log_response(response.status, log_fields.sort.to_h)
-  end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Layout/LineLength
-
-  # Log the error with the appropriate log level based on the status code
-  def log_response(status, error_log)
-    case status
-    when 500..599
-      Rails.logger.error(JSON.generate(error_log))
-    when 400..499
-      Rails.logger.warn(JSON.generate(error_log))
-    else
-      Rails.logger.info(JSON.generate(error_log))
-    end
-  end
-
   # Notify subscriber(s) of an internal error event with the payload of the
   # exception once done
   # @param [exc] exp the exception that caused the error
   # @return [ActiveSupport::Notifications::Event] provides an object-oriented
   # interface to the event
-  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def instrument_internal_error(exc, status = nil)
     err = {
       message: exc&.message || exc,
@@ -169,7 +108,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     err[:cause] = exc&.cause if exc&.cause
     err[:backtrace] = exc&.backtrace if exc&.backtrace && Rails.env.development?
     # Log the exception to the Rails logger with the appropriate severity
-    Rails.logger.send(err[:status] < 500 ? :warn : :error, JSON.generate(err))
+    Rails.logger.send(err[:status] < 500 ? :warn : :error, err)
     # Return unless the status code is 500 or greater to ensure subscribers are NOT notified
     return unless err[:status] >= 500
 
@@ -179,5 +118,5 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     # Return the event id for the internal error event
     sevent&.event_id
   end
-  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 end

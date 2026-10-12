@@ -29,6 +29,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   the unused `config/secrets.yml` and `wrap_parameters` initializer, and documented
   the Rails upgrade procedure in the README
   [#356](https://github.com/epimorphics/ppd-explorer/issues/356).
+- Replaced `json_rails_logger` with `epilog_rails` 0.3.0 and deleted the hand-rolled
+  request logging (`LoggingHelper`, the `around_action` in `ApplicationController`
+  and the per-action log calls). Each request is now logged once as a
+  `received`/`completed` pair by the framework. **Log format changes:**
+  `request_time` is a number of seconds rather than a string, 4xx responses are
+  logged at `INFO` rather than `WARN`, `user_agent` and `query_string` are no longer
+  logged (the query string remains part of `path`), and Rails' unstructured
+  exception and backtrace entry is logged at `DEBUG`
+  [#359](https://github.com/epimorphics/ppd-explorer/issues/359).
 - Restricted the E2E workflow to pre-production, updated GitHub Actions versions,
   added a warning against concurrent deploys, and consolidated the README environment, credentials and
   observability documentation
