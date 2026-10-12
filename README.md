@@ -267,3 +267,18 @@ started. Ask Ops for access.
 ./bin/bundle update --patch              # Update all gems to latest patch version
 ./bin/bundle outdated --only-explicit    # Check for outdated gems
 ```
+
+### Upgrading Rails
+
+Bumping the `rails` gem is not enough: a new Rails version only changes behaviour
+once the app opts in to that version's framework defaults. On every Rails upgrade
+(minor or major):
+
+1. Run `./bin/rails app:update` and review each proposed change with `git diff`.
+   Keep what is relevant and restore anything that overwrites app-specific
+   configuration (most of `config/` and `bin/`).
+2. Turn on the new defaults a few at a time in the generated
+   `config/initializers/new_framework_defaults_X_Y.rb`, running the tests and
+   comparing response headers (`curl -I`) as you go.
+3. When they are all on, set `config.load_defaults X.Y` in `config/application.rb`
+   and delete the initializer.
