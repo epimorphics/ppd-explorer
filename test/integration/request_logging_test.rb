@@ -44,7 +44,7 @@ class RequestLoggingTest < ActionDispatch::IntegrationTest
     end
 
     it 'should log messages as plain text, not as encoded JSON' do
-      entries = capture_log { get '/no/such/path' }
+      entries = capture_log { get root_path }
 
       _(entries).wont_be_empty
       entries.each do |entry|
@@ -53,13 +53,18 @@ class RequestLoggingTest < ActionDispatch::IntegrationTest
       end
     end
 
-    it 'should log a not found response once, with its status' do
-      entries = capture_log { get '/no/such/path' }
+    it 'should log a failed request once, with the path requested and its status' do
+      original_env = render_error_pages
 
+      entries = capture_log { get '/no/such/path' }
       completed = entries.select { |entry| entry['request_status'] == 'completed' }
 
+      _(entries.count { |entry| entry['request_status'] == 'received' }).must_equal 1
       _(completed.size).must_equal 1
+      _(completed.first['path']).must_equal '/no/such/path'
       _(completed.first['status']).must_equal 404
+    ensure
+      Rails.application.env_config.merge!(original_env)
     end
   end
 end

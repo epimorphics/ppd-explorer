@@ -6,6 +6,4 @@ PpdExplorer::Application.routes.draw do
   resources :ppd, only: [:index]
   resources :search
   resource :ppd_data
-
-  get '*unmatched_route', to: 'application#render_404'
 end

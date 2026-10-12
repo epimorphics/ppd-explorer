@@ -27,6 +27,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   logged (the query string remains part of `path`), and Rails' unstructured
   exception and backtrace entry is logged at `DEBUG`
   [#359](https://github.com/epimorphics/ppd-explorer/issues/359).
+- Error handling now goes through Rails' `config.exceptions_app` and a new
+  `ErrorsController`, replacing a production-only `rescue_from` that swallowed every
+  exception and returned a blank `200`. Unhandled exceptions now return a `500` with
+  the error page, are reported to Sentry and are counted. Removed the catch-all
+  route, the error rendering in `SearchController` and `PpdDataController`, and the
+  blanket treatment of `ArgumentError` as a bad request. **Metric change:**
+  `internal_application_error` now has the single label `message`, of the form
+  `Unhandled <Class> in <controller#action>`; the `result` and `status` labels are
+  removed and the exception's own text is no longer used as a label value
+  [#358](https://github.com/epimorphics/ppd-explorer/issues/358).
 - Restricted the E2E workflow to pre-production, updated GitHub Actions versions,
   added a warning against concurrent deploys, and consolidated the README environment, credentials and
   observability documentation
@@ -34,6 +44,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- A data download with an invalid search term or date returned a `500` or a blank
+  `200`; it now returns `400`. An invalid date or price on the search page now names
+  the value that was wrong
+  [#358](https://github.com/epimorphics/ppd-explorer/issues/358).
 - Made the test suite report errors honestly: the test environment set
   `show_exceptions = false`, which Rails 8 silently treats as `:all`, so exceptions
   were rendered instead of raised. It is now `:none`. Added integration tests for the

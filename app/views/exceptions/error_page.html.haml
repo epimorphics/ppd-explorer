@@ -11,6 +11,10 @@
           message as a result of using the HPI or PPD applications, please let us
           know so that we can correct the problem.
 
+        - if message
+          %p.error.bg-warning
+            = message
+
       - elsif status == 403
         %h1.o-heading--1 Request denied
 
