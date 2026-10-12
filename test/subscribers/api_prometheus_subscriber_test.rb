@@ -5,17 +5,19 @@ require 'stringio'
 
 # Unit tests on the ApiPrometheusSubscriber class
 class ApiPrometheusSubscriberTest < ActiveSupport::TestCase
-  # Real logger (the app's actual JsonRailsLogger::Logger), not a Mocha stub: a
+  # Real logger (with the app's actual EpilogRails::JsonFormatter), not a Mocha stub: a
   # stub bypasses Ruby's actual method arity, which is exactly what let the
   # two-positional-argument Rails.logger.error call ship broken (Logger#error
   # only accepts 0-1 positional args). Using the real logger here means a
   # regression back to that call shape raises ArgumentError in the test, the
   # same way it did in production, and also verifies the Hash we pass is
-  # actually shaped the way JsonRailsLogger::JsonFormatter expects.
+  # actually shaped the way EpilogRails::JsonFormatter expects.
   def with_captured_logger
     output = StringIO.new
     original_logger = Rails.logger
-    Rails.logger = JsonRailsLogger::Logger.new(output)
+    Rails.logger = ActiveSupport::Logger.new(output).tap do |logger|
+      logger.formatter = EpilogRails::JsonFormatter.new
+    end
     yield
     output.string.lines.map { |line| JSON.parse(line) }
   ensure

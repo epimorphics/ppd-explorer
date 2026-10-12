@@ -111,7 +111,7 @@ class QueryCommand < DataService
     end
   end
 
-  def load_query_results(options = {}) # rubocop:disable Metrics/MethodLength
+  def load_query_results(options = {})
     ppd = dataset(:ppd)
     query = assemble_query
     limit = query_limit
@@ -122,16 +122,9 @@ class QueryCommand < DataService
       count_query = base_query.count_only.limit(COUNT_LIMIT)
     end
 
-    time_taken = save_results(ppd, query, options) / 1000 # in milliseconds
+    save_results(ppd, query, options)
 
     add_count_information(ppd, count_query) if reached_count_limit?(limit)
-
-    log_fields = { message: 'Processing Data Services API response' }
-    log_fields[:request_status] = 'processing'
-    log_fields[:request_time] = time_taken
-    log_fields[:status] = Rack::Utils::SYMBOL_TO_STATUS_CODE[:ok]
-    LoggingHelper.log_request(log_fields) unless log_fields.empty?
-    puts "\n" if Rails.env.development? && Rails.logger.debug? # rubocop:disable Rails/Output
   end
 
   def self.find_aspect(key)
@@ -144,7 +137,6 @@ class QueryCommand < DataService
 
   def save_results(ppd, query, options) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     begin
-      start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
       log_fields = {}
       log_type = 'error'
 
@@ -168,9 +160,7 @@ class QueryCommand < DataService
       log_fields[:status] = 500 # Internal Server Error
     end
     # Log the request status and response
-    LoggingHelper.log_request(log_fields, log_type) unless log_fields.empty?
-    # Always return the time taken to execute the query
-    (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start)
+    Rails.logger.error(log_fields) unless log_fields.empty?
   end
 
   def reached_count_limit?(limit)
