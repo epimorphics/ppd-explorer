@@ -15,7 +15,8 @@ Rails.application.reloader.to_prepare do
     config.excluded_exceptions += [
       'ActionController::BadRequest',
       'ActionController::RoutingError',
-      'ActiveRecord::RecordNotFound'
+      'ActiveRecord::RecordNotFound',
+      'MalformedSearchError'
     ]
     # * Set the environment name from the SENTRY_ENVIRONMENT instance configuration value
     config.environment = ENV.fetch('SENTRY_ENVIRONMENT', Rails.env)

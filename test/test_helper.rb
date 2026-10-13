@@ -46,6 +46,18 @@ module ActionDispatch
       Capybara.reset_sessions!
       Capybara.use_default_driver
     end
+
+    # Have the exceptions middleware render error responses, as it does in
+    # production, where the test environment would raise the exception. Returns
+    # the settings it replaced, to merge back into `env_config` afterwards.
+    def render_error_pages
+      env = Rails.application.env_config
+      original = env.slice('action_dispatch.show_exceptions',
+                           'action_dispatch.show_detailed_exceptions')
+      env['action_dispatch.show_exceptions'] = :all
+      env['action_dispatch.show_detailed_exceptions'] = false
+      original
+    end
   end
 end
 

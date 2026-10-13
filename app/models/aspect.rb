@@ -48,7 +48,8 @@ class Aspect
     s = preference_value(preferences).delete(',')
     Integer(s)
   rescue ArgumentError
-    Float(s)
+    Float(s, exception: false) ||
+      raise(MalformedSearchError, "'#{preference_value(preferences)}' is not a valid number")
   end
 
   # Return a preference value as a date, if possible
@@ -58,7 +59,7 @@ class Aspect
 
     Date.parse(s)
   rescue ArgumentError
-    throw MalformedSearchError.new("'#{s}' is not a valid date")
+    raise MalformedSearchError, "'#{s}' is not a valid date"
   end
 
   def key_as_label
