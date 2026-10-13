@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Made the test suite report errors honestly: the test environment set
+  `show_exceptions = false`, which Rails 8 silently treats as `:all`, so exceptions
+  were rendered instead of raised. It is now `:none`. Added integration tests for the
+  error paths (unmatched path, invalid search term, invalid date, upstream API failure,
+  unhandled exception) that assert status as well as body; those that confirm an
+  existing defect are skipped with a reference to the issue that fixes it. Also fixed
+  an undefined variable in the VCR configuration
+  [#357](https://github.com/epimorphics/ppd-explorer/issues/357).
+
+### Changed
+
+- Adopted the Rails 8.1 framework defaults (`config.load_defaults 8.1`); the app
+  previously ran on the oldest default for every setting. Visible effects: unhandled
+  exceptions are logged at `ERROR` instead of `FATAL`; `X-XSS-Protection` is now `0`
+  and `X-Download-Options` is no longer sent; HTML responses carry a `Link` preload
+  header for the stylesheet and scripts; the session cookie is `SameSite=Lax`; and
+  YJIT is enabled in production. Also widened the filtered log parameters, removed
+  the unused `config/secrets.yml` and `wrap_parameters` initializer, and documented
+  the Rails upgrade procedure in the README
+  [#356](https://github.com/epimorphics/ppd-explorer/issues/356).
 - Restricted the E2E workflow to pre-production, updated GitHub Actions versions,
   added a warning against concurrent deploys, and consolidated the README environment, credentials and
   observability documentation
