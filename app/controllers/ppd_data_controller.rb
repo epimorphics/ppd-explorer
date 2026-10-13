@@ -9,8 +9,6 @@ class PpdDataController < ApplicationController
   # Above this number of results in a resultset, we write the CSV to a file first
   LARGE_RESULTSET_THRESHOLD = 1000
 
-  rescue_from MalformedSearchError, with: :render_malformed_search_error
-
   def show
     preferences = UserPreferences.new(params)
 
@@ -19,15 +17,6 @@ class PpdDataController < ApplicationController
     else
       download_data(preferences)
     end
-  end
-
-  def render_malformed_search_error(exception = nil)
-    # link the error to the actual request id otherwise generate one for this error
-    uuid = Thread.current[:request_id] || SecureRandom.uuid
-
-    Rails.logger.error "Malformed search error #{uuid} :: #{exception&.message || 'no message'}"
-
-    render nothing: true, status: :bad_request
   end
 
   private

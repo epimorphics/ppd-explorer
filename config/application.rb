@@ -44,6 +44,26 @@ module PpdExplorer
     config.sass.silence_deprecations = ['import']
     # Add fonts path to asset pipeline
     config.assets.paths << Rails.root.join('app/assets/fonts')
+
+    # Render error pages through the application, rather than static files in
+    # public/, so they use the application layout.
+    #
+    # ActionDispatch::ShowExceptions catches the exception, maps it to a status via
+    # `rescue_responses` below, resets the response, and hands the request to
+    # ErrorsController with the path rewritten to the status code. It runs outside
+    # the router, so unlike `rescue_from` it also catches routing errors. The
+    # application never decides which status an exception deserves.
+    #
+    # Dispatched straight to the controller rather than via `routes`, so the error
+    # pages have no public URLs: requesting /500 directly is just an unmatched path.
+    # The lambda defers the constant lookup until an error occurs, after autoloading
+    # is set up. `render_error` also copes with requests whose params can't be parsed.
+    config.exceptions_app = ->(env) { ErrorsController.render_error(env) }
+
+    # Statuses for the errors the application raises deliberately. Rails already
+    # knows the framework's own exceptions (RoutingError is 404, ParameterMissing
+    # is 400, and so on), so only ours need registering.
+    config.action_dispatch.rescue_responses['MalformedSearchError'] = :bad_request
   end
 end
 
