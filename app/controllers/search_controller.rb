@@ -8,7 +8,7 @@ class SearchController < ApplicationController
     create
   end
 
-  def create # rubocop:disable Metrics/MethodLength
+  def create
     @preferences = UserPreferences.new(params)
 
     if @preferences.empty?
@@ -16,11 +16,6 @@ class SearchController < ApplicationController
     else
       @query_command = QueryCommand.new(@preferences, use_compact_json?)
       @query_command.load_query_results
-      if @query_command.success?
-        render
-      else
-        render template: 'ppd/error'
-      end
     end
   end
 

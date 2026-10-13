@@ -4,7 +4,7 @@
 class QueryCommand < DataService
   include TurtleFormatter
 
-  attr_reader :all_results, :search_results, :error_message
+  attr_reader :all_results, :search_results
 
   COUNT_LIMIT = 10_000
 
@@ -135,32 +135,9 @@ class QueryCommand < DataService
     (l = preferences.selected_limit) =~ /\d/ && l.to_i
   end
 
-  def save_results(ppd, query, options) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-    begin
-      log_fields = {}
-      log_type = 'error'
-
-      @all_results = ppd.query(query)
-      @search_results = SearchResults.new(@all_results, options[:max])
-    rescue Faraday::ConnectionFailed => e
-      log_fields[:backtrace] = e&.backtrace&.join("\n") if Rails.logger.debug?
-      log_fields[:message] = e.message
-      log_fields[:request_status] = log_type
-      log_fields[:status] = 503 # Service Unavailable
-    rescue DataServicesApi::ServiceException => e
-      log_fields[:message] = e.service_message
-      log_fields[:request_status] = log_type
-      log_fields[:status] = 503 # Service Unavailable
-    rescue RuntimeError => e
-      log_fields[:backtrace] = e&.backtrace&.join("\n") if Rails.logger.debug?
-      log_fields[:message] = "Runtime error #{e.inspect}"
-      log_fields[:message] += "Caused by: #{e.cause}" if e.cause
-      log_fields[:message] += " in (#{e.class})" if Rails.logger.debug?
-      log_fields[:request_status] = log_type
-      log_fields[:status] = 500 # Internal Server Error
-    end
-    # Log the request status and response
-    Rails.logger.error(log_fields) unless log_fields.empty?
+  def save_results(ppd, query, options)
+    @all_results = ppd.query(query)
+    @search_results = SearchResults.new(@all_results, options[:max])
   end
 
   def reached_count_limit?(limit)
@@ -171,10 +148,6 @@ class QueryCommand < DataService
     count_result = ppd.query(count_query)
     count = count_result.first['ppd:count']
     @search_results.query_count("#{count}#{' or more' if count == COUNT_LIMIT}")
-  end
-
-  def success?
-    !error_message
   end
 
   def size
