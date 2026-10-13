@@ -94,8 +94,6 @@ class SearchResults
         yield v.sort!.reverse
       end
     end
-  rescue StandardError => e
-    Rails.logger.error { "Error in search_results: #{e.inspect}" }
   end
 
   def traverse_in_date_order(search_results, &)

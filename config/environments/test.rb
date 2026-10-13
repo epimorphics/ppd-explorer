@@ -53,6 +53,9 @@ PpdExplorer::Application.configure do
     file_logger.formatter = EpilogRails::JsonFormatter.new
     Rails.logger.broadcasts.dup.each { |sink| Rails.logger.stop_broadcasting_to(sink) }
     Rails.logger.broadcast_to(file_logger)
+    # dotenv took its own copy of the logger while it still wrote to stdout, and
+    # logs a line before every test
+    Dotenv::Rails.instance.logger = Rails.logger
   end
 
   # API location can be specified in the environment

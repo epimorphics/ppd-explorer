@@ -64,9 +64,11 @@ class ErrorsController < ApplicationController
     exception.message if exception.is_a?(MalformedSearchError)
   end
 
-  # Feeds the `internal_application_error` Prometheus counter
+  # Feeds the `internal_application_error` Prometheus counter. Only a 500 is an
+  # internal error: 502, 503 and 504 are failures of the Data Services API (see
+  # `rescue_responses` in config/application.rb), which the api_* metrics count.
   def instrument_internal_error(exception, status)
-    return if status < 500
+    return unless status == 500
 
     ActiveSupport::Notifications.instrument(
       'internal_error.application',

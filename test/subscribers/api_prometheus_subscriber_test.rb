@@ -1,66 +1,93 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'stringio'
 
 # Unit tests on the ApiPrometheusSubscriber class
 class ApiPrometheusSubscriberTest < ActiveSupport::TestCase
-  # Real logger (with the app's actual EpilogRails::JsonFormatter), not a Mocha stub: a
-  # stub bypasses Ruby's actual method arity, which is exactly what let the
-  # two-positional-argument Rails.logger.error call ship broken (Logger#error
-  # only accepts 0-1 positional args). Using the real logger here means a
-  # regression back to that call shape raises ArgumentError in the test, the
-  # same way it did in production, and also verifies the Hash we pass is
-  # actually shaped the way EpilogRails::JsonFormatter expects.
-  def with_captured_logger
-    output = StringIO.new
-    original_logger = Rails.logger
-    Rails.logger = ActiveSupport::Logger.new(output).tap do |logger|
-      logger.formatter = EpilogRails::JsonFormatter.new
-    end
-    yield
-    output.string.lines.map { |line| JSON.parse(line) }
-  ensure
-    Rails.logger = original_logger
-  end
+  delegate :registry, to: Prometheus::Client
 
   describe 'ApiPrometheusSubscriber' do
+    describe '#response' do
+      it 'should count the request, its status and its duration' do
+        event = stub(payload: { response: stub(status: 200), duration: 42 })
+
+        registry.get(:api_status).expects(:increment).with(labels: { status: '200' })
+        registry.get(:api_requests).expects(:increment).with(labels: { result: 'success' })
+        registry.get(:api_response_times).expects(:observe).with(42)
+
+        ApiPrometheusSubscriber.new.response(event)
+      end
+    end
+
     describe '#connection_failure' do
-      it 'should increment the failure counters and log an error' do
+      it 'should count a failed request, labelled by exception class and not by message' do
         exception = Faraday::ConnectionFailed.new('Failed to open TCP connection to data-api:8080')
         event = stub(payload: { exception: exception })
 
-        Prometheus::Client.registry.get(:api_requests).expects(:increment).with(labels: { result: 'failure' })
-        Prometheus::Client.registry.get(:api_connection_failure).expects(:increment)
-                          .with(labels: { message: exception.to_s })
+        registry.get(:api_requests).expects(:increment).with(labels: { result: 'failure' })
+        registry.get(:api_connection_failure).expects(:increment)
+                .with(labels: { message: 'Faraday::ConnectionFailed' })
 
-        logged = with_captured_logger { ApiPrometheusSubscriber.new.connection_failure(event) }
+        ApiPrometheusSubscriber.new.connection_failure(event)
+      end
 
-        _(logged.size).must_equal 1
-        _(logged.first['message']).must_equal(
-          "API connection failure: #{exception.message} - Faraday::ConnectionFailed"
-        )
-        _(logged.first['request_status']).must_equal 'error'
-        _(logged.first['status']).must_equal 503
+      it 'should label a timeout by its own class' do
+        event = stub(payload: { exception: Faraday::TimeoutError.new('execution expired') })
+
+        registry.get(:api_requests).expects(:increment).with(labels: { result: 'failure' })
+        registry.get(:api_connection_failure).expects(:increment)
+                .with(labels: { message: 'Faraday::TimeoutError' })
+
+        ApiPrometheusSubscriber.new.connection_failure(event)
       end
     end
 
     describe '#service_exception' do
-      it 'should increment the exception counter and log an error' do
-        exception = StandardError.new('Unexpected response from data-api')
+      it 'should count a failed request, labelled by response status and not by message' do
+        exception = DataServicesApi::ServiceException.new('the server responded with status 503', 503)
         event = stub(payload: { exception: exception })
 
-        Prometheus::Client.registry.get(:api_service_exception).expects(:increment)
-                          .with(labels: { message: exception.to_s })
+        registry.get(:api_requests).expects(:increment).with(labels: { result: 'failure' })
+        registry.get(:api_service_exception).expects(:increment).with(labels: { message: 'HTTP 503' })
 
-        logged = with_captured_logger { ApiPrometheusSubscriber.new.service_exception(event) }
+        ApiPrometheusSubscriber.new.service_exception(event)
+      end
 
-        _(logged.size).must_equal 1
-        _(logged.first['message']).must_equal(
-          "API service exception: #{exception.message} - StandardError"
-        )
-        _(logged.first['request_status']).must_equal 'error'
-        _(logged.first['status']).must_equal 502
+      it 'should say so when there was no response status' do
+        exception = DataServicesApi::ServiceException.new('unexpected token', nil)
+        event = stub(payload: { exception: exception })
+
+        registry.get(:api_requests).expects(:increment).with(labels: { result: 'failure' })
+        registry.get(:api_service_exception).expects(:increment)
+                .with(labels: { message: 'no response status' })
+
+        ApiPrometheusSubscriber.new.service_exception(event)
+      end
+    end
+
+    # The specs above call the subscriber's methods directly, so they would still
+    # pass if `attach_to` named the wrong event prefix. That happened silently in a
+    # sibling app when data_services_api 2.0.0 renamed its events from `*.api` to
+    # `*.data_services_api`. These fire through the real notification bus, so a
+    # future rename fails here.
+    describe 'ActiveSupport::Notifications wiring' do
+      it 'should count a connection failure when the gem reports one' do
+        exception = Faraday::ConnectionFailed.new('Failed to open TCP connection to data-api:8080')
+
+        registry.get(:api_requests).expects(:increment).with(labels: { result: 'failure' })
+        registry.get(:api_connection_failure).expects(:increment)
+                .with(labels: { message: 'Faraday::ConnectionFailed' })
+
+        ActiveSupport::Notifications.instrument('connection_failure.data_services_api', exception: exception)
+      end
+
+      it 'should count a service exception when the gem reports one' do
+        exception = DataServicesApi::ServiceException.new('the server responded with status 502', 502)
+
+        registry.get(:api_requests).expects(:increment).with(labels: { result: 'failure' })
+        registry.get(:api_service_exception).expects(:increment).with(labels: { message: 'HTTP 502' })
+
+        ActiveSupport::Notifications.instrument('service_exception.data_services_api', exception: exception)
       end
     end
   end

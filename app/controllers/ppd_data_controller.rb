@@ -75,7 +75,7 @@ class PpdDataController < ApplicationController
       nil
     else
       @query_command = query_command
-      query_command.success? ? template : 'ppd/error'
+      template
     end
   end
 

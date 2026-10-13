@@ -6,10 +6,6 @@ require 'sentry/test_helper'
 # Error pages are reached only through `config.exceptions_app`, so these tests
 # cause real errors and assert on the response a user would get: the status as
 # well as the body.
-#
-# Every test asserts the correct behaviour. A skipped test is a confirmed defect:
-# the skip message records what happens today and the issue that fixes it, and
-# that fix should delete the `skip`.
 class ErrorHandlingTest < ActionDispatch::IntegrationTest
   include Sentry::TestHelper
 
@@ -21,10 +17,10 @@ class ErrorHandlingTest < ActionDispatch::IntegrationTest
     before { @original_env = render_error_pages }
     after { Rails.application.env_config.merge!(@original_env) }
 
-    # Make every call to the Data Services API fail to connect
-    def stub_upstream_connection_failure
+    # Make every call to the Data Services API fail with the given exception
+    def stub_upstream_failure(exception, call = :query)
       dataset = stub('dataset')
-      dataset.stubs(:query).raises(Faraday::ConnectionFailed, 'Failed to open TCP connection')
+      dataset.stubs(call).raises(exception)
       QueryCommand.any_instance.stubs(:dataset).returns(dataset)
     end
 
@@ -37,6 +33,12 @@ class ErrorHandlingTest < ActionDispatch::IntegrationTest
       Prometheus::Client.registry
                         .get(:internal_application_error)
                         .get(labels: { message: label })
+    end
+
+    # The classes of the exceptions reported to Sentry. Sentry also records a
+    # sample of requests as performance transactions, which are not errors.
+    def reported_exceptions
+      sentry_events.grep(Sentry::ErrorEvent).map { |event| event.exception.values.first.type }
     end
 
     # The payloads of the internal error events emitted while the block runs
@@ -134,39 +136,58 @@ class ErrorHandlingTest < ActionDispatch::IntegrationTest
       end
     end
 
-    describe 'an upstream API failure' do
-      it 'should respond with a gateway error and an error page on the search page' do
-        skip 'Confirmed defect: responds 500 as an unhandled NoMethodError. The failure is ' \
-             'logged and ignored, then the missing results are read. Fixed in #360'
+    describe 'a Data Services API failure' do
+      # The three ways the API can fail, with the status each is given in
+      # `rescue_responses` (config/application.rb)
+      failures = {
+        'that cannot be reached' =>
+          [Faraday::ConnectionFailed.new('Failed to open TCP connection'), 503, 'Service Unavailable'],
+        'that does not answer in time' =>
+          [Faraday::TimeoutError.new('execution expired'), 504, 'Gateway Timeout'],
+        'that answers with an error' =>
+          [DataServicesApi::ServiceException.new('the server responded with status 503', 503),
+           502, 'Bad Gateway']
+      }
 
-        stub_upstream_connection_failure
+      failures.each do |description, (exception, status, status_text)|
+        describe description do
+          before { stub_upstream_failure(exception) }
 
-        get search_index_path(street: 'harbour road')
+          it "should respond with #{status} and advice on narrowing the search" do
+            get search_index_path(street: 'harbour road')
 
-        assert_includes [502, 503], response.status
-        assert_includes response.body, 'Application error'
+            assert_response status
+            assert_includes response.body, 'the query you have just run did not complete'
+            assert_includes response.body, 'Make the query more selective'
+          end
+
+          it "should respond with #{status} when all results are requested" do
+            get search_index_path(street: 'harbour road', limit: 'all')
+
+            assert_response status
+          end
+
+          it "should respond with #{status} as plain text on a data download" do
+            get '/ppd_data.csv', params: { street: 'harbour road' }
+
+            assert_response status
+            assert_equal status_text, response.body
+          end
+
+          it 'should not count it as an internal application error' do
+            events = internal_error_events { get search_index_path(street: 'harbour road') }
+
+            assert_empty events
+          end
+        end
       end
 
-      it 'should respond with a gateway error when all results are requested' do
-        skip 'Confirmed defect: responds 200 with a results page. With no limit nothing reads ' \
-             'the missing results, and QueryCommand#success? is always true. Fixed in #360'
+      it 'should respond with a gateway error when the query cannot be explained' do
+        stub_upstream_failure(Faraday::ConnectionFailed.new('Failed to open TCP connection'), :explain)
 
-        stub_upstream_connection_failure
+        get '/ppd_data', params: { street: 'harbour road', explain: true }
 
-        get search_index_path(street: 'harbour road', limit: 'all')
-
-        assert_includes [502, 503], response.status
-      end
-
-      it 'should respond with a gateway error on a data download' do
-        skip "Confirmed defect: responds 500 from NoMethodError (undefined method 'size' for " \
-             'nil) after the failure is logged and ignored. Fixed in #360'
-
-        stub_upstream_connection_failure
-
-        get '/ppd_data.csv', params: { street: 'harbour road' }
-
-        assert_includes [502, 503], response.status
+        assert_response :service_unavailable
       end
     end
 
@@ -214,9 +235,7 @@ class ErrorHandlingTest < ActionDispatch::IntegrationTest
 
         get search_index_path(street: 'harbour road')
 
-        reported = sentry_events.map { |event| event.exception.values.first.type }
-
-        assert_equal ['RuntimeError'], reported
+        assert_equal ['RuntimeError'], reported_exceptions
       ensure
         teardown_sentry_test
       end
@@ -226,7 +245,7 @@ class ErrorHandlingTest < ActionDispatch::IntegrationTest
 
         get search_index_path(street: 'and')
 
-        assert_empty sentry_events
+        assert_empty reported_exceptions
       ensure
         teardown_sentry_test
       end
