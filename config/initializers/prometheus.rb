@@ -15,12 +15,12 @@ prometheus.counter(
 )
 prometheus.counter(
   :api_connection_failure,
-  docstring: 'Reasons for back-end API connection failure, labelled by message',
+  docstring: 'Back-end API requests that got no response, by exception class',
   labels: [:message]
 )
 prometheus.counter(
   :api_service_exception,
-  docstring: 'The response from the back-end data API was not processed, labelled by message',
+  docstring: 'Back-end API requests that got an error response, by HTTP status',
   labels: [:message]
 )
 prometheus.counter(
