@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'version'
-
 Rails.application.reloader.to_prepare do
   Sentry.init do |config|
     # https://docs.sentry.io/platforms/ruby/configuration/options/#breadcrumbs-logger
