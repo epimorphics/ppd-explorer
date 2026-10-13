@@ -278,6 +278,12 @@ entry, so pre-encoded text ends up as JSON inside the `message` string.
 
 In the test environment logs go to `log/test.log`, not stdout.
 
+Calls to the Data Services API are logged by `ApiRequestLogSubscriber`, from the
+events the `data_services_api` gem emits: one entry when a call is made, one when
+it returns (with `returned_rows`, `status` and `request_time`), a `WARN` before
+each retry, and one `ERROR` if it fails. Models and controllers must not log API
+calls themselves.
+
 ### Error handling
 
 Controllers do not rescue errors or render error pages. An exception propagates
@@ -289,6 +295,10 @@ to Rails, which maps it to a status and renders the page through
   400, and its message is shown on the page. To make another error a deliberate
   status, give it its own exception class and register it in
   `config.action_dispatch.rescue_responses`.
+- A failure of the Data Services API is left to propagate from the
+  `data_services_api` gem, not rescued: 503 if it cannot be reached, 504 if it does
+  not answer in time, 502 if it answers with an error. The page advises the user to
+  narrow the search. These are counted by the `api_*` metrics below.
 - Anything else is a 500. It is reported to Sentry and increments the
   `internal_application_error` metric.
 
@@ -306,10 +316,22 @@ well as the body.
 in this repository, so a change to a metric's name or labels must be agreed with
 them for the same deploy.
 
-`internal_application_error` has one label, `message`, of the form
-`Unhandled <exception class> in <controller>#<action>`, for example
-`Unhandled NoMethodError in search#index`. It never contains the exception's own
-message, which can carry user input and would create a new time series per value.
+Label values are bounded: they never contain an exception's own message, which can
+carry user input or a URL and would create a new time series per value.
+
+| Metric | Labels | Counts |
+|---|---|---|
+| `internal_application_error` | `message`: `Unhandled <exception class> in <controller>#<action>`, e.g. `Unhandled NoMethodError in search#index` | Responses with status 500 |
+| `api_requests` | `result`: `success` or `failure` | Every Data Services API call |
+| `api_status` | `status`: the HTTP status | API calls that returned a response |
+| `api_response_times` | none (histogram, milliseconds) | API calls that returned a response |
+| `api_connection_failure` | `message`: the exception class, `Faraday::ConnectionFailed` or `Faraday::TimeoutError` | API calls that got no response, after retries |
+| `api_service_exception` | `message`: `HTTP <status>`, e.g. `HTTP 503`, or `no response status` | API calls that got an error response |
+
+These are recorded by the subscribers in `app/subscribers/`, which listen for the
+`data_services_api` gem's `*.data_services_api` events. If a gem upgrade renames
+those events the subscribers receive nothing and the metrics stop without any
+error; `test/integration/api_failure_test.rb` exists to catch that.
 
 ## Dependency maintenance
 
