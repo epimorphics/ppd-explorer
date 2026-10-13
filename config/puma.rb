@@ -48,11 +48,6 @@ metrics_url "tcp://0.0.0.0:#{metrics_port}" if Rails.env.development?
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
 
-# Use a custom log formatter to emit Puma log messages in a JSON format
-log_formatter do |str|
-  {
-    ts: DateTime.now.utc.strftime('%FT%T.%3NZ'),
-    level: 'INFO',
-    message: str
-  }.to_json
-end
+# Emit Puma's own log messages in the same JSON format as the application
+require 'epilog_rails/json_formatter'
+log_formatter(&EpilogRails::JsonFormatter.puma_formatter)
