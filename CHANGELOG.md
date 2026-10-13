@@ -37,6 +37,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `Unhandled <Class> in <controller#action>`; the `result` and `status` labels are
   removed and the exception's own text is no longer used as a label value
   [#358](https://github.com/epimorphics/ppd-explorer/issues/358).
+- Adopted `data_services_api` 2.0.0. Calls to the Data Services API are now logged
+  once each by a new `ApiRequestLogSubscriber`, including a `WARN` before each retry
+  [#347](https://github.com/epimorphics/ppd-explorer/issues/347); the gem no longer
+  logs for itself, which removes its double-encoded entries, and the duplicate
+  failure logging in `QueryCommand` and `ApiPrometheusSubscriber` is gone. **Metric
+  changes:** the `message` label on `api_connection_failure` is now the exception
+  class and on `api_service_exception` is `HTTP <status>`, where both were the
+  exception's free text; `api_requests{result="failure"}` now also counts error
+  responses from the API, which were previously not counted at all
+  [#360](https://github.com/epimorphics/ppd-explorer/issues/360).
 - Restricted the E2E workflow to pre-production, updated GitHub Actions versions,
   added a warning against concurrent deploys, and consolidated the README environment, credentials and
   observability documentation
@@ -44,6 +54,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- A failure of the Data Services API was logged and then ignored, so the request
+  went on to fail for an unrelated-looking reason, or returned an empty results page
+  when all results were requested. It now returns `503` (unreachable), `504` (timed
+  out) or `502` (error response) with advice on narrowing the search, and is not
+  counted as an internal application error
+  [#360](https://github.com/epimorphics/ppd-explorer/issues/360).
 - A data download with an invalid search term or date returned a `500` or a blank
   `200`; it now returns `400`. An invalid date or price on the search page now names
   the value that was wrong

@@ -60,10 +60,20 @@ module PpdExplorer
     # is set up. `render_error` also copes with requests whose params can't be parsed.
     config.exceptions_app = ->(env) { ErrorsController.render_error(env) }
 
-    # Statuses for the errors the application raises deliberately. Rails already
-    # knows the framework's own exceptions (RoutingError is 404, ParameterMissing
-    # is 400, and so on), so only ours need registering.
-    config.action_dispatch.rescue_responses['MalformedSearchError'] = :bad_request
+    # Statuses for the errors the application expects. Rails already knows the
+    # framework's own exceptions (RoutingError is 404, ParameterMissing is 400,
+    # and so on), so only these need registering.
+    #
+    # The last three are failures of the Data Services API, raised by the
+    # data_services_api gem and left to propagate: it could not be reached, it
+    # did not answer in time, or it answered with an error. They are counted by
+    # the api_* metrics, not as internal application errors.
+    config.action_dispatch.rescue_responses.merge!(
+      'MalformedSearchError' => :bad_request,
+      'Faraday::ConnectionFailed' => :service_unavailable,
+      'Faraday::TimeoutError' => :gateway_timeout,
+      'DataServicesApi::ServiceException' => :bad_gateway
+    )
   end
 end
 
