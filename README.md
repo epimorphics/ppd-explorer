@@ -34,6 +34,7 @@ wiki](https://github.com/epimorphics/ppd-explorer/wiki).
 | Templates | HAML |
 | Data | SPARQL endpoint queried via the `data_services_api` gem |
 | Error tracking | Sentry |
+| Logging | Structured JSON via the `epilog_rails` gem |
 | Metrics | Prometheus (`prometheus-client`, `puma-metrics`) |
 | E2E testing | Node 24 + Yarn 4 + Playwright (Chromium) |
 
@@ -57,7 +58,7 @@ gem install bundler
 
 ### 2. Authenticate with the private gem registry
 
-The `data_services_api`, `json_rails_logger`, and `lr_common_styles` gems are hosted
+The `data_services_api`, `epilog_rails`, and `lr_common_styles` gems are hosted
 on the Epimorphics GitHub Package Registry. You need a GitHub Personal Access Token
 with the `read:packages` scope.
 
@@ -260,6 +261,22 @@ Metrics for the presentation hosts of all HMLR apps are in
 [Grafana](https://grafana-hmlr.epimorphics.net/). Use it to see how each
 environment has behaved over time and to line up a problem with when it
 started. Ask Ops for access.
+
+### Logging
+
+Logs are single-line JSON on stdout, formatted by
+[`epilog_rails`](https://github.com/epimorphics/epilog-rails) to the
+[logging standard](https://github.com/epimorphics/internal/wiki/Logging-Standard).
+The gem logs every request itself, so controllers and models must not: each
+request produces one `received` entry and one `completed` entry (or `error` for a
+5xx), sharing a `request_id` and carrying `method`, `path`, `status` and
+`request_time` in seconds.
+
+To log something else, pass `Rails.logger` a string or a Hash with a `message`
+key. Never pass it `JSON.generate(...)` or `to_json`: the formatter encodes the
+entry, so pre-encoded text ends up as JSON inside the `message` string.
+
+In the test environment logs go to `log/test.log`, not stdout.
 
 ## Dependency maintenance
 

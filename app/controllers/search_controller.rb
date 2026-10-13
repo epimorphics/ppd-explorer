@@ -11,8 +11,6 @@ class SearchController < ApplicationController
   def create # rubocop:disable Metrics/MethodLength
     @preferences = UserPreferences.new(params)
 
-    LoggingHelper.log_request({ params: params, path: request.path }, 'info')
-
     if @preferences.empty?
       redirect_to controller: :ppd, action: :index
     else

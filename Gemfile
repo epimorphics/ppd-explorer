@@ -68,6 +68,6 @@ end
 
 source 'https://rubygems.pkg.github.com/epimorphics' do
   gem 'data_services_api'
-  gem 'json_rails_logger'
+  gem 'epilog_rails', '~> 0.3'
   gem 'lr_common_styles'
 end

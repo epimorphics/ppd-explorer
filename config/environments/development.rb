@@ -41,13 +41,10 @@ PpdExplorer::Application.configure do
   # Enable SASS source maps in development for easier debugging
   config.sass.inline_source_maps = true
 
-  # Tag rails logs with useful information
-  config.log_tags = %i[subdomain request_id request_method]
   # When sync mode is true, all output is immediately flushed to the underlying
   # operating system and is not buffered by Ruby internally.
   $stdout.sync = true
-  # Log the stdout output to the Epimorphics JSON logging gem
-  config.logger = JsonRailsLogger::Logger.new($stdout)
+  # epilog_rails sets the logger: JSON to stdout, with a pair of entries per request
   # Set the log level to the value of the LOG_LEVEL environment variable, or 'debug' by default
   config.log_level = ENV.fetch('LOG_LEVEL', 'debug').to_sym
 
