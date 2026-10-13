@@ -37,6 +37,40 @@
           Maybe you tried to change something you didn't have access to? If you are
           the application owner, check the logs for more information.
 
+      - elsif [502, 503, 504].include?(status)
+        %h1.o-heading--1 We're sorry, that didn't work
+
+        %p
+          We're very sorry, but the query you have just run did not complete. Reasons for
+          this are commonly due to large queries exceeding the time limit,
+          or the result set being too large to transmit.
+
+        %p
+          %strong
+            Things you can try:
+
+        %ul.list.list-bullet.error--checklist
+          %li
+            Make the query more selective. For example, add values for some of the other search
+            fields, such as county, postcode or street. In particular, if you don't enter values for
+            %em any
+            address fields, you're implicitly doing a search for all addresses across England and Wales.
+          %li
+            Limit the years that the data is selected for. If you don't specify a start date, you
+            will be querying the data going back to January 1995.
+          %li
+            Set the sample size. By limiting the number of results to 100 or 1000, you can try out
+            your queries without risking timeouts in the query engine.
+          %li
+            If you have a large analysis that requires all of the data as input, you may be better
+            to
+            %a{ href: "https://www.gov.uk/government/statistical-data-sets/price-paid-data-downloads" } download the raw data
+            and perform your own analysis using your own software.
+
+        %p
+          If you are still having difficulties accessing the data that you want, or you think that
+          your query should have completed normally, please see the contact details below.
+
       - else
         %h1.o-heading--1 Application error
 
