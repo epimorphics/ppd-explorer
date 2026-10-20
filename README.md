@@ -93,6 +93,7 @@ first and falls back to `.env.development`. `.env.local` is gitignored.
 | `SENTRY_ENABLED` | `false` | Enable Sentry error tracking |
 | `SENTRY_AUTH_TOKEN` | — | Required only for production builds (source map upload) |
 | `SENTRY_API_KEY` | — | Required only if `SENTRY_ENABLED=true` |
+| `SENTRY_LOG_LEVEL` | `warn` | Verbosity of the Sentry SDK's own diagnostics, independent of `LOG_LEVEL`. Raise to `debug` to see why an event was or was not sent |
 
 ## Data API
 
