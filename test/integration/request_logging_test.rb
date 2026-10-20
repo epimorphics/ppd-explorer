@@ -66,5 +66,19 @@ class RequestLoggingTest < ActionDispatch::IntegrationTest
     ensure
       Rails.application.env_config.merge!(original_env)
     end
+
+    # The completed entry already records a 404 or 400. Logging the exception as
+    # well, at any level, adds an unstructured entry and a backtrace to every trace
+    # read at DEBUG.
+    it 'should not log a handled error response as an exception' do
+      original_env = render_error_pages
+
+      entries = capture_log { get '/no/such/path' }
+
+      _(entries.pluck('message').grep(/RoutingError/)).must_be_empty
+      _(entries.pluck('request_status').compact).must_equal %w[received completed]
+    ensure
+      Rails.application.env_config.merge!(original_env)
+    end
   end
 end
