@@ -59,6 +59,10 @@ PpdExplorer::Application.configure do
   # epilog_rails sets the logger: JSON to stdout, with a pair of entries per request
   # Set the log level to the value of the LOG_LEVEL environment variable, or 'info' by default
   config.log_level = ENV.fetch('LOG_LEVEL', 'info').to_sym
+  # Don't log the rendering of each template and layout. At DEBUG these are
+  # unstructured `Rendering …` lines that epilog_rails 0.3.0 fails to suppress
+  # (epimorphics/epilog-rails#9).
+  config.action_view.logger = nil
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
