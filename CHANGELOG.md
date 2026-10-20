@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+
+- The Sentry SDK's own diagnostics now have their own log level, `SENTRY_LOG_LEVEL`
+  (default `warn`), instead of following `LOG_LEVEL`. Running the app at `debug` no
+  longer fills the log with Sentry's tracing and sampling messages. What is
+  reported to Sentry is unchanged
+  [#367](https://github.com/epimorphics/ppd-explorer/issues/367).
 - A failure of the Data Services API was logged and then ignored, so the request
   went on to fail for an unrelated-looking reason, or returned an empty results page
   when all results were requested. It now returns `503` (unreachable), `504` (timed
