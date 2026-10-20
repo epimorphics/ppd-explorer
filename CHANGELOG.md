@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Production no longer logs an unstructured `Rendering …` entry for each template
   and layout at `debug`
   [#368](https://github.com/epimorphics/ppd-explorer/issues/368).
+- A handled error response such as a `404` or `400` is no longer also logged as an
+  exception with a backtrace at `debug`; its completed entry already records the
+  status [#370](https://github.com/epimorphics/ppd-explorer/issues/370).
 - A failure of the Data Services API was logged and then ignored, so the request
   went on to fail for an unrelated-looking reason, or returned an empty results page
   when all results were requested. It now returns `503` (unreachable), `504` (timed
@@ -35,7 +38,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   existing defect are skipped with a reference to the issue that fixes it. Also fixed
   an undefined variable in the VCR configuration
   [#357](https://github.com/epimorphics/ppd-explorer/issues/357).
-
 
 ### Changed
 
