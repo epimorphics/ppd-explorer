@@ -74,6 +74,10 @@ module PpdExplorer
       'Faraday::TimeoutError' => :gateway_timeout,
       'DataServicesApi::ServiceException' => :bad_gateway
     )
+
+    # Expected failures (404, 400, 422, ...) are already recorded by the
+    # request's completed log entry, so don't also log them as exceptions.
+    config.action_dispatch.log_rescued_responses = false
   end
 end
 
