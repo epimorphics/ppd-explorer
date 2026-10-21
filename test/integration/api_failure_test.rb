@@ -36,17 +36,25 @@ class ApiFailureTest < ActionDispatch::IntegrationTest
     Prometheus::Client.registry.get(name).get(labels: labels)
   end
 
+  # The payloads of the internal error events emitted while the block runs
+  def internal_error_events(&)
+    events = []
+    callback = ->(*, payload) { events << payload }
+    ActiveSupport::Notifications.subscribed(callback, 'internal_error.application', &)
+    events
+  end
+
   describe 'A failing Data Services API call' do
     before { @original_env = render_error_pages }
     after { Rails.application.env_config.merge!(@original_env) }
 
-    describe 'when the API answers with an error status' do
+    describe 'when the API answers with a server error' do
       before { stub_api_connection { [503, {}, 'Query timed out'] } }
 
-      it 'should respond with 502' do
+      it 'should respond with 503' do
         VCR.turned_off { get search_index_path(street: 'harbour road') }
 
-        assert_response :bad_gateway
+        assert_response :service_unavailable
       end
 
       # The subscriber can't know whether the request will recover, so only the
@@ -64,7 +72,7 @@ class ApiFailureTest < ActionDispatch::IntegrationTest
         _(errors.size).must_equal 1
         # epilog_rails completes a 5xx request with request_status 'error'
         _(errors.first['request_status']).must_equal 'error'
-        _(errors.first['status']).must_equal 502
+        _(errors.first['status']).must_equal 503
       end
 
       it 'should count a failed request and the status the API returned' do
@@ -72,6 +80,24 @@ class ApiFailureTest < ActionDispatch::IntegrationTest
           assert_difference -> { metric(:api_service_exception, message: 'HTTP 503') }, 1 do
             VCR.turned_off { get search_index_path(street: 'harbour road') }
           end
+        end
+      end
+    end
+
+    # Only the API rejecting the query we built is a fault in this application
+    {
+      400 => [:internal_server_error, 1],
+      404 => [:bad_gateway, 0],
+      503 => [:service_unavailable, 0]
+    }.each do |upstream_status, (status, internal_errors)|
+      describe "when the API answers #{upstream_status}" do
+        before { stub_api_connection { [upstream_status, {}, 'error'] } }
+
+        it "should respond with #{status} and #{internal_errors} internal errors" do
+          events = internal_error_events { VCR.turned_off { get search_index_path(street: 'harbour road') } }
+
+          assert_response status
+          _(events.size).must_equal internal_errors
         end
       end
     end
