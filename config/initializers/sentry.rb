@@ -12,11 +12,19 @@ Rails.application.reloader.to_prepare do
     # ! Only report errors in these environments:
     config.enabled_environments = %w[production prod preprod dev]
     # ! Ignore exceptions that are not useful to us
+    # Failures of the Data Services API leave nothing for a developer to fix: ops
+    # hear about them from the api_* alerts. Not DataServicesApi::ServiceException,
+    # which is the `cause` of an ApiQueryRejectedError we do want reported: Sentry
+    # also checks causes against this list.
     config.excluded_exceptions += [
       'ActionController::BadRequest',
       'ActionController::RoutingError',
       'ActiveRecord::RecordNotFound',
-      'MalformedSearchError'
+      'MalformedSearchError',
+      'Faraday::ConnectionFailed',
+      'Faraday::TimeoutError',
+      'ApiUnavailableError',
+      'ApiBadResponseError'
     ]
     # * Set the environment name from the SENTRY_ENVIRONMENT instance configuration value
     config.environment = ENV.fetch('SENTRY_ENVIRONMENT', Rails.env)
