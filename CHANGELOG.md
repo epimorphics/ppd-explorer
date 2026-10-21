@@ -79,6 +79,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   exception's free text; `api_requests{result="failure"}` now also counts error
   responses from the API, which were previously not counted at all
   [#360](https://github.com/epimorphics/ppd-explorer/issues/360).
+- Data Services API log entries now describe the call in `upstream_*` fields, and
+  a failed call is logged at `WARN`, so a failed request has one `ERROR`: its
+  completed entry. Messages name the call, e.g. `API returned 12 rows for GET
+  /landregistry/id/ppd?… (status 200, 0.051s)`. **Ops: log field changes** in API
+  entries: `path` → `upstream_path`, `status` → `upstream_status`, `request_time`
+  → `upstream_time`, `method` → `upstream_method`; new `upstream_url`,
+  `exception` and `retry_count`; connection failures and timeouts no longer log
+  a `status` (it was always a made-up `503`); failures are `WARN`, not `ERROR`.
+  Saved Kibana searches for API failures need updating
+  [#369](https://github.com/epimorphics/ppd-explorer/issues/369).
 - Restricted the E2E workflow to pre-production, updated GitHub Actions versions,
   added a warning against concurrent deploys, and consolidated the README environment, credentials and
   observability documentation

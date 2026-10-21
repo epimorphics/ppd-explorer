@@ -49,17 +49,22 @@ class ApiFailureTest < ActionDispatch::IntegrationTest
         assert_response :bad_gateway
       end
 
-      it 'should log the failed call once, as an error, and the request once' do
+      # The subscriber can't know whether the request will recover, so only the
+      # request's completed entry is an ERROR
+      it 'should log the failed call once as a warning, and the request once as an error' do
         entries = capture_log { VCR.turned_off { get search_index_path(street: 'harbour road') } }
+        api_failures = entries.select { |entry| entry['message'].start_with?('API returned an error') }
         errors = entries.select { |entry| entry['level'] == 'ERROR' }
-        api_errors = errors.select { |entry| entry['message'].start_with?('API service exception') }
 
-        _(api_errors.size).must_equal 1
-        _(api_errors.first['status']).must_equal 503
-        _(api_errors.first['path']).must_match %r{\A/landregistry/id/ppd\?}
-        # The other error entry is the incoming request itself, completed with a 502
-        _(errors.size).must_equal 2
-        _((errors - api_errors).first['status']).must_equal 502
+        _(api_failures.size).must_equal 1
+        _(api_failures.first['level']).must_equal 'WARN'
+        _(api_failures.first['upstream_status']).must_equal 503
+        _(api_failures.first['upstream_path']).must_match %r{\A/landregistry/id/ppd\?}
+        _(api_failures.first.key?('status')).must_equal false
+        _(errors.size).must_equal 1
+        # epilog_rails completes a 5xx request with request_status 'error'
+        _(errors.first['request_status']).must_equal 'error'
+        _(errors.first['status']).must_equal 502
       end
 
       it 'should count a failed request and the status the API returned' do
@@ -78,6 +83,17 @@ class ApiFailureTest < ActionDispatch::IntegrationTest
         VCR.turned_off { get search_index_path(street: 'harbour road') }
 
         assert_response :service_unavailable
+      end
+
+      it 'should log the failed call as a warning without a status, since no response arrived' do
+        entries = capture_log { VCR.turned_off { get search_index_path(street: 'harbour road') } }
+        api_failures = entries.select { |entry| entry['message'].start_with?('Could not connect to the API') }
+
+        _(api_failures.size).must_equal 1
+        _(api_failures.first['level']).must_equal 'WARN'
+        _(api_failures.first['exception']).must_equal 'Faraday::ConnectionFailed'
+        _(api_failures.first.key?('upstream_status')).must_equal false
+        _(entries.count { |entry| entry['level'] == 'ERROR' }).must_equal 1
       end
 
       it 'should count a failed request by exception class' do
