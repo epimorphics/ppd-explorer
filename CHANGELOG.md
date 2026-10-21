@@ -57,6 +57,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   a `status` (it was always a made-up `503`); failures are `WARN`, not `ERROR`.
   Saved Kibana searches for API failures need updating
   [#369](https://github.com/epimorphics/ppd-explorer/issues/369).
+- The app now refuses to start if `API_SERVICE_URL` is malformed (not an `http` or
+  `https` URL with a host), and the container refuses to start if it is unset.
+  Previously the app started and every search failed with a 500 that no API log
+  entry or metric explained. **Ops:** a deployment with a missing or malformed
+  `API_SERVICE_URL` now fails its probes at startup instead of serving errors
+  [#372](https://github.com/epimorphics/ppd-explorer/issues/372).
 - Restricted the E2E workflow to pre-production, updated GitHub Actions versions,
   added a warning against concurrent deploys, and consolidated the README environment, credentials and
   observability documentation

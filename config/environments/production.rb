@@ -95,9 +95,9 @@ PpdExplorer::Application.configure do
   # compiled asset paths
   config.relative_url_root = ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/app/ppd')
 
-  # API_SERVICE_URL should also be specified in the entrypoint.sh file and
-  # set in the Makefile as an env variable for the docker container when run as an image.
-  # API_SERVICE_URL is required by both Docker image and Rails
+  # API_SERVICE_URL has no default in production. entrypoint.sh refuses to start
+  # the server without it, and config/initializers/api_service_url.rb stops boot
+  # if it is malformed. It is unset while assets are precompiled in the image build.
   config.api_service_url = ENV.fetch('API_SERVICE_URL', nil)
 end
 
