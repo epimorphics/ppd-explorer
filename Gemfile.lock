@@ -134,6 +134,7 @@ GEM
       net-http (~> 0.5)
     faraday-retry (2.4.0)
       faraday (~> 2.0)
+    ffi (1.17.4)
     ffi (1.17.4-aarch64-linux-gnu)
     ffi (1.17.4-aarch64-linux-musl)
     ffi (1.17.4-arm-linux-gnu)
@@ -390,6 +391,9 @@ GEM
     rubyzip (3.4.1)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
+    sass-embedded (1.101.7)
+      google-protobuf (~> 4.31)
+      rake (>= 13)
     sass-embedded (1.101.7-aarch64-linux-gnu)
       google-protobuf (~> 4.31)
     sass-embedded (1.101.7-aarch64-linux-musl)
@@ -581,7 +585,7 @@ DEPENDENCIES
   yajl-ruby
 
 RUBY VERSION
-   ruby 3.4.9p82
+  ruby 3.4.11
 
 BUNDLED WITH
-   2.7.2
+  4.0.23
