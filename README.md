@@ -281,9 +281,19 @@ In the test environment logs go to `log/test.log`, not stdout.
 
 Calls to the Data Services API are logged by `ApiRequestLogSubscriber`, from the
 events the `data_services_api` gem emits: one entry when a call is made, one when
-it returns (with `returned_rows`, `status` and `request_time`), a `WARN` before
-each retry, and one `ERROR` if it fails. Models and controllers must not log API
-calls themselves.
+it returns (with `returned_rows`), a `WARN` before each retry, and a `WARN` if it
+fails. Models and controllers must not log API calls themselves.
+
+API log entries describe the call to the API in `upstream_*` fields
+(`upstream_url`, `upstream_method`, `upstream_path`, `upstream_status`,
+`upstream_time` in seconds), so `status`, `path` and `request_time` always describe
+the incoming request. A failure is a `WARN` because the subscriber can't know
+whether the request will recover: when the request fails as a result, its
+completed entry is the one `ERROR`. A connection failure or timeout has no
+`upstream_status`, since no response arrived.
+
+The request id is sent to the API as `X-Request-Id`. To follow one request through
+ppd-explorer and the Data Services API, search Kibana for its `log_request_id`.
 
 ### Error handling
 
