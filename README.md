@@ -87,7 +87,7 @@ first and falls back to `.env.development`. `.env.local` is gitignored.
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `API_SERVICE_URL` | `http://localhost:8888` | Backing SPARQL/data API |
+| `API_SERVICE_URL` | `http://localhost:8888` | Backing SPARQL/data API. Must be an `http` or `https` URL with a host, or the app won't start; the container won't start without it |
 | `PORT` | `3001` | Rails server port |
 | `METRICS_PORT` | `9394` | Prometheus metrics port |
 | `SENTRY_ENABLED` | `false` | Enable Sentry error tracking |
