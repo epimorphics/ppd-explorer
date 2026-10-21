@@ -64,15 +64,21 @@ module PpdExplorer
     # framework's own exceptions (RoutingError is 404, ParameterMissing is 400,
     # and so on), so only these need registering.
     #
-    # The last three are failures of the Data Services API, raised by the
-    # data_services_api gem and left to propagate: it could not be reached, it
-    # did not answer in time, or it answered with an error. They are counted by
-    # the api_* metrics, not as internal application errors.
+    # The rest are failures of the Data Services API, given a status by who has
+    # to act. It could not be reached, did not answer in time, or is failing
+    # (5xx): 503, 504 and 503, raised by the data_services_api gem or ApiError
+    # and left to propagate. Any other error response, such as a 404 from an
+    # endpoint that should exist, is an upstream or deployment fault: 502. These
+    # are counted by the api_* metrics, not as internal application errors.
+    #
+    # An ApiQueryRejectedError (the API rejected the query we built) is not
+    # registered: it is a bug in this application, so it stays a 500.
     config.action_dispatch.rescue_responses.merge!(
       'MalformedSearchError' => :bad_request,
       'Faraday::ConnectionFailed' => :service_unavailable,
       'Faraday::TimeoutError' => :gateway_timeout,
-      'DataServicesApi::ServiceException' => :bad_gateway
+      'ApiUnavailableError' => :service_unavailable,
+      'ApiBadResponseError' => :bad_gateway
     )
 
     # Expected failures (404, 400, 422, ...) are already recorded by the

@@ -136,7 +136,7 @@ class QueryCommand < DataService
   end
 
   def save_results(ppd, query, options)
-    @all_results = ppd.query(query)
+    @all_results = call_api { ppd.query(query) }
     @search_results = SearchResults.new(@all_results, options[:max])
   end
 
@@ -145,7 +145,7 @@ class QueryCommand < DataService
   end
 
   def add_count_information(ppd, count_query)
-    count_result = ppd.query(count_query)
+    count_result = call_api { ppd.query(count_query) }
     count = count_result.first['ppd:count']
     @search_results.query_count("#{count}#{' or more' if count == COUNT_LIMIT}")
   end
