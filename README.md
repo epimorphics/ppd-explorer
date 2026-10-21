@@ -306,10 +306,15 @@ to Rails, which maps it to a status and renders the page through
   400, and its message is shown on the page. To make another error a deliberate
   status, give it its own exception class and register it in
   `config.action_dispatch.rescue_responses`.
-- A failure of the Data Services API is left to propagate from the
-  `data_services_api` gem, not rescued: 503 if it cannot be reached, 504 if it does
-  not answer in time, 502 if it answers with an error. The page advises the user to
-  narrow the search. These are counted by the `api_*` metrics below.
+- A failure of the Data Services API is given a status by who has to act on it.
+  Connection failures and timeouts propagate from the `data_services_api` gem: 503
+  if it cannot be reached, 504 if it does not answer in time. An error response is
+  re-raised by `DataService#call_api` as an `ApiError` subclass: 503 for a 5xx
+  (`ApiUnavailableError`), 502 for a 404 or any other status
+  (`ApiBadResponseError`). These are counted by the `api_*` metrics below and not
+  reported to Sentry. The 503 and 504 pages advise the user to narrow the search.
+- A 400 or 422 from the API (`ApiQueryRejectedError`) means ppd built a query the
+  API rejects. That is a bug here, so it is a 500 like any other.
 - Anything else is a 500. It is reported to Sentry and increments the
   `internal_application_error` metric.
 

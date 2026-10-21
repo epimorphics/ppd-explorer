@@ -33,6 +33,15 @@ class DataService
   # Delegate parameter checking to the user preferences object
   delegate :param, to: :@preferences
 
+  # Run a call to the Data Services API, re-raising an error response as the
+  # ApiError subclass for who has to act on it (see ApiError). Don't log here:
+  # ApiRequestLogSubscriber has already logged the call.
+  def call_api
+    yield
+  rescue DataServicesApi::ServiceException => e
+    raise ApiError.for(e)
+  end
+
   def api_service_url
     Rails.application.config.api_service_url
   end

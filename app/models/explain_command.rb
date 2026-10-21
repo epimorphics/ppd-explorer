@@ -14,6 +14,6 @@ class ExplainCommand < QueryCommand
 
     # Rails.logger.debug "About to ask DsAPI to explain: #{query.to_json}"
 
-    @explanation = ppd.explain(query).with_indifferent_access
+    @explanation = call_api { ppd.explain(query) }.with_indifferent_access
   end
 end

@@ -95,6 +95,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   entry or metric explained. **Ops:** a deployment with a missing or malformed
   `API_SERVICE_URL` now fails its probes at startup instead of serving errors
   [#372](https://github.com/epimorphics/ppd-explorer/issues/372).
+- Error responses from the Data Services API are now given a status by who has
+  to act on them, instead of all being a 502. A 5xx is a 503, as when the API
+  cannot be reached; a 400 or 422 means ppd built a query the API rejects, so it
+  is a 500; a 404 or any other status stays a 502. The 502 page no longer suggests
+  narrowing the search. Connection failures, timeouts and API errors other than a
+  rejected query are no longer reported to Sentry. **Ops:** a rejected query now
+  increments `internal_application_error` (label `Unhandled
+  ApiQueryRejectedError in <controller>#<action>`); an API 5xx now gives the
+  request a 503, not a 502
+  [#371](https://github.com/epimorphics/ppd-explorer/issues/371).
 - Restricted the E2E workflow to pre-production, updated GitHub Actions versions,
   added a warning against concurrent deploys, and consolidated the README environment, credentials and
   observability documentation

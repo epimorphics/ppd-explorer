@@ -36,9 +36,10 @@ class ErrorHandlingTest < ActionDispatch::IntegrationTest
     end
 
     # The classes of the exceptions reported to Sentry. Sentry also records a
-    # sample of requests as performance transactions, which are not errors.
+    # sample of requests as performance transactions, which are not errors. An
+    # event lists an exception's causes first, so the one raised is last.
     def reported_exceptions
-      sentry_events.grep(Sentry::ErrorEvent).map { |event| event.exception.values.first.type }
+      sentry_events.grep(Sentry::ErrorEvent).map { |event| event.exception.values.last.type }
     end
 
     # The payloads of the internal error events emitted while the block runs
@@ -137,28 +138,34 @@ class ErrorHandlingTest < ActionDispatch::IntegrationTest
     end
 
     describe 'a Data Services API failure' do
-      # The three ways the API can fail, with the status each is given in
-      # `rescue_responses` (config/application.rb)
+      # The ways the API can fail that are not our fault, with the status each is
+      # given in `rescue_responses` (config/application.rb). Only a slow or failing
+      # API can be helped by narrowing the search.
       failures = {
         'that cannot be reached' =>
-          [Faraday::ConnectionFailed.new('Failed to open TCP connection'), 503, 'Service Unavailable'],
+          [Faraday::ConnectionFailed.new('Failed to open TCP connection'), 503, 'Service Unavailable', true],
         'that does not answer in time' =>
-          [Faraday::TimeoutError.new('execution expired'), 504, 'Gateway Timeout'],
-        'that answers with an error' =>
+          [Faraday::TimeoutError.new('execution expired'), 504, 'Gateway Timeout', true],
+        'that answers with a server error' =>
           [DataServicesApi::ServiceException.new('the server responded with status 503', 503),
-           502, 'Bad Gateway']
+           503, 'Service Unavailable', true],
+        'that answers with any other error' =>
+          [DataServicesApi::ServiceException.new('the server responded with status 404', 404),
+           502, 'Bad Gateway', false]
       }
 
-      failures.each do |description, (exception, status, status_text)|
+      failures.each do |description, (exception, status, status_text, narrowing_helps)|
         describe description do
           before { stub_upstream_failure(exception) }
 
-          it "should respond with #{status} and advice on narrowing the search" do
+          advice = narrowing_helps ? 'advice' : 'no advice'
+
+          it "should respond with #{status} and #{advice} on narrowing the search" do
             get search_index_path(street: 'harbour road')
 
             assert_response status
-            assert_includes response.body, 'the query you have just run did not complete'
-            assert_includes response.body, 'Make the query more selective'
+            assert_includes response.body, "We're sorry, that didn't work"
+            assert_equal narrowing_helps, response.body.include?('Make the query more selective')
           end
 
           it "should respond with #{status} when all results are requested" do
@@ -179,11 +186,66 @@ class ErrorHandlingTest < ActionDispatch::IntegrationTest
 
             assert_empty events
           end
+
+          # Ops hear about it from the api_* alerts; there is nothing to fix in the code
+          it 'should not report it to Sentry' do
+            setup_sentry_test
+
+            get search_index_path(street: 'harbour road')
+
+            assert_empty reported_exceptions
+          ensure
+            teardown_sentry_test
+          end
+        end
+      end
+
+      # The API rejected the query we built: a bug in this application
+      [400, 422].each do |upstream_status|
+        describe "that rejects the query with #{upstream_status}" do
+          before do
+            stub_upstream_failure(
+              DataServicesApi::ServiceException.new("the server responded with status #{upstream_status}",
+                                                    upstream_status)
+            )
+          end
+
+          it 'should respond with 500 and the application error page' do
+            get search_index_path(street: 'harbour road')
+
+            assert_response :internal_server_error
+            assert_includes response.body, 'Application error'
+          end
+
+          it 'should count it as an internal application error' do
+            assert_difference -> { internal_error_count('Unhandled ApiQueryRejectedError in search#index') }, 1 do
+              get search_index_path(street: 'harbour road')
+            end
+          end
+
+          it 'should report it to Sentry' do
+            setup_sentry_test
+
+            get search_index_path(street: 'harbour road')
+
+            assert_equal ['ApiQueryRejectedError'], reported_exceptions
+          ensure
+            teardown_sentry_test
+          end
         end
       end
 
       it 'should respond with a gateway error when the query cannot be explained' do
         stub_upstream_failure(Faraday::ConnectionFailed.new('Failed to open TCP connection'), :explain)
+
+        get '/ppd_data', params: { street: 'harbour road', explain: true }
+
+        assert_response :service_unavailable
+      end
+
+      it 'should classify an error response when the query cannot be explained' do
+        stub_upstream_failure(DataServicesApi::ServiceException.new('the server responded with status 503', 503),
+                              :explain)
 
         get '/ppd_data', params: { street: 'harbour road', explain: true }
 
