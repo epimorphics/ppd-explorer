@@ -64,6 +64,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Links and forms generated in production, such as the search form, no longer carry
+  a `relative_url_root=%2Fapp%2Fppd` query parameter. Rails does not recognise that
+  key in `default_url_options` and appended it to every URL; the `/app/ppd` prefix
+  already comes from `config.relative_url_root`
+  [#324](https://github.com/epimorphics/ppd-explorer/issues/324).
 - The Sentry SDK's own diagnostics now have their own log level, `SENTRY_LOG_LEVEL`
   (default `warn`), instead of following `LOG_LEVEL`. Running the app at `debug` no
   longer fills the log with Sentry's tracing and sampling messages. What is
