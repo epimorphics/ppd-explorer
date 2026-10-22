@@ -141,34 +141,91 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
           .must_equal 'API did not respond in time to GET /landregistry/id/ppd?_limit=100 (2.5s): execution expired'
         _(entry['exception']).must_equal 'Faraday::TimeoutError'
         _(entry.key?('upstream_status')).must_equal false
+        _(entry.key?('upstream_response')).must_equal false
       end
     end
 
     describe '#service_exception' do
-      it 'should warn with the status the API returned' do
-        exception = DataServicesApi::ServiceException.new('the server responded with status 503', 503)
-        event = stub(payload: { exception: exception, path: '/landregistry/id/ppd',
-                                query_string: nil, duration: 90_000, status: 503 })
+      def exception_event(status:, body: nil, message: 'the server responded with an error', duration: 10)
+        exception = DataServicesApi::ServiceException.new(message, status, nil, body)
+        stub(payload: { exception: exception, path: '/landregistry/id/ppd',
+                        query_string: nil, duration: duration, status: status })
+      end
+
+      it 'should warn with the error status and what the API said' do
+        event = exception_event(status: 503, body: 'Query timed out', duration: 90_000)
 
         _(logged { subscriber.service_exception(event) }).must_equal [{
           'level' => 'WARN',
-          'message' => 'API returned an error for GET /landregistry/id/ppd (status 503, 90.0s)',
+          'message' => 'API returned status 503 for GET /landregistry/id/ppd (90.0s)',
           **upstream_call('/landregistry/id/ppd'),
           'upstream_status' => 503,
           'upstream_time' => 90.0,
+          'upstream_response' => 'Query timed out',
           'exception' => 'DataServicesApi::ServiceException'
         }]
       end
 
-      it 'should say the response could not be read when the API gave no status' do
-        exception = DataServicesApi::ServiceException.new('unexpected token', nil)
-        event = stub(payload: { exception: exception, path: '/landregistry/id/ppd',
-                                query_string: nil, duration: 10, status: nil })
+      it 'should say why the API rejected a query' do
+        entry = logged do
+          subscriber.service_exception(exception_event(status: 400, body: 'Bad value for mineq-pricePaid'))
+        end.first
+
+        _(entry['message']).must_equal 'API returned status 400 for GET /landregistry/id/ppd (0.01s)'
+        _(entry['upstream_response']).must_equal 'Bad value for mineq-pricePaid'
+      end
+
+      # The gem raises when a 2xx body is not valid JSON, such as one cut off part way
+      it 'should say a 2xx response could not be read, not that the API returned an error' do
+        event = exception_event(status: 200, body: '[{"ppd:pricePaid": 2', duration: 120_309,
+                                message: 'unexpected end of input at line 1 column 21')
         entry = logged { subscriber.service_exception(event) }.first
+
+        _(entry['message']).must_equal 'API response to GET /landregistry/id/ppd could not be read ' \
+                                       '(status 200, 120.309s): unexpected end of input at line 1 column 21'
+        _(entry['upstream_status']).must_equal 200
+        _(entry['upstream_response']).must_equal '[{"ppd:pricePaid": 2'
+      end
+
+      it 'should say the response could not be read when the API gave no status' do
+        entry = logged { subscriber.service_exception(exception_event(status: nil, message: 'unexpected token')) }.first
 
         _(entry['message'])
           .must_equal 'API response to GET /landregistry/id/ppd could not be read (0.01s): unexpected token'
         _(entry.key?('upstream_status')).must_equal false
+        _(entry.key?('upstream_response')).must_equal false
+      end
+
+      it 'should log only the start of a long response' do
+        entry = logged { subscriber.service_exception(exception_event(status: 502, body: 'x' * 2000)) }.first
+
+        _(entry['upstream_response'].length).must_equal ApiRequestLogSubscriber::RESPONSE_EXCERPT_LENGTH
+      end
+
+      # The API's own error body, as seen from a local API on 2026-10-22
+      it 'should log a pretty-printed JSON response compactly' do
+        body = <<~JSON
+          {
+            "timestamp" : "Thu Oct 22 08:24:25 GMT 2026",
+            "status" : "400",
+            "error" : "Bad Request",
+            "message" : "Cannot process an empty request parameter: mineq-pricePaid",
+            "path" : "/landregistry/id/ppd"
+          }
+        JSON
+        entry = logged { subscriber.service_exception(exception_event(status: 400, body: body)) }.first
+
+        _(entry['upstream_response']).must_equal '{"timestamp":"Thu Oct 22 08:24:25 GMT 2026","status":"400",' \
+                                                 '"error":"Bad Request","message":"Cannot process an empty ' \
+                                                 'request parameter: mineq-pricePaid","path":"/landregistry/id/ppd"}'
+      end
+
+      it 'should log a parsed response as JSON' do
+        entry = logged do
+          subscriber.service_exception(exception_event(status: 400, body: { 'error' => 'Bad query' }))
+        end.first
+
+        _(entry['upstream_response']).must_equal '{"error":"Bad query"}'
       end
     end
 
