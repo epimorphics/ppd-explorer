@@ -292,6 +292,13 @@ whether the request will recover: when the request fails as a result, its
 completed entry is the one `ERROR`. A connection failure or timeout has no
 `upstream_status`, since no response arrived.
 
+A failure where the API did respond says what kind of failure it was. A 4xx or 5xx
+is logged as `API returned status <status> for …`. Any other response the gem could
+not use, such as a `200` whose body was cut off part way, is logged as `API response
+to … could not be read (status 200, …): <parse error>`. Both carry
+`upstream_response`, the first 500 characters of the API's response body (a JSON
+body with its whitespace removed), so a rejected query says why it was rejected.
+
 The request id is sent to the API as `X-Request-Id`. To follow one request through
 ppd-explorer and the Data Services API, search Kibana for its `log_request_id`.
 
@@ -337,7 +344,7 @@ carry user input or a URL and would create a new time series per value.
 
 | Metric | Labels | Counts |
 |---|---|---|
-| `internal_application_error` | `message`: `Unhandled <exception class> in <controller>#<action>`, e.g. `Unhandled NoMethodError in search#index` | Responses with status 500 |
+| `internal_application_error` | `message`: `<exception class> in <controller>#<action>`, e.g. `NoMethodError in search#index` | Responses with status 500 |
 | `api_requests` | `result`: `success` or `failure` | Every Data Services API call |
 | `api_status` | `status`: the HTTP status | API calls that returned a response |
 | `api_response_times` | none (histogram, milliseconds) | API calls that returned a response |

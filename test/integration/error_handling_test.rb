@@ -218,7 +218,7 @@ class ErrorHandlingTest < ActionDispatch::IntegrationTest
           end
 
           it 'should count it as an internal application error' do
-            assert_difference -> { internal_error_count('Unhandled ApiQueryRejectedError in search#index') }, 1 do
+            assert_difference -> { internal_error_count('ApiQueryRejectedError in search#index') }, 1 do
               get search_index_path(street: 'harbour road')
             end
           end
@@ -286,7 +286,7 @@ class ErrorHandlingTest < ActionDispatch::IntegrationTest
       it 'should count an internal application error by class and action, not message' do
         stub_unhandled_exception
 
-        assert_difference -> { internal_error_count('Unhandled RuntimeError in search#index') }, 1 do
+        assert_difference -> { internal_error_count('RuntimeError in search#index') }, 1 do
           get search_index_path(street: 'harbour road')
         end
       end
