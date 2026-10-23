@@ -34,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   route, the error rendering in `SearchController` and `PpdDataController`, and the
   blanket treatment of `ArgumentError` as a bad request. **Metric change:**
   `internal_application_error` now has the single label `message`, of the form
-  `Unhandled <Class> in <controller#action>`; the `result` and `status` labels are
+  `<Class> in <controller#action>`; the `result` and `status` labels are
   removed and the exception's own text is no longer used as a label value
   [#358](https://github.com/epimorphics/ppd-explorer/issues/358).
 - Adopted `data_services_api` 2.0.0. Calls to the Data Services API are now logged
@@ -69,8 +69,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   is a 500; a 404 or any other status stays a 502. The 502 page no longer suggests
   narrowing the search. Connection failures, timeouts and API errors other than a
   rejected query are no longer reported to Sentry. **Ops:** a rejected query now
-  increments `internal_application_error` (label `Unhandled
-  ApiQueryRejectedError in <controller>#<action>`); an API 5xx now gives the
+  increments `internal_application_error` (label `ApiQueryRejectedError in
+  <controller>#<action>`); an API 5xx now gives the
   request a 503, not a 502
   [#371](https://github.com/epimorphics/ppd-explorer/issues/371).
 - Restricted the E2E workflow to pre-production, updated GitHub Actions versions,
@@ -80,6 +80,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- A failed Data Services API call is now logged as what happened. A `200` whose
+  body could not be parsed, such as one cut off part way, was logged as "API
+  returned an error … (status 200)" without the parse error; it is now "API
+  response to … could not be read (status 200, …): <parse error>". A 4xx or 5xx is
+  logged as "API returned status <status> for …", and both carry a new
+  `upstream_response` field with the start of the API's response body, so a
+  rejected query says why. **Ops:** saved Kibana searches matching "API returned
+  an error" need updating
+  [#383](https://github.com/epimorphics/ppd-explorer/issues/383).
 - Links and forms generated in production, such as the search form, no longer carry
   a `relative_url_root=%2Fapp%2Fppd` query parameter. Rails does not recognise that
   key in `default_url_options` and appended it to every URL; the `/app/ppd` prefix

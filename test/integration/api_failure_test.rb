@@ -21,11 +21,14 @@ class ApiFailureTest < ActionDispatch::IntegrationTest
     Rails.logger.stop_broadcasting_to(sink)
   end
 
-  # Have the gem talk to a connection that answers every request as the block does
+  # Have the gem talk to a connection that answers every request as the block does.
+  # The response middleware is the gem's own, in the same order, so a body that
+  # isn't JSON fails to parse as it would in production.
   def stub_api_connection(&)
     stubs = Faraday::Adapter::Test::Stubs.new { |stub| stub.get('/landregistry/id/ppd', &) }
     url = "#{Rails.application.config.api_service_url}/landregistry/id/ppd"
     connection = Faraday.new(url: url) do |config|
+      config.response :json
       config.response :raise_error
       config.adapter :test, stubs
     end
@@ -61,12 +64,13 @@ class ApiFailureTest < ActionDispatch::IntegrationTest
       # request's completed entry is an ERROR
       it 'should log the failed call once as a warning, and the request once as an error' do
         entries = capture_log { VCR.turned_off { get search_index_path(street: 'harbour road') } }
-        api_failures = entries.select { |entry| entry['message'].start_with?('API returned an error') }
+        api_failures = entries.select { |entry| entry['message'].start_with?('API returned status 503') }
         errors = entries.select { |entry| entry['level'] == 'ERROR' }
 
         _(api_failures.size).must_equal 1
         _(api_failures.first['level']).must_equal 'WARN'
         _(api_failures.first['upstream_status']).must_equal 503
+        _(api_failures.first['upstream_response']).must_equal 'Query timed out'
         _(api_failures.first['upstream_path']).must_match %r{\A/landregistry/id/ppd\?}
         _(api_failures.first.key?('status')).must_equal false
         _(errors.size).must_equal 1
@@ -99,6 +103,27 @@ class ApiFailureTest < ActionDispatch::IntegrationTest
           assert_response status
           _(events.size).must_equal internal_errors
         end
+      end
+    end
+
+    # As on dev on 2026-10-21, when an all-results search was cut off after 120s (#382)
+    describe 'when the API answers 200 with a body cut off part way' do
+      before { stub_api_connection { [200, { 'Content-Type' => 'application/json' }, '[{"ppd:pricePaid": 2'] } }
+
+      it 'should respond with 502' do
+        VCR.turned_off { get search_index_path(street: 'harbour road') }
+
+        assert_response :bad_gateway
+      end
+
+      it 'should log that the response could not be read, not that the API returned an error' do
+        entries = capture_log { VCR.turned_off { get search_index_path(street: 'harbour road') } }
+        api_failures = entries.select { |entry| entry['message'].include?('could not be read (status 200') }
+
+        _(api_failures.size).must_equal 1
+        _(api_failures.first['upstream_status']).must_equal 200
+        _(api_failures.first['upstream_response']).must_equal '[{"ppd:pricePaid": 2'
+        _(entries.none? { |entry| entry['message'].start_with?('API returned status') }).must_equal true
       end
     end
 

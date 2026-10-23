@@ -5,7 +5,8 @@ class ApplicationPrometheusSubscriber < ActiveSupport::Subscriber
   attach_to :application
 
   # The label names the exception class and the action that raised it, such as
-  # "Unhandled NoMethodError in search#index". The exception's own message is left
+  # "NoMethodError in search#index". It does not say "unhandled": some 500s, such
+  # as ApiQueryRejectedError, are deliberate. The exception's own message is left
   # out: it can carry user input, and every distinct label value is a new time
   # series. The message is in the logs and Sentry.
   #
@@ -20,7 +21,6 @@ class ApplicationPrometheusSubscriber < ActiveSupport::Subscriber
   private
 
   def label(exception)
-    label = "Unhandled #{exception[:class]}"
-    exception[:action] ? "#{label} in #{exception[:action]}" : label
+    exception[:action] ? "#{exception[:class]} in #{exception[:action]}" : exception[:class]
   end
 end
