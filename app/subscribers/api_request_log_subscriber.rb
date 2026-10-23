@@ -15,6 +15,10 @@
 class ApiRequestLogSubscriber < ActiveSupport::Subscriber
   attach_to :data_services_api
 
+  # The most of the API's response body logged with a failure: enough for its
+  # error message, without letting a large page flood the log
+  RESPONSE_EXCERPT_LENGTH = 500
+
   def request(event)
     Rails.logger.info(
       {
@@ -83,34 +87,56 @@ class ApiRequestLogSubscriber < ActiveSupport::Subscriber
     log_failure(event, message, status: nil)
   end
 
-  # The API answered, but with an error status or a body that could not be read
+  # The API answered, but with an error status or a body that could not be read.
+  # Only a 4xx or 5xx is an error status: the gem also raises when a 2xx body is
+  # not valid JSON, such as one cut off part way, and that is not the API
+  # returning an error.
   def service_exception(event)
-    call = method_and_path(event.payload)
-    time = seconds(event.payload[:duration])
     status = event.payload[:status]
     exception = event.payload[:exception]
-    message = if status
-                "API returned an error for #{call} (status #{status}, #{time}s)"
-              else
-                "API response to #{call} could not be read (#{time}s): #{exception.message}"
-              end
 
-    log_failure(event, message, status: status)
+    log_failure(event, service_exception_message(event.payload, status, exception),
+                status: status, response: excerpt(exception.try(:service_message)))
   end
 
   private
 
-  def log_failure(event, message, status:)
+  def service_exception_message(payload, status, exception)
+    call = method_and_path(payload)
+    time = seconds(payload[:duration])
+    return "API returned status #{status} for #{call} (#{time}s)" if status.to_i >= 400
+
+    timing = status ? "status #{status}, #{time}s" : "#{time}s"
+    "API response to #{call} could not be read (#{timing}): #{exception.message}"
+  end
+
+  def log_failure(event, message, status:, response: nil)
     Rails.logger.warn(
       {
         message: message,
         **upstream_call(event.payload),
         upstream_status: status,
         upstream_time: seconds(event.payload[:duration]),
+        upstream_response: response,
         exception: event.payload[:exception].class.name,
         request_status: 'processing'
       }.compact
     )
+  end
+
+  # The start of a response body, which may already have been parsed. A JSON body,
+  # such as the API's pretty-printed error, is logged compactly, so the excerpt is
+  # spent on content rather than whitespace.
+  def excerpt(body)
+    text = body.is_a?(String) ? compact_json(body) : body&.to_json
+    text.presence&.truncate(RESPONSE_EXCERPT_LENGTH)
+  end
+
+  # The body re-encoded without whitespace if it is JSON, otherwise unchanged
+  def compact_json(body)
+    JSON.parse(body).to_json
+  rescue JSON::ParserError
+    body
   end
 
   def upstream_call(payload)
