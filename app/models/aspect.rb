@@ -43,22 +43,43 @@ class Aspect
     end
   end
 
-  # Return a preference value as a number, if possible
+  # Return a preference value as a number, if possible. A price can't be negative,
+  # and a number too large for a Float is Infinity, which can't be sent to the API.
   def preference_value_numeric(preferences)
-    s = preference_value(preferences).delete(',')
-    Integer(s)
-  rescue ArgumentError
-    Float(s, exception: false) ||
-      raise(MalformedSearchError, "'#{preference_value(preferences)}' is not a valid number")
+    given = preference_value(preferences)
+    number = parse_number(given.delete(','))
+    raise MalformedSearchError, "'#{given}' is not a valid number" unless number&.finite?
+    if number.negative?
+      raise MalformedSearchError, "'#{given}' is not a valid price: it must be zero or more"
+    end
+
+    number
   end
 
-  # Return a preference value as a date, if possible
+  # Price Paid Data starts in 1995
+  EARLIEST_DATE = Date.new(1995, 1, 1)
+  # How dates are written in error messages, e.g. 1 January 1995
+  DATE_FORMAT = '%-d %B %Y'
+
+  # The latest date worth searching up to: the end of next year
+  def self.latest_date
+    Date.current.next_year.end_of_year
+  end
+
+  # Return a preference value as a date, if possible. A date outside the range of
+  # the data can only come from an edited URL, and some, such as year 0 or a
+  # five-digit year, can't be sent to the API.
   def preference_value_date(preferences)
     s = preference_value(preferences)
     raise 'No preference value' unless s
 
-    Date.parse(s)
-  rescue ArgumentError
+    date = Date.parse(s)
+    latest = Aspect.latest_date
+    return date if date.between?(EARLIEST_DATE, latest)
+
+    range = "#{EARLIEST_DATE.strftime(DATE_FORMAT)} and #{latest.strftime(DATE_FORMAT)}"
+    raise MalformedSearchError, "'#{s}' is not a date between #{range}"
+  rescue Date::Error
     raise MalformedSearchError, "'#{s}' is not a valid date"
   end
 
@@ -88,6 +109,11 @@ class Aspect
   end
 
   private
+
+  # An Integer if the string is one, otherwise a Float, or nil if it is neither
+  def parse_number(string)
+    Integer(string, exception: false) || Float(string, exception: false)
+  end
 
   # Return true if at least one, but not all, of this aspect's values are present in the parameters
   def only_some_present?(values, preferences)

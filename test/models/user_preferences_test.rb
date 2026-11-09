@@ -32,4 +32,17 @@ describe 'UserPreferences' do
     assert prefs.present?(:nb, 'false')
     assert_not prefs.present?(:nb, 'flimflam')
   end
+
+  it 'should keep a limit that the form offers' do
+    %w[100 1000 all].each do |limit|
+      _(UserPreferences.new(params_object('limit' => limit)).selected_limit).must_equal limit
+    end
+  end
+
+  it 'should use the default limit for one the form does not offer' do
+    %w[abc -1 0 50].each do |limit|
+      _(UserPreferences.new(params_object('limit' => limit)).selected_limit).must_equal '100'
+    end
+    _(UserPreferences.new(params_object({})).selected_limit).must_equal '100'
+  end
 end

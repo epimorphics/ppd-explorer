@@ -73,9 +73,11 @@ class UserPreferences
     QueryCommand.find_aspect(key).display_checked?(self, value)
   end
 
-  # Return the currentely selected limit on number of queries, or the default
+  # Return the selected limit on the number of results, or the default if none of
+  # the offered limits is selected
   def selected_limit
-    param('limit') || DEFAULT_LIMIT
+    limit = param('limit')
+    AVAILABLE_LIMITS.include?(limit) ? limit : DEFAULT_LIMIT
   end
 
   # Return true if the user has unlimited data

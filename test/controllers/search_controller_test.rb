@@ -13,7 +13,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
 
       it 'should conduct a search for a house name' do
         VCR.use_cassette('search_controller_test_house_name', record: :new_episodes) do
-          get search_index_path(paon: 'rose cottage', limit: 10)
+          get search_index_path(paon: 'rose cottage', limit: 100)
 
           query_command = @controller.query_command
 
@@ -22,10 +22,10 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
                   .summarise
                   .match(/Showing (\d+) transactions \(from (\d*) or more matching transactions\) for (\d+) properties/)
 
-          assert_equal 10, query_command.size
+          assert_equal 100, query_command.size
 
           assert match
-          assert_equal 10, match[1].to_i
+          assert_equal 100, match[1].to_i
           assert_operator match[2].to_i, :>, 0
           assert_operator match[3].to_i, :>, 0
         end

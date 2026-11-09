@@ -131,8 +131,10 @@ class QueryCommand < DataService
     ASPECTS[key]
   end
 
+  # The number of results to ask for, or nil for all of them
   def query_limit
-    (l = preferences.selected_limit) =~ /\d/ && l.to_i
+    limit = preferences.selected_limit
+    limit.to_i unless limit == 'all'
   end
 
   def save_results(ppd, query, options)

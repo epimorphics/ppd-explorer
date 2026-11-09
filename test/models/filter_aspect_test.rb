@@ -43,6 +43,48 @@ describe 'FilterAspect' do
     )
   end
 
+  it 'should send only the known values when unknown ones are also given' do
+    prefs = UserPreferences.new(params_object('ptype' => %w[a nosuch:thing b :]))
+    q = @aspect.add_clause(@query, prefs)
+
+    _(q.to_json).must_match_json_expression(
+      '@and' => [
+        {
+          'foo:propertyType' => {
+            '@oneof' => [{ '@value' => 'a' }, { '@value' => 'b' }]
+          }
+        }
+      ]
+    )
+  end
+
+  it 'should not add a clause if only unknown values are given' do
+    prefs = UserPreferences.new(params_object('ptype' => %w[nosuch:thing detached]))
+    q = @aspect.add_clause(@query, prefs)
+
+    _(q.to_json).must_match_json_expression({})
+  end
+
+  # As QueryCommand::ASPECTS defines them, so the prefixes are as the form sends them
+  describe 'the search form filters' do
+    def clause_for(key, values)
+      prefs = UserPreferences.new(params_object(key.to_s => values))
+      JSON.parse(QueryCommand.find_aspect(key).add_clause(@query, prefs).to_json)
+    end
+
+    it 'should drop a property type with no prefix' do
+      _(clause_for(:ptype, %w[lrcommon:detached detached])).must_equal(
+        '@and' => [{ 'ppd:propertyType' => { '@oneof' => [{ '@id' => 'lrcommon:detached' }] } }]
+      )
+    end
+
+    it 'should drop a new build value that is not true or false' do
+      _(clause_for(:nb, %w[true maybe])).must_equal(
+        '@and' => [{ 'ppd:newBuild' => { '@oneof' => [{ '@value' => 'true', '@type' => 'xsd:boolean' }] } }]
+      )
+    end
+  end
+
   it 'should produce a reasonable label with a URI filter value' do
     aspect = FilterAspect.new(
       'test_aspect_type',

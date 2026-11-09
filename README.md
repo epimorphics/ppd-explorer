@@ -316,7 +316,12 @@ to Rails, which maps it to a status and renders the page through
 
 - An unmatched path is a 404.
 - A `MalformedSearchError` (a search term, date or price that cannot be used) is a
-  400, and its message is shown on the page. To make another error a deliberate
+  400, and its message is shown on the page. A price must be a finite number, zero
+  or more, and a date must fall between 1 January 1995, when Price Paid Data
+  starts, and the end of next year. Values the form can't produce are checked
+  before anything is sent to the API. An unknown filter value (such as
+  `ptype[]=detached`) is dropped, and a `limit` other than `100`, `1000` or `all`
+  uses the default of `100`. To make another error a deliberate
   status, give it its own exception class and register it in
   `config.action_dispatch.rescue_responses`.
 - A failure of the Data Services API is given a status by who has to act on it.
