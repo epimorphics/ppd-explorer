@@ -7,8 +7,8 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:report": "playwright show-report tmp/playwright-report",
-    "lint": "eslint playwright.config.ts 'test/playwright/**/*.ts'",
-    "lint:fix": "eslint --fix playwright.config.ts 'test/playwright/**/*.ts'"
+    "lint": "eslint eslint.config.ts playwright.config.ts 'test/playwright/**/*.ts'",
+    "lint:fix": "eslint --fix eslint.config.ts playwright.config.ts 'test/playwright/**/*.ts'"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
