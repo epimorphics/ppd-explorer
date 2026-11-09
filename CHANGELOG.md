@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Calls to the Data Services API that return rows are now logged as "API returned
+  <n> rows for …" with `returned_rows`, as the README said. The API wraps its rows
+  in `{"meta": …, "items": […]}`, so the count was never found and every list call
+  was logged as "API responded to …"
+  [#387](https://github.com/epimorphics/ppd-explorer/issues/387).
 - A `200` from the API that isn't the JSON ppd expects, such as a proxy's HTML
   maintenance page, is now a 502 and counted as a failed API call
   (`api_service_exception{message="HTTP 200"}`). It was counted as a successful

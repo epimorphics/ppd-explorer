@@ -35,9 +35,9 @@ class ApiRequestLogSubscriber < ActiveSupport::Subscriber
     path = url.query ? "#{url.path}?#{url.query}" : url.path
     method = response.env.method.to_s.upcase
     time = seconds(event.payload[:duration])
-    # Only array bodies have a row count; an explain query returns a Hash, and
-    # claiming "0 rows" for one would be misleading.
-    returned_rows = response.body.size if response.body.is_a?(Array)
+    # The gem counts the rows in the body's `items`. An explain response has none,
+    # so row_count is nil, and claiming "0 rows" for one would be misleading.
+    returned_rows = event.payload[:row_count]
     call = "#{method} #{path}"
 
     Rails.logger.info(

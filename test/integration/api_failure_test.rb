@@ -47,6 +47,23 @@ class ApiFailureTest < ActionDispatch::IntegrationTest
     events
   end
 
+  # The API wraps its rows as {"meta": …, "items": […]}, not as a bare array
+  describe 'A successful Data Services API call' do
+    before do
+      body = { meta: { limit: 100 }, items: [] }.to_json
+      stub_api_connection { [200, { 'Content-Type' => 'application/json' }, body] }
+    end
+
+    it 'should log the number of rows the API returned' do
+      entries = capture_log { VCR.turned_off { get search_index_path(street: 'harbour road') } }
+      responses = entries.select { |entry| entry.key?('returned_rows') }
+
+      _(responses.size).must_equal 1
+      _(responses.first['message']).must_match %r{\AAPI returned 0 rows for GET /landregistry/id/ppd\?}
+      _(responses.first['returned_rows']).must_equal 0
+    end
+  end
+
   describe 'A failing Data Services API call' do
     before { @original_env = render_error_pages }
     after { Rails.application.env_config.merge!(@original_env) }

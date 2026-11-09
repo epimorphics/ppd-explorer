@@ -281,8 +281,13 @@ In the test environment logs go to `log/test.log`, not stdout.
 
 Calls to the Data Services API are logged by `ApiRequestLogSubscriber`, from the
 events the `data_services_api` gem emits: one entry when a call is made, one when
-it returns (with `returned_rows`), a `WARN` before each retry, and a `WARN` if it
-fails. Models and controllers must not log API calls themselves.
+it returns, a `WARN` before each retry, and a `WARN` if it fails. Models and
+controllers must not log API calls themselves.
+
+A call that returns rows is logged as `API returned <n> rows for GET …`, with the
+count in `returned_rows`, taken from the `items` the API wrapped them in. A
+response with no rows to count, such as an explain query, is logged as `API
+responded to GET …` without `returned_rows`.
 
 API log entries describe the call to the API in `upstream_*` fields
 (`upstream_url`, `upstream_method`, `upstream_path`, `upstream_status`,
