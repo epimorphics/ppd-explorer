@@ -68,9 +68,7 @@ export default defineConfig([
       ],
       '@stylistic/multiline-comment-style': 'off',
       '@stylistic/multiline-ternary': ['error', 'always-multiline'],
-      // Not adopted from hydrology's config (marked TODO there): it splits
-      // Playwright locator chains such as getByRole(...).first().click()
-      // '@stylistic/newline-per-chained-call': 'warn',
+      '@stylistic/newline-per-chained-call': 'warn',
       '@stylistic/no-confusing-arrow': ['warn', { onlyOneSimpleParam: true }],
       '@stylistic/no-trailing-spaces': 'warn',
       '@stylistic/object-curly-spacing': ['error', 'always'],
