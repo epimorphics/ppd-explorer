@@ -6,11 +6,15 @@ class FilterAspect < Aspect
     present?(preferences) ? add_filter_clause(query, preferences) : query
   end
 
+  # Only the aspect's own values are sent. The form can't produce any other, so
+  # an unknown value comes from an edited URL and is dropped rather than sent to
+  # the API, which would reject or misread it.
   def add_filter_clause(query, preferences)
+    selected = Array(preference_value(preferences)) & values
     if uri_value?
-      query.eq_any_uri(aspect_property, preference_value(preferences))
+      query.eq_any_uri(aspect_property, selected)
     else
-      query.eq_any_value(aspect_property, preference_value(preferences), type: value_type)
+      query.eq_any_value(aspect_property, selected, type: value_type)
     end
   end
 
