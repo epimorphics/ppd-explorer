@@ -27,6 +27,7 @@ Minitest::Spec.include ActiveSupport::Testing::Assertions
 require 'mocha/minitest'
 require 'json_expressions/minitest'
 require 'download_helpers'
+require 'api_stub_helpers'
 
 require 'capybara/minitest'
 require 'capybara/rails'
@@ -39,6 +40,7 @@ Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 module ActionDispatch
   class IntegrationTest
     include Capybara::DSL
+    include ApiStubHelpers
     include Capybara::Minitest::Assertions
 
     def teardown

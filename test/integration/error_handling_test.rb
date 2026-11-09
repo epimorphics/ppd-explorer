@@ -42,14 +42,6 @@ class ErrorHandlingTest < ActionDispatch::IntegrationTest
       sentry_events.grep(Sentry::ErrorEvent).map { |event| event.exception.values.last.type }
     end
 
-    # The payloads of the internal error events emitted while the block runs
-    def internal_error_events(&)
-      events = []
-      callback = ->(*, payload) { events << payload }
-      ActiveSupport::Notifications.subscribed(callback, 'internal_error.application', &)
-      events
-    end
-
     describe 'an unmatched path' do
       it 'should respond with 404 and the not found page' do
         get '/no/such/path'
