@@ -115,9 +115,8 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
 
     describe '#connection_failure' do
       def failure_event(exception)
-        # The gem always sends status 503 here, although no response arrived
         stub(payload: { exception: exception, path: '/landregistry/id/ppd',
-                        query_string: '_limit=100', duration: 2500, status: 503 })
+                        query_string: '_limit=100', duration: 2500 })
       end
 
       it 'should warn with the call and time taken, and no status' do

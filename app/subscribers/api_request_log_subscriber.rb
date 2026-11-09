@@ -72,8 +72,7 @@ class ApiRequestLogSubscriber < ActiveSupport::Subscriber
   end
 
   # The API could not be reached, or did not answer in time, after any retries.
-  # No response arrived, so no status is logged, whatever the payload says: the
-  # gem always sends a 503 here.
+  # No response arrived, so there is no status to log.
   def connection_failure(event)
     call = method_and_path(event.payload)
     time = seconds(event.payload[:duration])
@@ -87,10 +86,10 @@ class ApiRequestLogSubscriber < ActiveSupport::Subscriber
     log_failure(event, message, status: nil)
   end
 
-  # The API answered, but with an error status or a body that could not be read.
+  # The API answered, but with an error status or a body that could not be used.
   # Only a 4xx or 5xx is an error status: the gem also raises when a 2xx body is
-  # not valid JSON, such as one cut off part way, and that is not the API
-  # returning an error.
+  # not the JSON it expects, such as one cut off part way, an HTML page from a
+  # proxy, or an object with no `items`, and that is not the API returning an error.
   def service_exception(event)
     status = event.payload[:status]
     exception = event.payload[:exception]

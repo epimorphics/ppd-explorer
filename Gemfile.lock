@@ -510,7 +510,7 @@ GEM
 GEM
   remote: https://rubygems.pkg.github.com/epimorphics/
   specs:
-    data_services_api (2.0.0)
+    data_services_api (2.1.0)
       faraday (~> 2.13, >= 2.13.0)
       faraday-follow_redirects (~> 0.4, >= 0.4.0)
       faraday-retry (~> 2.0, >= 2.0)
@@ -547,7 +547,7 @@ DEPENDENCIES
   capybara
   csv
   dartsass-sprockets (~> 3.2)
-  data_services_api (~> 2.0)!
+  data_services_api (~> 2.1)!
   dotenv
   epilog_rails (~> 0.3)!
   faraday (~> 2.13, >= 2.13.0)
