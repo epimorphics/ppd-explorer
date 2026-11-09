@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Search parameters that the form can't produce are checked before the Data
+  Services API is called, so crawlers and scanners editing the query string no
+  longer cause 500s that are reported to Sentry and counted in
+  `internal_application_error`. A price that isn't a finite number of zero or
+  more, or a date outside 1 January 1995 to the end of next year, is a 400 naming
+  the value. Unknown filter values (`ptype`, `nb`, `et`, `tc`) are dropped, and a
+  `limit` other than `100`, `1000` or `all` uses the default of `100` instead of
+  returning every result
+  [#385](https://github.com/epimorphics/ppd-explorer/issues/385).
 - Calls to the Data Services API that return rows are now logged as "API returned
   <n> rows for …" with `returned_rows`, as the README said. The API wraps its rows
   in `{"meta": …, "items": […]}`, so the count was never found and every list call
