@@ -24,7 +24,7 @@ module TurtleFormatter
     ttl_value
   end
 
-  # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
+  # rubocop:disable-next Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
   def format_ttl_value(value)
     f =
       if value.nil?
@@ -53,5 +53,4 @@ module TurtleFormatter
 
     f.html_safe # rubocop:disable Rails/OutputSafety
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
 end
