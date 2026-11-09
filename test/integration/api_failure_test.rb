@@ -22,13 +22,13 @@ class ApiFailureTest < ActionDispatch::IntegrationTest
   end
 
   # Have the gem talk to a connection that answers every request as the block does.
-  # The response middleware is the gem's own, in the same order, so a body that
-  # isn't JSON fails to parse as it would in production.
+  # The response middleware is the gem's own (data_services_api 2.1), in the same
+  # order, so a body that isn't JSON fails to parse as it would in production.
   def stub_api_connection(&)
     stubs = Faraday::Adapter::Test::Stubs.new { |stub| stub.get('/landregistry/id/ppd', &) }
     url = "#{Rails.application.config.api_service_url}/landregistry/id/ppd"
     connection = Faraday.new(url: url) do |config|
-      config.response :json
+      config.response :json, content_type: [], preserve_raw: true
       config.response :raise_error
       config.adapter :test, stubs
     end
@@ -45,6 +45,23 @@ class ApiFailureTest < ActionDispatch::IntegrationTest
     callback = ->(*, payload) { events << payload }
     ActiveSupport::Notifications.subscribed(callback, 'internal_error.application', &)
     events
+  end
+
+  # The API wraps its rows as {"meta": …, "items": […]}, not as a bare array
+  describe 'A successful Data Services API call' do
+    before do
+      body = { meta: { limit: 100 }, items: [] }.to_json
+      stub_api_connection { [200, { 'Content-Type' => 'application/json' }, body] }
+    end
+
+    it 'should log the number of rows the API returned' do
+      entries = capture_log { VCR.turned_off { get search_index_path(street: 'harbour road') } }
+      responses = entries.select { |entry| entry.key?('returned_rows') }
+
+      _(responses.size).must_equal 1
+      _(responses.first['message']).must_match %r{\AAPI returned 0 rows for GET /landregistry/id/ppd\?}
+      _(responses.first['returned_rows']).must_equal 0
+    end
   end
 
   describe 'A failing Data Services API call' do
@@ -124,6 +141,46 @@ class ApiFailureTest < ActionDispatch::IntegrationTest
         _(api_failures.first['upstream_status']).must_equal 200
         _(api_failures.first['upstream_response']).must_equal '[{"ppd:pricePaid": 2'
         _(entries.none? { |entry| entry['message'].start_with?('API returned status') }).must_equal true
+      end
+    end
+
+    # Such as a proxy's maintenance page. The gem raises for any body that isn't the
+    # JSON it expects, whatever its content type, so ppd never tries to use it.
+    describe 'when the API answers 200 with an HTML page' do
+      before { stub_api_connection { [200, { 'Content-Type' => 'text/html' }, '<html>Down for maintenance</html>'] } }
+
+      it 'should respond with 502, without counting an internal error' do
+        events = internal_error_events { VCR.turned_off { get search_index_path(street: 'harbour road') } }
+
+        assert_response :bad_gateway
+        _(events).must_be_empty
+      end
+
+      it 'should count a failed API call, not a successful one' do
+        assert_no_difference -> { metric(:api_requests, result: 'success') } do
+          assert_difference -> { metric(:api_service_exception, message: 'HTTP 200') }, 1 do
+            VCR.turned_off { get search_index_path(street: 'harbour road') }
+          end
+        end
+      end
+
+      it 'should log that the response could not be read, with the page it got' do
+        entries = capture_log { VCR.turned_off { get search_index_path(street: 'harbour road') } }
+        api_failures = entries.select { |entry| entry['message'].include?('could not be read (status 200') }
+
+        _(api_failures.size).must_equal 1
+        _(api_failures.first['upstream_response']).must_equal '<html>Down for maintenance</html>'
+      end
+    end
+
+    describe 'when the API answers 200 with JSON that has no items' do
+      before { stub_api_connection { [200, { 'Content-Type' => 'application/json' }, '{"error": "unexpected"}'] } }
+
+      it 'should respond with 502, without counting an internal error' do
+        events = internal_error_events { VCR.turned_off { get search_index_path(street: 'harbour road') } }
+
+        assert_response :bad_gateway
+        _(events).must_be_empty
       end
     end
 

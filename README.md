@@ -281,8 +281,13 @@ In the test environment logs go to `log/test.log`, not stdout.
 
 Calls to the Data Services API are logged by `ApiRequestLogSubscriber`, from the
 events the `data_services_api` gem emits: one entry when a call is made, one when
-it returns (with `returned_rows`), a `WARN` before each retry, and a `WARN` if it
-fails. Models and controllers must not log API calls themselves.
+it returns, a `WARN` before each retry, and a `WARN` if it fails. Models and
+controllers must not log API calls themselves.
+
+A call that returns rows is logged as `API returned <n> rows for GET …`, with the
+count in `returned_rows`, taken from the `items` the API wrapped them in. A
+response with no rows to count, such as an explain query, is logged as `API
+responded to GET …` without `returned_rows`.
 
 API log entries describe the call to the API in `upstream_*` fields
 (`upstream_url`, `upstream_method`, `upstream_path`, `upstream_status`,
@@ -294,8 +299,9 @@ completed entry is the one `ERROR`. A connection failure or timeout has no
 
 A failure where the API did respond says what kind of failure it was. A 4xx or 5xx
 is logged as `API returned status <status> for …`. Any other response the gem could
-not use, such as a `200` whose body was cut off part way, is logged as `API response
-to … could not be read (status 200, …): <parse error>`. Both carry
+not use is logged as `API response to … could not be read (status 200, …): <reason>`:
+a `200` whose body was cut off part way, isn't JSON (such as a proxy's HTML
+maintenance page), or is JSON without an `items` array. Both carry
 `upstream_response`, the first 500 characters of the API's response body (a JSON
 body with its whitespace removed), so a rejected query says why it was rejected.
 
@@ -317,9 +323,10 @@ to Rails, which maps it to a status and renders the page through
   Connection failures and timeouts propagate from the `data_services_api` gem: 503
   if it cannot be reached, 504 if it does not answer in time. An error response is
   re-raised by `DataService#call_api` as an `ApiError` subclass: 503 for a 5xx
-  (`ApiUnavailableError`), 502 for a 404 or any other status
-  (`ApiBadResponseError`). These are counted by the `api_*` metrics below and not
-  reported to Sentry. The 503 and 504 pages advise the user to narrow the search.
+  (`ApiUnavailableError`), 502 for a 404, any other status, or a `200` whose body
+  can't be used (`ApiBadResponseError`). These are counted by the `api_*` metrics
+  below and not reported to Sentry. The 503 and 504 pages advise the user to narrow
+  the search.
 - A 400 or 422 from the API (`ApiQueryRejectedError`) means ppd built a query the
   API rejects. That is a bug here, so it is a 500 like any other.
 - Anything else is a 500. It is reported to Sentry and increments the
@@ -349,7 +356,7 @@ carry user input or a URL and would create a new time series per value.
 | `api_status` | `status`: the HTTP status | API calls that returned a response |
 | `api_response_times` | none (histogram, milliseconds) | API calls that returned a response |
 | `api_connection_failure` | `message`: the exception class, `Faraday::ConnectionFailed` or `Faraday::TimeoutError` | API calls that got no response, after retries |
-| `api_service_exception` | `message`: `HTTP <status>`, e.g. `HTTP 503`, or `no response status` | API calls that got an error response |
+| `api_service_exception` | `message`: `HTTP <status>`, e.g. `HTTP 503`, or `no response status` | API calls that got an error response, or a response that couldn't be used (`HTTP 200`) |
 
 These are recorded by the subscribers in `app/subscribers/`, which listen for the
 `data_services_api` gem's `*.data_services_api` events. If a gem upgrade renames

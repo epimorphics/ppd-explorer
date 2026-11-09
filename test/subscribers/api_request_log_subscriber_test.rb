@@ -60,14 +60,17 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
     end
 
     describe '#response' do
-      def response_event(body:, duration:, query: '_limit=100')
+      # As the gem sends it: the raw response, whose body is the API's
+      # {"meta": …, "items": […]} envelope, and row_count, the length of `items`
+      def response_event(row_count:, duration:, query: '_limit=100')
         url = stub(path: '/landregistry/id/ppd', query: query)
+        body = { 'meta' => {}, 'items' => Array.new(row_count.to_i) { {} } }
         response = stub(env: stub(url: url, method: :get), status: 200, body: body)
-        stub(payload: { response: response, duration: duration })
+        stub(payload: { response: response, duration: duration, row_count: row_count })
       end
 
       it 'should log the row count, call, status and timing in upstream fields' do
-        event = response_event(body: [{}, {}], duration: 1233)
+        event = response_event(row_count: 2, duration: 1233)
 
         _(logged { subscriber.response(event) }).must_equal [{
           'level' => 'INFO',
@@ -80,14 +83,22 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
       end
 
       it 'should not pluralise a single row' do
-        event = response_event(body: [{}], duration: 5)
+        event = response_event(row_count: 1, duration: 5)
 
         _(logged { subscriber.response(event) }.first['message'])
           .must_equal 'API returned 1 row for GET /landregistry/id/ppd?_limit=100 (status 200, 0.005s)'
       end
 
-      it 'should not claim a row count when the response body is not a list' do
-        event = response_event(body: { 'sparql' => 'SELECT' }, duration: 5, query: nil)
+      it 'should log a search that found nothing as 0 rows' do
+        entry = logged { subscriber.response(response_event(row_count: 0, duration: 5)) }.first
+
+        _(entry['message']).must_equal 'API returned 0 rows for GET /landregistry/id/ppd?_limit=100 (status 200, 0.005s)'
+        _(entry['returned_rows']).must_equal 0
+      end
+
+      # Such as an explain response, which has the generated SPARQL and no items
+      it 'should not claim a row count when the gem gives none' do
+        event = response_event(row_count: nil, duration: 5, query: nil)
         entry = logged { subscriber.response(event) }.first
 
         _(entry['message']).must_equal 'API responded to GET /landregistry/id/ppd (status 200, 0.005s)'
@@ -115,9 +126,8 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
 
     describe '#connection_failure' do
       def failure_event(exception)
-        # The gem always sends status 503 here, although no response arrived
         stub(payload: { exception: exception, path: '/landregistry/id/ppd',
-                        query_string: '_limit=100', duration: 2500, status: 503 })
+                        query_string: '_limit=100', duration: 2500 })
       end
 
       it 'should warn with the call and time taken, and no status' do
