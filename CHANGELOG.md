@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.4.0] - 2026-11-09
+
+**Ops: this release changes metric labels, log fields and response statuses
+that alert rules and saved Kibana searches depend on.** The entries marked
+**Ops** or **Metric change** below have the details:
+
+- `internal_application_error` has the single label `message`
+  (`<Class> in <controller#action>`), and a query the API rejects now counts as
+  `ApiQueryRejectedError` [#358](https://github.com/epimorphics/ppd-explorer/issues/358),
+  [#371](https://github.com/epimorphics/ppd-explorer/issues/371).
+- `api_connection_failure{message}` is the exception class,
+  `api_service_exception{message}` is `HTTP <status>` (including `HTTP 200` for a
+  response ppd can't use), and `api_requests{result="failure"}` now counts error
+  responses [#360](https://github.com/epimorphics/ppd-explorer/issues/360),
+  [#387](https://github.com/epimorphics/ppd-explorer/issues/387).
+- Request and API log entries change shape and level (`upstream_*` fields,
+  numeric `request_time`, API failures at `WARN`)
+  [#359](https://github.com/epimorphics/ppd-explorer/issues/359),
+  [#369](https://github.com/epimorphics/ppd-explorer/issues/369),
+  [#383](https://github.com/epimorphics/ppd-explorer/issues/383).
+- API failures return `502`, `503` or `504` instead of `500` or a blank `200`;
+  invalid search input returns `400`
+  [#360](https://github.com/epimorphics/ppd-explorer/issues/360),
+  [#371](https://github.com/epimorphics/ppd-explorer/issues/371),
+  [#385](https://github.com/epimorphics/ppd-explorer/issues/385).
+- The container won't start without a valid `API_SERVICE_URL`
+  [#372](https://github.com/epimorphics/ppd-explorer/issues/372).
+
 ### Fixed
 
 - Search parameters that the form can't produce are checked before the Data
@@ -148,6 +176,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   added a warning against concurrent deploys, and consolidated the README environment, credentials and
   observability documentation
   [frontend-backlog#114](https://github.com/epimorphics/frontend-backlog/issues/114).
+- Updated Rails to 8.1.4.1 and the other gem dependencies, including
+  `prometheus-client` 5.0.0 (drops support for Ruby below 3.3; metric output is
+  unchanged) and `nokogiri` 1.19.7.
+- Updated `.nvmrc` to Node v26 for local development, and the npm
+  dependencies.
+- The ESLint config now uses the same rules as hydrology-data-explorer, and the
+  Playwright specs follow them. RuboCop 1.92's `Style/DirectiveScope` is applied.
 
 ## [2.3.5] - 2026-10-27
 

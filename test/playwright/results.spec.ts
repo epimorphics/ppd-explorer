@@ -35,7 +35,9 @@ test.describe('Change settings', () => {
   test('returns to the search form with values preserved', async ({ page }) => {
     await page.getByLabel('Building name or number').fill('Rose Cottage')
     await submitSearch(page)
-    await page.getByRole('link', { name: /change search settings/i }).first().click()
+    await page.getByRole('link', { name: /change search settings/i })
+      .first()
+      .click()
     await expect(page.getByLabel('Building name or number')).toHaveValue('Rose Cottage')
   })
 })
@@ -45,16 +47,22 @@ test.describe('Download data', () => {
     await page.getByLabel('Building name or number').fill('Rose Cottage')
     await submitSearch(page)
 
-    await page.getByRole('link', { name: /download data/i }).first().click()
+    await page.getByRole('link', { name: /download data/i })
+      .first()
+      .click()
     await expect(page).toHaveURL(/ppd_data/)
 
     const [download] = await Promise.all([
       page.waitForEvent('download'),
-      page.getByRole('link', { name: /get selected results as csv/i }).first().click(),
+      page.getByRole('link', { name: /get selected results as csv/i })
+        .first()
+        .click(),
     ])
     expect(download.suggestedFilename()).toMatch(/\.csv$/)
 
-    const ttlHref = await page.getByRole('link', { name: /get selected results as turtle/i }).first().getAttribute('href')
+    const ttlHref = await page.getByRole('link', { name: /get selected results as turtle/i })
+      .first()
+      .getAttribute('href')
     expect(ttlHref).toMatch(/ttl/)
 
     await page.getByRole('link', { name: /back to results/i }).click()
@@ -66,7 +74,9 @@ test.describe('Share', () => {
   test('opens and closes the share modal', async ({ page }) => {
     await page.getByLabel('Building name or number').fill('Rose Cottage')
     await submitSearch(page)
-    await page.locator('.action-bookmark').first().click()
+    await page.locator('.action-bookmark')
+      .first()
+      .click()
     await expect(page.locator('#bookmark-modal')).toBeVisible()
     await page.locator('#bookmark-modal button.close').click()
     await expect(page.locator('#bookmark-modal')).toBeHidden()
@@ -99,8 +109,12 @@ test.describe('Results list item', () => {
     await page.getByLabel('Building name or number').fill('Rose Cottage')
     await submitSearch(page)
 
+    const firstTransaction = firstResult(page)
+      .locator('.transaction-history tbody tr')
+      .first()
+
     await expect(firstResult(page).locator('.property-heading .address')).toBeVisible()
-    await expect(firstResult(page).locator('.transaction-history tbody tr').first()).toBeVisible()
+    await expect(firstTransaction).toBeVisible()
     await expect(firstResult(page).locator('a[aria-label="show transaction raw data"]')).toBeVisible()
     await expect(firstResult(page).locator('.detailed-address')).toBeVisible()
   })
@@ -113,7 +127,9 @@ test.describe('Results list query within', () => {
     await submitSearch(page)
     await expect(summary(page)).toContainText(/transaction/)
 
-    await page.locator('[aria-label="add a filter for district"]').first().click()
+    await page.locator('[aria-label="add a filter for district"]')
+      .first()
+      .click()
     await expect(page.locator('.search-summary')).toBeVisible()
     await expect(page.locator('.search-terms')).toContainText(/district/i)
     await expect(summary(page)).toContainText(/transaction/)

@@ -202,7 +202,9 @@ test.describe('Special character handling', () => {
 
 test.describe('Help', () => {
   test('opens and closes the help modal', async ({ page }) => {
-    await page.locator('.action-help').first().click()
+    await page.locator('.action-help')
+      .first()
+      .click()
     await expect(page.locator('#help-modal')).toBeVisible()
     await expect(page.locator('#help-modal .trouble-shooting')).toBeVisible()
     await page.locator('#help-modal button.close').click()
@@ -214,7 +216,9 @@ test.describe('Reset form', () => {
   test('clears all entered values', async ({ page }) => {
     await page.getByLabel('Building name or number').fill('Rose Cottage')
     await page.getByLabel('Locality').fill('Thurloxton')
-    await page.getByRole('link', { name: /reset the form/i }).first().click()
+    await page.getByRole('link', { name: /reset the form/i })
+      .first()
+      .click()
     await expect(page.getByLabel('Building name or number')).toHaveValue('')
     await expect(page.getByLabel('Locality')).toHaveValue('')
   })
